@@ -5,14 +5,19 @@ import {ThongtinchungComponent} from "./menu/admin/thongtinchung/thongtinchung.c
 import {MenuRoutes} from "./menu/menu.routes";
 import {MenuComponent} from "./menu/menu.component";
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { MonanComponent } from './menu/monan/monan.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
-  MenuComponent,
-  SidenavComponent], // Khai báo component
+    MenuComponent,
+    SidenavComponent,
+    MonanComponent], // Khai báo component
   imports: [
     CommonModule,
     RouterModule.forChild(MenuRoutes), // Đăng ký route
   ],
+  exports: [
+    SidenavComponent
+  ]
 })
 export class LayoutModule {}
