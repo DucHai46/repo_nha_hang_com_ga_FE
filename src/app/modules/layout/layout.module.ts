@@ -6,11 +6,13 @@ import {MenuRoutes} from "./menu/menu.routes";
 import {MenuComponent} from "./menu/menu.component";
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MonanComponent } from './menu/monan/monan.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
     SidenavComponent,
+    MainComponent,
     MonanComponent], // Khai báo component
   imports: [
     CommonModule,

@@ -1,1 +1,26 @@
-<p>asdasdasddddddasdasd</p>
+<div class="sidenav">
+    <div class="logo-container">
+        <button class="logo">
+            <i class="fal fa-bars"></i>
+        </button>
+        <div class="logo-text">App</div>
+        <button class="btn-close">
+            <i class="fal fa-times close-icon"></i>
+        </button>
+         
+    </div>
+    <div class="sidenav-nav">
+        @for (item of items; track $index) {
+            <li class="sidenav-nav-item">
+                <a class="sidenav-nav-link" [routerLink]="item.routeLink" 
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact :true}"
+                >
+                <i class="sidenav-link-icon" [class]="item.icon"></i>
+                <span class="sidenav-link-text">{{ item.label }}</span>
+                </a>
+            </li>
+        }
+    </div>
+</div>
+<app-main></app-main>
