@@ -18,8 +18,6 @@ import { MainComponent } from './main/main.component';
     CommonModule,
     RouterModule.forChild(MenuRoutes), // Đăng ký route
   ],
-  exports: [
-    SidenavComponent
-  ]
+  exports: [MenuComponent,MainComponent, SidenavComponent]
 })
 export class LayoutModule {}

@@ -14,22 +14,22 @@ export class SidenavComponent {
   changeIsSideNavCollapsed = output<boolean>();
   items=[
     {
-      routeLink: 'dashboard',
+      routeLink: 'main/dashboard',
       icon : 'fal fa-home',
       label : 'Dashboard'
     },
     {
-      routeLink: 'products',
+      routeLink: 'main/products',
       icon : 'fal fa-box-open',
       label : 'Products'
     },
     {
-      routeLink: 'pages',
+      routeLink: 'main/pages',
       icon : 'fal fa-file',
       label : 'Pages'
     },
     {
-      routeLink: 'settings',
+      routeLink: 'main/settings',
       icon : 'fal fa-cog',
       label : 'Settings'
     },

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-repo-ddtw-vnpt-ddtw-entry',
   template: `
     <app-sidenav></app-sidenav>
-  `,
+    <app-main></app-main>
+    `,
 })
 export class RemoteEntryComponent {}
