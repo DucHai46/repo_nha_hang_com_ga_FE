@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-repo-ddtw-vnpt-ddtw-entry',
   template: `
-    <app-sidenav></app-sidenav>
+    <app-sidenav [isSideNavCollapsed]="isSideNavCollapsed()"
+    (changeIsSideNavCollapsed)="changeIsSideNavCollapsed($event)"></app-sidenav>
     <app-main></app-main>
     `,
 })
-export class RemoteEntryComponent {}
+export class RemoteEntryComponent {
+  isSideNavCollapsed= signal<boolean>(false);
+  changeIsSideNavCollapsed(isSideNavCollapsed: boolean): void {
+    this.isSideNavCollapsed.set(isSideNavCollapsed);
+  }
+}
