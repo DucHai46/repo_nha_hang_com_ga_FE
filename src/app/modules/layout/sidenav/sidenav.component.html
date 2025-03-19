@@ -1,13 +1,18 @@
-<div class="sidenav">
-    <div class="logo-container">
-        <button class="logo">
+<div class="sidenav" 
+[ngClass]="isSideNavCollapsed() ? 'sidenav-collapsed' : ''"
+>
+    <div class="logo-container" >
+        <button class="logo" (click)="toggleCollapse">
             <i class="fal fa-bars"></i>
         </button>
-        <div class="logo-text">App</div>
-        <button class="btn-close">
-            <i class="fal fa-times close-icon"></i>
-        </button>
-         
+        @if (!isSideNavCollapsed()) {
+            <div class="logo-text">App</div>
+            <button class="btn-close" (click)="closeSidenav">
+                <i class="fal fa-times close-icon"></i>
+            </button>
+             
+        }
+
     </div>
     <div class="sidenav-nav">
         @for (item of items; track $index) {
@@ -17,7 +22,10 @@
                 [routerLinkActiveOptions]="{exact :true}"
                 >
                 <i class="sidenav-link-icon" [class]="item.icon"></i>
-                <span class="sidenav-link-text">{{ item.label }}</span>
+                @if (!isSideNavCollapsed()) {
+                    <span class="sidenav-link-text">{{ item.label }}</span>
+                }
+                
                 </a>
             </li>
         }

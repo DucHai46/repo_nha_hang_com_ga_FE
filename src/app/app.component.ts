@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 
@@ -6,4 +6,10 @@ import { RouterModule } from '@angular/router';
   selector: 'app-root',
   template: '<router-outlet></router-outlet>',
 })
-export class AppComponent {}
+export class AppComponent {
+  isSideNavCollapsed= signal<boolean>(false);
+  
+  changeIsSideNavCollapsed(isSideNavCollapsed: boolean): void {
+    this.isSideNavCollapsed.set(isSideNavCollapsed);
+  }
+}

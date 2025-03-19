@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -10,6 +10,8 @@ import { RouterModule } from '@angular/router';
 
 })
 export class SidenavComponent {
+  isSideNavCollapsed = input.required<boolean>();
+  changeIsSideNavCollapsed = output<boolean>();
   items=[
     {
       routeLink: 'dashboard',
@@ -32,4 +34,10 @@ export class SidenavComponent {
       label : 'Settings'
     },
   ]
+  toggleCollapse(): void{
+    this.changeIsSideNavCollapsed.emit(!this.isSideNavCollapsed());
+  }
+  closeSidenav(): void{
+    this.changeIsSideNavCollapsed.emit(true);
+  }
 }
