@@ -7,7 +7,7 @@ import {MenuComponent} from "./menu/menu.component";
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MonanComponent } from './menu/monan/monan.component';
 import { MainComponent } from './main/main.component';
-import { DanhmucnguyenlieuComponent } from './danhmucnguyenlieu/danhmucnguyenlieu.component';
+import { DanhmucnguyenlieuComponent } from './menu/danhmucnguyenlieu/danhmucnguyenlieu.component';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({

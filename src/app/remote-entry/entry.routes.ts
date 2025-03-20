@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 import { RemoteEntryComponent } from './entry.component';
 import { MonanComponent } from '../modules/layout/menu/monan/monan.component';
 import { MainComponent } from '../modules/layout/main/main.component';
-import { DanhmucnguyenlieuComponent } from '../modules/layout/danhmucnguyenlieu/danhmucnguyenlieu.component';
+import { DanhmucnguyenlieuComponent } from '../modules/layout/menu/danhmucnguyenlieu/danhmucnguyenlieu.component';
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [

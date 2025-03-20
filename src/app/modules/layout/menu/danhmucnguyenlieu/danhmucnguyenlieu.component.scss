@@ -1,0 +1,99 @@
+@import '../../../../../styles.scss';
+
+// $table-border-color: #ddd;
+// $table-header-bg: navy;
+// $table-header-text: white;
+// $hover-bg: #f2f2f2;
+// $btn-primary-bg: white;
+// $btn-primary-hover: #2563eb;
+// $btn-danger-bg: white;
+// $btn-danger-hover: #b91c1c;
+// $card-bg: white;
+// $shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+
+// .table-container {
+//     max-width: 1000px;
+//     width: 90%;
+//     margin: 10px auto;
+//     background: $card-bg;
+//     padding: 20px;
+//     border-radius: 12px;
+//     box-shadow: $shadow;
+//     text-align: center;
+
+//     .add-btn {
+//         background-color: #3b82f6;
+//         color: white;
+//         border: none;
+//         padding: 10px 15px;
+//         margin-bottom: 10px;
+//         margin-top:20px;
+//         cursor: pointer;
+//         border-radius: 5px;
+
+//         &:hover {
+//             background-color: $btn-primary-hover;
+//         }
+//     }
+
+//     .product-table {
+//         width: 100%;
+//         border-collapse: collapse;
+
+//         th {
+//             padding: 12px 15px;
+//             border: 1px solid $table-border-color;
+//             font-size: 18px;
+//             text-align: center;
+//         }
+//         td {
+//             padding: 12px 15px;
+//             border: 1px solid $table-border-color;
+//             font-size: 18px;
+//             text-align: left;
+//         }
+
+//         thead {
+//             background-color: $table-header-bg;
+//             color: $table-header-text;
+//             font-weight: bold;
+//         }
+
+//         tbody tr:hover {
+//             background-color: $hover-bg;
+//         }
+
+//         .action-buttons {
+//             display: flex;
+//             justify-content: center;
+//             gap: 10px;
+
+//             .edit-btn, .delete-btn {
+//                 border: none;
+//                 padding: 5px 10px;
+//                 margin: 2px;
+//                 cursor: pointer;
+//                 border-radius: 5px;
+//                 font-size: 14px;
+//             }
+
+//             .edit-btn {
+//                 background-color: $btn-primary-bg;
+//                 color: white;
+
+//                 &:hover {
+//                     background-color: $btn-primary-hover;
+//                 }
+//             }
+
+//             .delete-btn {
+//                 background-color: $btn-danger-bg;
+//                 color: white;
+
+//                 &:hover {
+//                     background-color: $btn-danger-hover;
+//                 }
+//             }
+//         }
+//     }
+// }
