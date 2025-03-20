@@ -9,7 +9,15 @@ import { MonanComponent } from './menu/monan/monan.component';
 import { MainComponent } from './main/main.component';
 import { DanhmucnguyenlieuComponent } from './menu/danhmucnguyenlieu/danhmucnguyenlieu.component';
 import { LoginComponent } from './login/login.component';
-
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AddoreditComponent } from './menu/danhmucnguyenlieu/addoredit/addoredit.component';
+import { DanhMucNguyenLieuStore } from './menu/danhmucnguyenlieu/store/danh-muc-nguyen-lieu.store';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog.component';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -17,11 +25,19 @@ import { LoginComponent } from './login/login.component';
     MainComponent,
     MonanComponent,
     DanhmucnguyenlieuComponent,
-    LoginComponent], // Khai báo component
+    LoginComponent,
+    AddoreditComponent,
+    ConfirmationDialogComponent
+  ], // Khai báo component
   imports: [
     CommonModule,
-    RouterModule.forChild(MenuRoutes), // Đăng ký route
+    RouterModule.forChild(MenuRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    // Đăng ký route
   ],
-  exports: [MenuComponent,MainComponent, SidenavComponent]
+  exports: [MenuComponent,MainComponent, SidenavComponent],
+  providers: [DanhMucNguyenLieuStore]
 })
 export class LayoutModule {}

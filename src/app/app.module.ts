@@ -5,6 +5,11 @@ import { AppComponent } from './app.component';
 import {appRoutes} from "./app.routes";
 import { MenuComponent } from './modules/layout/menu/menu.component';
 import { ThongtinchungComponent } from './modules/layout/menu/admin/thongtinchung/thongtinchung.component';
+import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirmation-dialog.component';
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+
 
 @NgModule({
   declarations: [
@@ -12,9 +17,13 @@ import { ThongtinchungComponent } from './modules/layout/menu/admin/thongtinchun
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    NzNotificationModule,
+    RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

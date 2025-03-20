@@ -1,0 +1,13 @@
+<div class="p-5">
+  <h2 class="text-2xl font-bold">Xác nhận</h2>
+  <p>{{ data.message }}</p>
+
+  <div class="flex justify-end gap-2">
+    <button type="button" class="btn cancel-btn" (click)="onCancel()">
+      Hủy
+    </button>
+    <button type="button" class="btn confirm-btn" (click)="onConfirm()">
+      Xác nhận
+    </button>
+  </div>
+</div>
