@@ -7,13 +7,17 @@ import {MenuComponent} from "./menu/menu.component";
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MonanComponent } from './menu/monan/monan.component';
 import { MainComponent } from './main/main.component';
+import { DanhmucnguyenlieuComponent } from './danhmucnguyenlieu/danhmucnguyenlieu.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
     SidenavComponent,
     MainComponent,
-    MonanComponent], // Khai báo component
+    MonanComponent,
+    DanhmucnguyenlieuComponent,
+    LoginComponent], // Khai báo component
   imports: [
     CommonModule,
     RouterModule.forChild(MenuRoutes), // Đăng ký route

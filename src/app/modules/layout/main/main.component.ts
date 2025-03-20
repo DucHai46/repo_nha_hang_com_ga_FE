@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-main',
-  // standalone: true,
-  // imports: [RouterOutlet],
   templateUrl: './main.component.html',
-
-  styleUrl: './main.component.scss'
+  styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
+  @Input() isLeftSidebarCollapsed!: boolean;
+  @Input() screenWidth!: number;
 
+  // Getter sẽ tự cập nhật khi giá trị thay đổi
+  get sizeClass(): string {
+    return this.isLeftSidebarCollapsed ? '' : this.screenWidth > 768 ? 'body-trimmed' : 'body-md-screen';
+  }
 }

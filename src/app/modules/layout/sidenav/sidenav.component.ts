@@ -19,9 +19,9 @@ export class SidenavComponent {
       label : 'Dashboard'
     },
     {
-      routeLink: 'main/products',
+      routeLink: 'main/danhmucnguyenlieu',
       icon : 'fal fa-box-open',
-      label : 'Products'
+      label : 'DM Nguyen Lieu'
     },
     {
       routeLink: 'main/pages',

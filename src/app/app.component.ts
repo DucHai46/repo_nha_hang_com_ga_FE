@@ -7,9 +7,9 @@ import { RouterModule } from '@angular/router';
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent {
-  isSideNavCollapsed= signal<boolean>(false);
+  // isSideNavCollapsed= signal<boolean>(false);
   
-  changeIsSideNavCollapsed(isSideNavCollapsed: boolean): void {
-    this.isSideNavCollapsed.set(isSideNavCollapsed);
-  }
+  // changeIsSideNavCollapsed(isSideNavCollapsed: boolean): void {
+  //   this.isSideNavCollapsed.set(isSideNavCollapsed);
+  // }
 }
