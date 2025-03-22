@@ -24,9 +24,9 @@ export class SidenavComponent {
       label : 'DM Nguyen Lieu'
     },
     {
-      routeLink: 'main/pages',
-      icon : 'fal fa-file',
-      label : 'Pages'
+      routeLink: 'main/danhmucmonan',
+      icon : 'fal fa-box-open',
+      label : 'DM Mon An'
     },
     {
       routeLink: 'main/settings',

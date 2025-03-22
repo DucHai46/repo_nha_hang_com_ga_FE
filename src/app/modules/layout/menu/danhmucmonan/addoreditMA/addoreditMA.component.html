@@ -1,0 +1,45 @@
+<div class="p-5">
+  <h2 class="text-2xl font-bold mb-5">
+    {{ isEditMode ? "Sửa Nguyên Liệu" : "Thêm Nguyên Liệu" }}
+  </h2>
+  <form>
+    <div class="form-group">
+      <label for="materialCode">Mã Nguyên Liệu:</label>
+      <input
+        type="text"
+        id="materialCode"
+        [(ngModel)]="formData.ma"
+        name="ma"
+        placeholder="Nhập mã nguyên liệu..."
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="materialName">Tên Nguyên Liệu:</label>
+      <input
+        type="text"
+        id="materialName"
+        [(ngModel)]="formData.ten"
+        name="ten"
+        placeholder="Nhập tên nguyên liệu..."
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Mô Tả:</label>
+      <textarea
+        id="description"
+        [(ngModel)]="formData.moTa"
+        name="moTa"
+        placeholder="Nhập mô tả..."
+      ></textarea>
+    </div>
+
+    <div class="flex justify-end gap-2">
+      <button type="button" class="btn cancel-btn" (click)="onCancel()">
+        Hủy
+      </button>
+      <button type="button" class="btn save-btn" (click)="onSave()">Lưu</button>
+    </div>
+  </form>
+</div>

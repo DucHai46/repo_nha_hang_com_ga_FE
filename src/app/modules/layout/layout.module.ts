@@ -18,6 +18,10 @@ import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/conf
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { DanhmucmonanComponent } from './menu/danhmucmonan/danhmucmonan.component';
+import { AddoreditMAComponent } from './menu/danhmucmonan/addoreditMA/addoreditMA.component';
+import { DanhMucMonAnStore } from './menu/danhmucmonan/store/danh-muc-mon-an.store';
+
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -27,7 +31,9 @@ import { BrowserModule } from '@angular/platform-browser';
     DanhmucnguyenlieuComponent,
     LoginComponent,
     AddoreditComponent,
-    ConfirmationDialogComponent
+    AddoreditMAComponent,
+    ConfirmationDialogComponent,
+    DanhmucmonanComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -38,6 +44,6 @@ import { BrowserModule } from '@angular/platform-browser';
     // Đăng ký route
   ],
   exports: [MenuComponent,MainComponent, SidenavComponent],
-  providers: [DanhMucNguyenLieuStore]
+  providers: [DanhMucNguyenLieuStore,DanhMucMonAnStore]
 })
 export class LayoutModule {}
