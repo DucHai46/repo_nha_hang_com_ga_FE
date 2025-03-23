@@ -2,22 +2,23 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-addoredit-ma',
-  templateUrl: './addoreditMA.component.html',
-  styleUrl: './addoreditMA.component.scss'
+  selector: 'app-addoredit-loai-nl',
+  templateUrl: './addoreditLoaiNL.component.html',
+  styleUrl: './addoreditLoaiNL.component.scss'
 })
-export class AddoreditMAComponent {
+export class AddoreditLoaiNLComponent {
 // Form data model
   formData = {
     ma: '',
     ten: '',
     moTa: '',
+    danhMuc: ''
   };
 
   isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
 
   constructor(
-    public dialogRef: MatDialogRef<AddoreditMAComponent>,
+    public dialogRef: MatDialogRef<AddoreditLoaiNLComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if (data && data.item) {
