@@ -24,10 +24,14 @@
                 <i class="sidenav-link-icon" [class]="item.icon"></i>
                 @if (!isSideNavCollapsed()) {
                     <span class="sidenav-link-text">{{ item.label }}</span>
-                }
-                
+                }       
                 </a>
             </li>
         }
     </div>
+    <div class="sidenav-footer" [routerLink]="['/main/login']">
+        <button class="logout-button">
+          <i class="fal fa-sign-out"></i>
+        </button>
+    </div>  
 </div>

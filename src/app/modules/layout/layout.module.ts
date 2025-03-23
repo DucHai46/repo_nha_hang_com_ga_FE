@@ -21,7 +21,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DanhmucmonanComponent } from './menu/danhmucmonan/danhmucmonan.component';
 import { AddoreditMAComponent } from './menu/danhmucmonan/addoreditMA/addoreditMA.component';
 import { DanhMucMonAnStore } from './menu/danhmucmonan/store/danh-muc-mon-an.store';
-
+import { LoainguyenlieuComponent } from './menu/loainguyenlieu/loainguyenlieu.component';
+import { AddoreditLoaiNLComponent } from './menu/loainguyenlieu/addoreditLoaiNL/addoreditLoaiNL.component';
+import { LoaiNguyenLieuStore } from './menu/loainguyenlieu/store/loai-nguyen-lieu.store';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -32,8 +34,10 @@ import { DanhMucMonAnStore } from './menu/danhmucmonan/store/danh-muc-mon-an.sto
     LoginComponent,
     AddoreditComponent,
     AddoreditMAComponent,
+    AddoreditLoaiNLComponent,
     ConfirmationDialogComponent,
-    DanhmucmonanComponent
+    DanhmucmonanComponent,
+    LoainguyenlieuComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -44,6 +48,6 @@ import { DanhMucMonAnStore } from './menu/danhmucmonan/store/danh-muc-mon-an.sto
     // Đăng ký route
   ],
   exports: [MenuComponent,MainComponent, SidenavComponent],
-  providers: [DanhMucNguyenLieuStore,DanhMucMonAnStore]
+  providers: [DanhMucNguyenLieuStore,DanhMucMonAnStore,LoaiNguyenLieuStore]
 })
 export class LayoutModule {}

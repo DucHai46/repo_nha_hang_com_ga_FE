@@ -1,6 +1,6 @@
 <div class="p-5">
   <h2 class="text-2xl font-bold mb-5">
-    {{ isEditMode ? "Sửa Danh Mục" : "Thêm Danh Mục" }}
+    {{ isEditMode ? "Sửa Loại Nguyên Liệu" : "Thêm Loại Nguyên Liệu" }}
   </h2>
   <form>
     <div class="form-group">
@@ -33,6 +33,19 @@
         name="moTa"
         placeholder="Nhập mô tả..."
       ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="category">Danh Mục Nguyên Liệu:</label>
+      <select
+        id="category"
+        [(ngModel)]="formData.danhMuc"
+        name="danhMuc"
+        class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+      >
+        <option class="bg-white">Thực phẩm tươi sống</option>
+        <option class="bg-white">Gia vị</option>
+        <option class="bg-white">Đồ uống</option>
+      </select>
     </div>
 
     <div class="flex justify-end gap-2">

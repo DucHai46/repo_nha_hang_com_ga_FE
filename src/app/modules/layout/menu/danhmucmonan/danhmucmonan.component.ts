@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { DanhMucNguyenLieuStore } from '../danhmucnguyenlieu/store/danh-muc-nguyen-lieu.store';
+import { DanhMucMonAnStore } from '../danhmucmonan/store/danh-muc-mon-an.store';
 import { AddoreditMAComponent } from './addoreditMA/addoreditMA.component';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 
@@ -11,7 +11,7 @@ import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialo
   styleUrl: './danhmucmonan.component.scss'
 })
 export class DanhmucmonanComponent implements OnInit {
-  constructor(private store: DanhMucNguyenLieuStore, private dialog: MatDialog, private notification: NzNotificationService) {}
+  constructor(private store: DanhMucMonAnStore, private dialog: MatDialog, private notification: NzNotificationService) {}
   items = [
     { ma: 'DM-001', ten: 'Thực phẩm tươi sống', moTa: 'Bao gồm thịt, cá, rau củ quả' },
     { ma: 'DM-002', ten: 'Gia vị', moTa: 'Muối, đường, tiêu,...' },

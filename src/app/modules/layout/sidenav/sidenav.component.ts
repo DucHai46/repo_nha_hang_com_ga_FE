@@ -21,18 +21,19 @@ export class SidenavComponent {
     {
       routeLink: 'main/danhmucnguyenlieu',
       icon : 'fal fa-box-open',
-      label : 'DM Nguyen Lieu'
+      label : 'DM nguyên liệu'
     },
     {
       routeLink: 'main/danhmucmonan',
       icon : 'fal fa-box-open',
-      label : 'DM Mon An'
+      label : 'DM món ăn'
     },
     {
-      routeLink: 'main/settings',
-      icon : 'fal fa-cog',
-      label : 'Settings'
+      routeLink: 'main/loainguyenlieu',
+      icon : 'fal fa-box-open',
+      label : 'Loại nguyên liệu'
     },
+    
   ]
   toggleCollapse(): void{
     this.changeIsSideNavCollapsed.emit(!this.isSideNavCollapsed());
