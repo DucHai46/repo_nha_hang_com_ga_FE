@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  selector: 'app-menugoimon',
+  templateUrl: './menugoimon.component.html',
+  styleUrl: './menugoimon.component.scss'
 })
-export class LoginComponent implements OnInit {
+export class MenugoimonComponent implements OnInit {
   // Danh sách URL các background hình ảnh
   backgrounds: string[] = [
     'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg',

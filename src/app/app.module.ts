@@ -8,7 +8,6 @@ import { ThongtinchungComponent } from './modules/layout/menu/admin/thongtinchun
 import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirmation-dialog.component';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 
 @NgModule({
@@ -18,7 +17,6 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    NzNotificationModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

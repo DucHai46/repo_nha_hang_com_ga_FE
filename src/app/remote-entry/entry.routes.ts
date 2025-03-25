@@ -6,6 +6,7 @@ import { DanhmucnguyenlieuComponent } from '../modules/layout/menu/danhmucnguyen
 import { DanhmucmonanComponent } from '../modules/layout/menu/danhmucmonan/danhmucmonan.component';
 import { LoainguyenlieuComponent } from '../modules/layout/menu/loainguyenlieu/loainguyenlieu.component';
 import { LoginComponent } from '../modules/layout/login/login.component';
+import { MenugoimonComponent } from '../modules/layout/menugoimon/menugoimon.component';
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [
@@ -15,7 +16,6 @@ export const remoteRoutes: Route[] = [
           { path: 'danhmucnguyenlieu', component: DanhmucnguyenlieuComponent },
           { path: 'danhmucmonan', component: DanhmucmonanComponent },
           { path: 'loainguyenlieu', component: LoainguyenlieuComponent },
-          { path: 'login', component: LoginComponent },
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]
       },
@@ -24,5 +24,9 @@ export const remoteRoutes: Route[] = [
   {
     path: 'admin',
     loadChildren: () => import('../modules/layout/layout.module').then((m) => m.LayoutModule),
+  },
+  {
+    path: 'menugoimon',
+    component: MenugoimonComponent,
   },
 ];
