@@ -17,8 +17,7 @@
   <div class="sidenav-nav">
     @for (item of items; track $index) {
     <li class="sidenav-nav-item">
-      <a
-        class="sidenav-nav-link"
+                <a class="sidenav-nav-link"
         [routerLink]="item.routeLink"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"

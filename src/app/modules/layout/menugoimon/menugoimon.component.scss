@@ -1,6 +1,80 @@
-#background-section {
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    transition: background-image 1s ease-in-out;  /* Hiệu ứng chuyển hình */
-  }
+::-webkit-scrollbar {
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d1d1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8f8f8;
+}
+
+/* Sticky cho thanh tìm kiếm */
+.sticky-wrapper {
+  position: relative;
+  z-index: 10;
+}
+
+.sticky-wrapper.fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sticky-danh-muc {
+  position: relative;
+  z-index: 9;
+}
+
+.sticky-danh-muc.fixed {
+  position: fixed;
+  top: 58px; /* Đảm bảo luôn nằm dưới thanh tìm kiếm */
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sticky-spacer {
+  height: 0;
+  transition: height 0.3s ease; /* Thêm mượt mà */
+}
+
+.sticky-wrapper.fixed + .sticky-spacer {
+  height: 58px; /* Chiều cao khi thanh tìm kiếm sticky */
+}
+
+.sticky-danh-muc.fixed + .sticky-spacer {
+  height: 120px; /* Chiều cao bù lại khi sticky hoạt động */
+}
+
+.fixed {
+  position: fixed; /* Giữ cố định khi cuộn */
+}
+.bottom-0 {
+  bottom: 0; /* Gắn ở cuối màn hình */
+}
+.left-0 {
+  left: 0;
+}
+.w-full {
+  width: 100%; /* Chiều rộng 100% */
+}
+.content-wrapper {
+  padding-bottom: 40px; /* Bù trừ chiều cao cho thanh tổng tiền */
+}
+.fixed-bottom-bar {
+  padding: 8px 0;  /* Giảm chiều cao padding từ py-4 thành py-2 */
+  font-size: 14px;  /* Giảm font-size để nội dung nhỏ gọn hơn */
+}
+
+.fixed-bottom-bar button {
+  padding: 4px 8px;  /* Giảm padding của nút xác nhận */
+  font-size: 14px;   /* Giảm cỡ chữ của nút */
+}
+.category-title {
+  margin-top: 20px;  /* Khoảng cách giữa thanh danh mục và tiêu đề "Món mới" */
+}
