@@ -7,7 +7,7 @@ export const appRoutes: Route[] = [
     component: LoginComponent,
   },
   {
-    path: 'main',
+    path: '',
     loadChildren: () =>
       import('./remote-entry/entry.module').then((m) => m.RemoteEntryModule),
   },

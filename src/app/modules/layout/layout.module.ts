@@ -25,6 +25,8 @@ import { LoainguyenlieuComponent } from './menu/loainguyenlieu/loainguyenlieu.co
 import { AddoreditLoaiNLComponent } from './menu/loainguyenlieu/addoreditLoaiNL/addoreditLoaiNL.component';
 import { LoaiNguyenLieuStore } from './menu/loainguyenlieu/store/loai-nguyen-lieu.store';
 import { MenugoimonComponent } from './menugoimon/menugoimon.component';
+import { DanhmucmonanService } from './menu/danhmucmonan/services/danhmucmonan.service';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -47,9 +49,15 @@ import { MenugoimonComponent } from './menugoimon/menugoimon.component';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    HttpClientModule,
     // Đăng ký route
   ],
   exports: [MenuComponent,MainComponent, SidenavComponent,LoginComponent,MenugoimonComponent],
-  providers: [DanhMucNguyenLieuStore,DanhMucMonAnStore,LoaiNguyenLieuStore]
+  providers: [
+    DanhMucNguyenLieuStore,
+    DanhMucMonAnStore,
+    LoaiNguyenLieuStore,
+    DanhmucmonanService
+  ]
 })
 export class LayoutModule {}

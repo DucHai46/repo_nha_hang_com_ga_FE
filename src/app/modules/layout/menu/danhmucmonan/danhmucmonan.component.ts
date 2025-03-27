@@ -4,35 +4,42 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { DanhMucMonAnStore } from '../danhmucmonan/store/danh-muc-mon-an.store';
 import { AddoreditMAComponent } from './addoreditMA/addoreditMA.component';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
-
+import { DanhmucmonanService } from './services/danhmucmonan.service';
 @Component({
   selector: 'app-danhmucmonan',
   templateUrl: './danhmucmonan.component.html',
   styleUrl: './danhmucmonan.component.scss'
 })
 export class DanhmucmonanComponent implements OnInit {
-  constructor(private store: DanhMucMonAnStore, private dialog: MatDialog, private notification: NzNotificationService) {}
-  items = [
-    { ma: 'DM-001', ten: 'Thực phẩm tươi sống', moTa: 'Bao gồm thịt, cá, rau củ quả' },
-    { ma: 'DM-002', ten: 'Gia vị', moTa: 'Muối, đường, tiêu,...' },
-    { ma: 'DM-003', ten: 'Đồ uống', moTa: 'Nước ngọt, trà, cà phê, nước ép' }
-  ];
+  constructor(private store: DanhMucMonAnStore, private dialog: MatDialog, private notification: NzNotificationService, private danhmucmonanService: DanhmucmonanService) {}
+  danhMucMonAnPaging: any[] = [];
   itemsSearch: any[] = [];
   ngOnInit(): void {
-    this.itemsSearch = this.items;
-    this.store.setItems$(this.items);  
+    this.search();
+    this.store.setItems$(this.danhMucMonAnPaging);  
   }
   searchForm: any = {
-    ma: '',
-    ten: ''
+    tenDanhMuc: '',
   };
   search(){
-    this.itemsSearch = this.items.filter(item => item.ma.includes(this.searchForm.ma) && item.ten.includes(this.searchForm.ten));
+    this.searchForm.isPaging = true;
+    this.searchForm.PageNumber = 1;
+    this.searchForm.PageSize = 20;
+    this.danhmucmonanService.getDanhMucMonAn(this.searchForm).subscribe(
+      {
+        next: (res: any) => {
+          this.danhMucMonAnPaging = res.data.data;
+        },
+        error: (err: any) => {
+          alert('Lấy dữ liệu thất bại');
+        }
+      }
+    )
   }
+
   reset(){
-    this.itemsSearch = this.items;
-    this.searchForm.ma = '';
-    this.searchForm.ten = '';
+    this.searchForm.tenDanhMuc = '';
+    this.search()
   }
   openAddPopup(): void {
     const dialogRef = this.dialog.open(AddoreditMAComponent, {
@@ -41,9 +48,24 @@ export class DanhmucmonanComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Thêm mới:', result);
-        this.items.push(result); // Thêm vào danh sách
-        this.itemsSearch = this.items;
+        console.log(result);
+        this.danhmucmonanService.addDanhMucMonAn(result).subscribe(
+          {
+            next: (res: any) => {
+              if (res.data) {
+                // alert('Thêm mới thành công');
+                this.searchForm.tenDanhMuc = '';
+                this.search();
+              }
+              else{
+                alert('Thêm mới thất bại');
+              }
+            },
+            error: (err: any) => {
+              alert('Thêm mới thất bại');
+            }
+          }
+        )
         // this.notification.success(
         //   'Thành công', // Tiêu đề
         //   'Them moi thanh cong', // Nội dung
@@ -54,6 +76,7 @@ export class DanhmucmonanComponent implements OnInit {
         // );
       }
       else{
+        alert('Thêm mới thất bại');
         // this.notification.error(
         //   'Thành công', // Tiêu đề
         //   'Them moi that bai', // Nội dung
@@ -74,39 +97,51 @@ export class DanhmucmonanComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Sửa:', result);
-        const index = this.items.findIndex((m) => m.ma === item.ma);
-        if (index !== -1) {
-          this.items[index] = result; // Cập nhật nguyên liệu trong danh sách
-          this.itemsSearch = this.items;
-          // this.notification.create(
-          //   'success',
-          //   'Thành công!',
-          //   `Lưu dữ liệu thành công`, {
-          //   nzClass: 'vnpt-qhkh-notification-success',
-          // });
-        }
-        else{
-          // this.notification.create(
-          //   'error',
-          //   'Thành công!',
-          //   `Lưu dữ liệu thất bại`, {
-          //   nzClass: 'vnpt-qhkh-notification-error',
-          // });
-        }
+        this.danhmucmonanService.updateDanhMucMonAn(item.id, result).subscribe(
+          {
+            next: (res: any) => {
+              if(res.data){
+                this.search();
+              }
+              else{
+                alert('Sửa thất bại');
+              }
+            },
+            error: (err: any) => {
+              alert('Sửa thất bại');
+            }
+          }
+        )
+        // const index = this.danhMucMonAnPaging.findIndex((m) => m.ma === item.ma);
+        // if (index !== -1) {
+          
+        // }
+        // else{
+        //   // this.notification.create(
+        //   //   'error',
+        //   //   'Thành công!',
+        //   //   `Lưu dữ liệu thất bại`, {
+        //   //   nzClass: 'vnpt-qhkh-notification-error',
+        //   // });
+        // }
       }
     });
   }
    openDeletePopup(item: any): void {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         width: '400px',
-        data: { message: `Bạn có chắc chắn muốn xóa "${item.ten}" không?` },
+        data: { message: `Bạn có chắc chắn muốn xóa "${item.tenDanhMuc}" không?` },
       });
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          console.log('Xóa:', item);
-          this.items = this.items.filter((m) => m.ma !== item.ma); // Xóa khỏi danh sách
-          this.itemsSearch = this.items;
+          this.danhmucmonanService.deleteDanhMucMonAn(item.id).subscribe(
+            {
+              next: (res: any) => {
+                this.search();
+              }
+            }
+          )
           // this.notification.create(
           //   'success',
           //   'Thành công!',
