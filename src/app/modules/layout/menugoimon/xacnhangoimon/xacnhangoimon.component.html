@@ -28,13 +28,13 @@
             <input type="text" class="note-input" placeholder="Bạn muốn nhắn nhủ gì?" [(ngModel)]="item.ghiChu" />
           </div>
         </div>
-      
         <div class="total-price">
-          <p class="total-text">Tổng tiền: {{ tinhTongTien() | number }} VND</p>
+          <p class="total-text"></p>
         </div>
     </div>
-    <div *ngIf="selectedItemsMA.length > 0" class="sticky-footer">
-        <button class="btn-confirm" >Xác nhận gửi yêu cầu gọi món</button>
+    <div *ngIf="selectedItemsMA.length > 0"class="fixed-bottom-bar fixed bottom-0 left-0 w-full bg-blue-500 text-white text-center shadow-lg">
+      <span  class="text-lg font-bold">Tổng tiền: {{ tinhTongTien() | number }} VND</span>
+      <button class="ml-4 bg-white text-blue-500 rounded-lg font-bold">Xác nhận</button>
     </div>
 
     <ng-template #emptyCart>
