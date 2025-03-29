@@ -1,0 +1,44 @@
+<div class="xac-nhan-container">
+    <div class="header">
+      <button class="btn-back" (click)="troVeMenugoimon()">
+        <i class="fal fa-arrow-left text-xl text-blue-500"></i>
+      </button>
+      <h3 class="title">Các món đang chọn</h3>
+      <button class="btn-clear-cart" (click)="xoaTatCa()">Xóa tất cả</button>
+    </div>
+  
+    <div *ngIf="selectedItemsMA.length > 0; else emptyCart">
+        <div class="selected-item" *ngFor="let item of selectedItemsMA">
+          <div class="item-container">
+            <img [src]="item.hinhAnh" alt="{{ item.ten }}" class="item-image" />
+            <div class="item-details">
+              <p class="item-name">{{ item.ten }}</p>
+              <p class="item-price">{{ item.gia | number }} VND</p>
+            </div>
+      
+            <div class="item-quantity">
+              <button class="btn-quantity" (click)="giamSoLuong(item.ma)">-</button>
+              <span>{{ item.soLuong }}</span>
+              <button class="btn-quantity" (click)="tangSoLuong(item.ma)">+</button>
+            </div>
+          </div>
+      
+          <!-- Thêm dòng input nhắn nhủ cho mỗi món -->
+          <div class="note-container">
+            <input type="text" class="note-input" placeholder="Bạn muốn nhắn nhủ gì?" [(ngModel)]="item.ghiChu" />
+          </div>
+        </div>
+      
+        <div class="total-price">
+          <p class="total-text">Tổng tiền: {{ tinhTongTien() | number }} VND</p>
+        </div>
+    </div>
+    <div *ngIf="selectedItemsMA.length > 0" class="sticky-footer">
+        <button class="btn-confirm" >Xác nhận gửi yêu cầu gọi món</button>
+    </div>
+
+    <ng-template #emptyCart>
+      <p>Không có món ăn nào được chọn!</p>
+    </ng-template>
+</div>
+  

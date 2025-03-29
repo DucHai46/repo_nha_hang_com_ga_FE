@@ -63,7 +63,7 @@
 <!-- Thanh tổng tiền, chỉ hiển thị khi có ít nhất 1 món -->
 <div *ngIf="coMonAnDuocChon()" class="fixed-bottom-bar fixed bottom-0 left-0 w-full bg-blue-500 text-white text-center shadow-lg">
   <span class="text-lg font-bold">Tổng tiền: {{ tinhTongTien() | number }} VND</span>
-  <button class="ml-4 bg-white text-blue-500 rounded-lg font-bold">Xác nhận</button>
+  <button class="ml-4 bg-white text-blue-500 rounded-lg font-bold" (click)="chuyenSangXacNhan()">Xác nhận</button>
 </div>
 
 

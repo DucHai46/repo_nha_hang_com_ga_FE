@@ -1,11 +1,13 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-menugoimon',
   templateUrl: './menugoimon.component.html',
   styleUrls: ['./menugoimon.component.scss'],
 })
-export class MenugoimonComponent {
+export class MenugoimonComponent implements OnInit {
 
   itemsDanhMuc = [
     { ma: 'DM-001', ten: 'Món mới' },
@@ -52,7 +54,7 @@ export class MenugoimonComponent {
     { ma: 'MON-016', ten: 'Combo 2 người', hinhAnh: 'https://via.placeholder.com/150', gia: 160000, soLuong: 0, danhMuc: 'DM-003' },
     
     // Món mới
-    { ma: 'MON-017', ten: 'Lẩu Thái', hinhAnh: 'https://via.placeholder.com/150', gia: 150000, soLuong: 0, danhMuc: 'DM-001' },
+    { ma: 'MON-017', ten: 'Lẩu Thái', hinhAnh: 'https://img.pikbest.com/png-images/qiantu/hand-drawn-cute-french-fries-cartoon-character-vector-illustration_2528693.png!sw800', gia: 150000, soLuong: 0, danhMuc: 'DM-001' },
     { ma: 'MON-018', ten: 'Gà nướng', hinhAnh: 'https://via.placeholder.com/150', gia: 120000, soLuong: 0, danhMuc: 'DM-001' },
     
     // Rau
@@ -63,11 +65,37 @@ export class MenugoimonComponent {
     { ma: 'MON-021', ten: 'Cơm trắng', hinhAnh: 'https://via.placeholder.com/150', gia: 10000, soLuong: 0, danhMuc: 'DM-014' },
     { ma: 'MON-022', ten: 'Trứng ốp la', hinhAnh: 'https://via.placeholder.com/150', gia: 15000, soLuong: 0, danhMuc: 'DM-014' }
 ];
+  selectedItemsMA: any[] = [];
   
+  constructor(public router: Router) {}
+  ngOnInit() {
+    const updatedSelectedItems = history.state?.updatedSelectedItems;
+    if (updatedSelectedItems) {
+      this.capNhatSoLuongMonAn(updatedSelectedItems);
+      this.selectedItemsMA = updatedSelectedItems.filter((item: { soLuong: number; }) => item.soLuong > 0);
+    }
+  }
+
+  // Cập nhật số lượng món từ selectedItemsMA vào itemsMonAn chính
+  capNhatSoLuongMonAn(updatedSelectedItems: any[]) {
+    updatedSelectedItems.forEach((updatedItem) => {
+      const item = this.itemsMonAn.find((mon) => mon.ma === updatedItem.ma);
+      if (item) item.soLuong = updatedItem.soLuong;
+    });
+  }
 
   // Lọc món ăn theo mã danh mục
   getMonAnTheoDanhMuc(maDanhMuc: string) {
     return this.itemsMonAn.filter((mon) => mon.danhMuc === maDanhMuc);
+  }
+  updateSelectedItemsMA(item: any) {
+    const index = this.selectedItemsMA.findIndex((mon) => mon.ma === item.ma);
+    if (index >= 0) {
+      this.selectedItemsMA[index].soLuong = item.soLuong;
+    } else if (item.soLuong > 0) {
+      this.selectedItemsMA.push(item);
+    }
+    this.selectedItemsMA = this.selectedItemsMA.filter((mon) => mon.soLuong > 0);
   }
 
   // Hàm hiển thị nút tăng/giảm khi người dùng nhấn "+
@@ -77,6 +105,7 @@ export class MenugoimonComponent {
     const item = this.itemsMonAn.find((mon: any) => mon.ma === ma);
     if (item) {
       item.soLuong += 1;  // Tăng số lượng
+      this.updateSelectedItemsMA(item);  // Cập nhật danh sách món đã chọn
       console.log('Tăng số lượng:', item.soLuong);
     }
   }
@@ -85,10 +114,11 @@ export class MenugoimonComponent {
     const item = this.itemsMonAn.find((mon: any) => mon.ma === ma);
     if (item) {
       if (item.soLuong > 1) {
-        item.soLuong -= 1;  // Giảm số lượng nếu số lượng > 1
+        item.soLuong -= 1;
       } else {
-        item.soLuong = 0;  // Đặt về 0 và giao diện sẽ tự động ẩn
+        item.soLuong = 0;
       }
+      this.updateSelectedItemsMA(item);  // Cập nhật danh sách món đã chọn
       console.log('Giảm số lượng:', item.soLuong);
     }
   }
@@ -99,12 +129,18 @@ export class MenugoimonComponent {
       .reduce((tong, mon) => tong + mon.gia * mon.soLuong, 0); // Tính tổng tiền
   }
 
+  
   // Hàm kiểm tra xem có món nào đang được chọn hay không
   coMonAnDuocChon() {
     return this.itemsMonAn.some((mon) => mon.soLuong > 0);
   }
-
+  // constructor(public router: Router) {}
   
+  chuyenSangXacNhan() {
+    this.router.navigate(['/xacnhangoimon'], {
+      state: { selectedItemsMA: this.selectedItemsMA }, // Truyền selectedItemsMA
+    });
+  }
   
 
   // Hàm cuộn đến danh mục tương ứng khi click vào button danh mục

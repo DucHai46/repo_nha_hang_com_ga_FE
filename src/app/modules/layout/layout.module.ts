@@ -27,6 +27,7 @@ import { LoaiNguyenLieuStore } from './menu/loainguyenlieu/store/loai-nguyen-lie
 import { MenugoimonComponent } from './menugoimon/menugoimon.component';
 import { DanhmucmonanService } from './menu/danhmucmonan/services/danhmucmonan.service';
 import { HttpClientModule } from '@angular/common/http';
+import { XacnhangoimonComponent } from './menugoimon/xacnhangoimon/xacnhangoimon.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -41,7 +42,8 @@ import { HttpClientModule } from '@angular/common/http';
     ConfirmationDialogComponent,
     DanhmucmonanComponent,
     LoainguyenlieuComponent,
-    MenugoimonComponent
+    MenugoimonComponent,
+    XacnhangoimonComponent
   ], // Khai báo component
   imports: [
     CommonModule,

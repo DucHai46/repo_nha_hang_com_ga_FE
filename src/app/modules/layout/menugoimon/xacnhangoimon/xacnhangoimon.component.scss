@@ -1,0 +1,150 @@
+.xac-nhan-container {
+    padding: 1rem;
+    background-color: #f9f9f9; // Nền sáng dịu nhẹ
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Đổ bóng để tạo chiều sâu
+  
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+  
+      .title {
+        font-size: 1.4rem; // Tăng nhẹ kích thước chữ
+        font-weight: bold;
+      }
+  
+      .btn-back,
+      .btn-clear-cart {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ff5252; // Đỏ nổi bật
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.2s;
+  
+        &:hover {
+          background-color: rgba(255, 82, 82, 0.1); // Hiệu ứng hover
+        }
+      }
+    }
+  
+    .selected-item {
+      background-color: #fff;
+      padding: 0.7rem;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column; // Để note-text nằm dưới phần item
+  
+      .item-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+  
+        .item-image {
+          width: 50px;
+          height: 50px;
+          border-radius: 8px;
+          margin-right: 10px;
+          object-fit: cover; // Giúp ảnh không bị méo
+        }
+  
+        .item-details {
+          display: flex;
+          flex-direction: column;
+  
+          .item-name {
+            font-weight: bold;
+            font-size: 1rem;
+          }
+  
+          .item-price {
+            color: #757575; // Màu ghi cho giá
+            font-size: 0.9rem;
+          }
+        }
+  
+        .item-quantity {
+          display: flex;
+          align-items: center;
+  
+          .btn-quantity {
+            border: none;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+  
+            &:hover {
+              background-color: #e0e0e0; // Màu hover cho nút
+            }
+          }
+  
+          span {
+            margin: 0 0.5rem;
+            font-weight: bold;
+            font-size: 1rem;
+          }
+        }
+      }
+  
+      // Textarea cho nhắn nhủ
+      .note-text {
+        width: 100%;
+        margin-top: 5px;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        resize: none;
+        background-color: #f9f9f9;
+  
+        &:focus {
+          border-color: #4caf50; // Màu nổi bật khi nhập
+          outline: none;
+        }
+      }
+    }
+  
+    .total-price {
+      text-align: right;
+      padding: 1rem 0;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #1f2937; // Màu tối dịu mắt
+    }
+  
+    // Footer sticky với nút xác nhận
+    .sticky-footer {
+      position: sticky;
+      bottom: 0;
+      background-color: #fff;
+      padding: 1rem 0;
+      text-align: center;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  
+      .btn-confirm {
+        background-color: #4caf50; // Xanh lá cho nút chính
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+  
+        &:hover {
+          background-color: #45a049;
+        }
+      }
+    }
+  }
+  
