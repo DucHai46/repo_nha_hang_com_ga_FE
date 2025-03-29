@@ -27,8 +27,7 @@ export class MenugoimonComponent implements OnInit {
   ];
 
   // selectedItem: any = this.itemsDanhMuc[0]; // Mặc định chọn danh mục đầu tiên
-
-  itemsMonAn = [
+  itemsMonAnRoot = [
     // Đồ uống
     { ma: 'MON-001', ten: 'Trà đá', hinhAnh: 'https://product.hstatic.net/200000385717/product/trada_c8f7b50295c5422684059c5d62342e96_1024x1024.jpg', gia: 12000, soLuong: 0, danhMuc: 'DM-002' },
     { ma: 'MON-002', ten: 'Bình trà đá (Lớn)', hinhAnh: 'https://product.hstatic.net/200000385717/product/binhtralon_29662284998a4b4e837c13323ec3f837_1024x1024.jpg', gia: 35000, soLuong: 0, danhMuc: 'DM-002' },
@@ -64,11 +63,14 @@ export class MenugoimonComponent implements OnInit {
     // Gọi thêm
     { ma: 'MON-021', ten: 'Cơm trắng', hinhAnh: 'https://via.placeholder.com/150', gia: 10000, soLuong: 0, danhMuc: 'DM-014' },
     { ma: 'MON-022', ten: 'Trứng ốp la', hinhAnh: 'https://via.placeholder.com/150', gia: 15000, soLuong: 0, danhMuc: 'DM-014' }
-];
+  ];
+
+  itemsMonAn: any[] = [];
   selectedItemsMA: any[] = [];
   
   constructor(public router: Router) {}
   ngOnInit() {
+    this.itemsMonAn = this.itemsMonAnRoot;
     const updatedSelectedItems = history.state?.updatedSelectedItems;
     if (updatedSelectedItems) {
       this.capNhatSoLuongMonAn(updatedSelectedItems);
@@ -198,6 +200,9 @@ export class MenugoimonComponent implements OnInit {
     }
   }
 
-  
-  
+
+  searchMonAn(event: any) {
+    const keyword = event.target.value.toLowerCase();
+    this.itemsMonAn = this.itemsMonAnRoot.filter((mon) => mon.ten.toLowerCase().includes(keyword));
+  }
 }
