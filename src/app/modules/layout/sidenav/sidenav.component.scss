@@ -1,46 +1,49 @@
 .sidenav {
-  background: #012a5b;
-  transition: all 0.5s ease;
   position: fixed;
-  z-index: 1;
   top: 0;
+  left: 0;
+  height: 100%;
   width: 16.5625rem;
-  height: 100vh;
-  box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+  background: #2563eb;
+  z-index: 999;
+  transition: all 0.5s ease;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidenav-collapsed {
   width: 5rem;
 }
 
-.sidenav .logo-container {
+.logo-container {
   display: flex;
   align-items: center;
-  padding: 0.938rem 0.938rem 0 0.938rem;
+  padding: 0.938rem 0.938rem 0.938rem 1.25rem;
   width: 100%;
 }
 
-.sidenav .logo-container .logo {
-  background: #fff;
-  text-align: center;
-  width: 3rem;
-  min-width: 3rem;
-  border-radius: 0.313rem;
-  padding: 0.313rem;
-  font-size: 24px;
-  font-weight: 900;
+.logo {
   cursor: pointer;
+  background: transparent;
   border: none;
+  color: white;
+  font-size: 1.5rem;
+  width: 2rem;
+  min-width: 2rem;
+  text-align: center;
+  margin-right: 1.2rem;
 }
 
-.sidenav .logo-container .logo-text {
-  margin-left: 1.5rem;
-  font-size: 24px;
-  font-weight: 700;
-  color: #fff;
+.logo-text {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
 }
 
-.sidenav .logo-container .btn-close {
+.btn-close {
   margin-left: auto;
   cursor: pointer;
   width: 2rem;
@@ -48,88 +51,119 @@
   border-radius: 50%;
   background-color: transparent;
   border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0 0 0 auto;
+  transition: all 0.5s ease;
 }
 
-.sidenav .logo-container .btn-close .fa-times {
-  color: #fff;
-  font-size: 24px;
+.btn-close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .sidenav-nav {
   list-style: none;
-  padding: 0.938rem;
+  padding: 0.938rem 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: calc(100% - 5.65rem);  // Chiều cao đã giảm để chừa không gian cho nút logout
+  height: calc(100% - 3.65rem);
   cursor: pointer;
+  overflow-y: auto;
 }
 
-.sidenav-nav .sidenav-nav-item {
+.sidenav-nav-item {
   width: 100%;
   margin-bottom: 0.625rem;
 }
 
-.sidenav-nav .sidenav-nav-item .sidenav-nav-link {
+.sidenav-nav-link {
   display: flex;
   align-items: center;
   height: 3rem;
-  color: #f3f3f3;
+  color: #f3f4f6;
   text-decoration: none;
   border-radius: 0.625rem;
   transition: all 0.3s ease;
+  padding: 0 0.625rem;
+  cursor: pointer;
 }
 
-.sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-icon {
+.sidenav-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidenav-nav-link.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidenav-link-icon {
   font-size: 22px;
   width: 2rem;
   min-width: 2rem;
+  margin: 0 0.5rem;
   text-align: center;
-  padding: 12px;
 }
 
-.sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-text {
-  margin-left: 1.5rem;
+.sidenav-link-text {
+  margin-left: 1rem;
 }
-
-.sidenav-nav .sidenav-nav-item:hover .sidenav-nav-link {
-  background-color: #fff;
-  color: #000;
-}
-
-.active {
-  background-color: #fff;
-}
-
-.active .sidenav-link-icon,
-.active .sidenav-link-text {
-  color: #000;
-}
-
 
 .sidenav-footer {
-  position: absolute;     // Cố định vị trí
-  bottom: 10px;           // Canh cách đáy 10px để không bị dính sát
-  width: 100%;            // Để nút nằm chính giữa
-  display: flex;
-  justify-content: center;
-}
-.logout-button {
-  width: 40px;       // Nút logout nhỏ gọn
-  height: 40px;
-  background-color: #ff4d4f;  // Màu đỏ cảnh báo
-  color: white;
-  border: none;
-  border-radius: 50%;   // Tạo hình tròn
-  font-size: 20px;     // Kích thước icon
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: sticky;
+  bottom: 0;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  width: 100%;
+  padding: 0.938rem 0.938rem 0.938rem 1.25rem;
+  margin-top: auto;
+}
+
+.logout-button {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s ease;
 }
 
 .logout-button:hover {
-  background-color: #d9363e;  // Đổi màu khi hover
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+// Styles for submenu
+.submenu {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.submenu-item {
+  height: 2.5rem;
+  font-size: 0.9rem;
+}
+
+// Scrollbar styles
+.sidenav-nav::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidenav-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidenav-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.sidenav-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
