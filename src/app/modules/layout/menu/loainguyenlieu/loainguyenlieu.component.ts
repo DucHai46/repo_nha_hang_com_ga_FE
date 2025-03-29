@@ -13,9 +13,12 @@ import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialo
 export class LoainguyenlieuComponent implements OnInit {
   constructor(private store: LoaiNguyenLieuStore, private dialog: MatDialog, private notification: NzNotificationService) {}
   items = [
-    { ma: 'L-001', ten: 'Thịt heo', moTa: 'Bao gồm thịt, cá, rau củ quả',danhMuc:'Thực phẩm tươi sống' },
-    { ma: 'L-002', ten: 'Đường cát', moTa: 'Muối, đường, tiêu,...',danhMuc:'Gia vị' },
-    { ma: 'L-003', ten: 'Rau cải xanh', moTa: 'Nước ngọt, trà, cà phê, nước ép',danhMuc:'Thực phẩm tươi sống' }
+    { ten: 'Gà ta', moTa: 'Gà thả vườn, thịt chắc và thơm ngon', danhMuc: 'Thịt' },
+    { ten: 'Gà công nghiệp', moTa: 'Gà nuôi công nghiệp, thịt mềm hơn', danhMuc: 'Thịt' },
+    { ten: 'Dưa leo', moTa: 'Dưa chuột tươi, giòn, dùng kèm món ăn', danhMuc: 'Rau củ' },
+    { ten: 'Cà chua', moTa: 'Cà chua tươi, dùng trang trí và ăn kèm', danhMuc: 'Rau củ' },
+    { ten: 'Nước tương đen', moTa: 'Nước tương đặc trưng của Singapore', danhMuc: 'Gia vị và nước chấm' },
+    { ten: 'Tương ớt', moTa: 'Tương ớt cay, dùng làm nước chấm', danhMuc: 'Gia vị và nước chấm' }
   ];
   itemsSearch: any[] = [];
   ngOnInit(): void {
@@ -23,15 +26,13 @@ export class LoainguyenlieuComponent implements OnInit {
     this.store.setItems$(this.items);  
   }
   searchForm: any = {
-    ma: '',
     ten: ''
   };
   search(){
-    this.itemsSearch = this.items.filter(item => item.ma.includes(this.searchForm.ma) && item.ten.includes(this.searchForm.ten));
+    this.itemsSearch = this.items.filter(item => item.ten.includes(this.searchForm.ten));
   }
   reset(){
     this.itemsSearch = this.items;
-    this.searchForm.ma = '';
     this.searchForm.ten = '';
   }
   openAddPopup(): void {
@@ -77,7 +78,7 @@ export class LoainguyenlieuComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           console.log('Sửa:', result);
-          const index = this.items.findIndex((m) => m.ma === item.ma);
+          const index = this.items.findIndex((m) => m.ten === item.ten);
           if (index !== -1) {
             this.items[index] = result; // Cập nhật nguyên liệu trong danh sách
             this.itemsSearch = this.items;
@@ -110,7 +111,7 @@ export class LoainguyenlieuComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           console.log('Xóa:', item);
-          this.items = this.items.filter((m) => m.ma !== item.ma); // Xóa khỏi danh sách
+          this.items = this.items.filter((m) => m.ten !== item.ten); // Xóa khỏi danh sách
           this.itemsSearch = this.items;
           // this.notification.create(
           //   'success',
