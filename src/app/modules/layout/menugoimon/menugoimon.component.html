@@ -37,7 +37,7 @@
   <h2 class="text-xl font-bold mb-2 category-title">{{ category.ten }}</h2>
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    <div *ngFor="let item of getMonAnTheoDanhMuc(category.ma)" class="p-4 bg-white rounded-lg shadow-lg">
+    <div *ngFor="let item of getMonAnTheoDanhMuc(category.ma)" class="p-4 bg-white rounded-lg shadow-lg flex flex-col justify-between">
       <img [src]="item.hinhAnh" alt="{{ item.ten }}" class="rounded-lg w-full h-35 object-cover" />
       <h3 class="mt-2 text-lg font-bold">{{ item.ten }}</h3>
       <p class="text-black-500 font-semibold">{{ item.gia | number }} VND</p>
@@ -46,7 +46,7 @@
       <div class="mt-3">
         <!-- Nếu số lượng là 0, hiện nút "+" -->
         <div *ngIf="item.soLuong === 0">
-          <button (click)="tangSoLuong(item.ma)" class="bg-blue-500 text-white rounded-full p-2 text-lg">+</button>
+          <button (click)="tangSoLuong(item.ma)" class="bg-blue-500 text-white rounded-full p-3 text-lg">+</button>
         </div>
       
         <!-- Nếu số lượng lớn hơn 0, hiện giao diện tăng/giảm -->
