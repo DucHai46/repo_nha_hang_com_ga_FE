@@ -11,16 +11,51 @@
     <button class="btn-close" (click)="closeSidenav()">
       <i class="fal fa-times close-icon"></i>
     </button>
-
     }
   </div>
   <div class="sidenav-nav">
-    @for (item of items; track $index) {
+    @for (item of items; track $index) { @if (item.children) {
     <li class="sidenav-nav-item">
-                <a class="sidenav-nav-link"
+      <div
+        class="sidenav-nav-link flex justify-between"
+        (click)="toggleSubmenu(item)"
+      >
+        <div>
+          <i class="sidenav-link-icon" [class]="item.icon"></i>
+          <span *ngIf="!isSideNavCollapsed()" class="sidenav-link-text">{{
+            item.label
+          }}</span>
+        </div>
+        <i
+          *ngIf="!isSideNavCollapsed()"
+          class="fal"
+          [class.fa-chevron-down]="!item.isOpen"
+          [class.fa-chevron-up]="item.isOpen"
+        ></i>
+      </div>
+      @if (item.isOpen && !isSideNavCollapsed()) {
+      <ul class="submenu">
+        @for (child of item.children; track $index) {
+        <li>
+          <a
+            class="sidenav-nav-link submenu-item"
+            [routerLink]="child.routeLink"
+            routerLinkActive="active"
+          >
+            <i class="sidenav-link-icon" [class]="child.icon"></i>
+            <span class="sidenav-link-text">{{ child.label }}</span>
+          </a>
+        </li>
+        }
+      </ul>
+      }
+    </li>
+    } @else {
+    <li class="sidenav-nav-item">
+      <a
+        class="sidenav-nav-link"
         [routerLink]="item.routeLink"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
       >
         <i class="sidenav-link-icon" [class]="item.icon"></i>
         @if (!isSideNavCollapsed()) {
@@ -28,7 +63,7 @@
         }
       </a>
     </li>
-    }
+    } }
   </div>
   <div class="sidenav-footer" [routerLink]="['']">
     <button class="logout-button">

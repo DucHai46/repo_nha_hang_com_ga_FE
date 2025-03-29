@@ -10,13 +10,13 @@
     <!-- form -->
     <div class="flex flex-row gap-4">
       <div class="flex flex-col gap-2">
-        <label for="searchMa">Tên danh mục</label>
+        <label for="searchTen">Tên danh mục</label>
         <input
           class="border border-gray-300 rounded-md p-2"
-          id="searchMa"
+          id="searchTen"
           [(ngModel)]="searchForm.tenDanhMuc"
           type="text"
-          placeholder="Tìm kiếm"
+          placeholder="Tên danh mục"
         />
       </div>
     </div>
@@ -80,12 +80,8 @@
       </button>
     </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table
-        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-      >
-        <thead
-          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center"
-        >
+      <table class="w-full text-sm text-left rtl:text-right">
+        <thead class="text-xs text-gray-700 uppercase text-center">
           <tr>
             <th scope="col" class="px-6 py-3">STT</th>
             <th scope="col" class="px-6 py-3">Tên danh mục</th>
@@ -95,12 +91,12 @@
         </thead>
         <tbody>
           <tr
-            class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
+            class="border-b dark:border-gray-700 border-gray-200"
             *ngFor="let item of danhMucMonAnPaging; let i = index"
           >
             <td
               scope="row"
-              class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-center"
+              class="px-6 py-4 font-medium whitespace-nowrap text-center"
             >
               {{ i + 1 }}
             </td>
@@ -120,7 +116,23 @@
                 <p
                   class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-800"
                 >
-                  Edit
+                  <svg
+                    class="w-6 h-6 text-blue-600 dark:text-blue-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                    />
+                  </svg>
                 </p>
               </button>
 
@@ -131,7 +143,23 @@
                 <p
                   class="font-medium text-red-600 dark:text-red-500 hover:text-red-800"
                 >
-                  Delete
+                  <svg
+                    class="w-6 h-6 text-red-600 dark:text-red-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                    />
+                  </svg>
                 </p>
               </button>
             </td>
