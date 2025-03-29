@@ -33,12 +33,12 @@
 
 
 <!-- Hiển thị món ăn theo danh mục -->
-<div *ngFor="let category of itemsDanhMuc" id="{{ category.ma }}" class="mb-4 content-wrapper">
+<div *ngFor="let category of itemsDanhMuc" id="{{ category.ma }}" class="mb-4 content-wrapper px-4">
   <h2 class="text-xl font-bold mb-2 category-title">{{ category.ten }}</h2>
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
     <div *ngFor="let item of getMonAnTheoDanhMuc(category.ma)" class="p-4 bg-white rounded-lg shadow-lg">
-      <img [src]="item.hinhAnh" alt="{{ item.ten }}" class="rounded-lg w-full h-32 object-cover" />
+      <img [src]="item.hinhAnh" alt="{{ item.ten }}" class="rounded-lg w-full h-35 object-cover" />
       <h3 class="mt-2 text-lg font-bold">{{ item.ten }}</h3>
       <p class="text-black-500 font-semibold">{{ item.gia | number }} VND</p>
 
