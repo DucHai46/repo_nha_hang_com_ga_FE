@@ -5,6 +5,7 @@ import { DanhMucMonAnStore } from '../danhmucmonan/store/danh-muc-mon-an.store';
 import { AddoreditMAComponent } from './addoreditMA/addoreditMA.component';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 import { DanhmucmonanService } from './services/danhmucmonan.service';
+import { DanhMucMonAn } from '../../../../models/DanhMucMonAn';
 @Component({
   selector: 'app-danhmucmonan',
   templateUrl: './danhmucmonan.component.html',
@@ -12,15 +13,18 @@ import { DanhmucmonanService } from './services/danhmucmonan.service';
 })
 export class DanhmucmonanComponent implements OnInit {
   constructor(private store: DanhMucMonAnStore, private dialog: MatDialog, private notification: NzNotificationService, private danhmucmonanService: DanhmucmonanService) {}
-  danhMucMonAnPaging: any[] = [];
+  danhMucMonAnPaging: DanhMucMonAn[] = [];
   itemsSearch: any[] = [];
+
   ngOnInit(): void {
     this.search();
     this.store.setItems$(this.danhMucMonAnPaging);  
   }
+
   searchForm: any = {
     tenDanhMuc: '',
-  };
+  }; 
+
   search(){
     this.searchForm.isPaging = true;
     this.searchForm.PageNumber = 1;
@@ -41,6 +45,7 @@ export class DanhmucmonanComponent implements OnInit {
     this.searchForm.tenDanhMuc = '';
     this.search()
   }
+
   openAddPopup(): void {
     const dialogRef = this.dialog.open(AddoreditMAComponent, {
       width: '400px',
@@ -88,6 +93,7 @@ export class DanhmucmonanComponent implements OnInit {
       }
     })
   }
+
   openEditPopup(item: any): void {
     const dialogRef = this.dialog.open(AddoreditMAComponent, {
       width: '400px',
@@ -112,21 +118,10 @@ export class DanhmucmonanComponent implements OnInit {
             }
           }
         )
-        // const index = this.danhMucMonAnPaging.findIndex((m) => m.ma === item.ma);
-        // if (index !== -1) {
-          
-        // }
-        // else{
-        //   // this.notification.create(
-        //   //   'error',
-        //   //   'Thành công!',
-        //   //   `Lưu dữ liệu thất bại`, {
-        //   //   nzClass: 'vnpt-qhkh-notification-error',
-        //   // });
-        // }
       }
     });
   }
+  
    openDeletePopup(item: any): void {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         width: '400px',
