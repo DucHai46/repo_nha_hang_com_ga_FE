@@ -3,7 +3,7 @@
     {{ isEditMode ? "Sửa Danh Mục" : "Thêm Danh Mục" }}
   </h2>
   <form>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="materialCode">Mã Nguyên Liệu:</label>
       <input
         type="text"
@@ -12,15 +12,15 @@
         name="ma"
         placeholder="Nhập mã nguyên liệu..."
       />
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label for="materialName">Tên Nguyên Liệu:</label>
       <input
         type="text"
         id="materialName"
-        [(ngModel)]="formData.ten"
-        name="ten"
+        [(ngModel)]="formData.tenDanhMuc"
+        name="tenDanhMuc"
         placeholder="Nhập tên nguyên liệu..."
       />
     </div>

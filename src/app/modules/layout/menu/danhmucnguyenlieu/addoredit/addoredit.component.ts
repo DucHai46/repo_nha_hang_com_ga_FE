@@ -9,8 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class AddoreditComponent {
 // Form data model
   formData = {
-    ma: '',
-    ten: '',
+    tenDanhMuc: '',
     moTa: '',
   };
 

@@ -28,6 +28,7 @@ import { MenugoimonComponent } from './menugoimon/menugoimon.component';
 import { DanhmucmonanService } from './menu/danhmucmonan/services/danhmucmonan.service';
 import { HttpClientModule } from '@angular/common/http';
 import { XacnhangoimonComponent } from './menugoimon/xacnhangoimon/xacnhangoimon.component';
+import { DanhmucnguyenlieuService } from './menu/danhmucnguyenlieu/services/danhmucnguyenlieu.service';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -59,7 +60,8 @@ import { XacnhangoimonComponent } from './menugoimon/xacnhangoimon/xacnhangoimon
     DanhMucNguyenLieuStore,
     DanhMucMonAnStore,
     LoaiNguyenLieuStore,
-    DanhmucmonanService
+    DanhmucmonanService,
+    DanhmucnguyenlieuService
   ]
 })
 export class LayoutModule {}

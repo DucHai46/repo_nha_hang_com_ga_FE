@@ -4,6 +4,8 @@ import { AddoreditComponent } from './addoredit/addoredit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
+import { DanhmucnguyenlieuService } from './services/danhmucnguyenlieu.service';
+import { DanhMucNguyenLieu } from '../../../../models/DanhMucNguyenLieu';
 
 @Component({
   selector: 'app-danhmucnguyenlieu',
@@ -11,33 +13,39 @@ import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialo
   styleUrl: './danhmucnguyenlieu.component.scss'
 })
 export class DanhmucnguyenlieuComponent implements OnInit {
-  constructor(private store: DanhMucNguyenLieuStore, private dialog: MatDialog, private notification: NzNotificationService) {}
-
-  items = [
-    { ma: 'DM-001', ten: 'Thực phẩm tươi sống', moTa: 'Bao gồm thịt, cá, rau củ quả' },
-    { ma: 'DM-002', ten: 'Gia vị', moTa: 'Muối, đường, tiêu,...' },
-    { ma: 'DM-003', ten: 'Đồ uống', moTa: 'Nước ngọt, trà, cà phê, nước ép' }
-  ];
-
+  constructor(private store: DanhMucNguyenLieuStore, private dialog: MatDialog, private notification: NzNotificationService, private danhmucnguyenlieuService: DanhmucnguyenlieuService) {}
+  danhMucNguyenLieuPaging: DanhMucNguyenLieu[] = [];
   itemsSearch: any[] = [];
+
   ngOnInit(): void {
-    this.itemsSearch = this.items;
-    this.store.setItems$(this.items);
+    this.search();
+    this.store.setItems$(this.danhMucNguyenLieuPaging);
   }
 
   searchForm: any = {
-    ma: '',
-    ten: ''
+    // ma: '',
+    tenDanhMuc: ''
   };
 
   search() {
-    this.itemsSearch = this.items.filter(item => item.ma.includes(this.searchForm.ma) && item.ten.includes(this.searchForm.ten));
+    this.searchForm.isPaging = true;
+    this.searchForm.PageNumber = 1;
+    this.searchForm.PageSize = 20;
+    this.danhmucnguyenlieuService.getDanhMucNguyenLieu(this.searchForm).subscribe(
+      {
+        next: (res: any) => {
+          this.danhMucNguyenLieuPaging = res.data.data;
+        },
+        error: (err: any) => {
+          alert('Lấy dữ liệu thất bại');
+        }
+      }
+    )
   }
 
   reset() {
-    this.itemsSearch = this.items;
-    this.searchForm.ma = '';
-    this.searchForm.ten = '';
+    this.searchForm.tenDanhMuc = '';
+    this.search()
   }
 
   // Hàm mở popup Thêm
@@ -49,9 +57,24 @@ export class DanhmucnguyenlieuComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Thêm mới:', result);
-        this.items.push(result); // Thêm vào danh sách
-        this.itemsSearch = this.items;
+        // console.log('Thêm mới:', result);
+        this.danhmucnguyenlieuService.addDanhMucNguyenLieu(result).subscribe(
+          {
+            next: (res: any) => {
+              if (res.data) {
+                // alert('Thêm mới thành công');
+                this.searchForm.tenDanhMuc = '';
+                this.search();
+              }
+              else{
+                alert('Thêm mới thất bại');
+              }
+            },
+            error: (err: any) => {
+              alert('Thêm mới thất bại');
+            }
+          }
+        )
         // this.notification.success(
         //   'Thành công', // Tiêu đề
         //   'Thêm dữ liệu thành công', // Nội dung
@@ -83,26 +106,21 @@ export class DanhmucnguyenlieuComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Sửa:', result);
-        const index = this.items.findIndex((m) => m.ma === item.ma);
-        if (index !== -1) {
-          this.items[index] = result; // Cập nhật nguyên liệu trong danh sách
-          this.itemsSearch = this.items;
-          // this.notification.create(
-          //   'success',
-          //   'Thành công!',
-          //   `Lưu dữ liệu thành công`, {
-          //   nzClass: 'vnpt-qhkh-notification-success',
-          // });
-        }
-        else{
-          // this.notification.create(
-          //   'error',
-          //   'Thành công!',
-          //   `Lưu dữ liệu thất bại`, {
-          //   nzClass: 'vnpt-qhkh-notification-error',
-          // });
-        }
+        this.danhmucnguyenlieuService.updateDanhMucNguyenLieu(item.id, result).subscribe(
+          {
+            next: (res: any) => {
+              if(res.data){
+                this.search();
+              }
+              else{
+                alert('Sửa thất bại');
+              }
+            },
+            error: (err: any) => {
+              alert('Sửa thất bại');
+            }
+          }
+        )
       }
     });
   }
@@ -111,14 +129,18 @@ export class DanhmucnguyenlieuComponent implements OnInit {
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
-      data: { message: `Bạn có chắc chắn muốn xóa "${item.ten}" không?` },
+      data: { message: `Bạn có chắc chắn muốn xóa "${item.tenDanhMuc}" không?` },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Xóa:', item);
-        this.items = this.items.filter((m) => m.ma !== item.ma); // Xóa khỏi danh sách
-        this.itemsSearch = this.items;
+        this.danhmucnguyenlieuService.deleteDanhMucNguyenLieu(item.id).subscribe(
+          {
+            next: (res: any) => {
+              this.search();
+            }
+          }
+        )
         // this.notification.create(
         //   'success',
         //   'Thành công!',
