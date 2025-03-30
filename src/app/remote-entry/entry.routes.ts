@@ -7,6 +7,7 @@ import { DanhmucmonanComponent } from '../modules/layout/menu/danhmucmonan/danhm
 import { LoainguyenlieuComponent } from '../modules/layout/menu/loainguyenlieu/loainguyenlieu.component';
 import { LoginComponent } from '../modules/layout/login/login.component';
 import { MenugoimonComponent } from '../modules/layout/menugoimon/menugoimon.component';
+import { LoaibananComponent } from '../modules/layout/menu/loaibanan/loaibanan.component';
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [
@@ -16,6 +17,7 @@ export const remoteRoutes: Route[] = [
           { path: 'danhmucnguyenlieu', component: DanhmucnguyenlieuComponent },
           { path: 'danhmucmonan', component: DanhmucmonanComponent },
           { path: 'loainguyenlieu', component: LoainguyenlieuComponent },
+          { path: 'loaibanan', component: LoaibananComponent },
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]
       },

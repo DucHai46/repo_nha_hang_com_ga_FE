@@ -4,37 +4,56 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { LoaiNguyenLieuStore } from '../loainguyenlieu/store/loai-nguyen-lieu.store';
 import { AddoreditLoaiNLComponent } from './addoreditLoaiNL/addoreditLoaiNL.component';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
-
+import { LoainguyenlieuService } from './services/loainguyenlieu.service';
+import { DanhmucnguyenlieuService } from '../danhmucnguyenlieu/services/danhmucnguyenlieu.service';
+import { DanhMucNguyenLieu } from '../../../../models/DanhMucNguyenLieu';
 @Component({
   selector: 'app-loainguyenlieu',
   templateUrl: './loainguyenlieu.component.html',
   styleUrl: './loainguyenlieu.component.scss'
 })
 export class LoainguyenlieuComponent implements OnInit {
-  constructor(private store: LoaiNguyenLieuStore, private dialog: MatDialog, private notification: NzNotificationService) {}
-  items = [
-    { ten: 'Gà ta', moTa: 'Gà thả vườn, thịt chắc và thơm ngon', danhMuc: 'Thịt' },
-    { ten: 'Gà công nghiệp', moTa: 'Gà nuôi công nghiệp, thịt mềm hơn', danhMuc: 'Thịt' },
-    { ten: 'Dưa leo', moTa: 'Dưa chuột tươi, giòn, dùng kèm món ăn', danhMuc: 'Rau củ' },
-    { ten: 'Cà chua', moTa: 'Cà chua tươi, dùng trang trí và ăn kèm', danhMuc: 'Rau củ' },
-    { ten: 'Nước tương đen', moTa: 'Nước tương đặc trưng của Singapore', danhMuc: 'Gia vị và nước chấm' },
-    { ten: 'Tương ớt', moTa: 'Tương ớt cay, dùng làm nước chấm', danhMuc: 'Gia vị và nước chấm' }
-  ];
+  constructor(private store: LoaiNguyenLieuStore, private dialog: MatDialog, private notification: NzNotificationService, private loainguyenlieuService: LoainguyenlieuService, private danhMucNguyenLieuService: DanhmucnguyenlieuService) {}
+  loaiNguyenLieuPaging: any[] = []; 
   itemsSearch: any[] = [];
+  danhMucNguyenLieu: DanhMucNguyenLieu[] = [];
   ngOnInit(): void {
-    this.itemsSearch = this.items;
-    this.store.setItems$(this.items);  
+    this.store.setItems$(this.loaiNguyenLieuPaging);  
+    this.danhMucNguyenLieuService.getDanhMucNguyenLieu({}).subscribe(
+      {
+        next: (res: any) => {
+          this.danhMucNguyenLieu = res.data.data;
+        }
+      }
+    )
+    this.search();
   }
+
   searchForm: any = {
-    ten: ''
+    tenLoai: '',
+    danhMucNguyenLieuId: ''
   };
   search(){
-    this.itemsSearch = this.items.filter(item => item.ten.includes(this.searchForm.ten));
+    this.searchForm.isPaging = true;
+    this.searchForm.PageNumber = 1;
+    this.searchForm.PageSize = 20;
+    this.loainguyenlieuService.getLoaiNguyenLieu(this.searchForm).subscribe(
+      {
+        next: (res: any) => {
+          this.loaiNguyenLieuPaging = res.data.data;
+        },
+        error: (err: any) => {
+          alert('Lấy dữ liệu thất bại');
+        }
+      }
+    )  
   }
   reset(){
-    this.itemsSearch = this.items;
-    this.searchForm.ten = '';
+    this.searchForm.tenLoai = '';
+    this.searchForm.danhMucNguyenLieuId = '';
+    this.search();
   }
+
   openAddPopup(): void {
       const dialogRef = this.dialog.open(AddoreditLoaiNLComponent, {
         width: '400px',
@@ -43,9 +62,24 @@ export class LoainguyenlieuComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          console.log('Thêm mới:', result);
-          this.items.push(result); // Thêm vào danh sách
-          this.itemsSearch = this.items;
+          this.loainguyenlieuService.addLoaiNguyenLieu(result).subscribe(
+          {
+            next: (res: any) => {
+              if (res.data) {
+                // alert('Thêm mới thành công');
+                this.searchForm.tenLoai = '';
+                this.searchForm.danhMucNguyenLieuId = '';
+                this.search();
+              }
+              else{
+                alert('Thêm mới thất bại');
+              }
+            },
+            error: (err: any) => {
+              alert('Thêm mới thất bại');
+            }
+          }
+        )
           // this.notification.success(
           //   'Thành công', // Tiêu đề
           //   'Thêm dữ liệu thành công', // Nội dung
@@ -77,26 +111,21 @@ export class LoainguyenlieuComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          console.log('Sửa:', result);
-          const index = this.items.findIndex((m) => m.ten === item.ten);
-          if (index !== -1) {
-            this.items[index] = result; // Cập nhật nguyên liệu trong danh sách
-            this.itemsSearch = this.items;
-            // this.notification.create(
-            //   'success',
-            //   'Thành công!',
-            //   `Lưu dữ liệu thành công`, {
-            //   nzClass: 'vnpt-qhkh-notification-success',
-            // });
+        this.loainguyenlieuService.updateLoaiNguyenLieu(item.id, result).subscribe(
+          {
+            next: (res: any) => {
+              if(res.data){
+                this.search();
+              }
+              else{
+                alert('Sửa thất bại');
+              }
+            },
+            error: (err: any) => {
+              alert('Sửa thất bại');
+            }
           }
-          else{
-            // this.notification.create(
-            //   'error',
-            //   'Thành công!',
-            //   `Lưu dữ liệu thất bại`, {
-            //   nzClass: 'vnpt-qhkh-notification-error',
-            // });
-          }
+        )
         }
       });
     }
@@ -105,14 +134,18 @@ export class LoainguyenlieuComponent implements OnInit {
     openDeletePopup(item: any): void {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         width: '400px',
-        data: { message: `Bạn có chắc chắn muốn xóa "${item.ten}" không?` },
+        data: { message: `Bạn có chắc chắn muốn xóa "${item.tenLoai}" không?` },
       });
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          console.log('Xóa:', item);
-          this.items = this.items.filter((m) => m.ten !== item.ten); // Xóa khỏi danh sách
-          this.itemsSearch = this.items;
+        this.loainguyenlieuService.deleteLoaiNguyenLieu(item.id).subscribe(
+          {
+            next: (res: any) => {
+              this.search();
+            }
+          }
+        )
           // this.notification.create(
           //   'success',
           //   'Thành công!',

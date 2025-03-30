@@ -29,6 +29,11 @@ import { DanhmucmonanService } from './menu/danhmucmonan/services/danhmucmonan.s
 import { HttpClientModule } from '@angular/common/http';
 import { XacnhangoimonComponent } from './menugoimon/xacnhangoimon/xacnhangoimon.component';
 import { DanhmucnguyenlieuService } from './menu/danhmucnguyenlieu/services/danhmucnguyenlieu.service';
+import { LoaibananComponent } from './menu/loaibanan/loaibanan.component';
+import { LoaiBanAnStore } from './menu/loaibanan/store/loai-ban-an.store';
+import { LoaiBanAnService } from './menu/loaibanan/services/loaibanan.service';
+import { AddoreditLoaiBanComponent } from './menu/loaibanan/addoredit/addoreditLoaiBan.component';
+import { LoainguyenlieuService } from './menu/loainguyenlieu/services/loainguyenlieu.service';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -44,7 +49,9 @@ import { DanhmucnguyenlieuService } from './menu/danhmucnguyenlieu/services/danh
     DanhmucmonanComponent,
     LoainguyenlieuComponent,
     MenugoimonComponent,
-    XacnhangoimonComponent
+    XacnhangoimonComponent,
+    LoaibananComponent,
+    AddoreditLoaiBanComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -61,7 +68,10 @@ import { DanhmucnguyenlieuService } from './menu/danhmucnguyenlieu/services/danh
     DanhMucMonAnStore,
     LoaiNguyenLieuStore,
     DanhmucmonanService,
-    DanhmucnguyenlieuService
+    DanhmucnguyenlieuService,
+    LoaiBanAnStore,
+    LoaiBanAnService,
+    LoainguyenlieuService
   ]
 })
 export class LayoutModule {}

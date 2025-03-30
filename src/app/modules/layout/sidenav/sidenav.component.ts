@@ -55,6 +55,18 @@ export class SidenavComponent {
           label: 'Danh mục món ăn'
         }
       ]
+    },
+    {
+      icon: 'fal fa-table',
+      label: 'Quản lý bàn ăn',
+      isOpen: false,
+      children: [
+        {
+          routeLink: 'main/loaibanan',
+          icon: 'fal fa-table',
+          label: 'Loại bàn ăn'
+        }
+      ]
     }
   ];
 
