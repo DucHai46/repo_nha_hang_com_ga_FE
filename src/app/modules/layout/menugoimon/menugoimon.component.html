@@ -4,23 +4,31 @@
 <div class="sticky-wrapper" [ngClass]="{ fixed: isSticky }">
   <div class="sticky-margin">
     <!-- Thanh tìm kiếm -->
-    <div class="flex items-center bg-gray-100 rounded-full px-4 py-2 mb-4 w-full max-w-lg shadow-md">
+    <div
+      class="flex items-center bg-gray-100 rounded-full px-4 py-2 mb-4 w-full max-w-lg shadow-md"
+    >
       <i class="fal fa-home text-blue-500 text-xl mr-3"></i>
       <input
+        (keyup)="searchMonAn($event)"
         type="text"
         class="flex-1 bg-transparent border-none outline-none text-gray-600 placeholder-gray-400 text-base"
         placeholder="Bạn muốn tìm món gì?"
       />
     </div>
 
-    
     <!-- Thanh danh mục -->
-    <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+    <div
+      class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+    >
       <div class="grid grid-cols-7 gap-2 min-w-[700px]">
         <button
           *ngFor="let category of itemsDanhMuc"
-          [ngClass]="selectedItem === category ? 'bg-blue-500 text-white' : 'bg-white text-black'"
-          (click)="selectCategory(category, $event)"  
+          [ngClass]="
+            selectedItem === category
+              ? 'bg-blue-500 text-white'
+              : 'bg-white text-black'
+          "
+          (click)="selectCategory(category, $event)"
           class="text-center py-2 px-4 rounded-lg border shadow-md min-w-[100px] max-w-[120px] whitespace-nowrap overflow-hidden text-ellipsis hover:bg-orange-300"
           id="btn-{{ category.ma }}"
         >
@@ -31,29 +39,53 @@
   </div>
 </div>
 
-
 <!-- Hiển thị món ăn theo danh mục -->
-<div *ngFor="let category of itemsDanhMuc" id="{{ category.ma }}" class="mb-4 content-wrapper px-4">
+<div
+  *ngFor="let category of itemsDanhMuc"
+  id="{{ category.ma }}"
+  class="mb-4 content-wrapper px-4"
+>
   <h2 class="text-xl font-bold mb-2 category-title">{{ category.ten }}</h2>
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    <div *ngFor="let item of getMonAnTheoDanhMuc(category.ma)" class="p-4 bg-white rounded-lg shadow-lg flex flex-col justify-between">
-      <img [src]="item.hinhAnh" alt="{{ item.ten }}" class="rounded-lg w-full h-35 object-cover" />
+    <div
+      *ngFor="let item of getMonAnTheoDanhMuc(category.ma)"
+      class="p-4 bg-white rounded-lg shadow-lg flex flex-col justify-between"
+    >
+      <img
+        [src]="item.hinhAnh"
+        alt="{{ item.ten }}"
+        class="rounded-lg w-full h-35 object-cover"
+      />
       <h3 class="mt-2 text-lg font-bold">{{ item.ten }}</h3>
       <p class="text-black-500 font-semibold">{{ item.gia | number }} VND</p>
-
       <!-- Nút tùy thuộc vào trạng thái -->
       <div class="mt-3">
         <!-- Nếu số lượng là 0, hiện nút "+" -->
         <div *ngIf="item.soLuong === 0">
-          <button (click)="tangSoLuong(item.ma)" class="bg-blue-500 text-white rounded-full p-3 text-lg">+</button>
+          <button
+            (click)="tangSoLuong(item.ma)"
+            class="bg-blue-500 text-white rounded-full p-3 text-lg"
+          >
+            +
+          </button>
         </div>
-      
+
         <!-- Nếu số lượng lớn hơn 0, hiện giao diện tăng/giảm -->
         <div *ngIf="item.soLuong > 0" class="flex items-center">
-          <button (click)="giamSoLuong(item.ma)" class="px-2 py-1 bg-gray-300 rounded-lg">-</button>
+          <button
+            (click)="giamSoLuong(item.ma)"
+            class="px-2 py-1 bg-gray-300 rounded-lg"
+          >
+            -
+          </button>
           <span class="mx-3 text-lg">{{ item.soLuong }}</span>
-          <button (click)="tangSoLuong(item.ma)" class="px-2 py-1 bg-gray-300 rounded-lg">+</button>
+          <button
+            (click)="tangSoLuong(item.ma)"
+            class="px-2 py-1 bg-gray-300 rounded-lg"
+          >
+            +
+          </button>
         </div>
       </div>
     </div>
@@ -61,9 +93,17 @@
 </div>
 
 <!-- Thanh tổng tiền, chỉ hiển thị khi có ít nhất 1 món -->
-<div *ngIf="coMonAnDuocChon()" class="fixed-bottom-bar fixed bottom-0 left-0 w-full bg-blue-500 text-white text-center shadow-lg">
-  <span class="text-lg font-bold">Tổng tiền: {{ tinhTongTien() | number }} VND</span>
-  <button class="ml-4 bg-white text-blue-500 rounded-lg font-bold" (click)="chuyenSangXacNhan()">Xác nhận</button>
+<div
+  *ngIf="coMonAnDuocChon()"
+  class="fixed-bottom-bar fixed bottom-0 left-0 w-full bg-blue-500 text-white text-center shadow-lg"
+>
+  <span class="text-lg font-bold"
+    >Tổng tiền: {{ tinhTongTien() | number }} VND</span
+  >
+  <button
+    class="ml-4 bg-white text-blue-500 rounded-lg font-bold"
+    (click)="chuyenSangXacNhan()"
+  >
+    Xác nhận
+  </button>
 </div>
-
-

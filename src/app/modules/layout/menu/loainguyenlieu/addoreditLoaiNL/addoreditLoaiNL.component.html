@@ -4,24 +4,13 @@
   </h2>
   <form>
     <div class="form-group">
-      <label for="materialCode">Mã Nguyên Liệu:</label>
-      <input
-        type="text"
-        id="materialCode"
-        [(ngModel)]="formData.ma"
-        name="ma"
-        placeholder="Nhập mã nguyên liệu..."
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="materialName">Tên Nguyên Liệu:</label>
+      <label for="materialName">Tên Loại Nguyên Liệu:</label>
       <input
         type="text"
         id="materialName"
-        [(ngModel)]="formData.ten"
-        name="ten"
-        placeholder="Nhập tên nguyên liệu..."
+        [(ngModel)]="formData.tenLoai"
+        name="tenLoai"
+        placeholder="Nhập tên loại nguyên liệu..."
       />
     </div>
 
@@ -38,13 +27,17 @@
       <label for="category">Danh Mục Nguyên Liệu:</label>
       <select
         id="category"
-        [(ngModel)]="formData.danhMuc"
-        name="danhMuc"
+        [(ngModel)]="formData.danhMucNguyenLieu"
+        name="danhMucNguyenLieu"
         class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
       >
-        <option class="bg-white">Thịt</option>
-        <option class="bg-white">Rau củ</option>
-        <option class="bg-white">Gia vị và nước chấm</option>
+        <option
+          class="bg-white"
+          *ngFor="let danhMuc of danhMucNguyenLieu"
+          [ngValue]="{ id: danhMuc.id, name: danhMuc.tenDanhMuc }"
+        >
+          {{ danhMuc.tenDanhMuc }}
+        </option>
       </select>
     </div>
 

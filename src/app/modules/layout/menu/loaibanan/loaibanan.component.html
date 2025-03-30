@@ -1,7 +1,28 @@
 <div class="mt-10 mr-10">
   <!-- nhãn -->
   <div class="flex flex-row gap-4 mb-5">
-    <p class="text-2xl font-bold">Loại nguyên liệu</p>
+    <!-- <p class="flex justify-center items-center">
+      <a
+        ><svg
+          class="w-6 h-6 text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m15 19-7-7 7-7"
+          />
+        </svg>
+      </a>
+    </p> -->
+    <p class="text-2xl font-bold">Loại bàn ăn</p>
   </div>
   <!-- form search -->
   <div
@@ -9,34 +30,29 @@
   >
     <!-- form -->
     <div class="flex flex-row gap-4">
-      <div class="flex flex-col gap-2">
-        <label for="searchTenLoai">Tên loại</label>
+      <!-- <div class="flex flex-col gap-2">
+        <label for="searchMa">Mã danh mục</label>
         <input
           class="border border-gray-300 rounded-md p-2"
-          id="searchTenLoai"
-          [(ngModel)]="searchForm.tenLoai"
+          id="searchMa"
+          [(ngModel)]="searchForm.ma"
           type="text"
           placeholder="Tìm kiếm"
         />
-      </div>
+      </div> -->
       <div class="flex flex-col gap-2">
-        <label for="searchDanhMucNguyenLieu">Danh mục nguyên liệu</label>
-        <select
-          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-          id="searchDanhMucNguyenLieu"
-          [(ngModel)]="searchForm.danhMucNguyenLieuId"
-        >
-          <option
-            *ngFor="let danhMuc of danhMucNguyenLieu"
-            [value]="danhMuc.id"
-          >
-            {{ danhMuc.tenDanhMuc }}
-          </option>
-        </select>
+        <label for="searchTen">Tên </label>
+        <input
+          class="border border-gray-300 rounded-md p-2"
+          id="searchTen"
+          [(ngModel)]="searchForm.tenLoai"
+          type="text"
+          placeholder="Tên loại bàn"
+        />
       </div>
     </div>
     <!-- button -->
-    <div class="flex flex-row gap-4 justify-center items-center">
+    <div class="flex flex-row gap-2 justify-center items-center">
       <button
         class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
         (click)="reset()"
@@ -96,39 +112,34 @@
     </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right">
-        <thead class="text-xs text-gray-700 uppercase text-center">
-          >
+        <thead class="text-xs uppercase text-center">
           <tr>
             <th scope="col" class="px-6 py-3">STT</th>
-            <!-- <th scope="col" class="px-6 py-3">Mã loại</th> -->
-            <th scope="col" class="px-6 py-3">Tên loại</th>
+            <!-- <th scope="col" class="px-6 py-3">Mã danh mục</th> -->
+            <th scope="col" class="px-6 py-3">Tên loại bàn</th>
             <th scope="col" class="px-6 py-3">Mô tả</th>
-            <th scope="col" class="px-6 py-3">Danh mục</th>
             <th scope="col" class="px-6 py-3">Thao tác</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="border-b dark:border-gray-700 border-gray-200"
-            *ngFor="let item of loaiNguyenLieuPaging; let i = index"
+            *ngFor="let item of loaiBanAnPaging; let i = index"
           >
-            <td
-              scope="row"
-              class="px-6 py-4 font-medium whitespace-nowrap text-center"
-            >
+            <td class="px-6 py-4 font-medium whitespace-nowrap text-center">
               {{ i + 1 }}
             </td>
-            <!-- <td class="px-6 py-4">
+            <!-- <th
+              scope="row"
+              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            >
               {{ item.ma }}
-            </td> -->
+            </th> -->
             <td class="px-6 py-4">
               {{ item.tenLoai }}
             </td>
             <td class="px-6 py-4">
               {{ item.moTa }}
-            </td>
-            <td class="px-6 py-4">
-              {{ item.danhMucNguyenLieu.name }}
             </td>
             <td
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"

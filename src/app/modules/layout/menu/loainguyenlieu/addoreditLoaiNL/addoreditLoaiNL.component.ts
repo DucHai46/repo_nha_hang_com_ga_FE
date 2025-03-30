@@ -1,23 +1,39 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit   } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DanhmucnguyenlieuService } from '../../danhmucnguyenlieu/services/danhmucnguyenlieu.service';
 
 @Component({
   selector: 'app-addoredit-loai-nl',
   templateUrl: './addoreditLoaiNL.component.html',
   styleUrl: './addoreditLoaiNL.component.scss'
 })
-export class AddoreditLoaiNLComponent {
-// Form data model
+export class AddoreditLoaiNLComponent implements OnInit {
+  danhMucNguyenLieu: any[] = [];  
+
+  ngOnInit(): void {
+    this.danhMucNguyenLieuService.getDanhMucNguyenLieu({}).subscribe({
+      next: (res: any) => {
+        this.danhMucNguyenLieu = res.data.data;
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
+  // Form data model
   formData = {
-    ma: '',
-    ten: '',
+    tenLoai: '',
     moTa: '',
-    danhMuc: ''
+    danhMucNguyenLieu: {
+      id: '',
+      name: ''
+    }
   };
 
   isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
 
   constructor(
+    private danhMucNguyenLieuService: DanhmucnguyenlieuService,
     public dialogRef: MatDialogRef<AddoreditLoaiNLComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -30,6 +46,7 @@ export class AddoreditLoaiNLComponent {
 
   // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
+    console.log(this.formData);
     this.dialogRef.close(this.formData); // Đóng popup và trả về dữ liệu
   }
 
