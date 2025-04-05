@@ -34,6 +34,10 @@ import { LoaiBanAnStore } from './menu/loaibanan/store/loai-ban-an.store';
 import { LoaiBanAnService } from './menu/loaibanan/services/loaibanan.service';
 import { AddoreditLoaiBanComponent } from './menu/loaibanan/addoredit/addoreditLoaiBan.component';
 import { LoainguyenlieuService } from './menu/loainguyenlieu/services/loainguyenlieu.service';
+import { BananComponent } from './menu/banan/banan.component';
+import { BanAnStore } from './menu/banan/store/ban-an.store';
+import { BanAnService } from './menu/banan/services/banan.service';
+import { AddoreditBanComponent } from './menu/banan/addoredit/addoreditBan.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -51,7 +55,9 @@ import { LoainguyenlieuService } from './menu/loainguyenlieu/services/loainguyen
     MenugoimonComponent,
     XacnhangoimonComponent,
     LoaibananComponent,
-    AddoreditLoaiBanComponent
+    AddoreditLoaiBanComponent,
+    BananComponent,
+    AddoreditBanComponent,
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -71,7 +77,9 @@ import { LoainguyenlieuService } from './menu/loainguyenlieu/services/loainguyen
     DanhmucnguyenlieuService,
     LoaiBanAnStore,
     LoaiBanAnService,
-    LoainguyenlieuService
+    LoainguyenlieuService,
+    BanAnStore,
+    BanAnService
   ]
 })
 export class LayoutModule {}

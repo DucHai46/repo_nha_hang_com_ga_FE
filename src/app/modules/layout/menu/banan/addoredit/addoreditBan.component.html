@@ -1,0 +1,55 @@
+<div class="p-5">
+    <h2 class="text-2xl font-bold mb-5">
+      {{ isEditMode ? "Sửa Bàn" : "Thêm Bàn" }}
+    </h2>
+    <form>
+      <div class="form-group">
+        <label for="materialName">Tên bàn:</label>
+        <input
+          type="text"
+          id="materialName"
+          [(ngModel)]="formData.tenBan"
+          name="tenLoai"
+          placeholder="Nhập tên bàn..."
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="status">Trạng thái:</label>
+        <input
+          type="number"
+          id="status"
+          [(ngModel)]="formData.trangThai"
+          name="moTa"
+          placeholder="0: Còn trống 1: Đặt trước 2: Đang sử dụng"
+          min="0"
+          max="2"
+        >
+      </div>
+      <div class="form-group">
+        <label for="category">Loại bàn:</label>
+        <select
+          id="category"
+          [(ngModel)]="formData.loaiBanAn"
+          name="loaiBanAn"
+          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+        >
+          <option
+            class="bg-white"
+            *ngFor="let danhMuc of loaiBanAn"
+            [ngValue]="{ id: danhMuc.id, name: danhMuc.tenLoai }"
+          >
+            {{ danhMuc.tenLoai }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="flex justify-end gap-2">
+        <button type="button" class="btn cancel-btn" (click)="onCancel()">
+          Hủy
+        </button>
+        <button type="button" class="btn save-btn" (click)="onSave()">Lưu</button>
+      </div>
+    </form>
+  </div>
+  

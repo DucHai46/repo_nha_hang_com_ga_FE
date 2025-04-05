@@ -65,7 +65,12 @@ export class SidenavComponent {
           routeLink: 'main/loaibanan',
           icon: 'fal fa-table',
           label: 'Loại bàn ăn'
-        }
+        },
+        {
+          routeLink: 'main/banan',
+          icon: 'fal fa-table',
+          label: 'Bàn ăn'
+        },
       ]
     }
   ];
