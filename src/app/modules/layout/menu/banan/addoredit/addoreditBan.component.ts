@@ -24,7 +24,7 @@ export class AddoreditBanComponent implements OnInit {
   formData = {
     tenBan: '',
     trangThai: '',
-    loaiBanAn: {
+    loaiBan: {
       id: '',
       name: ''
     }
