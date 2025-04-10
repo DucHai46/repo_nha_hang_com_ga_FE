@@ -9,6 +9,10 @@ import { LoginComponent } from '../modules/layout/login/login.component';
 import { MenugoimonComponent } from '../modules/layout/menugoimon/menugoimon.component';
 import { LoaibananComponent } from '../modules/layout/menu/loaibanan/loaibanan.component';
 import { BananComponent } from '../modules/layout/menu/banan/banan.component';
+import { KhuyenmaiComponent } from '../modules/layout/menu/khuyenmai/khuyenmai.component';
+import { DonvitinhComponent } from '../modules/layout/menu/donvitinh/donvitinh.component';
+import { LoaitudoComponent } from '../modules/layout/menu/loaitudo/loaitudo.component';
+import { TudoComponent } from '../modules/layout/menu/tudo/tudo.component';
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [
@@ -20,6 +24,11 @@ export const remoteRoutes: Route[] = [
           { path: 'loainguyenlieu', component: LoainguyenlieuComponent },
           { path: 'loaibanan', component: LoaibananComponent },
           { path: 'banan', component: BananComponent },
+          { path: 'khuyenmai', component: KhuyenmaiComponent },
+          { path: 'donvitinh', component: DonvitinhComponent },
+          { path: 'loaitudo', component: LoaitudoComponent },
+          { path: 'tudo', component: TudoComponent },
+
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]
       },

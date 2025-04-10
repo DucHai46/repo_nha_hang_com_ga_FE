@@ -38,6 +38,24 @@ import { BananComponent } from './menu/banan/banan.component';
 import { BanAnStore } from './menu/banan/store/ban-an.store';
 import { BanAnService } from './menu/banan/services/banan.service';
 import { AddoreditBanComponent } from './menu/banan/addoredit/addoreditBan.component';
+import { KhuyenmaiComponent } from './menu/khuyenmai/khuyenmai.component';
+import { khuyenmaiService } from './menu/khuyenmai/services/khuyenmai.service';
+import { KhuyenMaiStore } from './menu/khuyenmai/store/khuyen-mai.store';
+import { AddoreditKhuyenMaiComponent } from './menu/khuyenmai/addoredit/addoreditKhuyenMai.component';
+import { DonvitinhComponent } from './menu/donvitinh/donvitinh.component';
+import { DonViTinhService } from './menu/donvitinh/services/donvitinh.service';
+import { DonViTinhStore } from './menu/donvitinh/store/don-vi-tinh.store';
+import { AddoreditDonViTinhComponent } from './menu/donvitinh/addoredit/addoreditDonViTinh.component';
+import { LoaitudoComponent } from './menu/loaitudo/loaitudo.component';
+import { LoaiTuDoService } from './menu/loaitudo/services/loaitudo.service';
+import { LoaiTuDoStore } from './menu/loaitudo/store/loai-tu-do.store';
+import { AddoreditLoaiTuDoComponent } from './menu/loaitudo/addoredit/addoreditLoaiTuDo.component';
+import { TudoComponent } from './menu/tudo/tudo.component';
+import { TuDoService } from './menu/tudo/services/tudo.service';
+import { TuDoStore } from './menu/tudo/store/tu-do.store';
+import { AddoreditTuDoComponent } from './menu/tudo/addoredit/addoreditTuDo.component';
+
+
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -58,6 +76,15 @@ import { AddoreditBanComponent } from './menu/banan/addoredit/addoreditBan.compo
     AddoreditLoaiBanComponent,
     BananComponent,
     AddoreditBanComponent,
+    KhuyenmaiComponent,
+    AddoreditKhuyenMaiComponent,
+    DonvitinhComponent,
+    AddoreditDonViTinhComponent,
+    LoaitudoComponent,
+    AddoreditLoaiTuDoComponent,
+    TudoComponent,
+    AddoreditTuDoComponent
+
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -79,7 +106,16 @@ import { AddoreditBanComponent } from './menu/banan/addoredit/addoreditBan.compo
     LoaiBanAnService,
     LoainguyenlieuService,
     BanAnStore,
-    BanAnService
+    BanAnService,
+    khuyenmaiService,
+    KhuyenMaiStore,
+    DonViTinhService,
+    DonViTinhStore,
+    LoaiTuDoService,
+    LoaiTuDoStore,
+    TuDoService,
+    TuDoStore
+
   ]
 })
 export class LayoutModule {}

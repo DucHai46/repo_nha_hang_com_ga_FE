@@ -41,7 +41,13 @@ export class SidenavComponent {
           routeLink: 'main/loainguyenlieu',
           icon: 'fal fa-tags',
           label: 'Loại nguyên liệu'
+        },
+        {
+          routeLink: 'main/donvitinh',
+          icon: 'fal fa-calculator',
+          label: 'Đơn vị tính'
         }
+
       ]
     },
     {
@@ -72,7 +78,38 @@ export class SidenavComponent {
           label: 'Bàn ăn'
         },
       ]
-    }
+    },
+    {
+      icon: 'fal fa-star',
+      label: 'Giảm giá & khuyến mại',
+      isOpen: false,
+      children: [
+        {
+          routeLink: 'main/khuyenmai',
+          icon: 'fal fa-gift',
+          label: 'Khuyến mại'
+        },
+
+      ]
+    },
+    {
+      icon: 'fal fa-cabinet-filing',
+      label: 'Tủ đồ',
+      isOpen: false,
+      children: [
+        {
+          routeLink: 'main/loaitudo',
+          icon: 'fal fa-door-closed',
+          label: 'Loại tủ đồ'
+        },
+        {
+          routeLink: 'main/tudo',
+          icon: 'fal fa-door-closed',
+          label: 'Tủ đồ'
+        },
+
+      ]
+    },
   ];
 
   toggleCollapse(): void {
