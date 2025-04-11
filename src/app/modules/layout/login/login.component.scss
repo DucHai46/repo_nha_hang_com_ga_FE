@@ -1,6 +1,149 @@
-#background-section {
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    transition: background-image 1s ease-in-out;  /* Hiệu ứng chuyển hình */
+.background-section {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f9fafb;
+  transition: all 1s ease;
+
+  &.dark {
+    background-color: #111827;
   }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  height: 100vh;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+
+  .logo-img {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 0.5rem;
+  }
+
+  .dark & {
+    color: white;
+  }
+}
+
+.login-box {
+  width: 100%;
+  max-width: 28rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  .dark & {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+  }
+}
+
+.login-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.login-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.25;
+
+  .dark & {
+    color: white;
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+
+  .dark & {
+    color: white;
+  }
+}
+
+.form-input {
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  color: #111827;
+
+  &:focus {
+    border-color: #2563eb;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+  }
+
+  .dark & {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: white;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+  }
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  color: white;
+  background-color: #2563eb;
+  border-radius: 0.5rem;
+  border: none;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1d4ed8;
+  }
+
+  .dark & {
+    background-color: #2563eb;
+
+    &:hover {
+      background-color: #1d4ed8;
+    }
+  }
+}

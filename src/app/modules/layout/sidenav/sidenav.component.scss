@@ -79,13 +79,13 @@
 
 .sidenav-nav-link {
   display: flex;
-  align-items: center;
-  height: 3rem;
+  align-items: flex-start;     /* Canh theo đỉnh để text xuống dòng đúng */
+  height: auto;                /* Cho phép tự động cao nếu text dài */
   color: #f3f4f6;
   text-decoration: none;
   border-radius: 0.625rem;
   transition: all 0.3s ease;
-  padding: 0 0.625rem;
+  padding: 0.625rem;
   cursor: pointer;
 }
 
@@ -101,12 +101,15 @@
   font-size: 22px;
   width: 2rem;
   min-width: 2rem;
-  margin: 0 0.5rem;
+  margin-right: 0.5rem;         /* Chỉ cần bên phải */
   text-align: center;
+  flex-shrink: 0;
 }
 
 .sidenav-link-text {
-  margin-left: 1rem;
+  white-space: normal;         /* Cho phép xuống dòng */
+  word-break: break-word;
+  line-height: 1.3;
 }
 
 .sidenav-footer {
