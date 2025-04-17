@@ -9,8 +9,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class AddoreditKhuyenMaiComponent {
 // Form data model
   formData = {
-    tenLoai: '',
-    moTa: '',
+    tenKhuyenMai: '',
+    ngayBatDau: '',
+    ngayKetThuc: '',
+    giaTri: 0
   };
 
   isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
