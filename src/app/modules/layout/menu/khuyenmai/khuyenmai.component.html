@@ -110,10 +110,10 @@
                 {{ item.tenKhuyenMai }}
               </td>
               <td class="px-6 py-4">
-                {{ item.ngayBatDau }}
+                {{ item.ngayBatDau | date:'dd/MM/yyyy' }}
               </td>
               <td class="px-6 py-4">
-                {{ item.ngayKetThuc }}
+                {{ item.ngayKetThuc | date:'dd/MM/yyyy' }}
               </td>
               <td class="px-6 py-4">
                 {{ item.giaTri }}
