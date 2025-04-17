@@ -34,7 +34,7 @@ export class BananComponent implements OnInit {
   }
   searchForm: any = {
     tenBan: '',
-    loaiBanId: ''
+    idLoaiBan: ''
   };
   getTrangThaiName(trangThai: number): string {
     switch(trangThai) {
