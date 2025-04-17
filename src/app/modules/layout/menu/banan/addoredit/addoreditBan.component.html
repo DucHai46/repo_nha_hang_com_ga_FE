@@ -15,17 +15,14 @@
       </div>
   
       <div class="form-group">
-        <label for="status">Trạng thái:</label>
-        <input
-          type="number"
-          id="status"
-          [(ngModel)]="formData.trangThai"
-          name="moTa"
-          placeholder="0: Còn trống 1: Đặt trước 2: Đang sử dụng"
-          min="0"
-          max="2"
-        >
+        <label>Trạng thái:</label>
+        <select [(ngModel)]="formData.trangThai" name="trangThai" required>
+          <option [ngValue]="0">Còn trống</option>
+          <option [ngValue]="1">Đặt trước</option>
+          <option [ngValue]="2">Đang sử dụng</option>
+        </select>
       </div>
+      
       <div class="form-group">
         <label for="category">Loại bàn:</label>
         <select

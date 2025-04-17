@@ -27,7 +27,7 @@ export const remoteRoutes: Route[] = [
           { path: 'khuyenmai', component: KhuyenmaiComponent },
           { path: 'donvitinh', component: DonvitinhComponent },
           { path: 'loaitudo', component: LoaitudoComponent },
-          { path: 'tudo', component: TudoComponent },
+          { path: 'tudo', component: TudoComponent  },
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]

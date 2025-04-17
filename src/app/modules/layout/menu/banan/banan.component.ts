@@ -7,6 +7,7 @@ import { BanAnService } from './services/banan.service';
 import { LoaiBanAnService } from '../loaibanan/services/loaibanan.service';
 import { LoaiBanAn } from '../../../../models/LoaiBanAn';
 import { BanAnStore } from './store/ban-an.store';
+import { TrangThaiBan } from '../../../../models/TrangThaiBan';
 @Component({
   selector: 'app-banan',
   templateUrl: './banan.component.html',
@@ -35,6 +36,14 @@ export class BananComponent implements OnInit {
     tenBan: '',
     loaiBanId: ''
   };
+  getTrangThaiName(trangThai: number): string {
+    switch(trangThai) {
+      case TrangThaiBan.ConTrong: return 'Còn trống';
+      case TrangThaiBan.DatTruoc: return 'Đặt trước';
+      case TrangThaiBan.DangSuDung: return 'Đang sử dụng';
+      default: return 'Không xác định';
+    }
+  }
   search(){
     this.searchForm.isPaging = true;
     this.searchForm.PageNumber = 1;

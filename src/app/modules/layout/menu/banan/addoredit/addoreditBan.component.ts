@@ -23,7 +23,7 @@ export class AddoreditBanComponent implements OnInit {
   // Form data model
   formData = {
     tenBan: '',
-    trangThai: '',
+    trangThai: 0,
     loaiBan: {
       id: '',
       name: ''
