@@ -190,6 +190,16 @@
           </tbody>
         </table>
       </div>
+      <div class="mt-4 custom-paginator">  
+        <mat-paginator
+          [length]="total"
+          [pageIndex]="pageIndex - 1"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[2, 5, 10, 20]"
+          (page)="onMatPageChange($event)"
+          showFirstLastButtons>
+        </mat-paginator>
+      </div>
     </div>
   </div>
-  
+

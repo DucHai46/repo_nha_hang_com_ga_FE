@@ -54,6 +54,7 @@ import { TudoComponent } from './menu/tudo/tudo.component';
 import { TuDoService } from './menu/tudo/services/tudo.service';
 import { TuDoStore } from './menu/tudo/store/tu-do.store';
 import { AddoreditTuDoComponent } from './menu/tudo/addoredit/addoreditTuDo.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -93,6 +94,7 @@ import { AddoreditTuDoComponent } from './menu/tudo/addoredit/addoreditTuDo.comp
     ReactiveFormsModule,
     MatDialogModule,
     HttpClientModule,
+    MatPaginatorModule
     // Đăng ký route
   ],
   exports: [MenuComponent,MainComponent, SidenavComponent,LoginComponent,MenugoimonComponent],

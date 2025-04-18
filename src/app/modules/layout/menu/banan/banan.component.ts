@@ -8,6 +8,7 @@ import { LoaiBanAnService } from '../loaibanan/services/loaibanan.service';
 import { LoaiBanAn } from '../../../../models/LoaiBanAn';
 import { BanAnStore } from './store/ban-an.store';
 import { TrangThaiBan } from '../../../../models/TrangThaiBan';
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-banan',
   templateUrl: './banan.component.html',
@@ -21,15 +22,16 @@ export class BananComponent implements OnInit {
   banAnPaging: any[] = []; 
   itemsSearch: any[] = [];
   loaiBanAn: LoaiBanAn[] = [];
+  pageIndex = 1;
+  pageSize = 2;
+  total = 0;
   ngOnInit(): void {
     this.store.setItems$(this.banAnPaging);  
-    this.loaiBanAnService.getLoaiBanAn({}).subscribe(
-      {
-        next: (res: any) => {
-          this.loaiBanAn = res.data.data;
-        }
+    this.loaiBanAnService.getLoaiBanAn({}).subscribe({
+      next: (res: any) => {
+        this.loaiBanAn = res.data.data;
       }
-    )
+    });
     this.search();
   }
   searchForm: any = {
@@ -44,20 +46,29 @@ export class BananComponent implements OnInit {
       default: return 'Không xác định';
     }
   }
-  search(){
-    this.searchForm.isPaging = true;
-    this.searchForm.PageNumber = 1;
-    this.searchForm.PageSize = 20;
-    this.banAnService.getBanAn(this.searchForm).subscribe(
-      {
-        next: (res: any) => {
-          this.banAnPaging = res.data.data;
-        },
-        error: (err: any) => {
-          alert('Lấy dữ liệu thất bại');
-        }
+  search() {
+    this.searchForm.isPaging = false; // Lấy tất cả dữ liệu
+    this.banAnService.getBanAn(this.searchForm).subscribe({
+      next: (res: any) => {
+        this.itemsSearch = res.data.data; // Lưu toàn bộ dữ liệu
+        this.total = this.itemsSearch.length; // Tính tổng số bản ghi
+        this.updatePagedData(); // Cập nhật dữ liệu hiển thị
+      },
+      error: (err: any) => {
+        this.notification.error('Lỗi', 'Lấy dữ liệu thất bại');
       }
-    )  
+    });  
+  }
+  updatePagedData() {
+    const startIndex = (this.pageIndex - 1) * this.pageSize;
+    this.banAnPaging = this.itemsSearch.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  // Thêm hàm xử lý thay đổi trang
+  onMatPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.updatePagedData();
   }
   reset(){
     this.searchForm.tenBan = '';
