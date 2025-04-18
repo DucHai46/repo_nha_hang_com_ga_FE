@@ -43,6 +43,11 @@ export class SidenavComponent {
           label: 'Loại nguyên liệu'
         },
         {
+          routeLink: 'main/nguyenlieu',
+          icon: 'fal fa-onion',
+          label: 'Nguyên liệu'
+        },
+        {
           routeLink: 'main/donvitinh',
           icon: 'fal fa-calculator',
           label: 'Đơn vị tính'

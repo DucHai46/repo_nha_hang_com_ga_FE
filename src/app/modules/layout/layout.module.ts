@@ -55,6 +55,10 @@ import { TuDoService } from './menu/tudo/services/tudo.service';
 import { TuDoStore } from './menu/tudo/store/tu-do.store';
 import { AddoreditTuDoComponent } from './menu/tudo/addoredit/addoreditTuDo.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { NguyenlieuComponent } from './menu/nguyenlieu/nguyenlieu.component';
+import { NguyenlieuService } from './menu/nguyenlieu/services/nguyenlieu.service';
+import { NguyenLieuStore } from './menu/nguyenlieu/store/nguyen-lieu.store';
+import { AddoreditNguyenLieuComponent } from './menu/nguyenlieu/addoredit/addoreditNguyenLieu.component';
 
 
 @NgModule({
@@ -84,7 +88,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     LoaitudoComponent,
     AddoreditLoaiTuDoComponent,
     TudoComponent,
-    AddoreditTuDoComponent
+    AddoreditTuDoComponent,
+    NguyenlieuComponent,
+    AddoreditNguyenLieuComponent
 
   ], // Khai báo component
   imports: [
@@ -116,7 +122,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     LoaiTuDoService,
     LoaiTuDoStore,
     TuDoService,
-    TuDoStore
+    TuDoStore,
+    NguyenlieuService,
+    NguyenLieuStore
 
   ]
 })
