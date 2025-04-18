@@ -22,9 +22,14 @@ export class BananComponent implements OnInit {
   banAnPaging: any[] = []; 
   itemsSearch: any[] = [];
   loaiBanAn: LoaiBanAn[] = [];
-  pageIndex = 1;
-  pageSize = 2;
-  total = 0;
+// Thêm vào component class
+  paging: any = {
+    page: 1,
+    size: 10,
+    total: 0
+  };
+
+  totalPages = 0;
   ngOnInit(): void {
     this.store.setItems$(this.banAnPaging);  
     this.loaiBanAnService.getLoaiBanAn({}).subscribe({
@@ -47,29 +52,36 @@ export class BananComponent implements OnInit {
     }
   }
   search() {
-    this.searchForm.isPaging = false; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.PageNumber = this.paging.page;
+    this.searchForm.PageSize = this.paging.size;
     this.banAnService.getBanAn(this.searchForm).subscribe({
       next: (res: any) => {
-        this.itemsSearch = res.data.data; // Lưu toàn bộ dữ liệu
-        this.total = this.itemsSearch.length; // Tính tổng số bản ghi
-        this.updatePagedData(); // Cập nhật dữ liệu hiển thị
+        this.banAnPaging = res.data.data; // Lưu toàn bộ dữ liệu
+        this.paging.page = res.data.paging.currentPage;
+        this.paging.size = res.data.paging.pageSize;
+        this.paging.total = res.data.paging.totalRecords;
+        this.totalPages = Math.ceil(this.paging.total / this.paging.size);
       },
       error: (err: any) => {
         this.notification.error('Lỗi', 'Lấy dữ liệu thất bại');
       }
     });  
   }
-  updatePagedData() {
-    const startIndex = (this.pageIndex - 1) * this.pageSize;
-    this.banAnPaging = this.itemsSearch.slice(startIndex, startIndex + this.pageSize);
+
+  // Thêm vào component class
+  changePage(newPage: number) {
+    if (newPage < 1 || newPage > this.totalPages) return;
+    this.paging.page = newPage;
+    this.search();
   }
 
-  // Thêm hàm xử lý thay đổi trang
-  onMatPageChange(event: PageEvent) {
-    this.pageIndex = event.pageIndex + 1;
-    this.pageSize = event.pageSize;
-    this.updatePagedData();
+  changePageSize(newSize: number) {
+    this.paging.size = newSize;
+    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.search();
   }
+
   reset(){
     this.searchForm.tenBan = '';
     this.searchForm.loaiBanId = '';

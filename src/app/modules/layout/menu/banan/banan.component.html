@@ -97,7 +97,6 @@
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right">
           <thead class="text-xs text-gray-700 uppercase text-center">
-            >
             <tr>
               <th scope="col" class="px-6 py-3">STT</th>
               <th scope="col" class="px-6 py-3">Tên bàn</th>
@@ -115,7 +114,7 @@
                 scope="row"
                 class="px-6 py-4 font-medium whitespace-nowrap text-center"
               >
-                {{ i + 1 }}
+                {{ i + 1 + (paging.page - 1) * paging.size }}
               </td>
               <!-- <td class="px-6 py-4">
                 {{ item.ma }}
@@ -190,7 +189,7 @@
           </tbody>
         </table>
       </div>
-      <div class="mt-4 custom-paginator">  
+      <!-- <div class="mt-4 custom-paginator">  
         <mat-paginator
           [length]="total"
           [pageIndex]="pageIndex - 1"
@@ -199,6 +198,49 @@
           (page)="onMatPageChange($event)"
           showFirstLastButtons>
         </mat-paginator>
+      </div> -->
+      <!-- Thêm vào sau phần hiển thị danh sách -->
+      <div class="pagination-controls mt-4 flex justify-end">
+        <div class="flex items-center justify-between gap-2">
+          <div class="text-gray-600">
+            Tổng số bản ghi: {{ paging.total }}
+          </div>
+  
+          <div class="flex items-center gap-2">
+            <button 
+              (click)="changePage(paging.page - 1)"
+              [disabled]="paging.page === 1"
+              class="px-3 py-1 border rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            
+            <span class="mx-2">
+              Trang {{ paging.page }} / {{ totalPages }}
+            </span>
+            
+            <button 
+              (click)="changePage(paging.page + 1)"
+              [disabled]="paging.page === totalPages"
+              class="px-3 py-1 border rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+  
+          <div class="flex items-center gap-2">
+            <span>Hiển thị:</span>
+            <select 
+              [(ngModel)]="paging.size" 
+              (change)="changePageSize(paging.size)"
+              class="border rounded px-2 py-1"
+            >
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>

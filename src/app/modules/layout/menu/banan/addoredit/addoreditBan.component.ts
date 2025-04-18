@@ -13,14 +13,26 @@ export class AddoreditBanComponent implements OnInit {
   ngOnInit(): void {
     this.loaiBanAnService.getLoaiBanAn({}).subscribe({
       next: (res: any) => {
-        this.loaiBanAn = res.data.data;
+        this.loaiBanAn = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenLoai 
+        }));
+  
+        if (this.isEditMode) {
+          const categoryId = this.formData.loaiBan.id;
+          const selectedCategory = this.loaiBanAn.find(
+            (cat) => cat.id === categoryId
+          );
+          if (selectedCategory) {
+            this.formData.loaiBan = selectedCategory; 
+          }
+        }
       },
       error: (err: any) => {
         console.log(err);
       }
     });
   }
-  // Form data model
   formData = {
     tenBan: '',
     trangThai: 0,
@@ -30,7 +42,7 @@ export class AddoreditBanComponent implements OnInit {
     }
   };
 
-  isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
+  isEditMode: boolean = false; 
 
   constructor(
     private loaiBanAnService: LoaiBanAnService,
@@ -38,20 +50,31 @@ export class AddoreditBanComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if (data && data.item) {
-      // Nếu có dữ liệu truyền vào, đây là chế độ Sửa
       this.isEditMode = true;
-      this.formData = { ...data.item }; // Điền dữ liệu vào form
+  
+      this.formData = {
+        ...data.item,
+        loaiBan: {
+          id: data.item.loaiBan.id,
+          name: data.item.loaiBan.tenLoai 
+        }
+      };
     }
   }
 
-  // Hàm xử lý khi nhấn "Lưu"
+
   onSave(): void {
-    console.log(this.formData);
-    this.dialogRef.close(this.formData); // Đóng popup và trả về dữ liệu
+    const dataToSend = {
+      ...this.formData,
+      loaiBan: {
+        id: this.formData.loaiBan.id,
+        name: this.formData.loaiBan.name 
+      }
+    };
+    this.dialogRef.close(dataToSend); 
   }
 
-  // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
-    this.dialogRef.close(); // Đóng popup mà không trả về dữ liệu
+    this.dialogRef.close(); 
   }
 }
