@@ -172,6 +172,50 @@
           </tbody>
         </table>
       </div>
+
+      <div class="pagination-controls mt-4 flex justify-end">
+        <div class="flex items-center justify-between gap-2">
+          <div class="text-gray-600">
+            Tổng số bản ghi: {{ paging.total }}
+          </div>
+  
+          <div class="flex items-center gap-2">
+            <button 
+              (click)="changePage(paging.page - 1)"
+              [disabled]="paging.page === 1"
+              class="px-3 py-1 border rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            
+            <span class="mx-2">
+              Trang {{ paging.page }} / {{ totalPages }}
+            </span>
+            
+            <button 
+              (click)="changePage(paging.page + 1)"
+              [disabled]="paging.page === totalPages"
+              class="px-3 py-1 border rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+  
+          <div class="flex items-center gap-2">
+            <span>Hiển thị:</span>
+            <select 
+              [(ngModel)]="paging.size" 
+              (change)="changePageSize(paging.size)"
+              class="border rounded px-2 py-1"
+            >
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   

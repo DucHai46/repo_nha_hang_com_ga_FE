@@ -17,6 +17,13 @@ export class LoainguyenlieuComponent implements OnInit {
   loaiNguyenLieuPaging: any[] = []; 
   itemsSearch: any[] = [];
   danhMucNguyenLieu: DanhMucNguyenLieu[] = [];
+  paging: any = {
+    page: 1,
+    size: 10,
+    total: 0
+  };
+
+  totalPages = 0;
   ngOnInit(): void {
     this.store.setItems$(this.loaiNguyenLieuPaging);  
     this.danhMucNguyenLieuService.getDanhMucNguyenLieu({}).subscribe(
@@ -34,20 +41,36 @@ export class LoainguyenlieuComponent implements OnInit {
     danhMucNguyenLieuId: ''
   };
   search(){
-    this.searchForm.isPaging = true;
-    this.searchForm.PageNumber = 1;
-    this.searchForm.PageSize = 20;
+    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.PageNumber = this.paging.page;
+    this.searchForm.PageSize = this.paging.size;
     this.loainguyenlieuService.getLoaiNguyenLieu(this.searchForm).subscribe(
       {
         next: (res: any) => {
           this.loaiNguyenLieuPaging = res.data.data;
+          this.paging.page = res.data.paging.currentPage;
+          this.paging.size = res.data.paging.pageSize;
+          this.paging.total = res.data.paging.totalRecords;
+          this.totalPages = Math.ceil(this.paging.total / this.paging.size);
         },
         error: (err: any) => {
-          alert('Lấy dữ liệu thất bại');
+          this.notification.error('Lỗi', 'Lấy dữ liệu thất bại');
         }
       }
     )  
   }
+  changePage(newPage: number) {
+    if (newPage < 1 || newPage > this.totalPages) return;
+    this.paging.page = newPage;
+    this.search();
+  }
+
+  changePageSize(newSize: number) {
+    this.paging.size = newSize;
+    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.search();
+  }
+
   reset(){
     this.searchForm.tenLoai = '';
     this.searchForm.danhMucNguyenLieuId = '';
