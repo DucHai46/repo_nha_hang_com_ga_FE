@@ -34,6 +34,19 @@
             </option>
           </select>
         </div>
+        <div class="flex flex-col gap-2">
+          <label for="searchTrangThai">Trạng thái bàn</label>
+          <select
+            id="searchTrangThai"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:outline-none"
+            [(ngModel)]="searchForm.trangThai"
+          >
+            <option [value]="''">Tất cả</option>
+            <option [value]="0">Còn trống</option>
+            <option [value]="1">Đặt trước</option>
+            <option [value]="2">Đang sử dụng</option>
+          </select>
+        </div>
       </div>
       <!-- button -->
       <div class="flex flex-row gap-4 justify-center items-center">

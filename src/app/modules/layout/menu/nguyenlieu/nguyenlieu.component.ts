@@ -68,6 +68,7 @@ export class NguyenlieuComponent implements OnInit {
     loaiNguyenLieuId: '',
     donViTinhId: '',
     tuDoId: '',
+    trangThai: '',
   };
   search(){
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
@@ -113,6 +114,7 @@ export class NguyenlieuComponent implements OnInit {
     this.searchForm.loaiNguyenLieuId = '';
     this.searchForm.tuDoId = '';
     this.searchForm.donViTinhId = '';
+    this.searchForm.trangThai = '';
     this.search();
   }
   openDeletePopup(item: any): void {

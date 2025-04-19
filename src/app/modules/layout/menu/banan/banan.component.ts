@@ -41,7 +41,8 @@ export class BananComponent implements OnInit {
   }
   searchForm: any = {
     tenBan: '',
-    idLoaiBan: ''
+    idLoaiBan: '',
+    trangThai: ''
   };
   getTrangThaiName(trangThai: number): string {
     switch(trangThai) {
@@ -85,6 +86,7 @@ export class BananComponent implements OnInit {
   reset(){
     this.searchForm.tenBan = '';
     this.searchForm.loaiBanId = '';
+    this.searchForm.trangThai = '';
     this.search();
   }
   openAddPopup(): void {
