@@ -14,34 +14,6 @@ export class AddoreditNguyenLieuComponent implements OnInit {
   tuDo: any[] = [];
   donViTinh: any[] = [];
 
-
-  ngOnInit(): void {
-    this.loaiNguyenLieuService.getLoaiNguyenLieu({}).subscribe({
-      next: (res: any) => {
-        this.loaiNguyenLieu = res.data.data;
-      },
-      error: (err: any) => {
-        console.log(err);
-      }
-    });
-    this.tuDoService.getTuDo({}).subscribe({
-      next: (res: any) => {
-        this.tuDo = res.data.data;
-      },
-      error: (err: any) => {
-        console.log(err);
-      }
-    });
-    this.donViTinhService.getDonViTinh({}).subscribe({
-      next: (res: any) => {
-        this.donViTinh = res.data.data;
-      },
-      error: (err: any) => {
-        console.log(err);
-      }
-    });
-  }
-  // Form data model
   formData = {
     tenNguyenLieu: '',
     moTa: '',
@@ -61,7 +33,7 @@ export class AddoreditNguyenLieuComponent implements OnInit {
     trangThai: 0
   };
 
-  isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
+  isEditMode: boolean = false;
 
   constructor(
     private loaiNguyenLieuService: LoainguyenlieuService,
@@ -71,18 +43,99 @@ export class AddoreditNguyenLieuComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if (data && data.item) {
-      // Nếu có dữ liệu truyền vào, đây là chế độ Sửa
       this.isEditMode = true;
-      this.formData = { ...data.item }; // Điền dữ liệu vào form
+      const item = data.item;
+
+      this.formData = {
+        ...item,
+        loaiNguyenLieu: {
+          id: item.loaiNguyenLieu.id,
+          name: item.loaiNguyenLieu.tenLoai
+        },
+        tuDo: {
+          id: item.tuDo.id,
+          name: item.tuDo.tenTuDo
+        },
+        donViTinh: {
+          id: item.donViTinh.id,
+          name: item.donViTinh.tenDonViTinh
+        }
+      };
     }
   }
 
-  // Hàm xử lý khi nhấn "Lưu"
-  onSave(): void {
-    console.log(this.formData);
-    this.dialogRef.close(this.formData); // Đóng popup và trả về dữ liệu
+  ngOnInit(): void {
+    this.loaiNguyenLieuService.getLoaiNguyenLieu({}).subscribe({
+      next: (res: any) => {
+        this.loaiNguyenLieu = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenLoai
+        }));
+
+        if (this.isEditMode) {
+          const selected = this.loaiNguyenLieu.find(x => x.id === this.formData.loaiNguyenLieu.id);
+          if (selected) {
+            this.formData.loaiNguyenLieu = selected;
+          }
+        }
+      },
+      error: (err: any) => console.log(err)
+    });
+
+    this.tuDoService.getTuDo({}).subscribe({
+      next: (res: any) => {
+        this.tuDo = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenTuDo
+        }));
+
+        if (this.isEditMode) {
+          const selected = this.tuDo.find(x => x.id === this.formData.tuDo.id);
+          if (selected) {
+            this.formData.tuDo = selected;
+          }
+        }
+      },
+      error: (err: any) => console.log(err)
+    });
+
+    this.donViTinhService.getDonViTinh({}).subscribe({
+      next: (res: any) => {
+        this.donViTinh = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenDonViTinh
+        }));
+
+        if (this.isEditMode) {
+          const selected = this.donViTinh.find(x => x.id === this.formData.donViTinh.id);
+          if (selected) {
+            this.formData.donViTinh = selected;
+          }
+        }
+      },
+      error: (err: any) => console.log(err)
+    });
   }
 
+  onSave(): void {
+    const dataToSend = {
+      ...this.formData,
+      loaiNguyenLieu: {
+        id: this.formData.loaiNguyenLieu.id,
+        name: this.formData.loaiNguyenLieu.name
+      },
+      tuDo: {
+        id: this.formData.tuDo.id,
+        name: this.formData.tuDo.name
+      },
+      donViTinh: {
+        id: this.formData.donViTinh.id,
+        name: this.formData.donViTinh.name
+      }
+    };
+
+    this.dialogRef.close(dataToSend);
+  }
   // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
     this.dialogRef.close(); // Đóng popup mà không trả về dữ liệu

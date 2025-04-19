@@ -24,19 +24,18 @@
       ></textarea>
     </div>
     <div class="form-group">
-      <label for="category">Danh Mục Nguyên Liệu:</label>
+      <label for="category">Danh mục nguyên liệu:</label>
       <select
         id="category"
         [(ngModel)]="formData.danhMucNguyenLieu"
-        name="danhMucNguyenLieu"
+        name="danhmucnguyenlieu"
         class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
       >
-        <option
-          class="bg-white"
-          *ngFor="let danhMuc of danhMucNguyenLieu"
-          [ngValue]="{ id: danhMuc.id, name: danhMuc.tenDanhMuc }"
+        <option 
+        *ngFor="let danhMuc of danhMucNguyenLieu" 
+        [ngValue]="danhMuc" 
         >
-          {{ danhMuc.tenDanhMuc }}
+          {{ danhMuc.name }}
         </option>
       </select>
     </div>

@@ -28,15 +28,14 @@
         <select
           id="category"
           [(ngModel)]="formData.loaiTuDo"
-          name="loaiBanAn"
+          name="loaitu"
           class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
         >
-          <option
-            class="bg-white"
-            *ngFor="let loaiTu of loaiTuDo"
-            [ngValue]="{ id: loaiTu.id, name: loaiTu.tenLoai }"
+          <option 
+          *ngFor="let danhMuc of loaiTuDo" 
+          [ngValue]="danhMuc" 
           >
-            {{ loaiTu.tenLoai }}
+            {{ danhMuc.name }}
           </option>
         </select>
       </div>

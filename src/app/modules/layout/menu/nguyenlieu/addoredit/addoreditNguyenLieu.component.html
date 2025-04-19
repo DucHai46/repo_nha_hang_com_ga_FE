@@ -23,6 +23,7 @@
           placeholder="Nhập mô tả..."
         />
       </div>
+
       <div class="form-group">
         <label for="dvt">Đơn vị tính:</label>
         <select
@@ -31,15 +32,15 @@
           name="donvitinh"
           class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
         >
-          <option
-            class="bg-white"
-            *ngFor="let donvi of donViTinh"
-            [ngValue]="{ id: donvi.id, name: donvi.tenDonViTinh }"
+          <option 
+          *ngFor="let danhMuc of donViTinh" 
+          [ngValue]="danhMuc" 
           >
-            {{ donvi.tenDonViTinh }}
+            {{ danhMuc.name }}
           </option>
         </select>
       </div>
+
       <div class="form-group">
         <label for="giaTri">Số lượng:</label>
         <input
@@ -52,6 +53,7 @@
           placeholder="Nhập số lượng nguyên liệu..."
         />
       </div>
+
       <div class="form-group">
         <label for="category">Loại nguyên liệu:</label>
         <select
@@ -60,29 +62,28 @@
           name="loaiNguyenLieu"
           class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
         >
-          <option
-            class="bg-white"
-            *ngFor="let danhMuc of loaiNguyenLieu"
-            [ngValue]="{ id: danhMuc.id, name: danhMuc.tenLoai }"
+          <option 
+          *ngFor="let danhMuc of loaiNguyenLieu" 
+          [ngValue]="danhMuc" 
           >
-            {{ danhMuc.tenLoai }}
+            {{ danhMuc.name }}
           </option>
         </select>
       </div>
+
       <div class="form-group">
-        <label for="tuDO">Tủ đồ:</label>
+        <label for="td">Tủ đồ:</label>
         <select
-          id="tuDo"
+          id="td"
           [(ngModel)]="formData.tuDo"
           name="tuDo"
           class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
         >
-          <option
-            class="bg-white"
-            *ngFor="let danhMuc of tuDo"
-            [ngValue]="{ id: danhMuc.id, name: danhMuc.tenTuDo }"
+          <option 
+          *ngFor="let danhMuc of tuDo" 
+          [ngValue]="danhMuc" 
           >
-            {{ danhMuc.tenTuDo }}
+            {{ danhMuc.name }}
           </option>
         </select>
       </div>

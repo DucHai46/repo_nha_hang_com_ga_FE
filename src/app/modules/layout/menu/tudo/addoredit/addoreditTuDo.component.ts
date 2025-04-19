@@ -13,7 +13,20 @@ export class AddoreditTuDoComponent implements OnInit {
   ngOnInit(): void {
     this.loaiTuDoService.getLoaiTuDo({}).subscribe({
       next: (res: any) => {
-        this.loaiTuDo = res.data.data;
+        this.loaiTuDo = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenLoai 
+        }));
+  
+        if (this.isEditMode) {
+          const categoryId = this.formData.loaiTuDo.id;
+          const selectedCategory = this.loaiTuDo.find(
+            (cat) => cat.id === categoryId
+          );
+          if (selectedCategory) {
+            this.formData.loaiTuDo = selectedCategory; 
+          }
+        }
       },
       error: (err: any) => {
         console.log(err);
@@ -38,16 +51,28 @@ export class AddoreditTuDoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if (data && data.item) {
-      // Nếu có dữ liệu truyền vào, đây là chế độ Sửa
       this.isEditMode = true;
-      this.formData = { ...data.item }; // Điền dữ liệu vào form
+  
+      this.formData = {
+        ...data.item,
+        loaiTuDo: {
+          id: data.item.loaiTuDo.id,
+          name: data.item.loaiTuDo.tenLoai 
+        }
+      };
     }
   }
 
   // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
-    console.log(this.formData);
-    this.dialogRef.close(this.formData); // Đóng popup và trả về dữ liệu
+    const dataToSend = {
+      ...this.formData,
+      danhMucNguyenLieu: {
+        id: this.formData.loaiTuDo.id,
+        name: this.formData.loaiTuDo.name
+      }
+    };
+    this.dialogRef.close(dataToSend);
   }
 
   // Hàm xử lý khi nhấn "Hủy"
