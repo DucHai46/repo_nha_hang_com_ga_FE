@@ -64,7 +64,12 @@ export class SidenavComponent {
           routeLink: 'main/danhmucmonan',
           icon: 'fal fa-utensils',
           label: 'Danh mục món ăn'
-        }
+        },
+        {
+          routeLink: 'main/loaimonan',
+          icon: 'fal fa-tags',
+          label: 'Loại món ăn'
+        },
       ]
     },
     {

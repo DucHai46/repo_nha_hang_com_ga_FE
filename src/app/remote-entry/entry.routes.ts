@@ -14,6 +14,7 @@ import { DonvitinhComponent } from '../modules/layout/menu/donvitinh/donvitinh.c
 import { LoaitudoComponent } from '../modules/layout/menu/loaitudo/loaitudo.component';
 import { TudoComponent } from '../modules/layout/menu/tudo/tudo.component';
 import { NguyenlieuComponent } from '../modules/layout/menu/nguyenlieu/nguyenlieu.component';
+import { LoaimonanComponent } from '../modules/layout/menu/loaimonan/loaimonan.component';
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [
@@ -30,6 +31,7 @@ export const remoteRoutes: Route[] = [
           { path: 'loaitudo', component: LoaitudoComponent },
           { path: 'tudo', component: TudoComponent  },
           { path: 'nguyenlieu', component: NguyenlieuComponent },
+          { path: 'loaimonan', component: LoaimonanComponent },
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]

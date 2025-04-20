@@ -59,6 +59,10 @@ import { NguyenlieuComponent } from './menu/nguyenlieu/nguyenlieu.component';
 import { NguyenlieuService } from './menu/nguyenlieu/services/nguyenlieu.service';
 import { NguyenLieuStore } from './menu/nguyenlieu/store/nguyen-lieu.store';
 import { AddoreditNguyenLieuComponent } from './menu/nguyenlieu/addoredit/addoreditNguyenLieu.component';
+import { LoaimonanComponent } from './menu/loaimonan/loaimonan.component';
+import { LoaimonanService} from './menu/loaimonan/services/loaimonan.service';
+import { LoaiMonAnStore } from './menu/loaimonan/store/loai-mon-an.store';
+import { AddoreditLoaiMAComponent } from './menu/loaimonan/addoredit/addoreditLoaiMA.component';
 
 
 @NgModule({
@@ -90,7 +94,9 @@ import { AddoreditNguyenLieuComponent } from './menu/nguyenlieu/addoredit/addore
     TudoComponent,
     AddoreditTuDoComponent,
     NguyenlieuComponent,
-    AddoreditNguyenLieuComponent
+    AddoreditNguyenLieuComponent,
+    LoaimonanComponent,
+    AddoreditLoaiMAComponent
 
   ], // Khai báo component
   imports: [
@@ -124,7 +130,9 @@ import { AddoreditNguyenLieuComponent } from './menu/nguyenlieu/addoredit/addore
     TuDoService,
     TuDoStore,
     NguyenlieuService,
-    NguyenLieuStore
+    NguyenLieuStore,
+    LoaimonanService,
+    LoaiMonAnStore
 
   ]
 })
