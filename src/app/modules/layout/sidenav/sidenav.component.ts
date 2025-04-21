@@ -70,6 +70,11 @@ export class SidenavComponent {
           icon: 'fal fa-tags',
           label: 'Loại món ăn'
         },
+        {
+          routeLink: 'main/congthuc',
+          icon: 'fal fa-book-open',
+          label: 'Công thức'
+        },
       ]
     },
     {

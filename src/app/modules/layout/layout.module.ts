@@ -63,6 +63,10 @@ import { LoaimonanComponent } from './menu/loaimonan/loaimonan.component';
 import { LoaimonanService} from './menu/loaimonan/services/loaimonan.service';
 import { LoaiMonAnStore } from './menu/loaimonan/store/loai-mon-an.store';
 import { AddoreditLoaiMAComponent } from './menu/loaimonan/addoredit/addoreditLoaiMA.component';
+import { CongthucComponent } from './menu/congthuc/congthuc.component';
+import { CongthucService } from './menu/congthuc/services/congthuc.service';
+import { CongThucStore } from './menu/congthuc/store/cong-thuc.store';
+import { AddoreditCongThucComponent } from './menu/congthuc/addoredit/addoreditCongThuc.component';
 
 
 @NgModule({
@@ -96,7 +100,9 @@ import { AddoreditLoaiMAComponent } from './menu/loaimonan/addoredit/addoreditLo
     NguyenlieuComponent,
     AddoreditNguyenLieuComponent,
     LoaimonanComponent,
-    AddoreditLoaiMAComponent
+    AddoreditLoaiMAComponent,
+    CongthucComponent,
+    AddoreditCongThucComponent
 
   ], // Khai báo component
   imports: [
@@ -132,7 +138,9 @@ import { AddoreditLoaiMAComponent } from './menu/loaimonan/addoredit/addoreditLo
     NguyenlieuService,
     NguyenLieuStore,
     LoaimonanService,
-    LoaiMonAnStore
+    LoaiMonAnStore,
+    CongthucService,
+    CongThucStore
 
   ]
 })

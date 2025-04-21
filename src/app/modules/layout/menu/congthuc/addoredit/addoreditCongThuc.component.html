@@ -1,0 +1,97 @@
+<div class="p-5">
+    <h2 class="text-2xl font-bold mb-5">
+      {{ isEditMode ? "Sửa công thức" : "Thêm công thức" }}
+    </h2>
+    <form>
+      <div class="form-group">
+        <label for="materialName">Tên công thức :</label>
+        <input
+          type="text"
+          id="materialName"
+          [(ngModel)]="formData.tenCongThuc"
+          name="tenCongThuc"
+          placeholder="Nhập tên công thức..."
+        />
+      </div>
+      <div class="mb-4">
+        <label class="block font-medium mb-1">Ảnh công thức</label>
+      
+        <!-- Input chọn file -->
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          class="border border-gray-300 p-2 rounded w-full"
+        />
+      
+        <!-- Hiển thị ảnh preview sau khi chọn -->
+        <div *ngIf="imagePreview" class="mt-3">
+          <p class="text-sm text-gray-500 mb-1">Xem trước:</p>
+          <img [src]="imagePreview" alt="Preview" class="w-40 h-auto border rounded shadow" />
+        </div>
+      
+        <!-- Ảnh hiện tại (chế độ sửa) nếu chưa chọn mới -->
+        <div *ngIf="isEditMode && formData.hinhAnh && !imagePreview" class="mt-3">
+          <p class="text-sm text-gray-500 mb-1">Ảnh hiện tại:</p>
+          <img [src]="formData.hinhAnh" alt="Ảnh hiện tại" class="w-40 h-auto border rounded shadow" />
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="loaiNguyenLieu">Loại nguyên liệu:</label>
+        <select
+          [(ngModel)]="selectedLoaiNguyenLieuId"
+          (change)="onLoaiNguyenLieuChange()"
+          name="loaiNguyenLieu"
+          class="border rounded p-2 w-full"
+        >
+          <option *ngFor="let loai of loaiNguyenLieu" [value]="loai.id">{{ loai.name }}</option>
+        </select>
+      </div>
+    
+      
+      <!-- Chọn nguyên liệu theo loại -->
+      <div *ngIf="filteredNguyenLieu.length > 0" class="form-group mt-2">
+        <label for="nguyenLieu">Chọn nguyên liệu:</label>
+        <select
+          [(ngModel)]="selectedNguyenLieuId"
+          (change)="onNguyenLieuSelected()"
+          name="nguyenLieu"
+          class="border rounded p-2 w-full"
+        >
+          <option *ngFor="let nl of filteredNguyenLieu" [value]="nl.id">{{ nl.name }}</option>
+        </select>
+      </div>
+      
+      <div *ngFor="let item of formData.nguyenLieus; let i = index">
+        <div *ngIf="item.nguyenLieu?.id" class="grid grid-cols-[1fr_4rem_1fr_2.5rem] gap-2 mb-2 items-center">
+          <div class="truncate whitespace-nowrap overflow-hidden text-ellipsis">{{ item.nguyenLieu.name }}</div>
+          <input [(ngModel)]="item.soLuong" type="number" placeholder="0" name="soLuong{{i}}" class="border p-2 rounded w-full" />
+          <textarea [(ngModel)]="item.ghiChu" placeholder="Ghi chú" name="ghiChu{{i}}" class="border p-2 rounded w-full resize-none" rows="1"></textarea>
+          <button (click)="removeNguyenLieu(i)" class="bg-red-500 text-white w-8 h-8 rounded flex items-center justify-center text-sm" title="Xóa">x</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="materialName">Tên mô tả :</label>
+        <input
+          type="text"
+          id="materialName"
+          [(ngModel)]="formData.moTa"
+          name="tenLoai"
+          placeholder="Nhập mô tả..."
+        />
+      </div>
+            
+      
+
+  
+      <div class="flex justify-end gap-2">
+        <button type="button" class="btn cancel-btn" (click)="onCancel()">
+          Hủy
+        </button>
+        <button type="button" class="btn save-btn" (click)="onSave()">Lưu</button>
+      </div>
+    </form>
+  </div>
+  

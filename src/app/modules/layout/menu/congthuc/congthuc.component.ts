@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { AddoreditBanComponent } from './addoredit/addoreditBan.component';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
-import { BanAnService } from './services/banan.service';
-import { LoaiBanAnService } from '../loaibanan/services/loaibanan.service';
-import { LoaiBanAn } from '../../../../models/LoaiBanAn';
-import { BanAnStore } from './store/ban-an.store';
-import { TrangThaiBan } from '../../../../models/TrangThaiBan';
-import { PageEvent } from '@angular/material/paginator';
+import { CongthucService } from './services/congthuc.service';
+import { NguyenlieuService } from '../nguyenlieu/services/nguyenlieu.service';
+import { NguyenLieu } from '../../../../models/NguyenLieu';
+import { CongThucStore } from './store/cong-thuc.store';
+import { AddoreditCongThucComponent } from './addoredit/addoreditCongThuc.component';
+
+
+
 @Component({
-  selector: 'app-banan',
-  templateUrl: './banan.component.html',
-  styleUrl: './banan.component.scss'
+  selector: 'app-congthuc',
+  templateUrl: './congthuc.component.html',
+  styleUrl: './congthuc.component.scss'
 })
-export class BananComponent implements OnInit   {
-  constructor(private store: BanAnStore, private dialog: MatDialog, 
+export class CongthucComponent implements OnInit {
+  constructor(private store: CongThucStore, private dialog: MatDialog, 
     private notification: NzNotificationService, 
-    private banAnService: BanAnService, 
-    private loaiBanAnService: LoaiBanAnService) {}
-  banAnPaging: any[] = []; 
+    private congThucService: CongthucService, 
+    private nguyenLieuService: NguyenlieuService) {}
+  congThucPaging: any[] = []; 
   itemsSearch: any[] = [];
-  loaiBanAn: LoaiBanAn[] = [];
-// Thêm vào component class
+  nguyenLieu: NguyenLieu[] = [];
   paging: any = {
     page: 1,
     size: 10,
@@ -31,34 +31,24 @@ export class BananComponent implements OnInit   {
 
   totalPages = 0;
   ngOnInit(): void {
-    this.store.setItems$(this.banAnPaging);  
-    this.loaiBanAnService.getLoaiBanAn({}).subscribe({
+    this.store.setItems$(this.congThucPaging);  
+    this.nguyenLieuService.getNguyenLieu({}).subscribe({
       next: (res: any) => {
-        this.loaiBanAn = res.data.data;
+        this.nguyenLieu = res.data.data;
       }
     });
     this.search();
   }
   searchForm: any = {
-    tenBan: '',
-    idLoaiBan: '',
-    trangThai: ''
+    tenCongThuc: '',
   };
-  getTrangThaiName(trangThai: number): string {
-    switch(trangThai) {
-      case TrangThaiBan.ConTrong: return 'Còn trống';
-      case TrangThaiBan.DatTruoc: return 'Đặt trước';
-      case TrangThaiBan.DangSuDung: return 'Đang sử dụng';
-      default: return 'Không xác định';
-    }
-  }
   search() {
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    this.banAnService.getBanAn(this.searchForm).subscribe({
+    this.congThucService.getCongThuc(this.searchForm).subscribe({
       next: (res: any) => {
-        this.banAnPaging = res.data.data; // Lưu toàn bộ dữ liệu
+        this.congThucPaging = res.data.data; // Lưu toàn bộ dữ liệu
         this.paging.page = res.data.paging.currentPage;
         this.paging.size = res.data.paging.pageSize;
         this.paging.total = res.data.paging.totalRecords;
@@ -69,8 +59,6 @@ export class BananComponent implements OnInit   {
       }
     });  
   }
-
-  // Thêm vào component class
   changePage(newPage: number) {
     if (newPage < 1 || newPage > this.totalPages) return;
     this.paging.page = newPage;
@@ -82,22 +70,20 @@ export class BananComponent implements OnInit   {
     this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
     this.search();
   }
-
   reset(){
-    this.searchForm.tenBan = '';
-    this.searchForm.loaiBanId = '';
-    this.searchForm.trangThai = '';
+    this.searchForm.tenCongThuc = '';
     this.search();
   }
   openAddPopup(): void {
-      const dialogRef = this.dialog.open(AddoreditBanComponent, {
-        width: '400px',
+      const dialogRef = this.dialog.open(AddoreditCongThucComponent, {
+        width: '800px',
+        height: '600px',
         data: {}, // Không truyền dữ liệu vì là Thêm
       });
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.banAnService.addBanAn(result).subscribe(
+          this.congThucService.addCongThuc(result).subscribe(
           {
             next: (res: any) => {
               if (res.data) {
@@ -136,16 +122,15 @@ export class BananComponent implements OnInit   {
         }
       });
     }
-    // Hàm mở popup Sửa
   openEditPopup(item: any): void {
-    const dialogRef = this.dialog.open(AddoreditBanComponent, {
+    const dialogRef = this.dialog.open(AddoreditCongThucComponent, {
       width: '400px',
       data: { item }, // Truyền dữ liệu của nguyên liệu cần sửa
     });
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.banAnService.updateBanAn(item.id, result).subscribe(
+        this.congThucService.updateCongThuc(item.id, result).subscribe(
         {
           next: (res: any) => {
             if(res.data){
@@ -163,15 +148,17 @@ export class BananComponent implements OnInit   {
       }
     });
   }
+
+
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
-      data: { message: `Bạn có chắc chắn muốn xóa "${item.tenBan}" không?` },
+      data: { message: `Bạn có chắc chắn muốn xóa "${item.tenCongThuc}" không?` },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-      this.banAnService.deleteBanAn(item.id).subscribe(
+      this.congThucService.deleteCongThuc(item.id).subscribe(
         {
           next: (res: any) => {
             this.search();
@@ -194,7 +181,5 @@ export class BananComponent implements OnInit   {
       }
     });
   }
-  
-  
 
 }
