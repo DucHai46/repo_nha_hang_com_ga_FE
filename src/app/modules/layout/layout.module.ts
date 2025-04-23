@@ -67,6 +67,9 @@ import { CongthucComponent } from './menu/congthuc/congthuc.component';
 import { CongthucService } from './menu/congthuc/services/congthuc.service';
 import { CongThucStore } from './menu/congthuc/store/cong-thuc.store';
 import { AddoreditCongThucComponent } from './menu/congthuc/addoredit/addoreditCongThuc.component';
+import { AuthService } from '../../core/services/auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthGuardService } from '../../core/services/auth-guard.service';
 
 
 @NgModule({
@@ -141,7 +144,6 @@ import { AddoreditCongThucComponent } from './menu/congthuc/addoredit/addoreditC
     LoaiMonAnStore,
     CongthucService,
     CongThucStore
-
   ]
 })
 export class LayoutModule {}

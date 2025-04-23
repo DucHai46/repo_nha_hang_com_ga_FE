@@ -140,4 +140,8 @@ export class SidenavComponent {
       item.isOpen = !item.isOpen;
     }
   }
+
+  logout() {
+    localStorage.removeItem('token');
+  }
 }
