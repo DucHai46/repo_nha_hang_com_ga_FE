@@ -14,12 +14,12 @@ export class fileService {
 
 
   getFileById(fileId: string) {
-    return this.http.get(`${this.fileUrl}/file/api/files/download/${fileId}`);
+    return this.http.get(`${this.fileUrl}/api/files/download/${fileId}`);
   }
   addFile(data: any) {
-    return this.http.post(`${this.fileUrl}/file/api/files/upload`, data);
+    return this.http.post(`${this.fileUrl}/api/files/upload`, data);
   }
   deleteFile(fileId: string) {
-    return this.http.delete(`${this.fileUrl}/file/api/files/delete/${fileId}`);
+    return this.http.delete(`${this.fileUrl}/api/files/delete/${fileId}`);
   }
 }

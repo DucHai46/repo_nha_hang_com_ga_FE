@@ -13,11 +13,11 @@ export class AuthService {
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
   register(body: any) {
-    return this.http.post(`${this.authUrl}/auth/api/auth/register`, body);
+    return this.http.post(`${this.authUrl}/api/auth/register`, body);
   }
 
   login(body: any) {
-    return this.http.post(`${this.authUrl}/auth/api/auth/token`, body);
+    return this.http.post(`${this.authUrl}/api/auth/token`, body);
   }
 
   isAuthenticated(): boolean {
