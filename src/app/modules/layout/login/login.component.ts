@@ -1,3 +1,4 @@
+import { AuthService } from './../../../core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -15,20 +16,32 @@ export class LoginComponent implements OnInit {
     'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg'
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   currentIndex: number = 0;
 
+  formData = {
+    username: '',
+    password: ''
+  };
+
   ngOnInit() {
-    // setInterval(() => {
-    //   const section = document.getElementById('background-section');
-    //   if (section) {
-    //     section.style.backgroundImage = `url(${this.backgrounds[this.currentIndex]})`;
-    //     this.currentIndex = (this.currentIndex + 1) % this.backgrounds.length; // Xoay vòng hình ảnh
-    //   }
-    // }, 5000); // Đổi hình nền sau mỗi 5 giây
+    this.formData = {
+      username: '',
+      password: ''
+    };
   }
   login() {
-      this.router.navigate(['/main']);
+      this.authService.login(this.formData).subscribe({
+        next: (res: any) => {
+          if(res.token){
+            localStorage.setItem('token', res.token);
+          }
+          this.router.navigate(['/main']);
+        },
+        error: (err: any) => {
+          alert('Đăng nhập thất bại');
+        }
+      });
   }
 }

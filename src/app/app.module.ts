@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -9,6 +9,9 @@ import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirma
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from './core/services/auth.service';
+import { AuthGuardService } from './core/services/auth-guard.service';
 
 
 @NgModule({
@@ -22,7 +25,11 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    { provide: NZ_I18N, useValue: en_US }
+    { provide: NZ_I18N, useValue: en_US },
+    AuthService,
+    JwtHelperService,
+    AuthGuardService,
+    { provide: JWT_OPTIONS, useValue: {} },
   ],
   bootstrap: [AppComponent],
 })

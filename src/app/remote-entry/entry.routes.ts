@@ -16,10 +16,16 @@ import { TudoComponent } from '../modules/layout/menu/tudo/tudo.component';
 import { NguyenlieuComponent } from '../modules/layout/menu/nguyenlieu/nguyenlieu.component';
 import { LoaimonanComponent } from '../modules/layout/menu/loaimonan/loaimonan.component';
 import { CongthucComponent } from '../modules/layout/menu/congthuc/congthuc.component';
+import { AuthGuardService as AuthGuard } from '../core/services/auth-guard.service';
+import { XacnhangoimonComponent } from '../modules/layout/menugoimon/xacnhangoimon/xacnhangoimon.component';
+
+
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [
-      { path: 'main', component: MainComponent,
+      { path: 'main', 
+        component: MainComponent,
+        canActivate: [AuthGuard],
         children: [
           { path: 'dashboard', component: MonanComponent },
           { path: 'danhmucnguyenlieu', component: DanhmucnguyenlieuComponent },
@@ -40,12 +46,16 @@ export const remoteRoutes: Route[] = [
       },
     ]
   },
-  {
-    path: 'admin',
-    loadChildren: () => import('../modules/layout/layout.module').then((m) => m.LayoutModule),
-  },
+  // {
+  //   path: 'admin',
+  //   loadChildren: () => import('../modules/layout/layout.module').then((m) => m.LayoutModule),
+  // },
   {
     path: 'menugoimon',
     component: MenugoimonComponent,
+  },
+  {
+    path: 'xacnhangoimon',
+    component: XacnhangoimonComponent,
   },
 ];

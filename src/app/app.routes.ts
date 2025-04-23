@@ -16,12 +16,4 @@ export const appRoutes: Route[] = [
     path: 'menugoimon',
     component: MenugoimonComponent,
   },
-  {
-    path: 'menugoimon',
-    component: MenugoimonComponent,
-  },
-  {
-    path: 'xacnhangoimon',
-    component: XacnhangoimonComponent,
-  },
 ];
