@@ -31,7 +31,11 @@ import { AuthInterceptor } from './core/interceptor/auth-interceptor';
     JwtHelperService,
     AuthGuardService,
     { provide: JWT_OPTIONS, useValue: {} },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS, // Đăng ký interceptor
+      useClass: AuthInterceptor,
+      multi: true, // Cho phép nhiều interceptor cùng hoạt động
+    },  
   ],
   bootstrap: [AppComponent],
 })
