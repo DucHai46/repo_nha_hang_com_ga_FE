@@ -8,10 +8,11 @@ import { ThongtinchungComponent } from './modules/layout/menu/admin/thongtinchun
 import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirmation-dialog.component';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from './core/services/auth.service';
 import { AuthGuardService } from './core/services/auth-guard.service';
+import { AuthInterceptor } from './core/interceptor/auth-interceptor';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { AuthGuardService } from './core/services/auth-guard.service';
     JwtHelperService,
     AuthGuardService,
     { provide: JWT_OPTIONS, useValue: {} },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
 })
