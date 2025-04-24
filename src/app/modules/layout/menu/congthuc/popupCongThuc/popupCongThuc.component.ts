@@ -1,15 +1,25 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileService } from '../../../../../core/services/file.service';
 import { NguyenlieuService } from '../../nguyenlieu/services/nguyenlieu.service';
 import { LoainguyenlieuService } from '../../loainguyenlieu/services/loainguyenlieu.service';
 
 @Component({
-  selector: 'app-addoreditCongThuc',
-  templateUrl: './addoreditCongThuc.component.html',
-  styleUrls: ['./addoreditCongThuc.component.scss']
+  selector: 'app-popupCongThuc',
+  templateUrl: './popupCongThuc.component.html',
+  styleUrls: ['./popupCongThuc.component.scss']
 })
-export class AddoreditCongThucComponent implements OnInit {
+export class PopupCongThucComponent implements OnInit {
+  @Input() isEditMode = false;
+  @Input() formData: any = {
+    tenCongThuc: '',
+    nguyenLieus: [],
+    moTa: '',
+    hinhAnh: ''
+  };
+
+  @Output() close = new EventEmitter<void>();
+  @Output() save = new EventEmitter<any>();
+
   nguyenLieu: any[] = [];
   loaiNguyenLieu: any[] = [];
 
@@ -22,30 +32,14 @@ export class AddoreditCongThucComponent implements OnInit {
     }
   ];
 
-  formData: any = {
-    tenCongThuc: '',
-    nguyenLieus: [],
-    moTa: '',
-    hinhAnh: ''
-  };
-
-  isEditMode: boolean = false;
-
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
 
   constructor(
     private nguyenLieuService: NguyenlieuService,
     private fileService: FileService,
-    private loaiNguyenLieuService: LoainguyenlieuService,
-    public dialogRef: MatDialogRef<AddoreditCongThucComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    if (data && data.item) {
-      this.isEditMode = true;
-      this.formData = { ...data.item };
-    }
-  }
+    private loaiNguyenLieuService: LoainguyenlieuService
+  ) {}
 
   ngOnInit(): void {
     this.loaiNguyenLieuService.getLoaiNguyenLieu({}).subscribe({
@@ -68,13 +62,15 @@ export class AddoreditCongThucComponent implements OnInit {
       },
       error: (err: any) => console.log(err)
     });
+
+    // Nếu là edit và đã có nguyên liệu, bạn cần xử lý fill loaiSelections (có thể thêm sau nếu cần)
   }
 
   addLoaiSelection(): void {
     this.loaiSelections.push({
       selectedLoaiId: '',
-      filteredNguyenLieu: [],
       selectedNguyenLieuId: '',
+      filteredNguyenLieu: [],
       nguyenLieus: []
     });
   }
@@ -129,18 +125,20 @@ export class AddoreditCongThucComponent implements OnInit {
     const dataToSend = {
       tenCongThuc: this.formData.tenCongThuc,
       moTa: this.formData.moTa,
-      hinhAnh: JSON.stringify({
-        id: this.formData.hinhAnh.id,
-        name: this.formData.hinhAnh.name
-      }),
+      hinhAnh: this.formData.hinhAnh
+        ? JSON.stringify({
+            id: this.formData.hinhAnh.id,
+            name: this.formData.hinhAnh.name
+          })
+        : '',
       nguyenLieus: allNguyenLieus
     };
 
-    this.dialogRef.close(dataToSend);
+    this.save.emit(dataToSend);
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.close.emit();
   }
 
   onFileSelected(event: any): void {

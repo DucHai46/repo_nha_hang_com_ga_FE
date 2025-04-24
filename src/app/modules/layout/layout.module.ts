@@ -66,10 +66,10 @@ import { AddoreditLoaiMAComponent } from './menu/loaimonan/addoredit/addoreditLo
 import { CongthucComponent } from './menu/congthuc/congthuc.component';
 import { CongthucService } from './menu/congthuc/services/congthuc.service';
 import { CongThucStore } from './menu/congthuc/store/cong-thuc.store';
-import { AddoreditCongThucComponent } from './menu/congthuc/addoredit/addoreditCongThuc.component';
 import { AuthService } from '../../core/services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthGuardService } from '../../core/services/auth-guard.service';
+import { PopupCongThucComponent } from './menu/congthuc/popupCongThuc/popupCongThuc.component';
 
 
 @NgModule({
@@ -105,7 +105,7 @@ import { AuthGuardService } from '../../core/services/auth-guard.service';
     LoaimonanComponent,
     AddoreditLoaiMAComponent,
     CongthucComponent,
-    AddoreditCongThucComponent
+    PopupCongThucComponent
 
   ], // Khai báo component
   imports: [
