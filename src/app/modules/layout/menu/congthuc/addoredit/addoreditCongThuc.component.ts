@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { fileService } from '../../../../../fileService';
+import { FileService } from '../../../../../core/services/file.service';
 import { NguyenlieuService } from '../../nguyenlieu/services/nguyenlieu.service';
 import { LoainguyenlieuService } from '../../loainguyenlieu/services/loainguyenlieu.service';
 
@@ -36,7 +36,7 @@ export class AddoreditCongThucComponent implements OnInit {
 
   constructor(
     private nguyenLieuService: NguyenlieuService,
-    private fileService: fileService,
+    private fileService: FileService,
     private loaiNguyenLieuService: LoainguyenlieuService,
     public dialogRef: MatDialogRef<AddoreditCongThucComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -129,7 +129,10 @@ export class AddoreditCongThucComponent implements OnInit {
     const dataToSend = {
       tenCongThuc: this.formData.tenCongThuc,
       moTa: this.formData.moTa,
-      hinhAnh: this.formData.hinhAnh.name,
+      hinhAnh: JSON.stringify({
+        id: this.formData.hinhAnh.id,
+        name: this.formData.hinhAnh.name
+      }),
       nguyenLieus: allNguyenLieus
     };
 

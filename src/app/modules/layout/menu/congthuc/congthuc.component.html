@@ -109,7 +109,7 @@
                 {{ item.tenCongThuc }}
               </td>
               <td class="px-6 py-4" style="max-width: 200px;">
-                {{ item.hinhAnh }}
+                  <a (click)="download(parseJSON(item.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(item.hinhAnh)?.name }}</a>
               </td>
               <td class="px-6 py-4" style="min-width: 300px; max-width: 400px; white-space: normal;">
                 <ul>

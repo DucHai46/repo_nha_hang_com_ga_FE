@@ -13,6 +13,7 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from './core/services/auth.service';
 import { AuthGuardService } from './core/services/auth-guard.service';
 import { AuthInterceptor } from './core/interceptor/auth-interceptor';
+import { FileService } from './core/services/file.service';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AuthInterceptor } from './core/interceptor/auth-interceptor';
       useClass: AuthInterceptor,
       multi: true, // Cho phép nhiều interceptor cùng hoạt động
     },  
+    FileService,
   ],
   bootstrap: [AppComponent],
 })

@@ -7,6 +7,7 @@ import { NguyenlieuService } from '../nguyenlieu/services/nguyenlieu.service';
 import { NguyenLieu } from '../../../../models/NguyenLieu';
 import { CongThucStore } from './store/cong-thuc.store';
 import { AddoreditCongThucComponent } from './addoredit/addoreditCongThuc.component';
+import { FileService } from '../../../../core/services/file.service';
 
 
 
@@ -19,6 +20,7 @@ export class CongthucComponent implements OnInit {
   constructor(private store: CongThucStore, private dialog: MatDialog, 
     private notification: NzNotificationService, 
     private congThucService: CongthucService, 
+    private fileService: FileService,
     private nguyenLieuService: NguyenlieuService) {}
   congThucPaging: any[] = []; 
   itemsSearch: any[] = [];
@@ -182,4 +184,26 @@ export class CongthucComponent implements OnInit {
     });
   }
 
+  parseJSON(jsonString: string): any {
+    try {
+      return JSON.parse(jsonString);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  download(fileId: string): void {
+    this.fileService.downloadFile(fileId).subscribe(
+      (response: Blob) => {
+        // Create object URL from blob
+        const url = window.URL.createObjectURL(response);
+        
+        // Open preview in new tab
+        window.open(url, '_blank');
+        
+        // Cleanup object URL after preview opens
+        window.URL.revokeObjectURL(url);
+      }
+    );
+  }
 }
