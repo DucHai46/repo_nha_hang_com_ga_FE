@@ -97,8 +97,7 @@ export class CongthucComponent implements OnInit {
         next: (res: any) => {
           if (res.data) {
             // alert('Thêm mới thành công');
-            this.searchForm.tenBan = '';
-            this.searchForm.loaiBanId = '';
+            this.searchForm.tenCongThuc = '';
             this.search();
           }
           else{
