@@ -90,6 +90,7 @@ export class LoaibananComponent implements OnInit {
             // alert('Thêm mới thành công');
             this.searchForm.tenLoai = '';
             this.search();
+            this.closePopup();
           }
           else{
             alert('Thêm mới thất bại');

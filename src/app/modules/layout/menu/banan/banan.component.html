@@ -257,4 +257,12 @@
       </div>
     </div>
   </div>
+  <app-popupBanAn
+  *ngIf="isPopupOpen"
+  [isEditMode]="isEditMode"
+  [formData]="formData"
+  (close)="closePopup()"
+  (save)="onSaveCongThuc($event)"
+></app-popupBanAn>
+
 

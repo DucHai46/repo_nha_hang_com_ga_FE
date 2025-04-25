@@ -1,13 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoaiBanAnService } from '../../loaibanan/services/loaibanan.service';
-
 @Component({
-  selector: 'app-addoreditBan',
-  templateUrl: './addoreditBan.component.html',
-  styleUrl: './addoreditBan.component.scss'
+  selector: 'app-popupBanAn',
+  templateUrl: './popupBanAn.component.html',
+  styleUrls: ['./popupBanAn.component.scss']
 })
-export class AddoreditBanComponent implements OnInit {
+export class PopupBanAnComponent implements OnInit {
   loaiBanAn: any[] = [];  
 
   ngOnInit(): void {
@@ -33,7 +32,7 @@ export class AddoreditBanComponent implements OnInit {
       }
     });
   }
-  formData = {
+  @Input() formData = {
     tenBan: '',
     trangThai: 0,
     loaiBan: {
@@ -42,25 +41,14 @@ export class AddoreditBanComponent implements OnInit {
     }
   };
 
-  isEditMode: boolean = false; 
+  @Input() isEditMode: boolean = false; 
+  
+  @Output() close = new EventEmitter<void>();
+  @Output() save = new EventEmitter<any>();
 
   constructor(
-    private loaiBanAnService: LoaiBanAnService,
-    public dialogRef: MatDialogRef<AddoreditBanComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    if (data && data.item) {
-      this.isEditMode = true;
-  
-      this.formData = {
-        ...data.item,
-        loaiBan: {
-          id: data.item.loaiBan.id,
-          name: data.item.loaiBan.tenLoai 
-        }
-      };
-    }
-  }
+    private loaiBanAnService: LoaiBanAnService
+  ) {}
 
 
   onSave(): void {
@@ -71,10 +59,10 @@ export class AddoreditBanComponent implements OnInit {
         name: this.formData.loaiBan.name 
       }
     };
-    this.dialogRef.close(dataToSend); 
+    this.save.emit(dataToSend);
   }
 
   onCancel(): void {
-    this.dialogRef.close(); 
+    this.close.emit();
   }
 }

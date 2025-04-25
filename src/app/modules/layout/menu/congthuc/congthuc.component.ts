@@ -99,6 +99,7 @@ export class CongthucComponent implements OnInit {
             // alert('Thêm mới thành công');
             this.searchForm.tenCongThuc = '';
             this.search();
+            this.closePopup();
           }
           else{
             alert('Thêm mới thất bại');

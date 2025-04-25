@@ -36,7 +36,6 @@ import { LoainguyenlieuService } from './menu/loainguyenlieu/services/loainguyen
 import { BananComponent } from './menu/banan/banan.component';
 import { BanAnStore } from './menu/banan/store/ban-an.store';
 import { BanAnService } from './menu/banan/services/banan.service';
-import { AddoreditBanComponent } from './menu/banan/addoredit/addoreditBan.component';
 import { KhuyenmaiComponent } from './menu/khuyenmai/khuyenmai.component';
 import { khuyenmaiService } from './menu/khuyenmai/services/khuyenmai.service';
 import { KhuyenMaiStore } from './menu/khuyenmai/store/khuyen-mai.store';
@@ -70,6 +69,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthGuardService } from '../../core/services/auth-guard.service';
 import { PopupCongThucComponent } from './menu/congthuc/popupCongThuc/popupCongThuc.component';
 import { PopupLoaiBanAnComponent } from './menu/loaibanan/popupLoaiBanAn/popupLoaiBanAn.component';
+import { PopupBanAnComponent } from './menu/banan/popupBanAn/popupBanAn.component';
 
 
 @NgModule({
@@ -90,7 +90,6 @@ import { PopupLoaiBanAnComponent } from './menu/loaibanan/popupLoaiBanAn/popupLo
     XacnhangoimonComponent,
     LoaibananComponent,
     BananComponent,
-    AddoreditBanComponent,
     KhuyenmaiComponent,
     AddoreditKhuyenMaiComponent,
     DonvitinhComponent,
@@ -105,7 +104,8 @@ import { PopupLoaiBanAnComponent } from './menu/loaibanan/popupLoaiBanAn/popupLo
     AddoreditLoaiMAComponent,
     CongthucComponent,
     PopupCongThucComponent,
-    PopupLoaiBanAnComponent
+    PopupLoaiBanAnComponent,
+    PopupBanAnComponent
 
   ], // Khai báo component
   imports: [
