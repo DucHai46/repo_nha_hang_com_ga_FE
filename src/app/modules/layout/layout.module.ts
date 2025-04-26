@@ -19,7 +19,6 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { DanhmucmonanComponent } from './menu/danhmucmonan/danhmucmonan.component';
-import { AddoreditMAComponent } from './menu/danhmucmonan/addoreditMA/addoreditMA.component';
 import { DanhMucMonAnStore } from './menu/danhmucmonan/store/danh-muc-mon-an.store';
 import { LoainguyenlieuComponent } from './menu/loainguyenlieu/loainguyenlieu.component';
 import { AddoreditLoaiNLComponent } from './menu/loainguyenlieu/addoreditLoaiNL/addoreditLoaiNL.component';
@@ -60,7 +59,6 @@ import { AddoreditNguyenLieuComponent } from './menu/nguyenlieu/addoredit/addore
 import { LoaimonanComponent } from './menu/loaimonan/loaimonan.component';
 import { LoaimonanService} from './menu/loaimonan/services/loaimonan.service';
 import { LoaiMonAnStore } from './menu/loaimonan/store/loai-mon-an.store';
-import { AddoreditLoaiMAComponent } from './menu/loaimonan/addoredit/addoreditLoaiMA.component';
 import { CongthucComponent } from './menu/congthuc/congthuc.component';
 import { CongthucService } from './menu/congthuc/services/congthuc.service';
 import { CongThucStore } from './menu/congthuc/store/cong-thuc.store';
@@ -70,6 +68,8 @@ import { AuthGuardService } from '../../core/services/auth-guard.service';
 import { PopupCongThucComponent } from './menu/congthuc/popupCongThuc/popupCongThuc.component';
 import { PopupLoaiBanAnComponent } from './menu/loaibanan/popupLoaiBanAn/popupLoaiBanAn.component';
 import { PopupBanAnComponent } from './menu/banan/popupBanAn/popupBanAn.component';
+import { PopupDanhMucMAComponent } from './menu/danhmucmonan/popupDanhMucMA/popupDanhMucMA.component';
+import { PopupLoaiMAComponent } from './menu/loaimonan/popupLoaiMA/popupLoaiMA.component';
 
 
 @NgModule({
@@ -81,7 +81,6 @@ import { PopupBanAnComponent } from './menu/banan/popupBanAn/popupBanAn.componen
     DanhmucnguyenlieuComponent,
     LoginComponent,
     AddoreditComponent,
-    AddoreditMAComponent,
     AddoreditLoaiNLComponent,
     ConfirmationDialogComponent,
     DanhmucmonanComponent,
@@ -101,11 +100,12 @@ import { PopupBanAnComponent } from './menu/banan/popupBanAn/popupBanAn.componen
     NguyenlieuComponent,
     AddoreditNguyenLieuComponent,
     LoaimonanComponent,
-    AddoreditLoaiMAComponent,
     CongthucComponent,
     PopupCongThucComponent,
     PopupLoaiBanAnComponent,
-    PopupBanAnComponent
+    PopupBanAnComponent,
+    PopupDanhMucMAComponent,
+    PopupLoaiMAComponent
 
   ], // Khai báo component
   imports: [
