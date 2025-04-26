@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { KhuyenMaiStore } from './store/khuyen-mai.store';
-import { AddoreditKhuyenMaiComponent } from './addoredit/addoreditKhuyenMai.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
@@ -71,79 +70,63 @@ export class KhuyenmaiComponent implements OnInit {
     this.searchForm.tenKhuyenMai = '';
     this.search()
   }
- openAddPopup(): void {
-    const dialogRef = this.dialog.open(AddoreditKhuyenMaiComponent, {
-      width: '400px',
-      data: {}, // Không truyền dữ liệu vì là Thêm
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        // console.log('Thêm mới:', result);
-        this.khuyenmaiService.addKhuyenMai(result).subscribe(
-          {
-            next: (res: any) => {
-              if (res.data) {
-                // alert('Thêm mới thành công');
-                this.searchForm.tenKhuyenMai = '';
-                this.search();
-              }
-              else{
-                alert('Thêm mới thất bại');
-              }
-            },
-            error: (err: any) => {
-              alert('Thêm mới thất bại');
-            }
-          }
-        )
-        // this.notification.success(
-        //   'Thành công', // Tiêu đề
-        //   'Thêm dữ liệu thành công', // Nội dung
-        //   {
-        //     nzDuration: 3000, // Thời gian hiển thị (ms)
-        //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-        //   }
-        // );
-      }
-      else{
-        // this.notification.error(
-        //   'Thành công', // Tiêu đề
-        //   'Thêm dữ liệu thất bại', // Nội dung
-        //   {
-        //     nzDuration: 3000, // Thời gian hiển thị (ms)
-        //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-        //   }
-        // );
-      }
-    });
+  isPopupOpen = false;
+  isEditMode = false;
+  formData: any = {}
+
+
+  openAddPopup(): void {
+    this.isPopupOpen = true;
+    this.isEditMode = false;
+    this.formData = {};
   }
+  closePopup(): void {
+    this.isPopupOpen = false;
+    this.isEditMode = false;
+  }
+  onSaveCongThuc(body: any): void {
+    console.log(body);
   
-  openEditPopup(item: any): void {
-    const dialogRef = this.dialog.open(AddoreditKhuyenMaiComponent, {
-      width: '400px',
-      data: { item }, // Truyền dữ liệu của nguyên liệu cần sửa
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.khuyenmaiService.updateKhuyenMai(item.id, result).subscribe(
-          {
-            next: (res: any) => {
-              if(res.data){
-                this.search();
-              }
-              else{
-                alert('Sửa thất bại');
-              }
-            },
-            error: (err: any) => {
-              alert('Sửa thất bại');
-            }
+    if (!body) return;
+  
+    if (this.isEditMode) {
+      // Sửa bàn
+      this.khuyenmaiService.updateKhuyenMai(body.id, body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenKhuyenMai = '';
+            this.search();
+            this.closePopup();
+          } else {
+            alert('Cập nhật thất bại');
           }
-        )
-      }
-    });
+        },
+        error: () => alert('Cập nhật thất bại')
+      });
+    } else {
+      // Thêm mới bàn
+      this.khuyenmaiService.addKhuyenMai(body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenKhuyenMai = '';
+            this.search();
+            this.closePopup();
+          } else {
+            alert('Thêm mới thất bại');
+          }
+        },
+        error: () => alert('Thêm mới thất bại')
+      });
+    }
+  }
+
+  
+    // Hàm mở popup Sửa
+  openEditPopup(item: any): void {
+    this.isPopupOpen = true;
+    this.isEditMode = true;
+    this.formData = item;
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

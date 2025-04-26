@@ -1,0 +1,50 @@
+<div class="popup-backdrop">
+    <div class="popup-box">
+      <div class="p-5">
+        <h2 class="text-2xl font-bold mb-5">
+          {{ isEditMode ? "Sửa Đơn Vị Tính" : "Thêm Đơn Vị Tính" }}
+        </h2>
+        <form>
+          <!-- <div class="form-group">
+            <label for="materialCode">Mã Nguyên Liệu:</label>
+            <input
+              type="text"
+              id="materialCode"
+              [(ngModel)]="formData.ma"
+              name="ma"
+              placeholder="Nhập mã nguyên liệu..."
+            />
+          </div> -->
+      
+          <div class="form-group">
+            <label for="materialName">Tên đơn vị tính:</label>
+            <input
+              type="text"
+              id="materialName"
+              [(ngModel)]="formData.tenDonViTinh"
+              name="tenLoai"
+              placeholder="Nhập tên đơn vị tính..."
+            />
+          </div>
+      
+          <div class="form-group">
+            <label for="description">Mô Tả:</label>
+            <textarea
+              id="description"
+              [(ngModel)]="formData.moTa"
+              name="moTa"
+              placeholder="Nhập mô tả..."
+            ></textarea>
+          </div>
+      
+          <div class="flex justify-end gap-2">
+            <button type="button" class="btn cancel-btn" (click)="onCancel()">
+              Hủy
+            </button>
+            <button type="button" class="btn save-btn" (click)="onSave()">Lưu</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>

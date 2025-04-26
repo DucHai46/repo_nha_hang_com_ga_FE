@@ -1,28 +1,30 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DanhmucmonanService } from '../../danhmucmonan/services/danhmucmonan.service';
+import { DanhmucnguyenlieuService } from '../../danhmucnguyenlieu/services/danhmucnguyenlieu.service';
 
 @Component({
-  selector: 'app-popupLoaiMA',
-  templateUrl: './popupLoaiMA.component.html',
-  styleUrls: ['./popupLoaiMA.component.scss']
+  selector: 'app-popupLoaiNL',
+  templateUrl: './popupLoaiNL.component.html',
+  styleUrls: ['./popupLoaiNL.component.scss']
 })
-export class PopupLoaiMAComponent implements OnInit {
-  danhMucMonAn: any[] = [];  
+export class PopupLoaiNLComponent implements OnInit {
+  danhMucNguyenLieu: any[] = [];  
 
   ngOnInit(): void {
-    this.danhMucMonAnService.getDanhMucMonAn({}).subscribe({
+    this.danhMucNguyenLieuService.getDanhMucNguyenLieu({}).subscribe({
       next: (res: any) => {
-        this.danhMucMonAn = res.data.data.map((item: any) => ({
+        this.danhMucNguyenLieu = res.data.data.map((item: any) => ({
           id: item.id,
           name: item.tenDanhMuc
         }));
+
+        // Nếu đang ở chế độ sửa, gán lại object từ danh sách (để binding đúng)
         if (this.isEditMode) {
-          const categoryId = this.formData.danhMucMonAn.id;
-          const selectedCategory = this.danhMucMonAn.find(
+          const categoryId = this.formData.danhMucNguyenLieu.id;
+          const selectedCategory = this.danhMucNguyenLieu.find(
             (cat) => cat.id === categoryId
           );
           if (selectedCategory) {
-            this.formData.danhMucMonAn = selectedCategory; 
+            this.formData.danhMucNguyenLieu = selectedCategory;
           }
         }
       },
@@ -35,7 +37,7 @@ export class PopupLoaiMAComponent implements OnInit {
   @Input() formData = {
     tenLoai: '',
     moTa: '',
-    danhMucMonAn: {
+    danhMucNguyenLieu: {
       id: '',
       name: ''
     }
@@ -44,17 +46,18 @@ export class PopupLoaiMAComponent implements OnInit {
   @Input() isEditMode = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
+
  constructor(
-    private danhMucMonAnService: DanhmucmonanService,
+    private danhMucNguyenLieuService: DanhmucnguyenlieuService,
   ) {}
 
   // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
     const dataToSend = {
       ...this.formData,
-      danhMucMonAn: {
-        id: this.formData.danhMucMonAn.id,
-        name: this.formData.danhMucMonAn.name
+      danhMucNguyenLieu: {
+        id: this.formData.danhMucNguyenLieu.id,
+        name: this.formData.danhMucNguyenLieu.name
       }
     };
     this.save.emit(dataToSend);

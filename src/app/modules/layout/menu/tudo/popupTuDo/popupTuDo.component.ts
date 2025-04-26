@@ -1,28 +1,28 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DanhmucmonanService } from '../../danhmucmonan/services/danhmucmonan.service';
-
+import { LoaiTuDoService } from '../../loaitudo/services/loaitudo.service';
 @Component({
-  selector: 'app-popupLoaiMA',
-  templateUrl: './popupLoaiMA.component.html',
-  styleUrls: ['./popupLoaiMA.component.scss']
+  selector: 'app-popupTuDo',
+  templateUrl: './popupTuDo.component.html',
+  styleUrls: ['./popupTuDo.component.scss']
 })
-export class PopupLoaiMAComponent implements OnInit {
-  danhMucMonAn: any[] = [];  
+export class PopupTuDoComponent implements OnInit {
+  loaiTuDo: any[] = [];  
 
   ngOnInit(): void {
-    this.danhMucMonAnService.getDanhMucMonAn({}).subscribe({
+    this.loaiTuDoService.getLoaiTuDo({}).subscribe({
       next: (res: any) => {
-        this.danhMucMonAn = res.data.data.map((item: any) => ({
+        this.loaiTuDo = res.data.data.map((item: any) => ({
           id: item.id,
-          name: item.tenDanhMuc
+          name: item.tenLoai 
         }));
+  
         if (this.isEditMode) {
-          const categoryId = this.formData.danhMucMonAn.id;
-          const selectedCategory = this.danhMucMonAn.find(
+          const categoryId = this.formData.loaiTuDo.id;
+          const selectedCategory = this.loaiTuDo.find(
             (cat) => cat.id === categoryId
           );
           if (selectedCategory) {
-            this.formData.danhMucMonAn = selectedCategory; 
+            this.formData.loaiTuDo = selectedCategory; 
           }
         }
       },
@@ -33,32 +33,34 @@ export class PopupLoaiMAComponent implements OnInit {
   }
   // Form data model
   @Input() formData = {
-    tenLoai: '',
+    tenTuDo: '',
     moTa: '',
-    danhMucMonAn: {
+    loaiTuDo: {
       id: '',
       name: ''
     }
   };
 
-  @Input() isEditMode = false;
+  @Input() isEditMode: boolean = false; 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
- constructor(
-    private danhMucMonAnService: DanhmucmonanService,
+
+  constructor(
+    private loaiTuDoService: LoaiTuDoService,
   ) {}
 
   // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
     const dataToSend = {
       ...this.formData,
-      danhMucMonAn: {
-        id: this.formData.danhMucMonAn.id,
-        name: this.formData.danhMucMonAn.name
+      danhMucNguyenLieu: {
+        id: this.formData.loaiTuDo.id,
+        name: this.formData.loaiTuDo.name
       }
     };
     this.save.emit(dataToSend);
   }
+
   // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
     this.close.emit(); // Đóng popup mà không trả về dữ liệu
