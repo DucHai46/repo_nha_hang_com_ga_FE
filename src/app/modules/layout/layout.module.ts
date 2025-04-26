@@ -39,19 +39,16 @@ import { KhuyenMaiStore } from './menu/khuyenmai/store/khuyen-mai.store';
 import { DonvitinhComponent } from './menu/donvitinh/donvitinh.component';
 import { DonViTinhService } from './menu/donvitinh/services/donvitinh.service';
 import { DonViTinhStore } from './menu/donvitinh/store/don-vi-tinh.store';
-import { AddoreditDonViTinhComponent } from './menu/donvitinh/addoredit/addoreditDonViTinh.component';
 import { LoaitudoComponent } from './menu/loaitudo/loaitudo.component';
 import { LoaiTuDoService } from './menu/loaitudo/services/loaitudo.service';
 import { LoaiTuDoStore } from './menu/loaitudo/store/loai-tu-do.store';
 import { TudoComponent } from './menu/tudo/tudo.component';
 import { TuDoService } from './menu/tudo/services/tudo.service';
 import { TuDoStore } from './menu/tudo/store/tu-do.store';
-import { AddoreditTuDoComponent } from './menu/tudo/addoredit/addoreditTuDo.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NguyenlieuComponent } from './menu/nguyenlieu/nguyenlieu.component';
 import { NguyenlieuService } from './menu/nguyenlieu/services/nguyenlieu.service';
 import { NguyenLieuStore } from './menu/nguyenlieu/store/nguyen-lieu.store';
-import { AddoreditNguyenLieuComponent } from './menu/nguyenlieu/addoredit/addoreditNguyenLieu.component';
 import { LoaimonanComponent } from './menu/loaimonan/loaimonan.component';
 import { LoaimonanService} from './menu/loaimonan/services/loaimonan.service';
 import { LoaiMonAnStore } from './menu/loaimonan/store/loai-mon-an.store';
@@ -71,6 +68,8 @@ import { PopupLoaiTuDoComponent } from './menu/loaitudo/popupLoaiTuDo/popupLoaiT
 import { PopupTuDoComponent } from './menu/tudo/popupTuDo/popupTuDo.component';
 import { PopupDanhMucNLComponent } from './menu/danhmucnguyenlieu/popupDanhMucNL/popupDanhMucNL.component';
 import { PopupLoaiNLComponent } from './menu/loainguyenlieu/popupLoaiNL/popupLoaiNL.component';
+import { PopupDonViTinhComponent } from './menu/donvitinh/popupDonViTinh/popupDonViTinh.component';
+import { PopupNguyenLieuComponent } from './menu/nguyenlieu/popupNguyenLieu/popupNguyenLieu.component';
 
 
 @NgModule({
@@ -90,12 +89,9 @@ import { PopupLoaiNLComponent } from './menu/loainguyenlieu/popupLoaiNL/popupLoa
     BananComponent,
     KhuyenmaiComponent,
     DonvitinhComponent,
-    AddoreditDonViTinhComponent,
     LoaitudoComponent,
     TudoComponent,
-    AddoreditTuDoComponent,
     NguyenlieuComponent,
-    AddoreditNguyenLieuComponent,
     LoaimonanComponent,
     CongthucComponent,
     PopupCongThucComponent,
@@ -107,7 +103,9 @@ import { PopupLoaiNLComponent } from './menu/loainguyenlieu/popupLoaiNL/popupLoa
     PopupLoaiTuDoComponent,
     PopupTuDoComponent,
     PopupDanhMucNLComponent,
-    PopupLoaiNLComponent
+    PopupLoaiNLComponent,
+    PopupDonViTinhComponent,
+    PopupNguyenLieuComponent
 
   ], // Khai báo component
   imports: [

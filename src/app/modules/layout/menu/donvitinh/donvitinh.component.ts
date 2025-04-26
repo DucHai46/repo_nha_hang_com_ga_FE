@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DonViTinhStore } from './store/don-vi-tinh.store';
-import { AddoreditDonViTinhComponent } from './addoredit/addoreditDonViTinh.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
@@ -69,79 +68,62 @@ export class DonvitinhComponent implements OnInit {
     this.searchForm.tenDonViTinh = '';
     this.search()
   }
+  isPopupOpen = false;
+  isEditMode = false;
+  formData: any = {}
   // Hàm mở popup Thêm
   openAddPopup(): void {
-    const dialogRef = this.dialog.open(AddoreditDonViTinhComponent, {
-      width: '400px',
-      data: {}, // Không truyền dữ liệu vì là Thêm
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        // console.log('Thêm mới:', result);
-        this.donvitinhService.addDonViTinh(result).subscribe(
-          {
-            next: (res: any) => {
-              if (res.data) {
-                // alert('Thêm mới thành công');
-                this.searchForm.tenLoai = '';
-                this.search();
-              }
-              else{
-                alert('Thêm mới thất bại');
-              }
-            },
-            error: (err: any) => {
-              alert('Thêm mới thất bại');
-            }
-          }
-        )
-        // this.notification.success(
-        //   'Thành công', // Tiêu đề
-        //   'Thêm dữ liệu thành công', // Nội dung
-        //   {
-        //     nzDuration: 3000, // Thời gian hiển thị (ms)
-        //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-        //   }
-        // );
-      }
-      else{
-        // this.notification.error(
-        //   'Thành công', // Tiêu đề
-        //   'Thêm dữ liệu thất bại', // Nội dung
-        //   {
-        //     nzDuration: 3000, // Thời gian hiển thị (ms)
-        //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-        //   }
-        // );
-      }
-    });
+    this.isPopupOpen = true;
+    this.isEditMode = false;
+    this.formData = {};
   }
-  openEditPopup(item: any): void {
-    const dialogRef = this.dialog.open(AddoreditDonViTinhComponent, {
-      width: '400px',
-      data: { item }, // Truyền dữ liệu của nguyên liệu cần sửa
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.donvitinhService.updateDonViTinh(item.id, result).subscribe(
-          {
-            next: (res: any) => {
-              if(res.data){
-                this.search();
-              }
-              else{
-                alert('Sửa thất bại');
-              }
-            },
-            error: (err: any) => {
-              alert('Sửa thất bại');
-            }
+  closePopup(): void {
+    this.isPopupOpen = false;
+    this.isEditMode = false;
+  }
+  onSaveCongThuc(body: any): void {
+    console.log(body);
+  
+    if (!body) return;
+  
+    if (this.isEditMode) {
+      // Sửa bàn
+      this.donvitinhService.updateDonViTinh(body.id, body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenDonViTinh = '';
+            this.search();
+            this.closePopup();
+          } else {
+            alert('Cập nhật thất bại');
           }
-        )
-      }
-    });
+        },
+        error: () => alert('Cập nhật thất bại')
+      });
+    } else {
+      // Thêm mới bàn
+      this.donvitinhService.addDonViTinh(body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenDonViTinh = '';
+            this.search();
+            this.closePopup();
+          } else {
+            alert('Thêm mới thất bại');
+          }
+        },
+        error: () => alert('Thêm mới thất bại')
+      });
+    }
+  }
+
+
+
+  // Hàm mở popup Sửa
+  openEditPopup(item: any): void {
+    this.isPopupOpen = true;
+    this.isEditMode = true;
+    this.formData = item;
   }
 
   openDeletePopup(item: any): void {

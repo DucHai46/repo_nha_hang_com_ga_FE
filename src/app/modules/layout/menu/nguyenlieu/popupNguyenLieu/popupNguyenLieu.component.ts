@@ -1,68 +1,17 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TuDoService } from '../../tudo/services/tudo.service';
 import { DonViTinhService } from '../../donvitinh/services/donvitinh.service';
 import { LoainguyenlieuService } from '../../loainguyenlieu/services/loainguyenlieu.service';
 
 @Component({
-  selector: 'app-addoreditNguyenLieu',
-  templateUrl: './addoreditNguyenLieu.component.html',
-  styleUrl: './addoreditNguyenLieu.component.scss'
+  selector: 'app-popupNguyenLieu',
+  templateUrl: './popupNguyenLieu.component.html',
+  styleUrls: ['./popupNguyenLieu.component.scss']
 })
-export class AddoreditNguyenLieuComponent implements OnInit {
+export class PopupNguyenLieuComponent implements OnInit {
   loaiNguyenLieu: any[] = [];
   tuDo: any[] = [];
   donViTinh: any[] = [];
-
-  formData = {
-    tenNguyenLieu: '',
-    moTa: '',
-    soLuong: 0,
-    loaiNguyenLieu: {
-      id: '',
-      name: ''
-    },
-    tuDo: {
-      id: '',
-      name: ''
-    },
-    donViTinh: {
-      id: '',
-      name: ''
-    },
-    trangThai: 0
-  };
-
-  isEditMode: boolean = false;
-
-  constructor(
-    private loaiNguyenLieuService: LoainguyenlieuService,
-    private tuDoService: TuDoService,
-    private donViTinhService: DonViTinhService,
-    public dialogRef: MatDialogRef<AddoreditNguyenLieuComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    if (data && data.item) {
-      this.isEditMode = true;
-      const item = data.item;
-
-      this.formData = {
-        ...item,
-        loaiNguyenLieu: {
-          id: item.loaiNguyenLieu.id,
-          name: item.loaiNguyenLieu.tenLoai
-        },
-        tuDo: {
-          id: item.tuDo.id,
-          name: item.tuDo.tenTuDo
-        },
-        donViTinh: {
-          id: item.donViTinh.id,
-          name: item.donViTinh.tenDonViTinh
-        }
-      };
-    }
-  }
 
   ngOnInit(): void {
     this.loaiNguyenLieuService.getLoaiNguyenLieu({}).subscribe({
@@ -116,7 +65,37 @@ export class AddoreditNguyenLieuComponent implements OnInit {
       error: (err: any) => console.log(err)
     });
   }
+  // Form data model
+  @Input() formData = {
+    tenNguyenLieu: '',
+    moTa: '',
+    soLuong: 0,
+    loaiNguyenLieu: {
+      id: '',
+      name: ''
+    },
+    tuDo: {
+      id: '',
+      name: ''
+    },
+    donViTinh: {
+      id: '',
+      name: ''
+    },
+    trangThai: 0
+  };
 
+  @Input() isEditMode = false;
+  @Output() close = new EventEmitter<void>();
+  @Output() save = new EventEmitter<any>();
+
+ constructor(
+  private loaiNguyenLieuService: LoainguyenlieuService,
+  private tuDoService: TuDoService,
+  private donViTinhService: DonViTinhService,
+  ) {}
+
+  // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
     const dataToSend = {
       ...this.formData,
@@ -133,11 +112,10 @@ export class AddoreditNguyenLieuComponent implements OnInit {
         name: this.formData.donViTinh.name
       }
     };
-
-    this.dialogRef.close(dataToSend);
+    this.save.emit(dataToSend);
   }
   // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
-    this.dialogRef.close(); // Đóng popup mà không trả về dữ liệu
+    this.close.emit(); // Đóng popup mà không trả về dữ liệu
   }
 }
