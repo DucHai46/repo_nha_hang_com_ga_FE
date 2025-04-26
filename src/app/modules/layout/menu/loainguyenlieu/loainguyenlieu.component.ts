@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { LoaiNguyenLieuStore } from '../loainguyenlieu/store/loai-nguyen-lieu.store';
-import { AddoreditLoaiNLComponent } from './addoreditLoaiNL/addoreditLoaiNL.component';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 import { LoainguyenlieuService } from './services/loainguyenlieu.service';
 import { DanhmucnguyenlieuService } from '../danhmucnguyenlieu/services/danhmucnguyenlieu.service';
@@ -77,81 +76,67 @@ export class LoainguyenlieuComponent implements OnInit {
     this.search();
   }
 
+
+  isPopupOpen = false;
+  isEditMode = false;
+  formData: any = {}
+
+
   openAddPopup(): void {
-      const dialogRef = this.dialog.open(AddoreditLoaiNLComponent, {
-        width: '400px',
-        data: {}, // Không truyền dữ liệu vì là Thêm
-      });
+    this.isPopupOpen = true;
+    this.isEditMode = false;
+    this.formData = {};
+  }
+  closePopup(): void {
+    this.isPopupOpen = false;
+    this.isEditMode = false;
+  }
+  onSaveCongThuc(body: any): void {
+    console.log(body);
   
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.loainguyenlieuService.addLoaiNguyenLieu(result).subscribe(
-          {
-            next: (res: any) => {
-              if (res.data) {
-                // alert('Thêm mới thành công');
-                this.searchForm.tenLoai = '';
-                this.searchForm.danhMucNguyenLieuId = '';
-                this.search();
-              }
-              else{
-                alert('Thêm mới thất bại');
-              }
-            },
-            error: (err: any) => {
-              alert('Thêm mới thất bại');
-            }
+    if (!body) return;
+  
+    if (this.isEditMode) {
+      // Sửa bàn
+      this.loainguyenlieuService.updateLoaiNguyenLieu(body.id, body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenLoai = '';
+            this.searchForm.danhMucNguyenLieuId = '';
+            this.search();
+            this.closePopup();
+          } else {
+            alert('Cập nhật thất bại');
           }
-        )
-          // this.notification.success(
-          //   'Thành công', // Tiêu đề
-          //   'Thêm dữ liệu thành công', // Nội dung
-          //   {
-          //     nzDuration: 3000, // Thời gian hiển thị (ms)
-          //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-          //   }
-          // );
-        }
-        else{
-          // this.notification.error(
-          //   'Thành công', // Tiêu đề
-          //   'Thêm dữ liệu thất bại', // Nội dung
-          //   {
-          //     nzDuration: 3000, // Thời gian hiển thị (ms)
-          //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-          //   }
-          // );
-        }
+        },
+        error: () => alert('Cập nhật thất bại')
+      });
+    } else {
+      // Thêm mới bàn
+      this.loainguyenlieuService.addLoaiNguyenLieu(body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenLoai = '';
+            this.searchForm.danhMucNguyenLieuId = '';
+            this.search();
+            this.closePopup();
+          } else {
+            alert('Thêm mới thất bại');
+          }
+        },
+        error: () => alert('Thêm mới thất bại')
       });
     }
+  }
+
   
     // Hàm mở popup Sửa
     openEditPopup(item: any): void {
-      const dialogRef = this.dialog.open(AddoreditLoaiNLComponent, {
-        width: '400px',
-        data: { item }, // Truyền dữ liệu của nguyên liệu cần sửa
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-        this.loainguyenlieuService.updateLoaiNguyenLieu(item.id, result).subscribe(
-          {
-            next: (res: any) => {
-              if(res.data){
-                this.search();
-              }
-              else{
-                alert('Sửa thất bại');
-              }
-            },
-            error: (err: any) => {
-              alert('Sửa thất bại');
-            }
-          }
-        )
-        }
-      });
+      this.isPopupOpen = true;
+      this.isEditMode = true;
+      this.formData = item;
     }
+  
   
       // Hàm mở popup xác nhận xóa
     openDeletePopup(item: any): void {

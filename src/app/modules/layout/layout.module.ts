@@ -11,7 +11,6 @@ import { DanhmucnguyenlieuComponent } from './menu/danhmucnguyenlieu/danhmucnguy
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AddoreditComponent } from './menu/danhmucnguyenlieu/addoredit/addoredit.component';
 import { DanhMucNguyenLieuStore } from './menu/danhmucnguyenlieu/store/danh-muc-nguyen-lieu.store';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog.component';
@@ -21,7 +20,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DanhmucmonanComponent } from './menu/danhmucmonan/danhmucmonan.component';
 import { DanhMucMonAnStore } from './menu/danhmucmonan/store/danh-muc-mon-an.store';
 import { LoainguyenlieuComponent } from './menu/loainguyenlieu/loainguyenlieu.component';
-import { AddoreditLoaiNLComponent } from './menu/loainguyenlieu/addoreditLoaiNL/addoreditLoaiNL.component';
 import { LoaiNguyenLieuStore } from './menu/loainguyenlieu/store/loai-nguyen-lieu.store';
 import { MenugoimonComponent } from './menugoimon/menugoimon.component';
 import { DanhmucmonanService } from './menu/danhmucmonan/services/danhmucmonan.service';
@@ -45,7 +43,6 @@ import { AddoreditDonViTinhComponent } from './menu/donvitinh/addoredit/addoredi
 import { LoaitudoComponent } from './menu/loaitudo/loaitudo.component';
 import { LoaiTuDoService } from './menu/loaitudo/services/loaitudo.service';
 import { LoaiTuDoStore } from './menu/loaitudo/store/loai-tu-do.store';
-import { AddoreditLoaiTuDoComponent } from './menu/loaitudo/addoredit/addoreditLoaiTuDo.component';
 import { TudoComponent } from './menu/tudo/tudo.component';
 import { TuDoService } from './menu/tudo/services/tudo.service';
 import { TuDoStore } from './menu/tudo/store/tu-do.store';
@@ -70,6 +67,10 @@ import { PopupBanAnComponent } from './menu/banan/popupBanAn/popupBanAn.componen
 import { PopupDanhMucMAComponent } from './menu/danhmucmonan/popupDanhMucMA/popupDanhMucMA.component';
 import { PopupLoaiMAComponent } from './menu/loaimonan/popupLoaiMA/popupLoaiMA.component';
 import { PopupKhuyenMaiComponent } from './menu/khuyenmai/popupLoaiKhuyenMai/popupKhuyenMai.component';
+import { PopupLoaiTuDoComponent } from './menu/loaitudo/popupLoaiTuDo/popupLoaiTuDo.component';
+import { PopupTuDoComponent } from './menu/tudo/popupTuDo/popupTuDo.component';
+import { PopupDanhMucNLComponent } from './menu/danhmucnguyenlieu/popupDanhMucNL/popupDanhMucNL.component';
+import { PopupLoaiNLComponent } from './menu/loainguyenlieu/popupLoaiNL/popupLoaiNL.component';
 
 
 @NgModule({
@@ -80,8 +81,6 @@ import { PopupKhuyenMaiComponent } from './menu/khuyenmai/popupLoaiKhuyenMai/pop
     MonanComponent,
     DanhmucnguyenlieuComponent,
     LoginComponent,
-    AddoreditComponent,
-    AddoreditLoaiNLComponent,
     ConfirmationDialogComponent,
     DanhmucmonanComponent,
     LoainguyenlieuComponent,
@@ -93,7 +92,6 @@ import { PopupKhuyenMaiComponent } from './menu/khuyenmai/popupLoaiKhuyenMai/pop
     DonvitinhComponent,
     AddoreditDonViTinhComponent,
     LoaitudoComponent,
-    AddoreditLoaiTuDoComponent,
     TudoComponent,
     AddoreditTuDoComponent,
     NguyenlieuComponent,
@@ -105,7 +103,11 @@ import { PopupKhuyenMaiComponent } from './menu/khuyenmai/popupLoaiKhuyenMai/pop
     PopupBanAnComponent,
     PopupDanhMucMAComponent,
     PopupLoaiMAComponent,
-    PopupKhuyenMaiComponent
+    PopupKhuyenMaiComponent,
+    PopupLoaiTuDoComponent,
+    PopupTuDoComponent,
+    PopupDanhMucNLComponent,
+    PopupLoaiNLComponent
 
   ], // Khai báo component
   imports: [

@@ -77,18 +77,12 @@ export class PopupCongThucComponent implements OnInit {
 
   addNguyenLieuRow(index: number): void {
     const loai = this.loaiSelections[index];
-    const availableNguyenLieus = loai.filteredNguyenLieu.filter(
-      (nl: any) => !loai.nguyenLieus.some((x: any) => x.nguyenLieu.id === nl.id)
-    );
-    if (availableNguyenLieus.length > 0) {
-      loai.nguyenLieus.push({
-        nguyenLieu: availableNguyenLieus[0],
-        soLuong: 0,
-        ghiChu: ''
-      });
-    }
+    loai.nguyenLieus.push({
+      nguyenLieu: null,  // chưa chọn nguyên liệu
+      soLuong: 0,
+      ghiChu: ''
+    });
   }
-
   onLoaiNguyenLieuChange(index: number): void {
     const selectedLoaiId = this.loaiSelections[index].selectedLoaiId;
     this.loaiSelections[index].filteredNguyenLieu = this.nguyenLieu.filter(
@@ -100,6 +94,12 @@ export class PopupCongThucComponent implements OnInit {
 
   isLoaiDuplicate(selectedLoaiId: string, index: number): boolean {
     return this.loaiSelections.some((s, idx) => idx !== index && s.selectedLoaiId === selectedLoaiId);
+  }
+  isNguyenLieuDuplicate(nl: any, loaiIndex: number, nguyenLieuIndex: number): boolean {
+    const loai = this.loaiSelections[loaiIndex];
+    return loai.nguyenLieus.some((x: any, idx: number) => 
+      idx !== nguyenLieuIndex && x.nguyenLieu && x.nguyenLieu.id === nl.id
+    );
   }
 
   removeNguyenLieuInLoai(loaiIndex: number, nlIndex: number): void {

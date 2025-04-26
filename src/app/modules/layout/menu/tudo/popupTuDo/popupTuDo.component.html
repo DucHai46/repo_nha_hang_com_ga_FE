@@ -1,0 +1,54 @@
+<div class="popup-backdrop">
+    <div class="popup-box">
+      <div class="p-5">
+        <h2 class="text-2xl font-bold mb-5">
+          {{ isEditMode ? "Sửa Tủ Đồ" : "Thêm Tủ Đồ" }}
+        </h2>
+        <form>
+          <div class="form-group">
+            <label for="materialName">Tên tủ đồ:</label>
+            <input
+              type="text"
+              id="materialName"
+              [(ngModel)]="formData.tenTuDo"
+              name="tenLoai"
+              placeholder="Nhập tên tủ đồ..."
+            />
+          </div>
+      
+          <div class="form-group">
+            <label for="description">Mô tả:</label>
+            <textarea
+                id="description"
+                [(ngModel)]="formData.moTa"
+                name="moTa"
+                placeholder="Nhập mô tả..."
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="category">Loại tủ:</label>
+            <select
+              id="category"
+              [(ngModel)]="formData.loaiTuDo"
+              name="loaitu"
+              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+            >
+              <option 
+              *ngFor="let danhMuc of loaiTuDo" 
+              [ngValue]="danhMuc" 
+              >
+                {{ danhMuc.name }}
+              </option>
+            </select>
+          </div>
+      
+          <div class="flex justify-end gap-2">
+            <button type="button" class="btn cancel-btn" (click)="onCancel()">
+              Hủy
+            </button>
+            <button type="button" class="btn save-btn" (click)="onSave()">Lưu</button>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>

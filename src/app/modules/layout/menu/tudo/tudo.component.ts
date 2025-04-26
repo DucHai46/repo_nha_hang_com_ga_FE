@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { AddoreditTuDoComponent } from './addoredit/addoreditTuDo.component';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 import { TuDoService } from './services/tudo.service';
 import { LoaiTuDoService } from '../loaitudo/services/loaitudo.service';
@@ -81,79 +80,62 @@ export class TudoComponent implements OnInit {
   }
 
 
-  openAddPopup(): void 
-  {
-      const dialogRef = this.dialog.open(AddoreditTuDoComponent, {
-        width: '400px',
-        data: {}, // Không truyền dữ liệu vì là Thêm
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.tuDoService.addTuDo(result).subscribe(
-          {
-            next: (res: any) => {
-              if (res.data) {
-                // alert('Thêm mới thành công');
-                this.searchForm.tenTuDo = '';
-                this.searchForm.loaiTuDoId = '';
-                this.search();
-              }
-              else{
-                alert('Thêm mới thất bại');
-              }
-            },
-            error: (err: any) => {
-              alert('Thêm mới thất bại');
-            }
-          }
-        )
-          // this.notification.success(
-          //   'Thành công', // Tiêu đề
-          //   'Thêm dữ liệu thành công', // Nội dung
-          //   {
-          //     nzDuration: 3000, // Thời gian hiển thị (ms)
-          //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-          //   }
-          // );
-        }
-        else{
-          // this.notification.error(
-          //   'Thành công', // Tiêu đề
-          //   'Thêm dữ liệu thất bại', // Nội dung
-          //   {
-          //     nzDuration: 3000, // Thời gian hiển thị (ms)
-          //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-          //   }
-          // );
-        }
-      });
+  isPopupOpen = false;
+  isEditMode = false;
+  formData: any = {}
+
+  openAddPopup(): void {
+    this.isPopupOpen = true;
+    this.isEditMode = false;
+    this.formData = {};
   }
-  openEditPopup(item: any): void {
-    const dialogRef = this.dialog.open(AddoreditTuDoComponent, {
-      width: '400px',
-      data: { item }, // Truyền dữ liệu của nguyên liệu cần sửa
-    });
+  closePopup(): void {
+    this.isPopupOpen = false;
+    this.isEditMode = false;
+  }
+  onSaveCongThuc(body: any): void {
+    console.log(body);
   
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.tuDoService.updateTuDo(item.id, result).subscribe(
-        {
-          next: (res: any) => {
-            if(res.data){
-              this.search();
-            }
-            else{
-              alert('Sửa thất bại');
-            }
-          },
-          error: (err: any) => {
-            alert('Sửa thất bại');
+    if (!body) return;
+  
+    if (this.isEditMode) {
+      // Sửa bàn
+      this.tuDoService.updateTuDo(body.id, body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenTuDo = '';
+            this.searchForm.loaiTuDoId = '';
+            this.search();
+            this.closePopup();
+          } else {
+            alert('Cập nhật thất bại');
           }
-        }
-        )
-      }
-    });
+        },
+        error: () => alert('Cập nhật thất bại')
+      });
+    } else {
+      // Thêm mới bàn
+      this.tuDoService.addTuDo(body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenTuDo = '';
+            this.searchForm.loaiTuDoId = '';
+            this.search();
+            this.closePopup();
+          } else {
+            alert('Thêm mới thất bại');
+          }
+        },
+        error: () => alert('Thêm mới thất bại')
+      });
+    }
+  }
+
+    // Hàm mở popup Sửa
+  openEditPopup(item: any): void {
+    this.isPopupOpen = true;
+    this.isEditMode = true;
+    this.formData = item;
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
