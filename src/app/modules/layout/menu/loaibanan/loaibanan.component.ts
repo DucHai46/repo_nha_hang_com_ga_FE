@@ -82,45 +82,40 @@ export class LoaibananComponent implements OnInit {
   }
   onSaveCongThuc(body: any): void {
     console.log(body);
-    if (body) {
-      this.loaibananService.addLoaiBanAn(body).subscribe(
-      {
+  
+    if (!body) return;
+  
+    if (this.isEditMode) {
+      // Sửa bàn
+      this.loaibananService.updateLoaiBanAn(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            // alert('Thêm mới thành công');
             this.searchForm.tenLoai = '';
             this.search();
             this.closePopup();
+          } else {
+            alert('Cập nhật thất bại');
           }
-          else{
+        },
+        error: () => alert('Cập nhật thất bại')
+      });
+    } else {
+      // Thêm mới bàn
+      this.loaibananService.addLoaiBanAn(body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenLoai = '';
+            this.search();
+            this.closePopup();
+          } else {
             alert('Thêm mới thất bại');
           }
         },
-        error: (err: any) => {
-          alert('Thêm mới thất bại');
-        }
-      }
-    )
-      // this.notification.success(
-      //   'Thành công', // Tiêu đề
-      //   'Thêm dữ liệu thành công', // Nội dung
-      //   {
-      //     nzDuration: 3000, // Thời gian hiển thị (ms)
-      //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-      //   }
-      // );
-    }
-    else{
-      // this.notification.error(
-      //   'Thành công', // Tiêu đề
-      //   'Thêm dữ liệu thất bại', // Nội dung
-      //   {
-      //     nzDuration: 3000, // Thời gian hiển thị (ms)
-      //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-      //   }
-      // );
+        error: () => alert('Thêm mới thất bại')
+      });
     }
   }
+
 
 
   // Hàm mở popup Sửa

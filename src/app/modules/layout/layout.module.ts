@@ -38,7 +38,6 @@ import { BanAnService } from './menu/banan/services/banan.service';
 import { KhuyenmaiComponent } from './menu/khuyenmai/khuyenmai.component';
 import { khuyenmaiService } from './menu/khuyenmai/services/khuyenmai.service';
 import { KhuyenMaiStore } from './menu/khuyenmai/store/khuyen-mai.store';
-import { AddoreditKhuyenMaiComponent } from './menu/khuyenmai/addoredit/addoreditKhuyenMai.component';
 import { DonvitinhComponent } from './menu/donvitinh/donvitinh.component';
 import { DonViTinhService } from './menu/donvitinh/services/donvitinh.service';
 import { DonViTinhStore } from './menu/donvitinh/store/don-vi-tinh.store';
@@ -70,6 +69,7 @@ import { PopupLoaiBanAnComponent } from './menu/loaibanan/popupLoaiBanAn/popupLo
 import { PopupBanAnComponent } from './menu/banan/popupBanAn/popupBanAn.component';
 import { PopupDanhMucMAComponent } from './menu/danhmucmonan/popupDanhMucMA/popupDanhMucMA.component';
 import { PopupLoaiMAComponent } from './menu/loaimonan/popupLoaiMA/popupLoaiMA.component';
+import { PopupKhuyenMaiComponent } from './menu/khuyenmai/popupLoaiKhuyenMai/popupKhuyenMai.component';
 
 
 @NgModule({
@@ -90,7 +90,6 @@ import { PopupLoaiMAComponent } from './menu/loaimonan/popupLoaiMA/popupLoaiMA.c
     LoaibananComponent,
     BananComponent,
     KhuyenmaiComponent,
-    AddoreditKhuyenMaiComponent,
     DonvitinhComponent,
     AddoreditDonViTinhComponent,
     LoaitudoComponent,
@@ -105,7 +104,8 @@ import { PopupLoaiMAComponent } from './menu/loaimonan/popupLoaiMA/popupLoaiMA.c
     PopupLoaiBanAnComponent,
     PopupBanAnComponent,
     PopupDanhMucMAComponent,
-    PopupLoaiMAComponent
+    PopupLoaiMAComponent,
+    PopupKhuyenMaiComponent
 
   ], // Khai báo component
   imports: [

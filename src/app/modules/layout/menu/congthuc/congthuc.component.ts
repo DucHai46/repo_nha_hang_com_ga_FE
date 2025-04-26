@@ -91,45 +91,40 @@ export class CongthucComponent implements OnInit {
 
   onSaveCongThuc(body: any): void {
     console.log(body);
-    if (body) {
-      this.congThucService.addCongThuc(body).subscribe(
-      {
+  
+    if (!body) return;
+  
+    if (this.isEditMode) {
+      // Sửa bàn
+      this.congThucService.updateCongThuc(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            // alert('Thêm mới thành công');
             this.searchForm.tenCongThuc = '';
             this.search();
             this.closePopup();
+          } else {
+            alert('Cập nhật thất bại');
           }
-          else{
+        },
+        error: () => alert('Cập nhật thất bại')
+      });
+    } else {
+      // Thêm mới bàn
+      this.congThucService.addCongThuc(body).subscribe({
+        next: (res: any) => {
+          if (res.data) {
+            this.searchForm.tenCongThuc = '';
+            this.search();
+            this.closePopup();
+          } else {
             alert('Thêm mới thất bại');
           }
         },
-        error: (err: any) => {
-          alert('Thêm mới thất bại');
-        }
-      }
-    )
-      // this.notification.success(
-      //   'Thành công', // Tiêu đề
-      //   'Thêm dữ liệu thành công', // Nội dung
-      //   {
-      //     nzDuration: 3000, // Thời gian hiển thị (ms)
-      //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-      //   }
-      // );
-    }
-    else{
-      // this.notification.error(
-      //   'Thành công', // Tiêu đề
-      //   'Thêm dữ liệu thất bại', // Nội dung
-      //   {
-      //     nzDuration: 3000, // Thời gian hiển thị (ms)
-      //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-      //   }
-      // );
+        error: () => alert('Thêm mới thất bại')
+      });
     }
   }
+
 
   openEditPopup(item: any): void {
     this.isPopupOpen = true;

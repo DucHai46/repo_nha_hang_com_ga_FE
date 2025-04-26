@@ -16,6 +16,15 @@ export class PopupLoaiMAComponent implements OnInit {
           id: item.id,
           name: item.tenDanhMuc
         }));
+        if (this.isEditMode) {
+          const categoryId = this.formData.danhMucMonAn.id;
+          const selectedCategory = this.danhMucMonAn.find(
+            (cat) => cat.id === categoryId
+          );
+          if (selectedCategory) {
+            this.formData.danhMucMonAn = selectedCategory; 
+          }
+        }
       },
       error: (err: any) => {
         console.log(err);
