@@ -233,7 +233,13 @@
           </div>
         </div>
       </div>
-  
     </div>
   </div>
+  <app-popupLoaiMA
+  *ngIf="isPopupOpen"
+  [isEditMode]="isEditMode"
+  [formData]="formData"
+  (close)="closePopup()"
+  (save)="onSaveCongThuc($event)"
+></app-popupLoaiMA>
   

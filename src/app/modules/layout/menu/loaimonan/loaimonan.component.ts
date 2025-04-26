@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { LoaiMonAnStore } from './store/loai-mon-an.store';
- import { AddoreditLoaiMAComponent } from './addoredit/addoreditLoaiMA.component';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 import { LoaimonanService } from './services/loaimonan.service';
 import { DanhmucmonanService } from '../danhmucmonan/services/danhmucmonan.service';
@@ -78,81 +77,68 @@ export class LoaimonanComponent implements OnInit {
     this.searchForm.danhMucMonAnId = '';
     this.search();
   }
+  isPopupOpen = false;
+  isEditMode = false;
+  formData: any = {}
+
 
   openAddPopup(): void {
-      const dialogRef = this.dialog.open(AddoreditLoaiMAComponent, {
-        width: '400px',
-        data: {}, // Không truyền dữ liệu vì là Thêm
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.loaimonanService.addLoaiMonAn(result).subscribe(
-          {
-            next: (res: any) => {
-              if (res.data) {
-                // alert('Thêm mới thành công');
-                this.searchForm.tenLoai = '';
-                this.searchForm.danhMucNguyenLieuId = '';
-                this.search();
-              }
-              else{
-                alert('Thêm mới thất bại');
-              }
-            },
-            error: (err: any) => {
-              alert('Thêm mới thất bại');
-            }
+    this.isPopupOpen = true;
+    this.isEditMode = false;
+    this.formData = {};
+  }
+  closePopup(): void {
+    this.isPopupOpen = false;
+    this.isEditMode = false;
+  }
+  onSaveCongThuc(body: any): void {
+    console.log(body);
+    if (body) {
+      this.loaimonanService.addLoaiMonAn(body).subscribe(
+      {
+        next: (res: any) => {
+          if (res.data) {
+            // alert('Thêm mới thành công');
+            this.searchForm.tenCongThuc = '';
+            this.search();
+            this.closePopup();
           }
-        )
-          // this.notification.success(
-          //   'Thành công', // Tiêu đề
-          //   'Thêm dữ liệu thành công', // Nội dung
-          //   {
-          //     nzDuration: 3000, // Thời gian hiển thị (ms)
-          //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-          //   }
-          // );
+          else{
+            alert('Thêm mới thất bại');
+          }
+        },
+        error: (err: any) => {
+          alert('Thêm mới thất bại');
         }
-        else{
-          // this.notification.error(
-          //   'Thành công', // Tiêu đề
-          //   'Thêm dữ liệu thất bại', // Nội dung
-          //   {
-          //     nzDuration: 3000, // Thời gian hiển thị (ms)
-          //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
-          //   }
-          // );
-        }
-      });
+      }
+    )
+      // this.notification.success(
+      //   'Thành công', // Tiêu đề
+      //   'Thêm dữ liệu thành công', // Nội dung
+      //   {
+      //     nzDuration: 3000, // Thời gian hiển thị (ms)
+      //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
+      //   }
+      // );
     }
+    else{
+      // this.notification.error(
+      //   'Thành công', // Tiêu đề
+      //   'Thêm dữ liệu thất bại', // Nội dung
+      //   {
+      //     nzDuration: 3000, // Thời gian hiển thị (ms)
+      //     nzPlacement: 'topRight', // Đặt vị trí là góc trên phải
+      //   }
+      // );
+    }
+  }
+
   
     // Hàm mở popup Sửa
     openEditPopup(item: any): void {
-      const dialogRef = this.dialog.open(AddoreditLoaiMAComponent, {
-        width: '400px',
-        data: { item }, // Truyền dữ liệu của nguyên liệu cần sửa
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-        this.loaimonanService.updateLoaiMonAn(item.id, result).subscribe(
-          {
-            next: (res: any) => {
-              if(res.data){
-                this.search();
-              }
-              else{
-                alert('Sửa thất bại');
-              }
-            },
-            error: (err: any) => {
-              alert('Sửa thất bại');
-            }
-          }
-        )
-        }
-      });
+      this.isPopupOpen = true;
+      this.isEditMode = true;
+      this.formData = item;
     }
   
       // Hàm mở popup xác nhận xóa
