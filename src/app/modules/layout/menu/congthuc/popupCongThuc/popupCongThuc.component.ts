@@ -95,8 +95,8 @@ export class PopupCongThucComponent implements OnInit {
   }
   isNguyenLieuDuplicate(nl: any, loaiIndex: number, nguyenLieuIndex: number): boolean {
     const loai = this.loaiSelections[loaiIndex];
-    return loai.nguyenLieus.some((x: any, idx: number) => 
-      idx !== nguyenLieuIndex && x.nguyenLieu && x.nguyenLieu.id === nl.id
+    return loai.filteredNguyenLieu.some((x: any, idx: number) => 
+      idx !== nguyenLieuIndex  && x.id === nl.id
     );
   }
 
