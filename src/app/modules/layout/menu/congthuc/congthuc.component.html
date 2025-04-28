@@ -85,7 +85,7 @@
             <tr>
               <th scope="col" class="px-6 py-3">STT</th>
               <th scope="col" class="px-6 py-3">Tên công thức</th>
-              <th scope="col" class="px-6 py-3">Hình ảnh</th>
+              <!-- <th scope="col" class="px-6 py-3">Hình ảnh</th> -->
               <th scope="col" class="px-6 py-3">Nguyên liệu</th>
               <th scope="col" class="px-6 py-3">Mô tả</th>
               <th scope="col" class="px-6 py-3">Thao tác</th>
@@ -111,13 +111,13 @@
               <td class="px-6 py-4" style="max-width: 200px;">
                   <a (click)="download(parseJSON(item.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(item.hinhAnh)?.name }}</a>
               </td>
-              <td class="px-6 py-4" style="min-width: 300px; max-width: 400px; white-space: normal;">
+              <!-- <td class="px-6 py-4" style="min-width: 300px; max-width: 400px; white-space: normal;">
                 <ul>
                   <li *ngFor="let item of item.nguyenLieus">
                     - {{item.nguyenLieu.name}} ({{item.soLuong}} {{item.ghiChu ? '- ' + item.ghiChu : ''}})
                   </li>
                 </ul>
-              </td>
+              </td> -->
               <td class="px-6 py-4">
                 {{ item.moTa }}
               </td>
