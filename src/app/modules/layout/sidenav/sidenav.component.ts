@@ -104,6 +104,11 @@ export class SidenavComponent {
           icon: 'fal fa-gift',
           label: 'Khuyến mại'
         },
+        {
+          routeLink: 'main/giamgia',
+          icon: 'fal fa-gift',
+          label: 'Giảm giá'
+        },
 
       ]
     },

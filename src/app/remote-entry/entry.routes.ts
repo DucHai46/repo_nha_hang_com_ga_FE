@@ -18,6 +18,7 @@ import { LoaimonanComponent } from '../modules/layout/menu/loaimonan/loaimonan.c
 import { CongthucComponent } from '../modules/layout/menu/congthuc/congthuc.component';
 import { AuthGuardService as AuthGuard } from '../core/services/auth-guard.service';
 import { XacnhangoimonComponent } from '../modules/layout/menugoimon/xacnhangoimon/xacnhangoimon.component';
+import { GiamgiaComponent } from '../modules/layout/menu/giamgia/giamgia.component';
 
 
 export const remoteRoutes: Route[] = [
@@ -40,6 +41,7 @@ export const remoteRoutes: Route[] = [
           { path: 'nguyenlieu', component: NguyenlieuComponent },
           { path: 'loaimonan', component: LoaimonanComponent },
           { path: 'congthuc', component: CongthucComponent },
+          { path: 'giamgia', component: GiamgiaComponent },
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]
