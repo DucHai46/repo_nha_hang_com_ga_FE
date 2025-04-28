@@ -178,7 +178,7 @@ export class BananComponent implements OnInit   {
       }
     });
   }
-  
+
   
 
 }
