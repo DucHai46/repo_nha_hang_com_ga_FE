@@ -136,13 +136,13 @@ export class LoaitudoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.loaitudoService.deleteLoaiTuDo(item.id).subscribe(
-          {
-            next: (res: any) => {
-              this.search();
-            }
+      this.loaitudoService.deleteLoaiTuDo(item.id).subscribe(
+        {
+          next: (res: any) => {
+            this.search();
           }
-        )
+        }
+      )
         // this.notification.create(
         //   'success',
         //   'Thành công!',
@@ -158,7 +158,6 @@ export class LoaitudoComponent implements OnInit {
         // });
       }
     });
-  } 
-
+  }
 
 }
