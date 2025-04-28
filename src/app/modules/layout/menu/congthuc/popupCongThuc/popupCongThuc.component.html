@@ -44,6 +44,7 @@
             <label class="text-sm font-medium text-gray-700">Loại nguyên liệu {{ i + 1 }}</label>
             <div class="flex flex-cols">
               <select [(ngModel)]="loai.selectedLoaiId"
+              
                       (change)="onLoaiNguyenLieuChange(i)"
                       [ngModelOptions]="{standalone: true}"
                       class="w-full mt-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -65,14 +66,16 @@
             <div *ngFor="let item of loai.nguyenLieus; let j = index" class="border p-3 rounded bg-white shadow space-y-2 flex justify-between">
               <!-- <div class="font-medium"></div> -->
               <!-- <div class="flex flex-col md:flex-row gap-2"> -->
-                <select [(ngModel)]="item.nguyenLieu" class="border px-3 py-2 rounded w-full md:w-1/3 m-0">
-                  <!-- <option value="" disabled>Chọn nguyên liệu</option> -->
+                <select [(ngModel)]="item.nguyenLieu.id" (ngModelChange)="updateNguyenLieuName(loai, item)" name="nguyenLieu-{{i}}-{{j}}" class="border px-3 py-2 rounded w-full md:w-1/3 m-0">
                   <option *ngFor="let nl of loai.filteredNguyenLieu" [value]="nl.id"
-                  [disabled]="isNguyenLieuDuplicate(nl, i, j)" 
-                    >{{ nl.name }}</option>
+                    [disabled]="isNguyenLieuDuplicate(nl, i, j)">
+                    {{ nl.name }}
+                  </option>
                 </select>
-                <input [(ngModel)]="item.soLuong" placeholder="Số lượng" class="border px-3 py-2 rounded w-full md:w-1/3 m-0 ml-2" />
-                <input [(ngModel)]="item.ghiChu" placeholder="Ghi chú" class="border px-3 py-2 rounded w-full md:w-1/3 m-0 ml-2" />
+
+                <input [(ngModel)]="item.soLuong" name="soLuong-{{i}}-{{j}}" placeholder="Số lượng" class="border px-3 py-2 rounded w-full md:w-1/3 m-0 ml-2" />
+
+                <input [(ngModel)]="item.ghiChu" name="ghiChu-{{i}}-{{j}}" placeholder="Ghi chú" class="border px-3 py-2 rounded w-full md:w-1/3 m-0 ml-2" />
               <!-- </div> -->
               <button (click)="removeNguyenLieuInLoai(i, j)" class="ml-2 bg-red-600 text-white px-4 rounded-lg hover:bg-red-700 transition w-full sm:w-auto">Xóa</button>
             </div>
