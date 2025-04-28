@@ -26,7 +26,6 @@ export class PopupCongThucComponent implements OnInit {
   loaiSelections: any[] = [
     {
       selectedLoaiId: '',
-      selectedLoaiName: '',
       selectedNguyenLieuId: '',
       filteredNguyenLieu: [],
       nguyenLieus: []
@@ -61,7 +60,6 @@ export class PopupCongThucComponent implements OnInit {
   addLoaiSelection(): void {
     this.loaiSelections.push({
       selectedLoaiId: '',
-      selectedLoaiName: '',
       selectedNguyenLieuId: '',
       filteredNguyenLieu: [],
       nguyenLieus: []
@@ -71,17 +69,13 @@ export class PopupCongThucComponent implements OnInit {
   addNguyenLieuRow(index: number): void {
     const loai = this.loaiSelections[index];
     loai.nguyenLieus.push({
-      nguyenLieu: {
-        id: '',
-        name: ''
-      },  // chưa chọn nguyên liệu
+      nguyenLieu: null,  // chưa chọn nguyên liệu
       soLuong: 0,
       ghiChu: ''
     });
   }
   onLoaiNguyenLieuChange(index: number): void {
     const selectedLoaiId = this.loaiSelections[index].selectedLoaiId;
-    this.loaiSelections[index].selectedLoaiName = this.loaiNguyenLieu.find(l => l.id === selectedLoaiId)?.name || '';
     this.nguyenLieuService.getNguyenLieu({loaiNguyenLieuId: selectedLoaiId}).subscribe({
       next: (res: any) => {
         this.loaiSelections[index].filteredNguyenLieu = res.data.data.map((item: any) => ({
@@ -101,16 +95,10 @@ export class PopupCongThucComponent implements OnInit {
   }
   isNguyenLieuDuplicate(nl: any, loaiIndex: number, nguyenLieuIndex: number): boolean {
     const loai = this.loaiSelections[loaiIndex];
-    return loai.nguyenLieus.some((x: any, idx: number) => 
-      idx !== nguyenLieuIndex  && x.nguyenLieu.id === nl.id
+    return loai.filteredNguyenLieu.some((x: any, idx: number) => 
+      idx !== nguyenLieuIndex  && x.id === nl.id
     );
   }
-
-  updateNguyenLieuName(loai: any, item: any) {
-    const found = loai.filteredNguyenLieu.find((nl: any) => nl.id === item.nguyenLieu.id);
-    item.nguyenLieu.name = found?.name || '';
-  }
-  
 
   removeNguyenLieuInLoai(loaiIndex: number, nlIndex: number): void {
     this.loaiSelections[loaiIndex].nguyenLieus.splice(nlIndex, 1);
@@ -121,18 +109,16 @@ export class PopupCongThucComponent implements OnInit {
   }
 
   onSave(): void {
-    const allNguyenLieus = this.loaiSelections.map(loai => ({
-      id: loai.selectedLoaiId,
-      name: loai.selectedLoaiName,
-      nguyenLieus: loai.nguyenLieus.map((item: {nguyenLieu: {id: string, name: string}, soLuong: number, ghiChu: string}) => ({
+    const allNguyenLieus = this.loaiSelections.flatMap((loai: any) =>
+      loai.nguyenLieus.map((item: any) => ({
         nguyenLieu: {
           id: item.nguyenLieu.id,
-          name: item.nguyenLieu.name,
+          name: item.nguyenLieu.name
         },
-        soLuong: parseInt(item.soLuong.toString(), 10),
+        soLuong: item.soLuong,
         ghiChu: item.ghiChu
       }))
-    }));
+    );
 
     const dataToSend = {
       tenCongThuc: this.formData.tenCongThuc,
@@ -143,11 +129,10 @@ export class PopupCongThucComponent implements OnInit {
             name: this.formData.hinhAnh.name
           })
         : '',
-      loaiNguyenLieus: allNguyenLieus
+      nguyenLieus: allNguyenLieus
     };
 
     this.save.emit(dataToSend);
-    // console.log(dataToSend);
   }
 
   onCancel(): void {

@@ -31,11 +31,11 @@ export class CongthucComponent implements OnInit {
   totalPages = 0;
   ngOnInit(): void {
     this.store.setItems$(this.congThucPaging);  
-    // this.nguyenLieuService.getNguyenLieu({}).subscribe({
-    //   next: (res: any) => {
-    //     this.nguyenLieu = res.data.data;
-    //   }
-    // });
+    this.nguyenLieuService.getNguyenLieu({}).subscribe({
+      next: (res: any) => {
+        this.nguyenLieu = res.data.data;
+      }
+    });
     this.search();
   }
   searchForm: any = {
