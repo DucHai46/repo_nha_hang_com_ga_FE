@@ -70,7 +70,17 @@ import { PopupDanhMucNLComponent } from './menu/danhmucnguyenlieu/popupDanhMucNL
 import { PopupLoaiNLComponent } from './menu/loainguyenlieu/popupLoaiNL/popupLoaiNL.component';
 import { PopupDonViTinhComponent } from './menu/donvitinh/popupDonViTinh/popupDonViTinh.component';
 import { PopupNguyenLieuComponent } from './menu/nguyenlieu/popupNguyenLieu/popupNguyenLieu.component';
-
+import { MonAnStore } from './menu/monan/store/mon-an.store';
+import { MonAnService } from './menu/monan/services/monan.service';
+import { PopupMonAnComponent } from './menu/monan/popupMonAn/popupMonAn.component';
+import { ComboComponent } from './menu/combo/combo.component';
+import { ComboService } from './menu/combo/services/combo.service';
+import { ComboStore } from './menu/combo/store/combo.store';
+import { PopupComboComponent } from './menu/combo/popupCombo/popupCombo.component';
+import { GiamgiaComponent } from './menu/giamgia/giamgia.component';
+import { GiamGiaStore } from './menu/giamgia/store/giam-gia.store';
+import { giamgiaService } from './menu/giamgia/services/giamgia.service';
+import { PopupGiamGiaComponent } from './menu/giamgia/popupGiamGia/popupGiamGia.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -105,7 +115,12 @@ import { PopupNguyenLieuComponent } from './menu/nguyenlieu/popupNguyenLieu/popu
     PopupDanhMucNLComponent,
     PopupLoaiNLComponent,
     PopupDonViTinhComponent,
-    PopupNguyenLieuComponent
+    PopupNguyenLieuComponent,
+    PopupMonAnComponent,
+    ComboComponent,
+    PopupComboComponent,
+    GiamgiaComponent,
+    PopupGiamGiaComponent
 
   ], // Khai báo component
   imports: [
@@ -143,7 +158,13 @@ import { PopupNguyenLieuComponent } from './menu/nguyenlieu/popupNguyenLieu/popu
     LoaimonanService,
     LoaiMonAnStore,
     CongthucService,
-    CongThucStore
+    CongThucStore,
+    MonAnStore,
+    MonAnService,
+    ComboService,
+    ComboStore,
+    giamgiaService,
+    GiamGiaStore
   ]
 })
 export class LayoutModule {}

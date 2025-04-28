@@ -1,7 +1,7 @@
 <div class="mt-10 mr-10">
     <!-- nhãn -->
     <div class="flex flex-row gap-4 mb-5">
-      <p class="text-2xl font-bold">Công thức</p>
+      <p class="text-2xl font-bold">Giảm giá</p>
     </div>
     <!-- form search -->
     <div
@@ -10,18 +10,18 @@
       <!-- form -->
       <div class="flex flex-row gap-4">
         <div class="flex flex-col gap-2">
-          <label for="searchTenBan">Tên công thức</label>
+          <label for="searchTen">Tên giảm giá </label>
           <input
             class="border border-gray-300 rounded-md p-2"
-            id="searchTenBan"
-            [(ngModel)]="searchForm.tenCongThuc"
+            id="searchTen"
+            [(ngModel)]="searchForm.tenGiamGia"
             type="text"
-            placeholder="Tìm kiếm"
+            placeholder="Tên giảm giá"
           />
         </div>
       </div>
       <!-- button -->
-      <div class="flex flex-row gap-4 justify-center items-center">
+      <div class="flex flex-row gap-2 justify-center items-center">
         <button
           class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
           (click)="reset()"
@@ -81,12 +81,14 @@
       </div>
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right">
-          <thead class="text-xs text-gray-700 uppercase text-center">
+          <thead class="text-xs uppercase text-center">
             <tr>
               <th scope="col" class="px-6 py-3">STT</th>
-              <th scope="col" class="px-6 py-3">Tên công thức</th>
-              <!-- <th scope="col" class="px-6 py-3">Hình ảnh</th> -->
-              <th scope="col" class="px-6 py-3">Nguyên liệu</th>
+              <!-- <th scope="col" class="px-6 py-3">Mã danh mục</th> -->
+              <th scope="col" class="px-6 py-3">Tên giảm giá</th>
+              <th scope="col" class="px-6 py-3">Ngày bắt đầu</th>
+              <th scope="col" class="px-6 py-3">Ngày kết thúc</th>
+              <th scope="col" class="px-6 py-3">Giá trị</th>
               <th scope="col" class="px-6 py-3">Mô tả</th>
               <th scope="col" class="px-6 py-3">Thao tác</th>
             </tr>
@@ -94,30 +96,29 @@
           <tbody>
             <tr
               class="border-b dark:border-gray-700 border-gray-200"
-              *ngFor="let item of congThucPaging; let i = index"
+              *ngFor="let item of giamGiaPaging; let i = index"
             >
-              <td
+              <td class="px-6 py-4 font-medium whitespace-nowrap text-center">
+                {{ i + 1 }}
+              </td>
+              <!-- <th
                 scope="row"
-                class="px-6 py-4 font-medium whitespace-nowrap text-center"
+                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
-                {{ i + 1 + (paging.page - 1) * paging.size }}
-              </td>
-              <!-- <td class="px-6 py-4">
                 {{ item.ma }}
-              </td> -->
+              </th> -->
               <td class="px-6 py-4">
-                {{ item.tenCongThuc }}
+                {{ item.tenGiamGia }}
               </td>
-              <td class="px-6 py-4" style="max-width: 200px;">
-                  <a (click)="download(parseJSON(item.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(item.hinhAnh)?.name }}</a>
+              <td class="px-6 py-4">
+                {{ item.ngayBatDau | date:'dd/MM/yyyy' }}
               </td>
-              <!-- <td class="px-6 py-4" style="min-width: 300px; max-width: 400px; white-space: normal;">
-                <ul>
-                  <li *ngFor="let item of item.nguyenLieus">
-                    - {{item.nguyenLieu.name}} ({{item.soLuong}} {{item.ghiChu ? '- ' + item.ghiChu : ''}})
-                  </li>
-                </ul>
-              </td> -->
+              <td class="px-6 py-4">
+                {{ item.ngayKetThuc | date:'dd/MM/yyyy' }}
+              </td>
+              <td class="px-6 py-4">
+                {{ item.giaTri }}
+              </td>
               <td class="px-6 py-4">
                 {{ item.moTa }}
               </td>
@@ -183,7 +184,6 @@
         </table>
       </div>
 
-
       <div class="pagination-controls mt-4 flex justify-end">
         <div class="flex items-center justify-between gap-2">
           <div class="text-gray-600">
@@ -228,10 +228,12 @@
       </div>
     </div>
   </div>
-  <app-popupCongThuc
-  *ngIf="isPopupOpen"
-  [isEditMode]="isEditMode"
-  [formData]="formData"
-  (close)="closePopup()"
-  (save)="onSaveCongThuc($event)"
-></app-popupCongThuc>
+  <app-popupGiamGia
+    *ngIf="isPopupOpen"
+    [isEditMode]="isEditMode"
+    [formData]="formData"
+    (close)="closePopup()"
+    (save)="onSaveCongThuc($event)"
+></app-popupGiamGia>
+
+  
