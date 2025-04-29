@@ -53,9 +53,40 @@ export class PopupCongThucComponent implements OnInit {
       error: (err: any) => console.log(err)
     });
 
-
-
-    // Nếu là edit và đã có nguyên liệu, bạn cần xử lý fill loaiSelections (có thể thêm sau nếu cần)
+    if (this.isEditMode && this.formData.loaiNguyenLieus?.length) {
+      this.populateLoaiSelectionsFromFormData();
+    }
+  }
+  populateLoaiSelectionsFromFormData(): void {
+    const loaiNguyenLieusFromForm = this.formData.loaiNguyenLieus;
+  
+    this.loaiSelections = loaiNguyenLieusFromForm.map((loai: any) => ({
+      selectedLoaiId: loai.id,
+      selectedLoaiName: loai.name,
+      filteredNguyenLieu: [],
+      nguyenLieus: loai.nguyenLieus.map((item: any) => ({
+        nguyenLieu: {
+          id: item.nguyenLieu.id,
+          name: item.nguyenLieu.name
+        },
+        soLuong: item.soLuong,
+        ghiChu: item.ghiChu
+      }))
+    }));
+  
+    // Gọi API để fill `filteredNguyenLieu` từng loại
+    this.loaiSelections.forEach((loai, index) => {
+      this.nguyenLieuService.getNguyenLieu({ loaiNguyenLieuId: loai.selectedLoaiId }).subscribe({
+        next: (res: any) => {
+          this.loaiSelections[index].filteredNguyenLieu = res.data.data.map((nl: any) => ({
+            id: nl.id,
+            name: nl.tenNguyenLieu,
+            loaiNguyenLieuId: nl.loaiNguyenLieu.id
+          }));
+        },
+        error: err => console.error('Lỗi khi lấy nguyên liệu:', err)
+      });
+    });
   }
 
   addLoaiSelection(): void {
