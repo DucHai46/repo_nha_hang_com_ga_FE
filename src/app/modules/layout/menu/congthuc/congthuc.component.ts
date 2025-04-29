@@ -57,6 +57,7 @@ export class CongthucComponent implements OnInit {
         this.notification.error('Lỗi', 'Lấy dữ liệu thất bại');
       }
     });  
+    console.log(this.congThucPaging);
   }
   changePage(newPage: number) {
     if (newPage < 1 || newPage > this.totalPages) return;
@@ -77,16 +78,25 @@ export class CongthucComponent implements OnInit {
   isPopupOpen = false;
   isEditMode = false;
   formData: any = {}
+  isChiTietOpen = false;
 
   openAddPopup(): void {
       this.isPopupOpen = true;
       this.isEditMode = false;
       this.formData = {};
-    }
+  }
+  openChiTietPopup(item: any): void {
+    this.isChiTietOpen = true; // mở popup ChiTiet
+    this.formData = item;      // gán dữ liệu cần xem chi tiết
+    console.log(this.formData);
+  }
 
   closePopup(): void {
     this.isPopupOpen = false;
     this.isEditMode = false;
+  }
+  closeChiTiet(): void {
+    this.isChiTietOpen = false;
   }
 
   onSaveCongThuc(body: any): void {
@@ -98,6 +108,7 @@ export class CongthucComponent implements OnInit {
       // Sửa bàn
       this.congThucService.updateCongThuc(body.id, body).subscribe({
         next: (res: any) => {
+          // console.log(res);
           if (res.data) {
             this.searchForm.tenCongThuc = '';
             this.search();
@@ -112,6 +123,7 @@ export class CongthucComponent implements OnInit {
       // Thêm mới bàn
       this.congThucService.addCongThuc(body).subscribe({
         next: (res: any) => {
+
           if (res.data) {
             this.searchForm.tenCongThuc = '';
             this.search();
@@ -130,6 +142,8 @@ export class CongthucComponent implements OnInit {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = item;
+    // console.log(item);
+    // console.log(this.formData);
   }
 
 
@@ -187,4 +201,7 @@ export class CongthucComponent implements OnInit {
       }
     );
   }
+
+
+
 }

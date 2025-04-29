@@ -81,6 +81,7 @@ import { GiamgiaComponent } from './menu/giamgia/giamgia.component';
 import { GiamGiaStore } from './menu/giamgia/store/giam-gia.store';
 import { giamgiaService } from './menu/giamgia/services/giamgia.service';
 import { PopupGiamGiaComponent } from './menu/giamgia/popupGiamGia/popupGiamGia.component';
+import { PopupChiTietComponent } from './menu/congthuc/popupChiTiet/popupChiTiet.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -120,7 +121,8 @@ import { PopupGiamGiaComponent } from './menu/giamgia/popupGiamGia/popupGiamGia.
     ComboComponent,
     PopupComboComponent,
     GiamgiaComponent,
-    PopupGiamGiaComponent
+    PopupGiamGiaComponent,
+    PopupChiTietComponent
 
   ], // Khai báo component
   imports: [

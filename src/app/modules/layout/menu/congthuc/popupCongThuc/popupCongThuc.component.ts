@@ -135,6 +135,7 @@ export class PopupCongThucComponent implements OnInit {
     }));
 
     const dataToSend = {
+      id: this.formData.id,
       tenCongThuc: this.formData.tenCongThuc,
       moTa: this.formData.moTa,
       hinhAnh: this.formData.hinhAnh

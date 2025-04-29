@@ -125,7 +125,7 @@
                 class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
               >
                 <button
-                  (click)="openEditPopup(item)"
+                  (click)="openEditPopup(item)" 
                   class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
                 >
                   <p
@@ -177,6 +177,26 @@
                     </svg>
                   </p>
                 </button>
+                <button
+                    (click)="openChiTietPopup(item)"
+                    class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
+                  >
+                    <svg
+                      class="w-6 h-6 text-blue-600 dark:text-blue-400"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-3 8c-4.418 0-8-5.373-8-8s3.582-8 8-8 8 5.373 8 8-3.582 8-8 8z"
+                      />
+                    </svg>
+                </button>
+                
               </td>
             </tr>
           </tbody>
@@ -235,3 +255,9 @@
   (close)="closePopup()"
   (save)="onSaveCongThuc($event)"
 ></app-popupCongThuc>
+
+  <app-popupChiTiet
+  *ngIf="isChiTietOpen"
+  [formData]="formData"
+  (close)="closeChiTiet()"
+  ></app-popupChiTiet>
