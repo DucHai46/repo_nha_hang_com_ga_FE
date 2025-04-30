@@ -71,6 +71,11 @@ export class SidenavComponent {
           label: 'Loại món ăn'
         },
         {
+          routeLink: 'main/monan',
+          icon: 'fal fa-drumstick-bite',
+          label: 'Món ăn'
+        },
+        {
           routeLink: 'main/congthuc',
           icon: 'fal fa-book-open',
           label: 'Công thức'

@@ -54,10 +54,10 @@ export class PopupCongThucComponent implements OnInit {
     });
 
     if (this.isEditMode && this.formData.loaiNguyenLieus?.length) {
-      this.populateLoaiSelectionsFromFormData();
+      this.updateData();
     }
   }
-  populateLoaiSelectionsFromFormData(): void {
+  updateData(): void {
     const loaiNguyenLieusFromForm = this.formData.loaiNguyenLieus;
   
     this.loaiSelections = loaiNguyenLieusFromForm.map((loai: any) => ({

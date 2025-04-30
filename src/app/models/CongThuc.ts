@@ -1,11 +1,8 @@
 export interface CongThuc {
-  id: string;
   tenCongThuc: string;
   loaiNguyenLieus: {
-    loaiNguyenLieu: {
-      id: string;
-      name: string;
-    };
+    id: string;
+    name: string;
     nguyenLieus: {
       nguyenLieu: {
         id: string;
