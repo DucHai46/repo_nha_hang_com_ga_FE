@@ -63,19 +63,39 @@
     
             <!-- Lặp qua các nguyên liệu đã chọn và hiển thị dropdown, số lượng, ghi chú -->
             <label *ngIf="loai.selectedLoaiId" class="text-sm font-medium text-gray-700">Danh sách nguyên liệu</label>
-            <div *ngFor="let item of loai.nguyenLieus; let j = index" class="border p-3 rounded bg-white shadow space-y-2 flex justify-between">
-              <!-- <div class="font-medium"></div> -->
-              <!-- <div class="flex flex-col md:flex-row gap-2"> -->
-                <select [(ngModel)]="item.nguyenLieu.id" (ngModelChange)="updateNguyenLieuName(loai, item)" name="nguyenLieu-{{i}}-{{j}}" class="border px-3 py-2 rounded w-full md:w-1/3 m-0">
-                  <option *ngFor="let nl of loai.filteredNguyenLieu" [value]="nl.id"
-                    [disabled]="isNguyenLieuDuplicate(nl, i, j)">
+            <div *ngFor="let item of loai.nguyenLieus; let j = index" class="bg-white p-3 rounded shadow mb-3">
+         <!-- Hàng trên: Dropdown + số lượng -->
+              <div class="flex space-x-2 mb-2">
+                <!-- Dropdown nguyên liệu -->
+                <select [(ngModel)]="item.nguyenLieu.id"
+                        (ngModelChange)="updateNguyenLieuName(loai, item)"
+                        name="nguyenLieu-{{i}}-{{j}}"
+                        class="w-2/3 px-2 py-1 border rounded">
+                  <option *ngFor="let nl of loai.filteredNguyenLieu" [value]="nl.id" [disabled]="isNguyenLieuDuplicate(nl, i, j)">
                     {{ nl.name }}
                   </option>
-                </select>
-                <input [(ngModel)]="item.soLuong" name="soLuong-{{i}}-{{j}}" placeholder="Số lượng" class="border px-3 py-2 rounded w-full md:w-1/3 m-0 ml-2" />
-                <input [(ngModel)]="item.ghiChu" name="ghiChu-{{i}}-{{j}}" placeholder="Ghi chú" class="border px-3 py-2 rounded w-full md:w-1/3 m-0 ml-2" />
-              <!-- </div> -->
-              <button (click)="removeNguyenLieuInLoai(i, j)" class="ml-2 bg-red-600 text-white px-4 rounded-lg hover:bg-red-700 transition w-full sm:w-auto">Xóa</button>
+                </select>         
+                <!-- Ô số lượng -->
+                <input type="number"
+                        [(ngModel)]="item.soLuong"
+                        name="soLuong-{{i}}-{{j}}"
+                        class="w-1/3 px-2 py-1 border rounded text-center"
+                        placeholder="0" />
+              </div>
+              <!-- Ghi chú -->
+              <div class="flex space-x-2 items-center">
+                <input type="text"
+                        [(ngModel)]="item.ghiChu"
+                        name="ghiChu-{{i}}-{{j}}"
+                        class="w-full px-2 py-1 border rounded"
+                        placeholder="Ghi chú" />
+            
+                <!-- Nút xóa -->
+                <button (click)="removeNguyenLieuInLoai(i, j)"
+                        class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
+                  Xóa
+                </button>
+              </div>
             </div>
             <!-- Chỉ hiển thị nút Thêm nguyên liệu khi loại nguyên liệu được chọn -->
             <div *ngIf="loai.selectedLoaiId">

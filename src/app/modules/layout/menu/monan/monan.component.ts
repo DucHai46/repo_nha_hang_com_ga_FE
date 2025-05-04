@@ -76,6 +76,7 @@ export class MonanComponent implements OnInit {
       {
         next: (res: any) => {
           this.monAnPaging = res.data.data;
+          console.log(this.monAnPaging);
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;

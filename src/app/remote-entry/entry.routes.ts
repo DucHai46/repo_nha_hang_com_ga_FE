@@ -19,6 +19,7 @@ import { CongthucComponent } from '../modules/layout/menu/congthuc/congthuc.comp
 import { AuthGuardService as AuthGuard } from '../core/services/auth-guard.service';
 import { XacnhangoimonComponent } from '../modules/layout/menugoimon/xacnhangoimon/xacnhangoimon.component';
 import { GiamgiaComponent } from '../modules/layout/menu/giamgia/giamgia.component';
+import { ComboComponent } from '../modules/layout/menu/combo/combo.component';
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [
@@ -41,6 +42,7 @@ export const remoteRoutes: Route[] = [
           { path: 'congthuc', component: CongthucComponent },
           { path: 'giamgia', component: GiamgiaComponent },
           { path: 'monan', component: MonanComponent },
+          { path: 'combo', component: ComboComponent },
 
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },

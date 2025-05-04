@@ -75,10 +75,22 @@ export class SidenavComponent {
           icon: 'fal fa-drumstick-bite',
           label: 'Món ăn'
         },
+      ]
+    },
+    {
+      icon: 'fas fa-clipboard-list',
+      label: 'Quản lý thực đơn',
+      isOpen: false,
+      children: [
         {
           routeLink: 'main/congthuc',
           icon: 'fal fa-book-open',
           label: 'Công thức'
+        },
+        {
+          routeLink: 'main/combo',
+          icon: 'fal fa-concierge-bell',
+          label: 'Combo'
         },
       ]
     },
