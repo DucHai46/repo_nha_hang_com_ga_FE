@@ -169,12 +169,11 @@ export class PopupComboComponent implements OnInit {
       id: loai.selectedLoaiId,
       name: loai.selectedLoaiName,
       monAns: loai.monAns.map((item: any) => ({
-        monAn: {
-          id: item.monAn.id,
-          name: item.monAn.name,
-          hinhAnh: item.monAn.hinhAnh,
-          giaTien: item.monAn.giaTien
-        },
+        id: item.monAn.id,
+        tenMonAn: item.monAn.name,
+        hinhAnh: item.monAn.hinhAnh,
+        giaTien: item.monAn.giaTien,
+        moTa: ''
       }))
     }));
 
