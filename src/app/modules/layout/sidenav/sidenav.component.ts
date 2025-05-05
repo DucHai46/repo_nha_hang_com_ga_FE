@@ -92,6 +92,11 @@ export class SidenavComponent {
           icon: 'fal fa-concierge-bell',
           label: 'Combo'
         },
+        {
+          routeLink: 'main/thucdon',
+          icon: 'fal fa-th-list',
+          label: 'Thực đơn'
+        },
       ]
     },
     {

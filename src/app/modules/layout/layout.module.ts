@@ -83,6 +83,11 @@ import { giamgiaService } from './menu/giamgia/services/giamgia.service';
 import { PopupGiamGiaComponent } from './menu/giamgia/popupGiamGia/popupGiamGia.component';
 import { PopupChiTietComponent } from './menu/congthuc/popupChiTiet/popupChiTiet.component';
 import { PopupChiTietCBComponent } from './menu/combo/popupChiTiet/popupChiTietCB.component';
+import { ThucdonComponent } from './menu/thucdon/thucdon.component';
+import { ThucDonStore } from './menu/thucdon/store/thuc-don.store';
+import { ThucDonService } from './menu/thucdon/services/thucdon.service'; 
+import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.component';
+
 
 
 @NgModule({
@@ -125,7 +130,9 @@ import { PopupChiTietCBComponent } from './menu/combo/popupChiTiet/popupChiTietC
     GiamgiaComponent,
     PopupGiamGiaComponent,
     PopupChiTietComponent,
-    PopupChiTietCBComponent
+    PopupChiTietCBComponent,
+    ThucdonComponent,
+    PopupThucDonComponent
 
   ], // Khai báo component
   imports: [
@@ -169,7 +176,9 @@ import { PopupChiTietCBComponent } from './menu/combo/popupChiTiet/popupChiTietC
     ComboService,
     ComboStore,
     giamgiaService,
-    GiamGiaStore
+    GiamGiaStore,
+    ThucDonStore,
+    ThucDonService
   ]
 })
 export class LayoutModule {}

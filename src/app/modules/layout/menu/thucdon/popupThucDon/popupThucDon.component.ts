@@ -2,24 +2,26 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileService } from '../../../../../core/services/file.service';
 import { LoaimonanService } from '../../loaimonan/services/loaimonan.service';
 import { MonAnService } from '../../monan/services/monan.service';
+import { ComboService } from '../../combo/services/combo.service';
+import { TrangThaiThucDon } from '../../../../../models/TrangThaiThucDon';
 @Component({
-  selector: 'app-popupCombo',
-  templateUrl: './popupCombo.component.html',
-  styleUrls: ['./popupCombo.component.scss']
+  selector: 'app-popupThucDon',
+  templateUrl: './popupThucDon.component.html',
+  styleUrls: ['./popupThucDon.component.scss']
 })
-export class PopupComboComponent implements OnInit {
+export class PopupThucDonComponent implements OnInit {
   @Input() isEditMode = false;
   @Input() formData: any = {
-    tenCombo: '',
+    tenThucDon: '',
     monAns: [],
-    moTa: '',
-    hinhAnh: '',
-    giaTien: ''
+    combos: [],
+    trangThai:''
   };
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
   monAn: any[]=[];
   loaiMonAn: any[]=[];
+  combo: any[]=[];
   loaiSelections: any[] = [
     {
       selectedLoaiId: '',
@@ -29,12 +31,22 @@ export class PopupComboComponent implements OnInit {
       monAns: []
     }
   ];
+  comboSelections:any[] = [
+    {
+      selectedComboId: '',
+      selectedComboName: '',
+      hinhAnh: '',
+      giaTien: '',
+      moTa: '',
+    }
+  ];
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
   constructor(
     private monAnService: MonAnService,
     private fileService: FileService,
-    private loaiMonAnService: LoaimonanService
+    private loaiMonAnService: LoaimonanService,
+    private comboService: ComboService
   ) {}
   ngOnInit(): void {
     this.loaiMonAnService.getLoaiMonAn({}).subscribe({
@@ -46,30 +58,39 @@ export class PopupComboComponent implements OnInit {
       },
       error: (err: any) => console.log(err)
     });
+    this.comboService.getCombo({}).subscribe({
+      next: (res: any) => {
+        this.combo = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenCombo
+        }));
+      },
+      error: (err: any) => console.log(err)
+    });
 
-    if (this.isEditMode && this.formData.loaiMonAns?.length) {
+    if (this.isEditMode && this.formData.loaiMonAns?.length ) {
       this.updateData();
 
     }
   }
-  updateData(): void {
+  updateData(): void {  
     const loaiMonAnsFromForm = this.formData.loaiMonAns;    
-    console.log('Dữ liệu loaiMonAnsFromForm:', loaiMonAnsFromForm);
     this.loaiSelections = loaiMonAnsFromForm.map((loai: any) => ({
       selectedLoaiId: loai.id,
       selectedLoaiName: loai.name,
       filteredMonAn: [], // Dữ liệu món ăn sẽ được điền sau
-      monAns: loai.monAns.map((item: any) => ({
-        monAn: {
-          id: item.id,
-          name: item.tenMonAn,
-          hinhAnh: item.hinhAnh,
-          giaTien: item.giaTien
-        }
-      }))
+      monAns: (loai.monAns || [])
+        .filter((item: any) => item?.monAn) // Tránh item không có monAn
+        .map((item: any) => ({
+          monAn: {
+            id: item.monAn.id,
+            name: item.monAn.tenMonAn,
+            hinhAnh: item.monAn.hinhAnh,
+            giaTien: item.monAn.giaTien
+          }
+        }))
     }));  
-    console.log('Dữ liệu loaiSelections:', this.loaiSelections);
-    // Gọi API để lấy danh sách món ăn cho mỗi loại
+    // console.log('Dữ liệu loaiSelections:', this.loaiSelections);
     this.loaiSelections.forEach((loai, index) => {
         this.monAnService.getMonAn({ tenLoaiMonAn: loai.selectedLoaiName }).subscribe({
           next: (res: any) => {
@@ -81,13 +102,20 @@ export class PopupComboComponent implements OnInit {
               hinhAnh: nl.hinhAnh,
               giaTien: nl.giaTien
             }));
-            console.log(this.loaiSelections[index].monAns);
           },
           error: err => {
             console.error('Lỗi khi lấy món ăn:', err);
           }
         });
     });
+    const comboFromForm = this.formData.combos;    
+    this.comboSelections = comboFromForm.map((loai: any) => ({
+      selectedComboId: loai.id,
+      selectedComboName: loai.name,
+      hinhAnh: loai.hinhAnh,
+      giaTien: loai.giaTien,
+      moTa: loai.moTa
+    }));  
 
   }
   
@@ -98,6 +126,15 @@ export class PopupComboComponent implements OnInit {
       selectedMonAnId: '',
       filteredMonAn: [],
       monAns: []
+    });
+  }
+  addComboSelection(): void {
+    this.comboSelections.push({
+      selectedComboId: '',
+      selectedComboName: '',
+      hinhAnh: '',
+      giaTien: '',
+      moTa: '',
     });
   }
   addMonAnRow(index: number): void {
@@ -131,9 +168,20 @@ export class PopupComboComponent implements OnInit {
     this.loaiSelections[index].selectedMonAnId = '';
     this.loaiSelections[index].monAns = [];
   }
+  onComboChange(index: number): void {
+    const selectedComboId = this.comboSelections[index].selectedComboId;
+    this.comboSelections[index].selectedComboName = this.combo.find(l => l.id === selectedComboId)?.name || '';
+    this.comboSelections[index].hinhAnh = this.combo.find(l => l.id === selectedComboId)?.hinhAnh || '';
+    this.comboSelections[index].giaTien = this.combo.find(l => l.id === selectedComboId)?.giaTien || '';
+    this.comboSelections[index].moTa = this.combo.find(l => l.id === selectedComboId)?.moTa || '';
+  }
   isLoaiDuplicate(selectedLoaiId: string, index: number): boolean {
     return this.loaiSelections.some((s, idx) => idx !== index && s.selectedLoaiId === selectedLoaiId);
   }
+  isComboDuplicate(selectedComboId: string, index: number): boolean {
+    return this.comboSelections.some((s, idx) => idx !== index && s.selectedComboId === selectedComboId);
+  }
+
   isMonAnDuplicate(nl: any, loaiIndex: number, monAnIndex: number): boolean {
     const loai = this.loaiSelections[loaiIndex];
     return loai.monAns.some((x: any, idx: number) => 
@@ -159,31 +207,36 @@ export class PopupComboComponent implements OnInit {
   removeLoaiSelection(index: number): void {
     this.loaiSelections.splice(index, 1);
   }
+  removeComboSelection(index: number): void {
+    this.comboSelections.splice(index, 1);
+  }
   onSave(): void {
     const allMonAns = this.loaiSelections.map(loai => ({
       id: loai.selectedLoaiId,
       name: loai.selectedLoaiName,
       monAns: loai.monAns.map((item: any) => ({
-        id: item.monAn.id,
-        tenMonAn: item.monAn.name,
-        hinhAnh: item.monAn.hinhAnh,
-        giaTien: item.monAn.giaTien,
-        moTa: ''
+        monAn: {
+          id: item.monAn.id,
+          name: item.monAn.name,
+          hinhAnh: item.monAn.hinhAnh,
+          giaTien: item.monAn.giaTien
+        },
       }))
+    }));
+    const allCombos = this.comboSelections.map(loai => ({
+      id: loai.selectedLoaiId,
+      name: loai.selectedLoaiName,
+      hinhAnh: loai.hinhAnh,
+      giaTien: loai.giaTien,
+      moTa: loai.moTa
     }));
 
     const dataToSend = {
       id: this.formData.id,
-      tenCombo:  this.formData.tenCombo,
-      moTa: this.formData.moTa,
-      giaTien: this.formData.giaTien,
-      hinhAnh: this.formData.hinhAnh
-        ? JSON.stringify({
-            id: this.formData.hinhAnh.id,
-            name: this.formData.hinhAnh.name
-          })
-        : '',
-      loaiMonAns: allMonAns
+      tenThucDon:  this.formData.tenThucDon,
+      trangThai: this.formData.trangThai,
+      loaiMonAns: allMonAns,
+      combos:allCombos
     };
     console.log(dataToSend);
 

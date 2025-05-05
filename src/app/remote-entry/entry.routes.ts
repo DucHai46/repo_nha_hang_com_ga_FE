@@ -20,6 +20,7 @@ import { AuthGuardService as AuthGuard } from '../core/services/auth-guard.servi
 import { XacnhangoimonComponent } from '../modules/layout/menugoimon/xacnhangoimon/xacnhangoimon.component';
 import { GiamgiaComponent } from '../modules/layout/menu/giamgia/giamgia.component';
 import { ComboComponent } from '../modules/layout/menu/combo/combo.component';
+import { ThucdonComponent } from '../modules/layout/menu/thucdon/thucdon.component';
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [
@@ -43,6 +44,7 @@ export const remoteRoutes: Route[] = [
           { path: 'giamgia', component: GiamgiaComponent },
           { path: 'monan', component: MonanComponent },
           { path: 'combo', component: ComboComponent },
+          { path: 'thucdon', component:ThucdonComponent  },
 
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },

@@ -1,7 +1,7 @@
 <div class="mt-10 mr-10">
     <!-- nhãn -->
     <div class="flex flex-row gap-4 mb-5">
-      <p class="text-2xl font-bold">Combo</p>
+      <p class="text-2xl font-bold">Thực đơn</p>
     </div>
     <!-- form search -->
     <div
@@ -10,24 +10,26 @@
       <!-- form -->
       <div class="flex flex-row gap-4">
         <div class="flex flex-col gap-2">
-          <label for="searchTenCombo">Tên Combo</label>
+          <label for="searchTenThucDon">Tên thực đơn</label>
           <input
             class="border border-gray-300 rounded-md p-2"
-            id="searchTenCombo"
-            [(ngModel)]="searchForm.tenCombo"
+            id="searchTenThucDon"
+            [(ngModel)]="searchForm.tenThucDon"
             type="text"
             placeholder="Tìm kiếm"
           />
         </div>
         <div class="flex flex-col gap-2">
-            <label for="giaTri">Giá trị</label>
-            <input
-              class="border border-gray-300 rounded-md p-2"
-              id="giaTri"
-              [(ngModel)]="searchForm.giaTri"
-              type="text"
-              placeholder="Tìm kiếm"
-            />
+            <label for="searchTrangThai">Trạng thái thực đơn</label>
+            <select
+              id="searchTrangThai"
+              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:outline-none"
+              [(ngModel)]="searchForm.trangThai"
+            >
+              <option [value]="''">Tất cả</option>
+              <option [value]="0">Không hoạt động</option>
+              <option [value]="1">Hoạt động</option>
+            </select>
           </div>
       </div>
       <!-- button -->
@@ -94,18 +96,15 @@
           <thead class="text-xs text-gray-700 uppercase text-center">
             <tr>
               <th scope="col" class="px-6 py-3">STT</th>
-              <th scope="col" class="px-6 py-3">Tên combo</th>
-              <th scope="col" class="px-6 py-3">Hình ảnh</th>
-              <!-- <th scope="col" class="px-6 py-3">Nguyên liệu</th> -->
-              <th scope="col" class="px-6 py-3">Giá tiền</th>
-              <th scope="col" class="px-6 py-3">Mô tả</th>
+              <th scope="col" class="px-6 py-3">Tên thực đơn</th>
+              <th scope="col" class="px-6 py-3">Trạng thái</th>
               <th scope="col" class="px-6 py-3">Thao tác</th>
             </tr>
           </thead>
           <tbody>
             <tr
               class="border-b dark:border-gray-700 border-gray-200"
-              *ngFor="let item of comboPaging; let i = index"
+              *ngFor="let item of thucDonPaging; let i = index"
             >
               <td
                 scope="row"
@@ -117,23 +116,10 @@
                 {{ item.ma }}
               </td> -->
               <td class="px-6 py-4">
-                {{ item.tenCombo }}
-              </td>
-              <td class="px-6 py-4" style="max-width: 200px;">
-                  <a (click)="download(parseJSON(item.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(item.hinhAnh)?.name }}</a>
-              </td>
-              <!-- <td class="px-6 py-4" style="min-width: 300px; max-width: 400px; white-space: normal;">
-                <ul>
-                  <li *ngFor="let item of item.nguyenLieus">
-                    - {{item.nguyenLieu.name}} ({{item.soLuong}} {{item.ghiChu ? '- ' + item.ghiChu : ''}})
-                  </li>
-                </ul>
-              </td> -->
-              <td class="px-6 py-4">
-                {{ item.giaTien }}
+                {{ item.tenThucDon }}
               </td>
               <td class="px-6 py-4">
-                {{ item.moTa }}
+                {{ getTrangThaiName(item.trangThai) }}
               </td>
               <td
                 class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
@@ -262,16 +248,12 @@
       </div>
     </div>
   </div>
-  <app-popupCombo
+  <app-popupThucDon
   *ngIf="isPopupOpen"
   [isEditMode]="isEditMode"
   [formData]="formData"
   (close)="closePopup()"
   (save)="onSaveCongThuc($event)"
-></app-popupCombo>
+></app-popupThucDon>
 
-  <app-popupChiTietCB
-  *ngIf="isChiTietOpen"
-  [formData]="formData"
-  (close)="closeChiTiet()"
-  ></app-popupChiTietCB>
+

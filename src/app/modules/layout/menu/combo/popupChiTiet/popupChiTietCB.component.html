@@ -2,13 +2,13 @@
   <div class="popup-box bg-white rounded-lg p-6 shadow-lg max-w-5xl mx-auto relative">
     <button (click)="closePopup()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
 
-    <h2 class="text-2xl font-bold mb-6 text-center">Chi tiết công thức</h2>
+    <h2 class="text-2xl font-bold mb-6 text-center">Chi tiết combo</h2>
 
     <div class="space-y-6">
       <!-- Tên công thức -->
       <div>
-        <h3 class="font-semibold text-gray-700 mb-1">Tên công thức:</h3>
-        <p class="text-gray-900">{{ formData.tenCongThuc }}</p>
+        <h3 class="font-semibold text-gray-700 mb-1">Tên combo:</h3>
+        <p class="text-gray-900">{{ formData.tenCombo }}</p>
       </div>
       
       <div>
@@ -25,25 +25,25 @@
 
       
       <div>
-        <h3 class="font-semibold text-gray-700 mb-3">Danh sách nguyên liệu:</h3>
+        <h3 class="font-semibold text-gray-700 mb-3">Danh sách món ăn:</h3>
 
         <div class="overflow-x-auto">
           <table class="min-w-full table-auto border-collapse border border-gray-300">
             <thead>
               <tr class="bg-gray-100">
-                <th class="border border-gray-300 px-4 py-2 text-left">Tên nguyên liệu</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Tên món ăn</th>
                 <th class="border border-gray-300 px-4 py-2 text-left">Loại</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Số lượng</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Ghi chú</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Hình ảnh</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Giá tiền</th>
               </tr>
             </thead>
             <tbody>
-              <ng-container *ngFor="let loai of formData.loaiNguyenLieus">
-                <tr *ngFor="let nl of loai.nguyenLieus" class="hover:bg-gray-50">
-                  <td class="border border-gray-300 px-4 py-2">{{ nl.nguyenLieu.name }}</td>
+              <ng-container *ngFor="let loai of formData.loaiMonAns">
+                <tr *ngFor="let nl of loai.monAns" class="hover:bg-gray-50">
+                  <td class="border border-gray-300 px-4 py-2">{{ nl.tenMonAn }}</td>
                   <td class="border border-gray-300 px-4 py-2">{{ loai.name}}</td>
-                  <td class="border border-gray-300 px-4 py-2">{{ nl.soLuong}}</td>
-                  <td class="border border-gray-300 px-4 py-2 italic text-gray-600">{{ nl.ghiChu}}</td>
+                  <a (click)="download(parseJSON(nl.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(nl.hinhAnh)?.name }}</a>
+                  <td class="border border-gray-300 px-4 py-2 italic text-gray-600">{{ nl.giaTien}}</td>
                 </tr>
               </ng-container>
             </tbody>
