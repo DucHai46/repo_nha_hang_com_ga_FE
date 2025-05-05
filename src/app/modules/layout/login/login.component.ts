@@ -1,7 +1,6 @@
 import { AuthService } from './../../../core/services/auth.service';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +16,7 @@ export class LoginComponent implements OnInit {
     'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg'
   ];
 
-  constructor(private router: Router, private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   currentIndex: number = 0;
 
@@ -36,9 +35,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.formData).subscribe({
         next: (res: any) => {
           if(res.token){
-            if (isPlatformBrowser(this.platformId)) {
-              localStorage.setItem('token', res.token);
-            }
+            localStorage.setItem('token', res.token);
           }
           this.router.navigate(['/main']);
         },

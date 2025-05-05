@@ -1,6 +1,5 @@
-import { Component, Inject, input, OnInit, output, PLATFORM_ID } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
 
 interface MenuItem {
   routeLink?: string;
@@ -18,11 +17,7 @@ interface MenuItem {
   styleUrl: './sidenav.component.scss',
 
 })
-export class SidenavComponent implements OnInit  {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
-  ngOnInit(): void {
-    
-  }
+export class SidenavComponent {
   isSideNavCollapsed = input.required<boolean>();
   changeIsSideNavCollapsed = output<boolean>();
   
@@ -174,8 +169,6 @@ export class SidenavComponent implements OnInit  {
   }
 
   logout() {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('token');
-    }
+    localStorage.removeItem('token');
   }
 }
