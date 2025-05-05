@@ -5,7 +5,11 @@ export const environment = {
   // authUrl: 'http://3.24.10.252:8081',
   // fileUrl: 'http://3.24.10.252:8082',
  
-  apiUrl: 'https://3.24.10.252',
-  authUrl: 'https://3.24.10.252/auth',
-  fileUrl: 'https://3.24.10.252/files',
+  // apiUrl: 'https://3.24.10.252',
+  // authUrl: 'https://3.24.10.252/auth',
+  // fileUrl: 'https://3.24.10.252/files',
+
+  apiUrl: 'https://api.duchaibui.id.vn',
+  authUrl: 'https://api.duchaibui.id.vn/auth',
+  fileUrl: 'https://api.duchaibui.id.vn/files',
 };
