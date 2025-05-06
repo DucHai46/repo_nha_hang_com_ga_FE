@@ -30,8 +30,11 @@
             <label class="materialName">Món ăn theo loại</label>
             
             <!-- Lặp qua các loại nguyên liệu -->
-            <div *ngFor="let loai of loaiSelections; let i = index" class="bg-gray-100 border rounded-xl p-4 mb-4 space-y-3">
-              
+            <div *ngFor="let loai of loaiSelections; let i = index" class="relative bg-gray-100 border rounded-xl p-4 mb-4 space-y-3">
+              <button (click)="removeLoaiSelection(i)"
+              class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-lg font-bold">
+                &times;
+              </button>
               <!-- Dropdown chọn loại nguyên liệu -->
               <label class="text-sm font-medium text-gray-700">Loại món ăn {{ i + 1 }}</label>
               <div class="flex flex-cols">
@@ -93,10 +96,10 @@
                     Thêm nguyên liệu
                 </button>
               </div>
-              <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto" 
+              <!-- <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto" 
               (click)="removeLoaiSelection(i)">
                 Xóa
-              </button>
+              </button> -->
             </div>
       
             <!-- Nút thêm loại nguyên liệu -->

@@ -87,6 +87,7 @@ import { ThucdonComponent } from './menu/thucdon/thucdon.component';
 import { ThucDonStore } from './menu/thucdon/store/thuc-don.store';
 import { ThucDonService } from './menu/thucdon/services/thucdon.service'; 
 import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.component';
+import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTietTD.component';
 
 
 
@@ -132,7 +133,8 @@ import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.
     PopupChiTietComponent,
     PopupChiTietCBComponent,
     ThucdonComponent,
-    PopupThucDonComponent
+    PopupThucDonComponent,
+    PopupChiTietTDComponent
 
   ], // Khai báo component
   imports: [

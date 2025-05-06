@@ -3,7 +3,9 @@ import { FileService } from '../../../../../core/services/file.service';
 import { LoaimonanService } from '../../loaimonan/services/loaimonan.service';
 import { MonAnService } from '../../monan/services/monan.service';
 import { ComboService } from '../../combo/services/combo.service';
+import { ThucDonService } from '../services/thucdon.service';
 import { TrangThaiThucDon } from '../../../../../models/TrangThaiThucDon';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-popupThucDon',
   templateUrl: './popupThucDon.component.html',
@@ -46,7 +48,8 @@ export class PopupThucDonComponent implements OnInit {
     private monAnService: MonAnService,
     private fileService: FileService,
     private loaiMonAnService: LoaimonanService,
-    private comboService: ComboService
+    private comboService: ComboService,
+    private thucDonService: ThucDonService
   ) {}
   ngOnInit(): void {
     this.loaiMonAnService.getLoaiMonAn({}).subscribe({
@@ -62,7 +65,9 @@ export class PopupThucDonComponent implements OnInit {
       next: (res: any) => {
         this.combo = res.data.data.map((item: any) => ({
           id: item.id,
-          name: item.tenCombo
+          name: item.tenCombo,
+          hinhAnh: item.hinhAnh,
+          giaTien: item.giaTien
         }));
       },
       error: (err: any) => console.log(err)
@@ -75,22 +80,22 @@ export class PopupThucDonComponent implements OnInit {
   }
   updateData(): void {  
     const loaiMonAnsFromForm = this.formData.loaiMonAns;    
+    console.log('Dữ liệu loaiMonAnsFromForm:', loaiMonAnsFromForm);
     this.loaiSelections = loaiMonAnsFromForm.map((loai: any) => ({
       selectedLoaiId: loai.id,
       selectedLoaiName: loai.name,
       filteredMonAn: [], // Dữ liệu món ăn sẽ được điền sau
-      monAns: (loai.monAns || [])
-        .filter((item: any) => item?.monAn) // Tránh item không có monAn
-        .map((item: any) => ({
-          monAn: {
-            id: item.monAn.id,
-            name: item.monAn.tenMonAn,
-            hinhAnh: item.monAn.hinhAnh,
-            giaTien: item.monAn.giaTien
-          }
-        }))
+      monAns: loai.monAns.map((item: any) => ({
+        monAn: {
+          id: item.id,
+          name: item.tenMonAn,
+          hinhAnh: item.hinhAnh,
+          giaTien: item.giaTien
+        }
+      }))
     }));  
-    // console.log('Dữ liệu loaiSelections:', this.loaiSelections);
+    console.log('Dữ liệu loaiSelections:', this.loaiSelections);
+    // Gọi API để lấy danh sách món ăn cho mỗi loại
     this.loaiSelections.forEach((loai, index) => {
         this.monAnService.getMonAn({ tenLoaiMonAn: loai.selectedLoaiName }).subscribe({
           next: (res: any) => {
@@ -102,12 +107,14 @@ export class PopupThucDonComponent implements OnInit {
               hinhAnh: nl.hinhAnh,
               giaTien: nl.giaTien
             }));
+            console.log(this.loaiSelections[index].monAns);
           },
           error: err => {
             console.error('Lỗi khi lấy món ăn:', err);
           }
         });
     });
+    console.log(this.loaiSelections);
     const comboFromForm = this.formData.combos;    
     this.comboSelections = comboFromForm.map((loai: any) => ({
       selectedComboId: loai.id,
@@ -171,9 +178,11 @@ export class PopupThucDonComponent implements OnInit {
   onComboChange(index: number): void {
     const selectedComboId = this.comboSelections[index].selectedComboId;
     this.comboSelections[index].selectedComboName = this.combo.find(l => l.id === selectedComboId)?.name || '';
+    const selectedCombo = this.combo.find(l => l.id === selectedComboId);
     this.comboSelections[index].hinhAnh = this.combo.find(l => l.id === selectedComboId)?.hinhAnh || '';
     this.comboSelections[index].giaTien = this.combo.find(l => l.id === selectedComboId)?.giaTien || '';
     this.comboSelections[index].moTa = this.combo.find(l => l.id === selectedComboId)?.moTa || '';
+    console.log(this.comboSelections[index]);
   }
   isLoaiDuplicate(selectedLoaiId: string, index: number): boolean {
     return this.loaiSelections.some((s, idx) => idx !== index && s.selectedLoaiId === selectedLoaiId);
@@ -215,17 +224,16 @@ export class PopupThucDonComponent implements OnInit {
       id: loai.selectedLoaiId,
       name: loai.selectedLoaiName,
       monAns: loai.monAns.map((item: any) => ({
-        monAn: {
-          id: item.monAn.id,
-          name: item.monAn.name,
-          hinhAnh: item.monAn.hinhAnh,
-          giaTien: item.monAn.giaTien
-        },
+        id: item.monAn.id,
+        tenMonAn: item.monAn.name,
+        hinhAnh: item.monAn.hinhAnh,
+        giaTien: item.monAn.giaTien,
+        moTa: ''
       }))
     }));
     const allCombos = this.comboSelections.map(loai => ({
-      id: loai.selectedLoaiId,
-      name: loai.selectedLoaiName,
+      id: loai.selectedComboId,
+      name: loai.selectedComboName,
       hinhAnh: loai.hinhAnh,
       giaTien: loai.giaTien,
       moTa: loai.moTa
@@ -238,9 +246,44 @@ export class PopupThucDonComponent implements OnInit {
       loaiMonAns: allMonAns,
       combos:allCombos
     };
-    console.log(dataToSend);
+    if (this.formData.trangThai == 1) {
+      // Kiểm tra các thực đơn đang hoạt động
+      this.thucDonService.getThucDon({ trangThai: 1 }).subscribe({
+        next: (res: any) => {
+          // Kiểm tra nếu res.data và res.data.data có hợp lệ không
+          if (res && res.data && res.data.data) {
+            // Lọc danh sách thực đơn đang hoạt động và không phải là thực đơn hiện tại
+            const activeThucDons = res.data.data.filter((td: any) => td.trangThai === 1 && td.id !== this.formData.id);
+              // Cập nhật tất cả thực đơn khác về trạng thái "Không hoạt động"
+            const updateObservables = activeThucDons.map((td: any) =>
+              this.thucDonService.updateThucDon(td.id, { ...td, trangThai: 0 })
+            );
+            forkJoin(updateObservables).subscribe({
+              next: () => {
+                  // Sau khi cập nhật trạng thái các thực đơn khác về "Không hoạt động", lưu thực đơn mới với trạng thái "Hoạt động"
+                this.save.emit(dataToSend);
+              },
+              error: (err: any) => {
+                console.log('Lỗi khi cập nhật trạng thái các thực đơn:', err);
+              }
+            });
 
-    this.save.emit(dataToSend);
+          } else {
+            // Nếu không có thực đơn nào đang hoạt động, lưu luôn thực đơn này với trạng thái "Hoạt động"
+            this.save.emit(dataToSend);
+          }
+        },
+        error: (err: any) => {
+          console.log('Lỗi khi lấy danh sách thực đơn:', err);
+        }
+      });
+    } else {
+      // Nếu trạng thái không phải "Hoạt động", trực tiếp lưu thực đơn này
+      this.save.emit(dataToSend);
+    }
+
+
+    // this.save.emit(dataToSend);
     // console.log(dataToSend);
   }
 

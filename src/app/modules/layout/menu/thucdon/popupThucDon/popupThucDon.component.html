@@ -18,31 +18,34 @@
       <!-- ------------------------------------------------- --------------------------------------------------->
       
             <div>
-            <label class="materialName">Món ăn theo loại</label>
-            
-            <!-- Lặp qua các loại nguyên liệu -->
-            <div *ngFor="let loai of loaiSelections; let i = index" class="bg-gray-100 border rounded-xl p-4 mb-4 space-y-3">
+              <label class="materialName">Món ăn theo loại</label>
               
-              <!-- Dropdown chọn loại nguyên liệu -->
-              <label class="text-sm font-medium text-gray-700">Loại món ăn {{ i + 1 }}</label>
-              <div class="flex flex-cols">
-                <select [(ngModel)]="loai.selectedLoaiId"
-                
-                        (change)="onLoaiMonAnChange(i)"
-                        [ngModelOptions]="{standalone: true}"
-                        class="w-full mt-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  <!-- <option value="" disabled selected>Chọn loại nguyên liệu</option> -->
-                  <option *ngFor="let l of loaiMonAn" [value]="l.id" [disabled]="isLoaiDuplicate(l.id, i)">
-                    {{ l.name }}
-                  </option>
-                </select>
-              </div>
+              <!-- Lặp qua các loại nguyên liệu -->
+              <div *ngFor="let loai of loaiSelections; let i = index" class="relative bg-gray-100 border rounded-xl p-4 mb-4 space-y-3">
+                <button (click)="removeLoaiSelection(i)"
+                class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-lg font-bold">
+                  &times;
+                </button>
+                <!-- Dropdown chọn loại nguyên liệu -->
+                <label class="text-sm font-medium text-gray-700">Loại món ăn {{ i + 1 }}</label>
+                <div class="flex flex-cols">
+                  <select [(ngModel)]="loai.selectedLoaiId"
+                  
+                          (change)="onLoaiMonAnChange(i)"
+                          [ngModelOptions]="{standalone: true}"
+                          class="w-full mt-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <!-- <option value="" disabled selected>Chọn loại nguyên liệu</option> -->
+                    <option *ngFor="let l of loaiMonAn" [value]="l.id" [disabled]="isLoaiDuplicate(l.id, i)">
+                      {{ l.name }}
+                    </option>
+                  </select>
+                </div>
       
   
               <!-- Lặp qua các nguyên liệu đã chọn và hiển thị dropdown, số lượng, ghi chú -->
               <label *ngIf="loai.selectedLoaiId" class="text-sm font-medium text-gray-700">Danh sách món ăn</label>
               <div *ngFor="let item of loai.monAns; let j = index" class="bg-white p-3 rounded shadow mb-3">
-                <div class="space-y-4 mb-4">
+                  <div class="space-y-4 mb-4">
                     <!-- Một item món ăn -->
                     <div class="border border-gray-300 rounded-lg p-4 bg-white shadow-sm space-y-3">
                   
@@ -84,50 +87,61 @@
                     Thêm nguyên liệu
                 </button>
               </div>
-              <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto" 
+              <!-- <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto" 
               (click)="removeLoaiSelection(i)">
                 Xóa
-              </button>
+              </button> -->
             </div>
+
+            
       
             <!-- Nút thêm loại nguyên liệu -->
             <button (click)="addLoaiSelection()"
                     class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto">
-                    <!-- <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
-                    </svg> -->
-                     Thêm
+                     Thêm món ăn
             </button>
           </div>
           <!-- ------------------------------------------------------------------------------------------------------------ -->
-            <div>
-                <label class="materialName">Món ăn theo combo</label>
-                
-                <!-- Lặp qua các loại nguyên liệu -->
-                <div *ngFor="let loai of comboSelections; let i = index" class="bg-gray-100 border rounded-xl p-4 mb-4 space-y-3">
-                
-                <!-- Dropdown chọn loại nguyên liệu -->
+          <div>
+            <label class="materialName">Món ăn theo combo</label>
+            
+         
+              <div *ngFor="let loai of comboSelections; let i = index" class="relative bg-gray-100 border rounded-xl p-4 mb-4 space-y-3">
+                <button (click)="removeComboSelection(i)"
+                class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-lg font-bold">
+                  &times;
+                </button>
                 <label class="text-sm font-medium text-gray-700">Combo {{ i + 1 }}</label>
                     <div class="flex flex-cols">
-                        <select [(ngModel)]="loai.selectedLoaiId"
-                                (change)="onComboChange(i)"
-                                [ngModelOptions]="{standalone: true}"
-                                class="w-full mt-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <!-- <option value="" disabled selected>Chọn loại nguyên liệu</option> -->
+                      <select [(ngModel)]="loai.selectedComboId"
+                              (change)="onComboChange(i)"
+                              [ngModelOptions]="{standalone: true}"
+                              class="w-full mt-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        
                         <option *ngFor="let l of combo" [value]="l.id" [disabled]="isComboDuplicate(l.id, i)">
                             {{ l.name }}
                         </option>
-                        </select>
+                      </select>
                     </div>
-                    <label *ngIf="loai.selectedComboId" class="text-sm font-medium text-gray-700">Danh sách combo</label>
-                    <button (click)="addLoaiSelection()"
-                      class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto">
-                      Thêm combo 
-                    </button>
-                </div>
-            </div>
-          
+                    <div class="text-xl font-semibold text-center text-green-700">
+                      {{ loai.name }}
+                    </div>
+                    <div>
+                      <a (click)="download(parseJSON(loai.hinhAnh)?.id)"
+                        class="text-blue-600 underline hover:text-blue-800 transition">
+                        {{ parseJSON(loai.hinhAnh)?.name }}
+                      </a>
+                    </div>
+                    <div class="text-xl font-semibold text-center text-green-700">
+                      {{ loai.giaTien }}
+                    </div>
 
+            </div>
+            <button (click)="addComboSelection()"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto">
+             Thêm combo
+            </button>
+          </div>
 
 
 

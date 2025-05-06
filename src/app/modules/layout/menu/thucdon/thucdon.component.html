@@ -255,5 +255,10 @@
   (close)="closePopup()"
   (save)="onSaveCongThuc($event)"
 ></app-popupThucDon>
+<app-popupChiTietTD
+*ngIf="isChiTietOpen"
+[formData]="formData"
+(close)="closeChiTiet()"
+></app-popupChiTietTD>
 
 
