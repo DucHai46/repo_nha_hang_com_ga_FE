@@ -14,7 +14,7 @@ export class PopupComboComponent implements OnInit {
     monAns: [],
     moTa: '',
     hinhAnh: '',
-    giaTien: ''
+    giaTien: 0
   };
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
@@ -71,7 +71,7 @@ export class PopupComboComponent implements OnInit {
     console.log('Dữ liệu loaiSelections:', this.loaiSelections);
     // Gọi API để lấy danh sách món ăn cho mỗi loại
     this.loaiSelections.forEach((loai, index) => {
-        this.monAnService.getMonAn({ tenLoaiMonAn: loai.selectedLoaiName }).subscribe({
+        this.monAnService.getMonAn({ idLoaiMonAn: loai.selectedLoaiId }).subscribe({
           next: (res: any) => {
             const items = res?.data?.data || [];
             this.loaiSelections[index].filteredMonAn = items.map((nl: any) => ({
@@ -107,14 +107,14 @@ export class PopupComboComponent implements OnInit {
         id: '',
         name: '',
         hinhAnh: '',
-        giaTien: ''
+        giaTien: 0
       },  
     });
   }
   onLoaiMonAnChange(index: number): void {
     const selectedLoaiId = this.loaiSelections[index].selectedLoaiId;
     this.loaiSelections[index].selectedLoaiName = this.loaiMonAn.find(l => l.id === selectedLoaiId)?.name || '';
-    this.monAnService.getMonAn({tenLoaiMonAn: this.loaiSelections[index].selectedLoaiName}).subscribe({
+    this.monAnService.getMonAn({idLoaiMonAn: this.loaiSelections[index].selectedLoaiId}).subscribe({
       next: (res: any) => {
         // console.log(res.data.data);
         this.loaiSelections[index].filteredMonAn = res.data.data.map((item: any) => ({
@@ -162,13 +162,9 @@ export class PopupComboComponent implements OnInit {
   onSave(): void {
     const allMonAns = this.loaiSelections.map(loai => ({
       id: loai.selectedLoaiId,
-      name: loai.selectedLoaiName,
       monAns: loai.monAns.map((item: any) => ({
         id: item.monAn.id,
-        tenMonAn: item.monAn.name,
-        hinhAnh: item.monAn.hinhAnh,
-        giaTien: item.monAn.giaTien,
-        moTa: ''
+
       }))
     }));
 

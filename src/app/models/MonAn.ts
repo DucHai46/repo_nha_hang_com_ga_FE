@@ -11,9 +11,9 @@ export interface MonAn {
   giamGia: {
     id: string;
     name: string;
-    giaTri: string;
+    giaTri: number;
   };
   moTa: string;
   hinhAnh: string;
-  giaTien: string;
+  giaTien: number;
 }

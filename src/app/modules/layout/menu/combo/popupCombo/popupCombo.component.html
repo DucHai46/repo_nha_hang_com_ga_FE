@@ -78,7 +78,7 @@
                   
                       <!-- Giá tiền -->
                       <div class="text-xl font-semibold text-center text-green-700">
-                        {{ item.monAn.giaTien }}
+                        {{ item.monAn.giaTien | number:'1.0-0'}}
                       </div>
                   
                       <!-- Nút xóa -->
@@ -115,7 +115,7 @@
           <div class="form-group mt-6">
             <label for="GT">Giá tiền</label>
             <input
-              type="text"
+              type="number"
               id="GT"
               [(ngModel)]="formData.giaTien"
               name="GiaTien"

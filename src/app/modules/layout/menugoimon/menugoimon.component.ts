@@ -1,5 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ThucDonService } from '../menu/thucdon/services/thucdon.service';
+import { LoaimonanService } from '../menu/loaimonan/services/loaimonan.service';
+import { LoaiMonAn } from '../../../models/LoaiMonAn';
+import { ThucDon} from '../../../models/ThucDon';
+import { MonAn } from '../../../models/MonAn';
 
 
 @Component({
@@ -67,17 +72,89 @@ export class MenugoimonComponent implements OnInit {
 
   itemsMonAn: any[] = [];
   selectedItemsMA: any[] = [];
+  loaiMonAn: any[] = [];
+  thucDon: any[] = [];
+  itemsRoot2: any[] = [];
+  combo: any[] = [];
   
-  constructor(public router: Router) {}
+  constructor(
+    public router: Router,
+    private thucDonService: ThucDonService,
+    private loaiMonAnService: LoaimonanService,
+  ) {}
   ngOnInit() {
-    this.itemsMonAn = this.itemsMonAnRoot;
+    
     const updatedSelectedItems = history.state?.updatedSelectedItems;
     if (updatedSelectedItems) {
       this.capNhatSoLuongMonAn(updatedSelectedItems);
       this.selectedItemsMA = updatedSelectedItems.filter((item: { soLuong: number; }) => item.soLuong > 0);
     }
-  }
+  
+    this.loaiMonAnService.getLoaiMonAn({}).subscribe({
+      next: (res: any) => {
+        this.loaiMonAn = res.data.data.map((item: any) => ({
+          ma: item.id,
+          ten: item.tenLoai
+        }));
+      },
+      error: (err: any) => console.log(err)
+    });
+  
+    this.thucDonService.getThucDon({trangThai: 1}).subscribe({
+      next: (res: any) => {
+        this.thucDon = res.data.data;
+  
+        this.itemsRoot2 = this.taoDanhSachMonAn(this.thucDon);
+        this.itemsMonAn = this.itemsRoot2;
+        console.log(this.itemsMonAn);
+        this.combo= this.taoDanhSachCombo(this.thucDon);
 
+      },
+      error: (err: any) => console.log(err)
+    });
+
+  }
+  private taoDanhSachMonAn(thucDonData: any[]): any[] {
+    const danhSach: any[] = [];
+  
+    thucDonData.forEach((item: any) => {
+      if (item.loaiMonAns && item.loaiMonAns.length > 0) {
+        item.loaiMonAns.forEach((loaiMon: any) => {
+          if (loaiMon.monAns && loaiMon.monAns.length > 0) {
+            loaiMon.monAns.forEach((monAn: any) => {
+              danhSach.push({
+                ma: monAn.id,
+                ten: monAn.tenMonAn,
+                hinhAnh: monAn.hinhAnh,
+                gia: monAn.giaTien,
+                soLuong: 0,
+                danhMuc: loaiMon.id
+              });
+            });
+          }
+        });
+      }
+    });
+  
+    return danhSach;
+  }
+  private taoDanhSachCombo(thucDonData: any[]): any[] {
+    const danhSach: any[] = [];
+  
+    thucDonData.forEach((item: any) => {
+        item.combos.forEach((loaiMon: any) => {
+              danhSach.push({
+                ma: loaiMon.id,
+                ten: loaiMon.name,
+                hinhAnh: loaiMon.hinhAnh,
+                gia: loaiMon.giaTien,
+                soLuong: 0,
+              });
+        });
+    });
+  
+    return danhSach;
+  }
   // Cập nhật số lượng món từ selectedItemsMA vào itemsMonAn chính
   capNhatSoLuongMonAn(updatedSelectedItems: any[]) {
     updatedSelectedItems.forEach((updatedItem) => {
@@ -163,7 +240,7 @@ export class MenugoimonComponent implements OnInit {
     // Giữ lại selectedItem nếu không thay đổi vị trí
     let currentCategory = this.selectedItem;
   
-    this.itemsDanhMuc.forEach((category) => {
+    this.loaiMonAn.forEach((category) => {
       const el = document.getElementById(category.ma);
       if (el) {
         const { top } = el.getBoundingClientRect();
@@ -204,5 +281,15 @@ export class MenugoimonComponent implements OnInit {
   searchMonAn(event: any) {
     const keyword = event.target.value.toLowerCase();
     this.itemsMonAn = this.itemsMonAnRoot.filter((mon) => mon.ten.toLowerCase().includes(keyword));
+  }
+  getImageUrl(hinhAnh: string): string {
+    if (!hinhAnh) return '';
+  
+    try {
+      const parsed = JSON.parse(hinhAnh);
+      return `https://api.duchaibui.id.vn/api/files/download/${parsed.id}`;
+    } catch {
+      return ''; // hoặc ảnh mặc định nếu parse lỗi
+    }
   }
 }

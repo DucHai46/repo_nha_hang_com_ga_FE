@@ -1,8 +1,14 @@
-export interface Combo {
-  tenCombo: string;
+export interface ThucDon {
+  tenThucDon: string;
   loaiMonAns: LoaiMonAnTrongCombo[];
+  trangThai: number;
+  combos: ComboTrongThucDon[];
+}
+interface ComboTrongThucDon {
+  id: string;
+  name: string;
   hinhAnh: string;
-  giaTien: number;
+  giaTien: string;
   moTa: string;
 }
 
@@ -17,6 +23,6 @@ interface MonAnTrongCombo {
   id: string;
   tenMonAn: string;
   hinhAnh: string;
-  giaTien: number;
+  giaTien: string;
   moTa: string;
 }

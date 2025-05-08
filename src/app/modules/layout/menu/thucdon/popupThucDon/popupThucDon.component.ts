@@ -38,7 +38,7 @@ export class PopupThucDonComponent implements OnInit {
       selectedComboId: '',
       selectedComboName: '',
       hinhAnh: '',
-      giaTien: '',
+      giaTien: 0,
       moTa: '',
     }
   ];
@@ -97,7 +97,7 @@ export class PopupThucDonComponent implements OnInit {
     console.log('Dữ liệu loaiSelections:', this.loaiSelections);
     // Gọi API để lấy danh sách món ăn cho mỗi loại
     this.loaiSelections.forEach((loai, index) => {
-        this.monAnService.getMonAn({ tenLoaiMonAn: loai.selectedLoaiName }).subscribe({
+        this.monAnService.getMonAn({ idLoaiMonAn: loai.selectedLoaiId }).subscribe({
           next: (res: any) => {
             const items = res?.data?.data || [];
             this.loaiSelections[index].filteredMonAn = items.map((nl: any) => ({
@@ -140,7 +140,7 @@ export class PopupThucDonComponent implements OnInit {
       selectedComboId: '',
       selectedComboName: '',
       hinhAnh: '',
-      giaTien: '',
+      giaTien: 0,
       moTa: '',
     });
   }
@@ -151,14 +151,14 @@ export class PopupThucDonComponent implements OnInit {
         id: '',
         name: '',
         hinhAnh: '',
-        giaTien: ''
+        giaTien: 0
       },  
     });
   }
   onLoaiMonAnChange(index: number): void {
     const selectedLoaiId = this.loaiSelections[index].selectedLoaiId;
     this.loaiSelections[index].selectedLoaiName = this.loaiMonAn.find(l => l.id === selectedLoaiId)?.name || '';
-    this.monAnService.getMonAn({tenLoaiMonAn: this.loaiSelections[index].selectedLoaiName}).subscribe({
+    this.monAnService.getMonAn({idLoaiMonAn: this.loaiSelections[index].selectedLoaiId}).subscribe({
       next: (res: any) => {
         // console.log(res.data.data);
         this.loaiSelections[index].filteredMonAn = res.data.data.map((item: any) => ({
@@ -206,7 +206,7 @@ export class PopupThucDonComponent implements OnInit {
     } else {
       item.monAn.name = '';
       item.monAn.hinhAnh = '';
-      item.monAn.giaTien = '';
+      item.monAn.giaTien = 0;
     }
   }
   removeMonAnInLoai(loaiIndex: number, nlIndex: number): void {
@@ -222,13 +222,8 @@ export class PopupThucDonComponent implements OnInit {
   onSave(): void {
     const allMonAns = this.loaiSelections.map(loai => ({
       id: loai.selectedLoaiId,
-      name: loai.selectedLoaiName,
       monAns: loai.monAns.map((item: any) => ({
         id: item.monAn.id,
-        tenMonAn: item.monAn.name,
-        hinhAnh: item.monAn.hinhAnh,
-        giaTien: item.monAn.giaTien,
-        moTa: ''
       }))
     }));
     const allCombos = this.comboSelections.map(loai => ({
@@ -281,6 +276,7 @@ export class PopupThucDonComponent implements OnInit {
       // Nếu trạng thái không phải "Hoạt động", trực tiếp lưu thực đơn này
       this.save.emit(dataToSend);
     }
+    this.save.emit(dataToSend);
 
 
     // this.save.emit(dataToSend);

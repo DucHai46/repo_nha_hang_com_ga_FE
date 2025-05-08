@@ -116,7 +116,15 @@ export class GiamgiaComponent implements OnInit {
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
-    this.formData = item;
+    this.formData = {
+      ...item,
+      ngayBatDau: this.formatDate(item.ngayBatDau),
+      ngayKetThuc: this.formatDate(item.ngayKetThuc)
+    }
+  }
+  formatDate(dateInput: string){
+    const date= new Date(dateInput);
+    return date.toISOString().split('T')[0];
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

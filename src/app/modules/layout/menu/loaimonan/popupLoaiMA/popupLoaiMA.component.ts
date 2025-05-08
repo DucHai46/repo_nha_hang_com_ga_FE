@@ -52,10 +52,7 @@ export class PopupLoaiMAComponent implements OnInit {
   onSave(): void {
     const dataToSend = {
       ...this.formData,
-      danhMucMonAn: {
-        id: this.formData.danhMucMonAn.id,
-        name: this.formData.danhMucMonAn.name
-      }
+      danhMucMonAn:this.formData.danhMucMonAn.id
     };
     this.save.emit(dataToSend);
   }

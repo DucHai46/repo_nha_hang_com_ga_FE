@@ -99,18 +99,9 @@ export class PopupNguyenLieuComponent implements OnInit {
   onSave(): void {
     const dataToSend = {
       ...this.formData,
-      loaiNguyenLieu: {
-        id: this.formData.loaiNguyenLieu.id,
-        name: this.formData.loaiNguyenLieu.name
-      },
-      tuDo: {
-        id: this.formData.tuDo.id,
-        name: this.formData.tuDo.name
-      },
-      donViTinh: {
-        id: this.formData.donViTinh.id,
-        name: this.formData.donViTinh.name
-      }
+      loaiNguyenLieu: this.formData.loaiNguyenLieu.id,
+      tuDo: this.formData.tuDo.id,
+      donViTinh: this.formData.donViTinh.id
     };
     this.save.emit(dataToSend);
   }

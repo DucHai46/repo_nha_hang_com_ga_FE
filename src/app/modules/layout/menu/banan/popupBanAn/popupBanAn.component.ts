@@ -54,10 +54,7 @@ export class PopupBanAnComponent implements OnInit {
   onSave(): void {
     const dataToSend = {
       ...this.formData,
-      loaiBan: {
-        id: this.formData.loaiBan.id,
-        name: this.formData.loaiBan.name 
-      }
+      loaiBan: this.formData.loaiBan.id
     };
     this.save.emit(dataToSend);
   }

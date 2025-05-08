@@ -85,11 +85,6 @@ export class CongthucComponent implements OnInit {
       this.isEditMode = false;
       this.formData = {};
   }
-  openChiTietPopup(item: any): void {
-    this.isChiTietOpen = true; // mở popup ChiTiet
-    this.formData = item;      // gán dữ liệu cần xem chi tiết
-    console.log(this.formData);
-  }
 
   closePopup(): void {
     this.isPopupOpen = false;
@@ -123,7 +118,7 @@ export class CongthucComponent implements OnInit {
       // Thêm mới bàn
       this.congThucService.addCongThuc(body).subscribe({
         next: (res: any) => {
-
+          
           if (res.data) {
             this.searchForm.tenCongThuc = '';
             this.search();
@@ -142,9 +137,20 @@ export class CongthucComponent implements OnInit {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = item;
+    console.log(item);
     // console.log(item);
     // console.log(this.formData);
   }
+  
+  openChiTietPopup(item: any): void {
+    this.isChiTietOpen = true; 
+    this.congThucService.getCongThucById(item.id).subscribe((response: any) => {
+    this.formData = response.data;  
+    console.log(this.formData);
+    });      
+
+  }
+
 
 
   openDeletePopup(item: any): void {

@@ -53,10 +53,7 @@ export class PopupTuDoComponent implements OnInit {
   onSave(): void {
     const dataToSend = {
       ...this.formData,
-      danhMucNguyenLieu: {
-        id: this.formData.loaiTuDo.id,
-        name: this.formData.loaiTuDo.name
-      }
+      loaiTuDo: this.formData.loaiTuDo.id
     };
     this.save.emit(dataToSend);
   }

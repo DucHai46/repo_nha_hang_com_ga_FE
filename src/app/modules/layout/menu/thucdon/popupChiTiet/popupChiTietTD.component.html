@@ -33,7 +33,7 @@
                   <td class="border border-gray-300 px-4 py-2 italic text-gray-600">
                     <a (click)="download(parseJSON(nl.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(nl.hinhAnh)?.name }}</a>
                   </td>
-                  <td class="border border-gray-300 px-4 py-2 italic text-gray-600">{{ nl.giaTien}}</td>
+                  <td class="border border-gray-300 px-4 py-2 italic text-gray-600">{{ nl.giaTien| number:'1.0-0'}}</td>
                 </tr>
               </ng-container>
             </tbody>
@@ -62,7 +62,7 @@
                 <td class="border border-gray-300 px-4 py-2 italic text-gray-600">
                   <a (click)="download(parseJSON(nl.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(nl.hinhAnh)?.name }}</a>
                 </td>
-                <td class="border border-gray-300 px-4 py-2 italic text-gray-600">{{ nl.giaTien}}</td>
+                <td class="border border-gray-300 px-4 py-2 italic text-gray-600">{{ nl.giaTien| number:'1.0-0'}}</td>
               </tr>
             </tbody>
           </table>

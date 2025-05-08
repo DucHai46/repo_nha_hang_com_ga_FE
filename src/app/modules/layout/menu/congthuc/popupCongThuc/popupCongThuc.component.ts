@@ -154,12 +154,8 @@ export class PopupCongThucComponent implements OnInit {
   onSave(): void {
     const allNguyenLieus = this.loaiSelections.map(loai => ({
       id: loai.selectedLoaiId,
-      name: loai.selectedLoaiName,
       nguyenLieus: loai.nguyenLieus.map((item: {nguyenLieu: {id: string, name: string}, soLuong: number, ghiChu: string}) => ({
-        nguyenLieu: {
-          id: item.nguyenLieu.id,
-          name: item.nguyenLieu.name,
-        },
+        nguyenLieu: item.nguyenLieu.id,
         soLuong: parseInt(item.soLuong.toString(), 10),
         ghiChu: item.ghiChu
       }))

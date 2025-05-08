@@ -29,7 +29,7 @@ export class PopupMonAnComponent implements OnInit {
     giamGia: {
       id: '',
       name: '',
-      giaTri: ''
+      giaTri: 0,
     },
     moTa: '',
     hinhAnh: '',
@@ -101,19 +101,9 @@ export class PopupMonAnComponent implements OnInit {
   onSave() {
     const dataToSend = {
       ...this.formData,
-      loaiMonAn: {
-        id: this.formData.loaiMonAn.id,
-        name: this.formData.loaiMonAn.name
-      },
-      giamGia: {
-        id: this.formData.giamGia.id,
-        name: this.formData.giamGia.name,
-        giaTri: this.formData.giamGia.giaTri
-      },
-      congThuc: {
-        id: this.formData.congThuc.id,
-        name: this.formData.congThuc.name
-      },
+      loaiMonAn: this.formData.loaiMonAn.id,
+      giamGia: this.formData.giamGia.id,
+      congThuc: this.formData.congThuc.id,
       hinhAnh: this.formData.hinhAnh
         ? JSON.stringify({
             id: this.formData.hinhAnh.id,
