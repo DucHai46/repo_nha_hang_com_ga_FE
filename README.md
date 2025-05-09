@@ -1,27 +1,89 @@
-# RepoNhaHangComGa
+# Chicken Rice Restaurant - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.12.
+This is the Frontend application for the Chicken Rice Restaurant management system, built with Angular 17.
 
-## Development server
+## Technologies Used
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Angular 17.3.0
+- Angular Material 19.2.4
+- NgRx Component Store 19.0.1
+- TailwindCSS 4.0.14
+- Flowbite 3.1.2
+- ng-zorro-antd 19.1.0
+- JWT Authentication (@auth0/angular-jwt)
 
-## Code scaffolding
+## System Requirements
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Node.js (Latest LTS version)
+- npm (comes with Node.js)
 
-## Build
+## Installation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Clone the repository:
+```bash
+git clone [repository-url]
+cd repo_nha_hang_com_ga_FE
+```
 
-## Running unit tests
+2. Install dependencies:
+```bash
+npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Running the Application
 
-## Running end-to-end tests
+### Development Server
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm start
+```
+The application will run at `http://localhost:4200/`
 
-## Further help
+### Build
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm run build
+```
+Output will be generated in the `dist/` directory
+
+### SSR (Server-Side Rendering)
+
+```bash
+npm run serve:ssr:repo_nha_hang_com_ga
+```
+
+## Project Structure
+
+```
+src/
+├── app/           # Contains components, services, and main application logic
+├── assets/        # Contains static resources (images, fonts, etc.)
+├── styles.scss    # Global styles
+└── main.ts        # Application entry point
+```
+
+## Key Features
+
+- Order Management
+- Menu Management
+- User Authentication (JWT)
+- Responsive UI with TailwindCSS
+- UI Components from Angular Material and ng-zorro-antd
+
+## Testing
+
+```bash
+npm test
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+[MIT License](LICENSE)
