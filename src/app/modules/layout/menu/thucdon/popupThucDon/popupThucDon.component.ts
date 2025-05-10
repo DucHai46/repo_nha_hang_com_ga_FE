@@ -6,6 +6,7 @@ import { ComboService } from '../../combo/services/combo.service';
 import { ThucDonService } from '../services/thucdon.service';
 import { TrangThaiThucDon } from '../../../../../models/TrangThaiThucDon';
 import { forkJoin } from 'rxjs';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 @Component({
   selector: 'app-popupThucDon',
   templateUrl: './popupThucDon.component.html',
@@ -49,7 +50,8 @@ export class PopupThucDonComponent implements OnInit {
     private fileService: FileService,
     private loaiMonAnService: LoaimonanService,
     private comboService: ComboService,
-    private thucDonService: ThucDonService
+    private thucDonService: ThucDonService,
+    private notification: NzNotificationService
   ) {}
   ngOnInit(): void {
     this.loaiMonAnService.getLoaiMonAn({}).subscribe({
@@ -308,12 +310,36 @@ export class PopupThucDonComponent implements OnInit {
               id: fileId,
               name: fileName
             };
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Upload thành công`, {
+                nzClass: 'notification-success',  
+                nzDuration: 2000
+              } 
+            );
           } else {
             console.error('Upload failed', res);
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Upload thất bại`, {
+                nzClass: 'notification-error',  
+                nzDuration: 2000
+              }
+            );
           }
         },
         error: (err) => {
           console.error('Lỗi upload file:', err);
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Upload thất bại`, {
+              nzClass: 'notification-error',  
+              nzDuration: 2000
+            }
+          );
         }
       });
     }

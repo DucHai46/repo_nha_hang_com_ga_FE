@@ -214,19 +214,16 @@ export class NhaHangComponent implements OnInit {
             })
           }
           )
-          // this.notification.create(
-          //   'success',
-          //   'Thông báo!',
-          //   `Xóa dữ liệu thành công`, {
-          //   nzClass: 'notification-success',
-          // });
         } else {
-          // this.notification.create(
-          //   'error',
-          //   'Thông báo!',
-          //   `Xóa dữ liệu thất bại`, {
-          //   nzClass: 'notification-error',
-          // });
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Xóa thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000  
+            }
+          );
         }
       });
     }
@@ -282,20 +279,7 @@ export class NhaHangComponent implements OnInit {
         next: (res: any) => {
         if (res.data) {
           this.search();
-          // this.notification.create(
-          //   'success',
-          //   'Thông báo!',
-          //   `Cập nhật thành công`, {
-          //   nzClass: 'notification-success',
-          // });
-        } else {
-          // this.notification.create(
-          //   'error',
-          //   'Thông báo!',
-          //   `Cập nhật thất bại`, {
-          //   nzClass: 'notification-error',
-          // });
-        }
+        } else {}
       },
       error: () => this.notification.create(
         'error',

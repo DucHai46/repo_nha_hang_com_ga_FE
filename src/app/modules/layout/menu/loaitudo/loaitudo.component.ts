@@ -96,12 +96,27 @@ export class LoaitudoComponent implements OnInit {
           if (res.data) {
             this.searchForm.tenLoai = '';
             this.search();
-            this.closePopup();
-          } else {
-            alert('Cập nhật thất bại');
+            this.closePopup();  
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Cập nhật thành công`,
+              {
+                nzClass: 'notification-success',
+                nzDuration: 2000
+              }
+            );
           }
         },
-        error: () => alert('Cập nhật thất bại')
+        error: () => this.notification.create(
+          'error',
+          'Thông báo!',
+          `Cập nhật thất bại`,
+          {
+            nzClass: 'notification-error',
+            nzDuration: 2000
+          }
+        )
       });
     } else {
       // Thêm mới bàn
@@ -111,11 +126,26 @@ export class LoaitudoComponent implements OnInit {
             this.searchForm.tenLoai = '';
             this.search();
             this.closePopup();
-          } else {
-            alert('Thêm mới thất bại');
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Thêm mới thành công`,
+              {
+                nzClass: 'notification-success',
+                nzDuration: 2000
+              }
+            );
           }
         },
-        error: () => alert('Thêm mới thất bại')
+        error: () => this.notification.create(
+          'error',
+          'Thông báo!',
+          `Thêm mới thất bại`,
+          {
+            nzClass: 'notification-error',
+            nzDuration: 2000
+          }
+        )
       });
     }
   }
@@ -140,22 +170,37 @@ export class LoaitudoComponent implements OnInit {
         {
           next: (res: any) => {
             this.search();
-          }
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Xóa thành công`,
+              {
+                nzClass: 'notification-success',    
+                nzDuration: 2000
+              }
+            );
+          },
+          error: () => this.notification.create(
+            'error',
+            'Thông báo!',
+            `Xóa thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          )
         }
       )
-        // this.notification.create(
-        //   'success',
-        //   'Thành công!',
-        //   `Xóa dữ liệu thành công`, {
-        //   nzClass: 'notification-success',
-        // });
       } else {
-        // this.notification.create(
-        //   'error',
-        //   'Thành công!',
-        //   `Xóa dữ liệu thất bại`, {
-        //   nzClass: 'notification-error',
-        // });
+        this.notification.create(
+          'error',
+          'Thông báo!',
+          `Xóa thất bại`,
+          {
+            nzClass: 'notification-error',  
+            nzDuration: 2000
+          }
+        );
       }
     });
   }

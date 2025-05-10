@@ -3,7 +3,7 @@ import { LoaimonanService } from '../../loaimonan/services/loaimonan.service';
 import { giamgiaService } from '../../giamgia/services/giamgia.service';
 import { CongthucService } from '../../congthuc/services/congthuc.service';
 import { FileService } from '../../../../../core/services/file.service';
-
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
 
@@ -95,7 +95,8 @@ export class PopupMonAnComponent implements OnInit {
     private loaiMonAnService: LoaimonanService,
     private giamgiaService: giamgiaService,
     private congthucService: CongthucService,
-    private fileService: FileService
+    private fileService: FileService,
+    private notification: NzNotificationService
   ) {}
 
   onSave() {
@@ -142,12 +143,38 @@ export class PopupMonAnComponent implements OnInit {
               id: fileId,
               name: fileName
             };
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Upload thành công`,
+              {
+                nzClass: 'notification-success',  
+                nzDuration: 2000
+              }
+            );
           } else {
-            console.error('Upload failed', res);
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Upload thất bại`,
+              {
+                nzClass: 'notification-error',  
+                nzDuration: 2000
+              }
+            );
           }
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Lỗi upload file:', err);
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Upload thất bại`,
+            {
+              nzClass: 'notification-error',  
+              nzDuration: 2000
+            }
+          );
         }
       });
     }

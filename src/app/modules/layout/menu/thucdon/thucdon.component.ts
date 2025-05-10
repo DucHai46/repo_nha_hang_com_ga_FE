@@ -130,11 +130,35 @@ export class ThucdonComponent {
             this.searchForm.trangThai = '';
             this.search();
             this.closePopup();
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Cập nhật thành công`,
+              {
+                nzClass: 'notification-success',    
+                nzDuration: 2000
+              }
+            );
           } else {
-            alert('Cập nhật thất bại');
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Cập nhật thất bại`,
+              {
+                nzClass: 'notification-error',  
+                nzDuration: 2000
+              }
+            );
           }
         },
-        error: () => alert('Cập nhật thất bại')
+        error: () => this.notification.create(
+          'error',
+          'Thông báo!',
+          `Cập nhật thất bại`, {
+            nzClass: 'notification-error',  
+            nzDuration: 2000
+          }
+        )
       });
     } else {
       // Thêm mới bàn
@@ -147,12 +171,36 @@ export class ThucdonComponent {
             this.searchForm.tenThucDon = '';
             this.searchForm.trangThai = '';
             this.search();
-            this.closePopup();
+            this.closePopup();  
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Thêm mới thành công`,
+              {
+                nzClass: 'notification-success',  
+                nzDuration: 2000
+              }
+            );
           } else {
-            alert('Thêm mới thất bại');
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Thêm mới thất bại`,
+              {
+            nzClass: 'notification-error',  
+                nzDuration: 2000
+              }
+            );
           }
         },
-        error: () => alert('Thêm mới thất bại')
+        error: () => this.notification.create(
+          'error',
+          'Thông báo!',
+          `Thêm mới thất bại`, {
+            nzClass: 'notification-error',  
+            nzDuration: 2000
+          }
+        )
       });
     }
   }
@@ -175,22 +223,25 @@ export class ThucdonComponent {
         {
           next: (res: any) => {
             this.search();
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Xóa thành công`,
+              {
+                nzClass: 'notification-success',    
+                nzDuration: 2000
+              }
+            );
+          },
+          error: () => this.notification.create(
+            'error',
+          'Thông báo!',
+          `Xóa thất bại`, {
+            nzClass: 'notification-error',  
+            nzDuration: 2000
           }
-        }
-      )
-        // this.notification.create(
-        //   'success',
-        //   'Thành công!',
-        //   `Xóa dữ liệu thành công`, {
-        //   nzClass: 'notification-success',
-        // });
-      } else {
-        // this.notification.create(
-        //   'error',
-        //   'Thành công!',
-        //   `Xóa dữ liệu thất bại`, {
-        //   nzClass: 'notification-error',
-        // });
+        )
+      });
       }
     });
   }
@@ -222,10 +273,35 @@ export class ThucdonComponent {
       const updatedItem = { ...item, trangThai: 0 };
       this.thucDonService.updateThucDon(item.id, updatedItem).subscribe({
         next: (res: any) => {
-          if (res.data) item.trangThai = 0;
-          else alert('Cập nhật thất bại');
+            if (res.data) {
+              item.trangThai = 0;
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Cập nhật thành công`, {
+                nzClass: 'notification-success',  
+                nzDuration: 2000
+              }
+            );
+          } else {
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Cập nhật thất bại`, {
+                nzClass: 'notification-error',  
+                nzDuration: 2000
+              }
+            );
+          }
         },
-        error: () => alert('Cập nhật thất bại')
+        error: () => this.notification.create(
+          'error',
+          'Thông báo!',
+          `Cập nhật thất bại`, {
+            nzClass: 'notification-error',  
+            nzDuration: 2000
+          }
+        )
       });
     } else {
       // Nếu đang tắt => bật, và tắt tất cả cái đang bật khác
@@ -255,8 +331,23 @@ export class ThucdonComponent {
           // cập nhật local state sau khi thành công
           if (dangHoatDong) dangHoatDong.trangThai = 0;
           item.trangThai = 1;
+          this.notification.create(
+            'success',
+            'Thông báo!',
+            `Cập nhật thành công`, {
+              nzClass: 'notification-success',  
+              nzDuration: 2000  
+            }
+          );
         },
-        error: () => alert('Cập nhật thất bại')
+        error: () => this.notification.create(
+          'error',
+          'Thông báo!',
+          `Cập nhật thất bại`, {
+            nzClass: 'notification-error',  
+            nzDuration: 2000
+          }
+        )
       });
     }
   }
