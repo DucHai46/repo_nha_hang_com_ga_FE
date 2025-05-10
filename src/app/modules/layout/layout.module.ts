@@ -88,6 +88,9 @@ import { ThucDonStore } from './menu/thucdon/store/thuc-don.store';
 import { ThucDonService } from './menu/thucdon/services/thucdon.service'; 
 import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.component';
 import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTietTD.component';
+import { DonOrderService } from './menugoimon/services/donorder.service';
+
+
 import { MenuDynamicComponent } from './menu/menudynamic/menudynamic.component';
 import { PopupMenuDynamicComponent } from './menu/menudynamic/popupMenuDynamic/popupMenuDynamic.component';
 import { MenuDynamicStore } from './menu/menudynamic/store/menu-dynamic.store';
@@ -191,6 +194,7 @@ import { NhaHangService } from './menu/nhahang/services/nhahang.service';
     GiamGiaStore,
     ThucDonStore,
     ThucDonService,
+    DonOrderService,
     MenuDynamicStore,
     MenuDynamicService,
     NhaHangStore,

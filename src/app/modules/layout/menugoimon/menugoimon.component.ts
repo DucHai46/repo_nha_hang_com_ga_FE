@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThucDonService } from '../menu/thucdon/services/thucdon.service';
 import { LoaimonanService } from '../menu/loaimonan/services/loaimonan.service';
+import { MonAnService } from '../menu/monan/services/monan.service';
 import { LoaiMonAn } from '../../../models/LoaiMonAn';
 import { ThucDon} from '../../../models/ThucDon';
 import { MonAn } from '../../../models/MonAn';
@@ -81,62 +82,79 @@ export class MenugoimonComponent implements OnInit {
     public router: Router,
     private thucDonService: ThucDonService,
     private loaiMonAnService: LoaimonanService,
+    private monAnService: MonAnService
   ) {}
   ngOnInit() {
-    
     const updatedSelectedItems = history.state?.updatedSelectedItems;
-    if (updatedSelectedItems) {
-      this.capNhatSoLuongMonAn(updatedSelectedItems);
-      this.selectedItemsMA = updatedSelectedItems.filter((item: { soLuong: number; }) => item.soLuong > 0);
-    }
-  
+
     this.loaiMonAnService.getLoaiMonAn({}).subscribe({
       next: (res: any) => {
-        this.loaiMonAn = res.data.data.map((item: any) => ({
-          ma: item.id,
-          ten: item.tenLoai
-        }));
+        this.loaiMonAn = [
+          { ma: "comboMonAn", ten: "combo" },
+          ...res.data.data.map((item: any) => ({
+            ma: item.id,
+            ten: item.tenLoai,
+          })),
+        ];
       },
-      error: (err: any) => console.log(err)
+      error: (err: any) => console.log(err),
     });
-  
-    this.thucDonService.getThucDon({trangThai: 1}).subscribe({
-      next: (res: any) => {
+
+    this.thucDonService.getThucDon({ trangThai: 1 }).subscribe({
+      next: async (res: any) => {
         this.thucDon = res.data.data;
-  
-        this.itemsRoot2 = this.taoDanhSachMonAn(this.thucDon);
-        this.itemsMonAn = this.itemsRoot2;
-        console.log(this.itemsMonAn);
-        this.combo= this.taoDanhSachCombo(this.thucDon);
 
+        this.itemsRoot2 = await this.taoDanhSachMonAn(this.thucDon);
+        this.combo = this.taoDanhSachCombo(this.thucDon);
+        this.itemsMonAn = [...this.itemsRoot2, ...this.combo];
+
+        if (updatedSelectedItems) {
+
+          this.capNhatSoLuongMonAn(updatedSelectedItems);
+
+          this.selectedItemsMA = updatedSelectedItems.filter(
+            (item: { soLuong: number }) => item.soLuong > 0
+          );
+        }
       },
-      error: (err: any) => console.log(err)
+      error: (err: any) => console.log(err),
     });
-
   }
-  private taoDanhSachMonAn(thucDonData: any[]): any[] {
-    const danhSach: any[] = [];
-  
-    thucDonData.forEach((item: any) => {
-      if (item.loaiMonAns && item.loaiMonAns.length > 0) {
-        item.loaiMonAns.forEach((loaiMon: any) => {
-          if (loaiMon.monAns && loaiMon.monAns.length > 0) {
-            loaiMon.monAns.forEach((monAn: any) => {
-              danhSach.push({
-                ma: monAn.id,
-                ten: monAn.tenMonAn,
-                hinhAnh: monAn.hinhAnh,
-                gia: monAn.giaTien,
-                soLuong: 0,
-                danhMuc: loaiMon.id
+
+  private taoDanhSachMonAn(thucDonData: any[]): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      this.monAnService.getMonAn({}).subscribe({
+        next: (res: any) => {
+          const monAnList = res.data.data;
+          const danhSach: any[] = [];
+
+          thucDonData.forEach((item: any) => {
+            item.loaiMonAns.forEach((loaiMon: any) => {
+              loaiMon.monAns.forEach((monAn: any) => {
+                const monAnInfo = monAnList.find((ma: any) => ma.id === monAn.id);
+                console.log(monAnInfo);
+                danhSach.push({
+                  ma: monAn.id,
+                  ten: monAn.tenMonAn,
+                  hinhAnh: monAn.hinhAnh,
+                  gia: monAn.giaTien,
+                  soLuong: 0,
+                  danhMuc: loaiMon.id,
+                  giamGia: monAnInfo.giamGia.giaTri
+                });
               });
             });
-          }
-        });
-      }
+          });
+          console.log(danhSach);
+          // Trả về danh sách món ăn sau khi xử lý
+          resolve(danhSach);
+        },
+        error: (err: any) => {
+          console.log(err);
+          reject(err);
+        }
+      });
     });
-  
-    return danhSach;
   }
   private taoDanhSachCombo(thucDonData: any[]): any[] {
     const danhSach: any[] = [];
@@ -149,18 +167,26 @@ export class MenugoimonComponent implements OnInit {
                 hinhAnh: loaiMon.hinhAnh,
                 gia: loaiMon.giaTien,
                 soLuong: 0,
+                danhMuc:"comboMonAn"
               });
         });
     });
   
     return danhSach;
   }
-  // Cập nhật số lượng món từ selectedItemsMA vào itemsMonAn chính
+    // Cập nhật số lượng món từ selectedItemsMA vào itemsMonAn chính
   capNhatSoLuongMonAn(updatedSelectedItems: any[]) {
     updatedSelectedItems.forEach((updatedItem) => {
-      const item = this.itemsMonAn.find((mon) => mon.ma === updatedItem.ma);
-      if (item) item.soLuong = updatedItem.soLuong;
+      const itemIndex = this.itemsMonAn.findIndex((mon) => mon.ma === updatedItem.ma);
+      if (itemIndex >= 0) {
+        // Cập nhật lại đối tượng trong mảng
+        this.itemsMonAn[itemIndex] = { 
+          ...this.itemsMonAn[itemIndex], 
+          soLuong: updatedItem.soLuong 
+        };
+      }
     });
+    console.log("itemsMonAn sau khi cập nhật:", this.itemsMonAn);  // Kiểm tra lại sau khi cập nhật
   }
 
   // Lọc món ăn theo mã danh mục
@@ -205,7 +231,7 @@ export class MenugoimonComponent implements OnInit {
   tinhTongTien() {
     return this.itemsMonAn
       .filter((mon) => mon.soLuong > 0) // Chỉ tính các món có số lượng > 0
-      .reduce((tong, mon) => tong + mon.gia * mon.soLuong, 0); // Tính tổng tiền
+      .reduce((tong, mon) => tong + (mon.gia - (mon.giamGia ? mon.gia * mon.giamGia / 100 : 0)) * mon.soLuong, 0); // Tính tổng tiền
   }
 
   
@@ -216,6 +242,7 @@ export class MenugoimonComponent implements OnInit {
   // constructor(public router: Router) {}
   
   chuyenSangXacNhan() {
+    console.log(this.itemsMonAn);
     this.router.navigate(['/xacnhangoimon'], {
       state: { selectedItemsMA: this.selectedItemsMA }, // Truyền selectedItemsMA
     });

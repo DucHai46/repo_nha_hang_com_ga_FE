@@ -13,6 +13,7 @@ export class XacnhangoimonComponent  {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['selectedItemsMA']) {
       this.selectedItemsMA = navigation.extras.state['selectedItemsMA'];
+      console.log("Dữ liệu nhận được từ MenuGoiMonComponent:", this.selectedItemsMA);
     }
   }
 
@@ -46,12 +47,14 @@ export class XacnhangoimonComponent  {
 
   // Tính tổng tiền
   tinhTongTien(): number {
-    return this.selectedItemsMA.reduce((tong, mon) => tong + mon.gia * mon.soLuong, 0);
+    return this.selectedItemsMA.reduce((tong, mon) => tong + (mon.gia - (mon.giamGia ? mon.gia * mon.giamGia / 100 : 0)) * mon.soLuong, 0);
   }
-  troVeMenugoimon() {
-    this.router.navigate(['/menugoimon'], {
-      state: { updatedSelectedItems: this.selectedItemsMA },  // Truyền lại danh sách đã cập nhật
-    });
-  }
+troVeMenugoimon() {
+  console.log("Dữ liệu trước khi truyền đi:", this.selectedItemsMA); // Kiểm tra dữ liệu đang truyền đi
+
+  this.router.navigate(['/menugoimon'], {
+    state: { updatedSelectedItems: this.selectedItemsMA },
+  });
+}
 
 }
