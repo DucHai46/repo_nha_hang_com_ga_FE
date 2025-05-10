@@ -63,14 +63,7 @@
                 "fonts": true
               },
               "sourceMap": false,
-              "namedChunks": false,
-              "vendorChunk": true,
-              "buildOptimizer": true,
-              "budget": {
-                "type": "anyComponentStyle",
-                "maximumWarning": "4kb",
-                "maximumError": "8kb"
-              }
+              "namedChunks": false
             },
             "development": {
               "optimization": false,
