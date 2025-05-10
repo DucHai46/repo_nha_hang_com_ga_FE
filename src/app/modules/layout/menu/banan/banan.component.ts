@@ -250,6 +250,19 @@ export class BananComponent implements OnInit   {
     });
   }
 
-  
+  isQRPopupOpen = false;
+  qrData = '';
+  selectedTableName = '';
 
+  
+  downloadQR(item: any): void {
+    const domain = window.location.origin;
+    this.qrData = `${domain}/menugoimon/${item.id}`;
+    this.selectedTableName = item.tenBan;
+    this.isQRPopupOpen = true;
+  }
+
+  closeQRPopup(): void {
+    this.isQRPopupOpen = false;
+  }
 }

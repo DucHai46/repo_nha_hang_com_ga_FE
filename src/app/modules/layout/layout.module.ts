@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { QRCodeModule } from 'angularx-qrcode';
 import {ThongtinchungComponent} from "./menu/admin/thongtinchung/thongtinchung.component";
 import {MenuRoutes} from "./menu/menu.routes";
 import {MenuComponent} from "./menu/menu.component";
@@ -100,6 +101,7 @@ import { NhaHangComponent } from './menu/nhahang/nhahang.component';
 import { PopupNhaHangComponent } from './menu/nhahang/popupNhaHang/popupNhaHang.component';
 import { NhaHangStore } from './menu/nhahang/store/nha-hangstore';
 import { NhaHangService } from './menu/nhahang/services/nhahang.service';
+import { PopupQRComponent } from './menu/banan/popupQR/popupQR.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -149,7 +151,8 @@ import { NhaHangService } from './menu/nhahang/services/nhahang.service';
     PopupMenuDynamicComponent,
     NhaHangComponent,
     PopupNhaHangComponent,
-    ChitietdonComponent
+    ChitietdonComponent,
+    PopupQRComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -160,9 +163,9 @@ import { NhaHangService } from './menu/nhahang/services/nhahang.service';
     HttpClientModule,
     MatPaginatorModule,
     NzNotificationModule,
-    // Đăng ký route
+    QRCodeModule
   ],
-  exports: [MenuComponent,MainComponent, SidenavComponent,LoginComponent,MenugoimonComponent],
+  exports: [MenuComponent, MainComponent, SidenavComponent, LoginComponent, MenugoimonComponent],
   providers: [
     DanhMucNguyenLieuStore,
     DanhMucMonAnStore,

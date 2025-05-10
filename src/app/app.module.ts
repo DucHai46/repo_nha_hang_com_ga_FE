@@ -15,7 +15,6 @@ import { AuthGuardService } from './core/services/auth-guard.service';
 import { AuthInterceptor } from './core/interceptor/auth-interceptor';
 import { FileService } from './core/services/file.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,
