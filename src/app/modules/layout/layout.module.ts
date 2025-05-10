@@ -97,7 +97,7 @@ import { PopupMenuDynamicComponent } from './menu/menudynamic/popupMenuDynamic/p
 import { MenuDynamicStore } from './menu/menudynamic/store/menu-dynamic.store';
 import { MenuDynamicService } from './menu/menudynamic/services/menudynamic.service';
 import { NhaHangComponent } from './menu/nhahang/nhahang.component';
-import { PopupNhaHangComponent } from './menu/nhahang/popupMenuDynamic/popupNhaHang.component';
+import { PopupNhaHangComponent } from './menu/nhahang/popupNhaHang/popupNhaHang.component';
 import { NhaHangStore } from './menu/nhahang/store/nha-hangstore';
 import { NhaHangService } from './menu/nhahang/services/nhahang.service';
 
