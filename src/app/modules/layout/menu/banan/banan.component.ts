@@ -167,14 +167,14 @@ export class BananComponent implements OnInit   {
         //   'success',
         //   'Thành công!',
         //   `Xóa dữ liệu thành công`, {
-        //   nzClass: 'vnpt-qhkh-notification-success',
+        //   nzClass: 'notification-success',
         // });
       } else {
         // this.notification.create(
         //   'error',
         //   'Thành công!',
         //   `Xóa dữ liệu thất bại`, {
-        //   nzClass: 'vnpt-qhkh-notification-error',
+        //   nzClass: 'notification-error',
         // });
       }
     });

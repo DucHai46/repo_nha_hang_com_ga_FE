@@ -23,9 +23,21 @@ export class SidenavComponent {
   
   items: MenuItem[] = [
     {
-      routeLink: 'main/dashboard',
-      icon: 'fal fa-home',
-      label: 'Dashboard'
+      icon: 'fal fa-cogs',
+      label: 'Quản trị hệ thống',
+      isOpen: false,
+      children: [
+        {
+          routeLink: 'main/menudynamic',
+          icon: 'fal fa-box',
+          label: 'Quản lý menu'
+        },
+        {
+          routeLink: 'main/nhahang',
+          icon: 'fal fa-building',
+          label: 'Quản lý thông tin nhà hàng'
+        },
+      ]
     },
     {
       icon: 'fal fa-box-open',

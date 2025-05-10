@@ -88,8 +88,14 @@ import { ThucDonStore } from './menu/thucdon/store/thuc-don.store';
 import { ThucDonService } from './menu/thucdon/services/thucdon.service'; 
 import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.component';
 import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTietTD.component';
-
-
+import { MenuDynamicComponent } from './menu/menudynamic/menudynamic.component';
+import { PopupMenuDynamicComponent } from './menu/menudynamic/popupMenuDynamic/popupMenuDynamic.component';
+import { MenuDynamicStore } from './menu/menudynamic/store/menu-dynamic.store';
+import { MenuDynamicService } from './menu/menudynamic/services/menudynamic.service';
+import { NhaHangComponent } from './menu/nhahang/nhahang.component';
+import { PopupNhaHangComponent } from './menu/nhahang/popupMenuDynamic/popupNhaHang.component';
+import { NhaHangStore } from './menu/nhahang/store/nha-hangstore';
+import { NhaHangService } from './menu/nhahang/services/nhahang.service';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -134,8 +140,11 @@ import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTie
     PopupChiTietCBComponent,
     ThucdonComponent,
     PopupThucDonComponent,
-    PopupChiTietTDComponent
-
+    PopupChiTietTDComponent,
+    MenuDynamicComponent,
+    PopupMenuDynamicComponent,
+    NhaHangComponent,
+    PopupNhaHangComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -144,7 +153,8 @@ import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTie
     ReactiveFormsModule,
     MatDialogModule,
     HttpClientModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NzNotificationModule,
     // Đăng ký route
   ],
   exports: [MenuComponent,MainComponent, SidenavComponent,LoginComponent,MenugoimonComponent],
@@ -180,7 +190,11 @@ import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTie
     giamgiaService,
     GiamGiaStore,
     ThucDonStore,
-    ThucDonService
+    ThucDonService,
+    MenuDynamicStore,
+    MenuDynamicService,
+    NhaHangStore,
+    NhaHangService
   ]
 })
 export class LayoutModule {}

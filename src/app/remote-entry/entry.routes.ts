@@ -21,6 +21,8 @@ import { XacnhangoimonComponent } from '../modules/layout/menugoimon/xacnhangoim
 import { GiamgiaComponent } from '../modules/layout/menu/giamgia/giamgia.component';
 import { ComboComponent } from '../modules/layout/menu/combo/combo.component';
 import { ThucdonComponent } from '../modules/layout/menu/thucdon/thucdon.component';
+import { MenuDynamicComponent } from '../modules/layout/menu/menudynamic/menudynamic.component';
+import { NhaHangComponent } from '../modules/layout/menu/nhahang/nhahang.component';
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [
@@ -28,7 +30,9 @@ export const remoteRoutes: Route[] = [
         component: MainComponent,
         canActivate: [AuthGuard],
         children: [
-          { path: 'dashboard', component: MonanComponent },
+          // { path: 'dashboard', component: MonanComponent },
+          { path: 'menudynamic', component: MenuDynamicComponent },
+          { path: 'nhahang', component: NhaHangComponent },
           { path: 'danhmucnguyenlieu', component: DanhmucnguyenlieuComponent },
           { path: 'danhmucmonan', component: DanhmucmonanComponent },
           { path: 'loainguyenlieu', component: LoainguyenlieuComponent },

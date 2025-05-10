@@ -1,0 +1,156 @@
+<div class="popup-backdrop">
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        {{
+          isEditMode
+            ? "Sửa thông tin nhà hàng"
+            : isChiTietOpen
+            ? "Chi tiết nhà hàng"
+            : "Thêm thông tin nhà hàng"
+        }}
+      </h2>
+      <form>
+        <div class="form-grid">
+          <div class="form-column">
+            <div class="form-group">
+              <label for="materialName">Tên nhà hàng:</label>
+              <input
+                type="text"
+                id="materialName"
+                [(ngModel)]="formData.tenNhaHang"
+                name="tenNhaHang"
+                placeholder="Nhập tên nhà hàng..."
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="description">Địa chỉ:</label>
+              <input
+                type="text"
+                id="description"
+                [(ngModel)]="formData.diaChi"
+                name="diaChi"
+                placeholder="Nhập địa chỉ..."
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="description">Số điện thoại:</label>
+              <input
+                type="text"
+                id="description"
+                [(ngModel)]="formData.soDienThoai"
+                name="soDienThoai"
+                placeholder="Nhập số điện thoại..."
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="description">Email:</label>
+              <input
+                type="text"
+                id="description"
+                [(ngModel)]="formData.email"
+                name="email"
+                placeholder="Nhập email..."
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+          </div>
+
+          <div class="form-column">
+            <div class="form-group">
+              <label for="description">Website:</label>
+              <input
+                type="text"
+                id="description"
+                [(ngModel)]="formData.website"
+                name="website"
+                placeholder="Nhập website..."
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label class="materialName">Logo:</label>
+              <input
+                type="file"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+                class="border border-gray-300 p-2 rounded w-full"
+              />
+              <!-- <div *ngIf="imagePreview" class="mt-3">
+                <p class="text-sm text-gray-500 mb-1">Xem trước:</p>
+                <img [src]="imagePreview" alt="Preview" class="w-40 h-auto border rounded shadow" />
+              </div>
+              <div *ngIf="isEditMode && formData.hinhAnh && !imagePreview" class="mt-3">
+                <p class="text-sm text-gray-500 mb-1">Ảnh hiện tại:</p>
+                <img [src]="formData.hinhAnh" alt="Ảnh hiện tại" class="w-40 h-auto border rounded shadow" />
+              </div> -->
+            </div>
+
+            <div class="form-group">
+              <label for="description">Banner:</label>
+              <input
+                type="text"
+                id="description"
+                [(ngModel)]="formData.banner"
+                name="banner"
+                placeholder="Nhập banner..."
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="description">Mô tả:</label>
+              <input
+                id="description"
+                [(ngModel)]="formData.moTa"
+                name="moTa"
+                placeholder="Nhập mô tả..."
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <!-- <div class="form-group">
+              <label for="description">Trạng thái:</label>
+              <label class="inline-flex items-center cursor-pointer relative">
+                <input
+                  type="checkbox"
+                  [checked]="formData.isActive"
+                  (change)="toggleActive(formData)"
+                  class="sr-only peer"
+                  aria-label="Trạng thái"
+                />
+                <div
+                  class="w-11 h-6 bg-gray-200 rounded-full transition-colors duration-200 peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:bg-blue-600"
+                ></div>
+                <div
+                  class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-200 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 mt-5">
+          <button type="button" class="btn cancel-btn" (click)="onCancel()">
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="btn save-btn"
+            (click)="onSave()"
+            *ngIf="!isChiTietOpen"
+          >
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
