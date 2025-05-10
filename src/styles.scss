@@ -1,8 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 @import "flowbite/src/themes/default";
-// @import "~ng-zorro-antd/ng-zorro-antd.min.css";
-
+@import 'ng-zorro-antd/ng-zorro-antd.min.css';
 body, html {
   margin: 0;
   padding: 0;
@@ -17,47 +16,54 @@ body, html {
   /* Đảm bảo không bị ép sang trái */
 }
 
-.vnpt-qhkh-notification-success {
+.notification-success {
   background-color: #e5fcf2 !important;
   /* Màu nền */
   border: 1px solid #00ab76 !important;
   /* Màu viền */
 }
 
-.vnpt-qhkh-notification-success .ant-notification-notice-message {
+.notification-success .ant-notification-notice-message {
   color: #006339;
   /* Màu chữ */
 }
 
-.vnpt-qhkh-notification-success .ant-notification-notice-description {
+.notification-success .ant-notification-notice-description {
   color: #006339;
   /* Màu chữ */
 }
 
-.vnpt-qhkh-notification-success .ant-notification-notice-close {
+.notification-success .ant-notification-notice-close {
   color: #006339;
 }
 
 
-.vnpt-qhkh-notification-error {
+.notification-error {
   background-color: #fce5ea !important;
   /* Màu nền */
   border: 1px solid #ef708a !important;
   /* Màu viền */
 }
 
-.vnpt-qhkh-notification-error .ant-notification-notice-message {
+.notification-error .ant-notification-notice-message {
   color: #cb002b;
   /* Màu chữ */
 }
 
-.vnpt-qhkh-notification-error .ant-notification-notice-description {
+.notification-error .ant-notification-notice-description {
   color: #e20030;
   /* Màu chữ */
 }
 
-.vnpt-qhkh-notification-error .ant-notification-notice-close {
+.notification-error .ant-notification-notice-close {
   color: #e20030;
+}
+
+button{
+  color: #fff !important;
+  p {
+    margin: 0 !important;
+  }
 }
 
 

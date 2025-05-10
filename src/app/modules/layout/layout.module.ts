@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { QRCodeModule } from 'angularx-qrcode';
 import {ThongtinchungComponent} from "./menu/admin/thongtinchung/thongtinchung.component";
 import {MenuRoutes} from "./menu/menu.routes";
 import {MenuComponent} from "./menu/menu.component";
@@ -90,8 +91,15 @@ import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.
 import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTietTD.component';
 import { DonOrderService } from './menugoimon/services/donorder.service';
 import { ChitietdonComponent } from './menugoimon/chitietdon/chitietdon.component';
-
-
+import { MenuDynamicComponent } from './menu/menudynamic/menudynamic.component';
+import { PopupMenuDynamicComponent } from './menu/menudynamic/popupMenuDynamic/popupMenuDynamic.component';
+import { MenuDynamicStore } from './menu/menudynamic/store/menu-dynamic.store';
+import { MenuDynamicService } from './menu/menudynamic/services/menudynamic.service';
+import { NhaHangComponent } from './menu/nhahang/nhahang.component';
+import { PopupNhaHangComponent } from './menu/nhahang/popupNhaHang/popupNhaHang.component';
+import { NhaHangStore } from './menu/nhahang/store/nha-hangstore';
+import { NhaHangService } from './menu/nhahang/services/nhahang.service';
+import { PopupQRComponent } from './menu/banan/popupQR/popupQR.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -137,8 +145,13 @@ import { ChitietdonComponent } from './menugoimon/chitietdon/chitietdon.componen
     ThucdonComponent,
     PopupThucDonComponent,
     PopupChiTietTDComponent,
-    ChitietdonComponent
-
+    ChitietdonComponent,
+    MenuDynamicComponent,
+    PopupMenuDynamicComponent,
+    NhaHangComponent,
+    PopupNhaHangComponent,
+    ChitietdonComponent,
+    PopupQRComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -147,10 +160,11 @@ import { ChitietdonComponent } from './menugoimon/chitietdon/chitietdon.componen
     ReactiveFormsModule,
     MatDialogModule,
     HttpClientModule,
-    MatPaginatorModule
-    // Đăng ký route
+    MatPaginatorModule,
+    NzNotificationModule,
+    QRCodeModule
   ],
-  exports: [MenuComponent,MainComponent, SidenavComponent,LoginComponent,MenugoimonComponent],
+  exports: [MenuComponent, MainComponent, SidenavComponent, LoginComponent, MenugoimonComponent],
   providers: [
     DanhMucNguyenLieuStore,
     DanhMucMonAnStore,
@@ -184,7 +198,11 @@ import { ChitietdonComponent } from './menugoimon/chitietdon/chitietdon.componen
     GiamGiaStore,
     ThucDonStore,
     ThucDonService,
-    DonOrderService
+    DonOrderService,
+    MenuDynamicStore,
+    MenuDynamicService,
+    NhaHangStore,
+    NhaHangService
   ]
 })
 export class LayoutModule {}

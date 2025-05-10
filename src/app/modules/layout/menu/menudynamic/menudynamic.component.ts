@@ -1,23 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { KhuyenMaiStore } from './store/khuyen-mai.store';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { MenuDynamicStore } from './store/menu-dynamic.store';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
-import { khuyenmaiService } from './services/khuyenmai.service';
-import { KhuyenMai } from '../../../../models/KhuyenMai';
-
-
-
+import { MenuDynamicService } from './services/menudynamic.service';
+import { MenuDynamic } from '../../../../models/MenuDynamic';
 @Component({
-  selector: 'app-khuyenmai',
-  templateUrl: './khuyenmai.component.html',
-  styleUrl: './khuyenmai.component.scss'
+  selector: 'app-menudynamic',
+  templateUrl: './menudynamic.component.html',
+  styleUrl: './menudynamic.component.scss'
 })
-export class KhuyenmaiComponent implements OnInit {
-  constructor(private store: KhuyenMaiStore, 
-    private dialog: MatDialog, private notification: NzNotificationService, 
-    private khuyenmaiService: khuyenmaiService) {}
-  khuyenMaiPaging: KhuyenMai[] = [];
+export class MenuDynamicComponent implements OnInit {
+  constructor(private store: MenuDynamicStore, private dialog: MatDialog, private notification: NzNotificationService, private menuDynamicService: MenuDynamicService) {}
+  menuDynamicPaging: MenuDynamic[] = [];
   itemsSearch: any[] = [];
   paging: any = {
     page: 1,
@@ -26,23 +21,23 @@ export class KhuyenmaiComponent implements OnInit {
   };
 
   totalPages = 0;
-
   ngOnInit(): void {
     this.search();
-    this.store.setItems$(this.khuyenMaiPaging);
+    this.store.setItems$(this.menuDynamicPaging);  
   }
+
   searchForm: any = {
-    // ma: '',
-    tenKhuyenMai: ''
-  };
-  search() {
+    label: '',
+  }; 
+
+  search(){
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    this.khuyenmaiService.getKhuyenMai(this.searchForm).subscribe(
+    this.menuDynamicService.getMenuDynamic(this.searchForm).subscribe(
       {
         next: (res: any) => {
-          this.khuyenMaiPaging = res.data.data;
+          this.menuDynamicPaging = res.data.data;
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -66,15 +61,14 @@ export class KhuyenmaiComponent implements OnInit {
     this.search();
   }
 
-  reset() {
-    this.searchForm.tenKhuyenMai = '';
+
+  reset(){
+    this.searchForm.label = '';
     this.search()
   }
-
   isPopupOpen = false;
   isEditMode = false;
   formData: any = {}
-
 
   openAddPopup(): void {
     this.isPopupOpen = true;
@@ -92,10 +86,10 @@ export class KhuyenmaiComponent implements OnInit {
   
     if (this.isEditMode) {
       // Sửa bàn
-      this.khuyenmaiService.updateKhuyenMai(body.id, body).subscribe({
+      this.menuDynamicService.updateMenuDynamic(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenKhuyenMai = '';
+            this.searchForm.tenDanhMuc = '';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -103,7 +97,7 @@ export class KhuyenmaiComponent implements OnInit {
               'Thông báo!',
               `Cập nhật thành công`,
               {
-                nzClass: 'notification-success',  
+                nzClass: 'notification-success',
                 nzDuration: 2000
               }
             );
@@ -111,9 +105,9 @@ export class KhuyenmaiComponent implements OnInit {
             this.notification.create(
               'error',
               'Thông báo!',
-              `Cập nhật thất bại`,
+              `Cập nhật thất bại`,    
               {
-                nzClass: 'notification-error',    
+                nzClass: 'notification-error',
                 nzDuration: 2000
               }
             );
@@ -124,17 +118,17 @@ export class KhuyenmaiComponent implements OnInit {
           'Thông báo!',
           `Cập nhật thất bại`,
           {
-            nzClass: 'notification-error',  
+            nzClass: 'notification-error',
             nzDuration: 2000
           }
         )
       });
     } else {
       // Thêm mới bàn
-      this.khuyenmaiService.addKhuyenMai(body).subscribe({
+      this.menuDynamicService.addMenuDynamic(body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenKhuyenMai = '';
+            this.searchForm.tenDanhMuc = '';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -142,7 +136,7 @@ export class KhuyenmaiComponent implements OnInit {
               'Thông báo!',
               `Thêm mới thành công`,
               {
-                nzClass: 'notification-success',  
+                nzClass: 'notification-success',
                 nzDuration: 2000
               }
             );
@@ -152,7 +146,7 @@ export class KhuyenmaiComponent implements OnInit {
               'Thông báo!',
               `Thêm mới thất bại`,
               {
-                nzClass: 'notification-error',  
+                nzClass: 'notification-error',
                 nzDuration: 2000
               }
             );
@@ -163,7 +157,7 @@ export class KhuyenmaiComponent implements OnInit {
           'Thông báo!',
           `Thêm mới thất bại`,
           {
-            nzClass: 'notification-error',  
+            nzClass: 'notification-error',
             nzDuration: 2000
           }
         )
@@ -171,57 +165,58 @@ export class KhuyenmaiComponent implements OnInit {
     }
   }
 
-  
-    // Hàm mở popup Sửa
+
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = item;
   }
-  openDeletePopup(item: any): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '400px',
-      data: { message: `Bạn có chắc chắn muốn xóa "${item.tenKhuyenMai}" không?` },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.khuyenmaiService.deleteKhuyenMai(item.id).subscribe(
-          {
-            next: (res: any) => {
-              this.search();
-              this.notification.create(
-                'success',
+  
+   openDeletePopup(item: any): void {
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        width: '400px',
+        data: { message: `Bạn có chắc chắn muốn xóa "${item.tenDanhMuc}" không?` },
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.menuDynamicService.deleteMenuDynamic(item.id).subscribe(
+            {
+              next: (res: any) => {
+                this.search();
+                this.notification.create(
+                  'success',
+                  'Thông báo!',
+                  `Xóa thành công`,
+                  {
+                    nzClass: 'notification-success',  
+                    nzDuration: 2000
+                  }
+                );
+              },
+              error: () => this.notification.create(
+                'error',
                 'Thông báo!',
-                `Xóa thành công`,
-                { 
-                  nzClass: 'notification-success',  
+                `Xóa thất bại`,
+                {
+                  nzClass: 'notification-error',
                   nzDuration: 2000
                 }
-              );
-            },
-            error: () => this.notification.create(
-              'error',
-              'Thông báo!',
-              `Xóa thất bại`,
-              {
-                nzClass: 'notification-error',  
-                nzDuration: 2000
-              }
-            )
-          }
-        )
-      } else {
-        this.notification.create(
-          'error',
-          'Thông báo!',
-          `Xóa thất bại`, {
-            nzClass: 'notification-error',
-            nzDuration: 2000
-          }
-        );
-      }
-    });
-  } 
+              )
+            }
+          )
+        } else {
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Xóa thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000  
+            }
+          );
+        }
+      });
+    }
 
 }

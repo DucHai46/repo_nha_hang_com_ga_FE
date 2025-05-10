@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { DanhMucMonAnStore } from '../danhmucmonan/store/danh-muc-mon-an.store';
+import { NhaHangStore } from './store/nha-hangstore';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
-import { DanhmucmonanService } from './services/danhmucmonan.service';
-import { DanhMucMonAn } from '../../../../models/DanhMucMonAn';
+import { NhaHangService } from './services/nhahang.service';
+import { NhaHang } from '../../../../models/NhaHang';
+import { FileService } from '../../../../core/services/file.service';
 @Component({
-  selector: 'app-danhmucmonan',
-  templateUrl: './danhmucmonan.component.html',
-  styleUrl: './danhmucmonan.component.scss'
+  selector: 'app-nhahang',
+  templateUrl: './nhahang.component.html',
+  styleUrl: './nhahang.component.scss'
 })
-export class DanhmucmonanComponent implements OnInit {
-  constructor(private store: DanhMucMonAnStore, private dialog: MatDialog, private notification: NzNotificationService, private danhmucmonanService: DanhmucmonanService) {}
-  danhMucMonAnPaging: DanhMucMonAn[] = [];
+export class NhaHangComponent implements OnInit {
+  constructor(private store: NhaHangStore, private dialog: MatDialog, private notification: NzNotificationService, private nhaHangService: NhaHangService, private fileService: FileService) {}
+  nhaHangPaging: NhaHang[] = [];
   itemsSearch: any[] = [];
   paging: any = {
     page: 1,
@@ -23,21 +24,21 @@ export class DanhmucmonanComponent implements OnInit {
   totalPages = 0;
   ngOnInit(): void {
     this.search();
-    this.store.setItems$(this.danhMucMonAnPaging);  
+    this.store.setItems$(this.nhaHangPaging);  
   }
 
   searchForm: any = {
-    tenDanhMuc: '',
+    label: '',
   }; 
 
   search(){
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    this.danhmucmonanService.getDanhMucMonAn(this.searchForm).subscribe(
+    this.nhaHangService.getNhaHang(this.searchForm).subscribe(
       {
         next: (res: any) => {
-          this.danhMucMonAnPaging = res.data.data;
+          this.nhaHangPaging = res.data.data;
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -63,7 +64,7 @@ export class DanhmucmonanComponent implements OnInit {
 
 
   reset(){
-    this.searchForm.tenDanhMuc = '';
+    this.searchForm.label = '';
     this.search()
   }
   isPopupOpen = false;
@@ -73,23 +74,24 @@ export class DanhmucmonanComponent implements OnInit {
   openAddPopup(): void {
     this.isPopupOpen = true;
     this.isEditMode = false;
+    this.isChiTietOpen = false;
     this.formData = {};
   }
   closePopup(): void {
     this.isPopupOpen = false;
     this.isEditMode = false;
   }
-  onSaveCongThuc(body: any): void {
+  onSaveNhaHang(body: any): void {
     console.log(body);
   
     if (!body) return;
   
     if (this.isEditMode) {
       // Sửa bàn
-      this.danhmucmonanService.updateDanhMucMonAn(body.id, body).subscribe({
+      this.nhaHangService.updateNhaHang(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenDanhMuc = '';
+            this.searchForm.tenNhaHang = '';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -116,7 +118,8 @@ export class DanhmucmonanComponent implements OnInit {
         error: () => this.notification.create(
           'error',
           'Thông báo!',
-          `Cập nhật thất bại`, {
+          `Cập nhật thất bại`,
+          {
             nzClass: 'notification-error',
             nzDuration: 2000
           }
@@ -124,10 +127,10 @@ export class DanhmucmonanComponent implements OnInit {
       });
     } else {
       // Thêm mới bàn
-      this.danhmucmonanService.addDanhMucMonAn(body).subscribe({
+      this.nhaHangService.addNhaHang(body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenDanhMuc = '';
+            this.searchForm.tenNhaHang = '';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -143,7 +146,8 @@ export class DanhmucmonanComponent implements OnInit {
             this.notification.create(
               'error',
               'Thông báo!',
-              `Thêm mới thất bại`, {
+              `Thêm mới thất bại`,
+              {
                 nzClass: 'notification-error',
                 nzDuration: 2000
               }
@@ -153,7 +157,8 @@ export class DanhmucmonanComponent implements OnInit {
         error: () => this.notification.create(
           'error',
           'Thông báo!',
-          `Thêm mới thất bại`, {
+          `Thêm mới thất bại`,
+          {
             nzClass: 'notification-error',
             nzDuration: 2000
           }
@@ -165,6 +170,7 @@ export class DanhmucmonanComponent implements OnInit {
 
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
+    this.isChiTietOpen = false;
     this.isEditMode = true;
     this.formData = item;
   }
@@ -172,46 +178,117 @@ export class DanhmucmonanComponent implements OnInit {
    openDeletePopup(item: any): void {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         width: '400px',
-        data: { message: `Bạn có chắc chắn muốn xóa "${item.tenDanhMuc}" không?` },
+        data: { message: `Bạn có chắc chắn muốn xóa "${item.tenNhaHang}" không?` },
       });
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.danhmucmonanService.deleteDanhMucMonAn(item.id).subscribe(
+          this.nhaHangService.deleteNhaHang(item.id).subscribe(
             {
               next: (res: any) => {
+                if (res.data) {
                 this.search();
                 this.notification.create(
                   'success',
                   'Thông báo!',
-                  `Xóa thành công`,
-                  {
-                    nzClass: 'notification-success',    
-                    nzDuration: 2000
-                  }
-                );
-              },
-              error: () => this.notification.create(
-                'error',
-                'Thông báo!',
-                `Xóa thất bại`, {
+                  `Xóa dữ liệu thành công`, {
+                  nzClass: 'notification-success',
+                  nzDuration: 2000
+                }); 
+              } else {
+                this.notification.create(
+                  'error',
+                  'Thông báo!',
+                  `Xóa dữ liệu thất bại`, {
                   nzClass: 'notification-error',
                   nzDuration: 2000
-                }
-              )
-            }
+                });
+              }
+            },
+            error: () => this.notification.create(
+              'error',
+              'Thông báo!',
+              `Xóa dữ liệu thất bại`, {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            })
+          }
           )
         } else {
           this.notification.create(
             'error',
             'Thông báo!',
-            `Xóa thất bại`, {
+            `Xóa thất bại`,
+            {
               nzClass: 'notification-error',
-              nzDuration: 2000
+              nzDuration: 2000  
             }
           );
         }
       });
     }
 
+  isChiTietOpen = false;
+  openChiTietPopup(item: any): void {
+    this.isPopupOpen = true;
+    this.isChiTietOpen = true; 
+    this.nhaHangService.getNhaHangById(item.id).subscribe((response: any) => {
+    this.formData = response.data;  
+    console.log(this.formData);
+    });      
+  }
+
+  parseJSON(jsonString: string): any {
+    try {
+      return JSON.parse(jsonString);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  download(fileId: string): void {
+    this.fileService.downloadFile(fileId).subscribe(
+      (response: Blob) => {
+        // Create object URL from blob
+        const url = window.URL.createObjectURL(response);
+        
+        // Open preview in new tab
+        window.open(url, '_blank');
+        
+        // Cleanup object URL after preview opens
+        window.URL.revokeObjectURL(url);
+      }
+    );
+  }
+
+  toggleActive(item: any): void {
+    const newStatus = !item.isActive;
+    // Nếu đang bật và đã có nhà hàng khác active thì không cho bật
+    if (newStatus && this.nhaHangPaging.some(i => i.isActive)) {
+      this.notification.create(
+        'error',
+        'Thông báo!',
+        `Chỉ có thể có 1 nhà hàng được kích hoạt tại một thời điểm.`, {
+        nzClass: 'notification-error',
+        nzDuration: 2000
+      });
+    }
+    else{ 
+      item.isActive = newStatus;
+      this.nhaHangService.updateNhaHang(item.id, item).subscribe({
+        next: (res: any) => {
+        if (res.data) {
+          this.search();
+        } else {}
+      },
+      error: () => this.notification.create(
+        'error',
+        'Thông báo!',
+        `Cập nhật thất bại`, {
+        nzClass: 'notification-error',
+        nzDuration: 2000
+      })
+    });
+    }
+  }
 }

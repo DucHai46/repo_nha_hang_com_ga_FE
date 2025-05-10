@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileService } from '../../../../../core/services/file.service';
 import { LoaimonanService } from '../../loaimonan/services/loaimonan.service';
 import { MonAnService } from '../../monan/services/monan.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 @Component({
   selector: 'app-popupCombo',
   templateUrl: './popupCombo.component.html',
@@ -34,7 +35,8 @@ export class PopupComboComponent implements OnInit {
   constructor(
     private monAnService: MonAnService,
     private fileService: FileService,
-    private loaiMonAnService: LoaimonanService
+    private loaiMonAnService: LoaimonanService,
+    private notification: NzNotificationService
   ) {}
   ngOnInit(): void {
     this.loaiMonAnService.getLoaiMonAn({}).subscribe({
@@ -213,12 +215,37 @@ export class PopupComboComponent implements OnInit {
               id: fileId,
               name: fileName
             };
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Upload file thành công`,
+              {
+                nzClass: 'notification-success',
+                nzDuration: 2000
+              }
+            );
           } else {
-            console.error('Upload failed', res);
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Upload file thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            );  
           }
         },
         error: (err) => {
-          console.error('Lỗi upload file:', err);
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Lỗi upload file: ${err.message}`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
         }
       });
     }

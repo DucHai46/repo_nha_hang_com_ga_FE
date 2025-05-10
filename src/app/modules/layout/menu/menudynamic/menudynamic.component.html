@@ -1,7 +1,7 @@
 <div class="mt-10 mr-10">
   <!-- nhãn -->
-  <div class="flex flex-row gap-4 mb-5 bg">
-    <p class="text-2xl font-bold">Bàn ăn</p>
+  <div class="flex flex-row gap-4 mb-5">
+    <p class="text-2xl font-bold">Danh mục món ăn</p>
   </div>
   <!-- form search -->
   <div
@@ -10,39 +10,14 @@
     <!-- form -->
     <div class="flex flex-row gap-4">
       <div class="flex flex-col gap-2">
-        <label for="searchTenBan">Tên bàn ăn</label>
+        <label for="searchTen">Tên menu</label>
         <input
           class="border border-gray-300 rounded-md p-2"
-          id="searchTenBan"
-          [(ngModel)]="searchForm.tenBan"
+          id="searchTen"
+          [(ngModel)]="searchForm.label"
           type="text"
-          placeholder="Tìm kiếm"
+          placeholder="Tên menu"
         />
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="searchLoaiBan">Loại bàn</label>
-        <select
-          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-          id="searchLoaiBan"
-          [(ngModel)]="searchForm.idLoaiBan"
-        >
-          <option *ngFor="let loaiBan of loaiBanAn" [value]="loaiBan.id">
-            {{ loaiBan.tenLoai }}
-          </option>
-        </select>
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="searchTrangThai">Trạng thái bàn</label>
-        <select
-          id="searchTrangThai"
-          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:outline-none"
-          [(ngModel)]="searchForm.trangThai"
-        >
-          <option [value]="''">Tất cả</option>
-          <option [value]="0">Còn trống</option>
-          <option [value]="1">Đặt trước</option>
-          <option [value]="2">Đang sử dụng</option>
-        </select>
       </div>
     </div>
     <!-- button -->
@@ -109,34 +84,27 @@
         <thead class="text-xs text-gray-700 uppercase text-center">
           <tr>
             <th scope="col" class="px-6 py-3">STT</th>
-            <th scope="col" class="px-6 py-3">Tên bàn</th>
-            <th scope="col" class="px-6 py-3">Trang thái</th>
-            <th scope="col" class="px-6 py-3">Loại bàn</th>
+            <th scope="col" class="px-6 py-3">Tên menu</th>
+            <th scope="col" class="px-6 py-3">Link</th>
             <th scope="col" class="px-6 py-3">Thao tác</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="border-b dark:border-gray-700 border-gray-200"
-            *ngFor="let item of banAnPaging; let i = index"
+            *ngFor="let item of menuDynamicPaging; let i = index"
           >
             <td
               scope="row"
               class="px-6 py-4 font-medium whitespace-nowrap text-center"
             >
-              {{ i + 1 + (paging.page - 1) * paging.size }}
-            </td>
-            <!-- <td class="px-6 py-4">
-                {{ item.ma }}
-              </td> -->
-            <td class="px-6 py-4">
-              {{ item.tenBan }}
+              {{ i + 1 }}
             </td>
             <td class="px-6 py-4">
-              {{ getTrangThaiName(item.trangThai) }}
+              {{ item.label }}
             </td>
             <td class="px-6 py-4">
-              {{ item.loaiBan.name }}
+              {{ item.routeLink }}
             </td>
             <td
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
@@ -194,53 +162,12 @@
                   </svg>
                 </p>
               </button>
-              <button
-                (click)="downloadQR(item)"
-                class="transition-transform transform hover:scale-105 hover:bg-red-100 focus:outline-none rounded-lg px-2 py-1"
-              >
-                <p
-                  class="font-medium text-red-600 white:text-red-500 hover:text-red-800"
-                >
-                  <svg
-                    class="w-6 h-6 text-gray-800 white:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z"
-                    />
-                    <path
-                      stroke="currentColor"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z"
-                    />
-                  </svg>
-                </p>
-              </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <!-- <div class="mt-4 custom-paginator">  
-        <mat-paginator
-          [length]="total"
-          [pageIndex]="pageIndex - 1"
-          [pageSize]="pageSize"
-          [pageSizeOptions]="[2, 5, 10, 20]"
-          (page)="onMatPageChange($event)"
-          showFirstLastButtons>
-        </mat-paginator>
-      </div> -->
-    <!-- Thêm vào sau phần hiển thị danh sách -->
+
     <div class="pagination-controls mt-4 flex justify-end">
       <div class="flex items-center justify-between gap-2">
         <div class="text-gray-600">Tổng số bản ghi: {{ paging.total }}</div>
@@ -281,17 +208,10 @@
     </div>
   </div>
 </div>
-<app-popupBanAn
+<app-popupDanhMucMA
   *ngIf="isPopupOpen"
   [isEditMode]="isEditMode"
   [formData]="formData"
   (close)="closePopup()"
   (save)="onSaveCongThuc($event)"
-></app-popupBanAn>
-
-<app-popup-qr
-  *ngIf="isQRPopupOpen"
-  [qrData]="qrData"
-  [tableName]="selectedTableName"
-  (close)="closeQRPopup()"
-></app-popup-qr>
+></app-popupDanhMucMA>

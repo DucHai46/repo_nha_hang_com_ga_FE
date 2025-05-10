@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileService } from '../../../../../core/services/file.service';
 import { NguyenlieuService } from '../../nguyenlieu/services/nguyenlieu.service';
 import { LoainguyenlieuService } from '../../loainguyenlieu/services/loainguyenlieu.service';
-
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 @Component({
   selector: 'app-popupCongThuc',
   templateUrl: './popupCongThuc.component.html',
@@ -39,7 +39,8 @@ export class PopupCongThucComponent implements OnInit {
   constructor(
     private nguyenLieuService: NguyenlieuService,
     private fileService: FileService,
-    private loaiNguyenLieuService: LoainguyenlieuService
+    private loaiNguyenLieuService: LoainguyenlieuService,
+    private notification: NzNotificationService
   ) {}
 
   ngOnInit(): void {
@@ -205,12 +206,37 @@ export class PopupCongThucComponent implements OnInit {
               id: fileId,
               name: fileName
             };
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Upload file thành công`,
+              {
+                nzClass: 'notification-success',
+                nzDuration: 2000
+              }
+            );
           } else {
-            console.error('Upload failed', res);
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Upload file thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000  
+              }
+            );
           }
         },
         error: (err) => {
-          console.error('Lỗi upload file:', err);
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Upload file thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
         }
       });
     }
