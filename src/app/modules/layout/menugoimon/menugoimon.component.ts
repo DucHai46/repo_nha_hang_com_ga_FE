@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ThucDonService } from '../menu/thucdon/services/thucdon.service';
 import { LoaimonanService } from '../menu/loaimonan/services/loaimonan.service';
 import { MonAnService } from '../menu/monan/services/monan.service';
@@ -77,12 +77,14 @@ export class MenugoimonComponent implements OnInit {
   thucDon: any[] = [];
   itemsRoot2: any[] = [];
   combo: any[] = [];
+  id: string = '';
   
   constructor(
     public router: Router,
     private thucDonService: ThucDonService,
     private loaiMonAnService: LoaimonanService,
-    private monAnService: MonAnService
+    private monAnService: MonAnService,
+    private route: ActivatedRoute
   ) {}
   ngOnInit() {
     const updatedSelectedItems = history.state?.updatedSelectedItems;
@@ -119,6 +121,8 @@ export class MenugoimonComponent implements OnInit {
       },
       error: (err: any) => console.log(err),
     });
+    this.id = this.route.snapshot.paramMap.get('id') || '';
+    console.log('ID:', this.id);
   }
 
   private taoDanhSachMonAn(thucDonData: any[]): Promise<any[]> {
@@ -139,6 +143,7 @@ export class MenugoimonComponent implements OnInit {
                   hinhAnh: monAn.hinhAnh,
                   gia: monAn.giaTien,
                   soLuong: 0,
+                  ghiChu:"",
                   danhMuc: loaiMon.id,
                   giamGia: monAnInfo.giamGia.giaTri
                 });
@@ -167,6 +172,7 @@ export class MenugoimonComponent implements OnInit {
                 hinhAnh: loaiMon.hinhAnh,
                 gia: loaiMon.giaTien,
                 soLuong: 0,
+                ghiChu:"",
                 danhMuc:"comboMonAn"
               });
         });
@@ -244,7 +250,12 @@ export class MenugoimonComponent implements OnInit {
   chuyenSangXacNhan() {
     console.log(this.itemsMonAn);
     this.router.navigate(['/xacnhangoimon'], {
-      state: { selectedItemsMA: this.selectedItemsMA }, // Truyền selectedItemsMA
+      state: { selectedItemsMA: this.selectedItemsMA,id:this.id }, // Truyền selectedItemsMA
+    });
+  }
+  chuyenSangChiTiet(){
+    this.router.navigate(['/chitietdon'], {
+      state: {id:this.id }, // Truyền selectedItemsMA
     });
   }
   

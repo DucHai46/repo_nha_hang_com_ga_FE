@@ -23,6 +23,7 @@ import { ComboComponent } from '../modules/layout/menu/combo/combo.component';
 import { ThucdonComponent } from '../modules/layout/menu/thucdon/thucdon.component';
 import { MenuDynamicComponent } from '../modules/layout/menu/menudynamic/menudynamic.component';
 import { NhaHangComponent } from '../modules/layout/menu/nhahang/nhahang.component';
+import { ChitietdonComponent } from '../modules/layout/menugoimon/chitietdon/chitietdon.component';
 export const remoteRoutes: Route[] = [
   { path: '', component: RemoteEntryComponent,
     children: [
@@ -61,11 +62,15 @@ export const remoteRoutes: Route[] = [
   //   loadChildren: () => import('../modules/layout/layout.module').then((m) => m.LayoutModule),
   // },
   {
-    path: 'menugoimon',
+    path: 'menugoimon/:id',
     component: MenugoimonComponent,
   },
   {
     path: 'xacnhangoimon',
     component: XacnhangoimonComponent,
+  },
+    {
+    path: 'chitietdon',
+    component: ChitietdonComponent,
   },
 ];

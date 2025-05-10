@@ -89,6 +89,7 @@ import { ThucDonService } from './menu/thucdon/services/thucdon.service';
 import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.component';
 import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTietTD.component';
 import { DonOrderService } from './menugoimon/services/donorder.service';
+import { ChitietdonComponent } from './menugoimon/chitietdon/chitietdon.component';
 
 
 import { MenuDynamicComponent } from './menu/menudynamic/menudynamic.component';
@@ -147,7 +148,8 @@ import { NhaHangService } from './menu/nhahang/services/nhahang.service';
     MenuDynamicComponent,
     PopupMenuDynamicComponent,
     NhaHangComponent,
-    PopupNhaHangComponent
+    PopupNhaHangComponent,
+    ChitietdonComponent
   ], // Khai báo component
   imports: [
     CommonModule,
