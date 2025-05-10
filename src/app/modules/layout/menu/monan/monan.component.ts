@@ -229,7 +229,19 @@ export class MonanComponent implements OnInit {
   closeChiTiet(): void {
     this.isChiTietOpen = false;
   }
+  imageUrl: string | null = null;
 
+  download1(fileId: string): void {
+    this.fileService.downloadFile(fileId).subscribe(
+      (response: Blob) => {
+        // Tạo URL đối tượng từ blob
+        const url = window.URL.createObjectURL(response);
+        
+        // Lưu URL đối tượng để sử dụng trong HTML
+        this.imageUrl = url;
+      }
+    );
+  }
 
 
   

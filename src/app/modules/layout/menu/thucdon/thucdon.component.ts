@@ -10,6 +10,7 @@ import { FileService } from '../../../../core/services/file.service';
 import { ComboService } from '../combo/services/combo.service';
 import { Combo } from '../../../../models/Combo';
 import { TrangThaiThucDon } from '../../../../models/TrangThaiThucDon';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-thucdon',
@@ -53,7 +54,7 @@ export class ThucdonComponent {
     this.thucDonService.getThucDon(this.searchForm).subscribe({
       next: (res: any) => {
         this.thucDonPaging = res.data.data; // Lưu toàn bộ dữ liệu
-        console.log(this.thucDonPaging);
+        // console.log(this.thucDonPaging);
         this.paging.page = res.data.paging.currentPage;
         this.paging.size = res.data.paging.pageSize;
         this.paging.total = res.data.paging.totalRecords;
@@ -83,13 +84,13 @@ export class ThucdonComponent {
     this.search();
   }
   
-    getTrangThaiName(trangThai: number): string {
-      switch(trangThai) {
-        case TrangThaiThucDon.KhongHoatDong: return 'Không hoạt động';
-        case TrangThaiThucDon.HoatDong: return 'Hoạt động';
-        default: return 'Không xác định';
-      }
+  getTrangThaiName(trangThai: number): string {
+    switch(trangThai) {
+      case TrangThaiThucDon.KhongHoatDong: return 'Không hoạt động';
+      case TrangThaiThucDon.HoatDong: return 'Hoạt động';
+      default: return 'Không xác định';
     }
+  }
   isPopupOpen = false;
   isEditMode = false;
   formData: any = {}
@@ -170,7 +171,7 @@ export class ThucdonComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-      this.comboService.deleteCombo(item.id).subscribe(
+      this.thucDonService.deleteThucDon(item.id).subscribe(
         {
           next: (res: any) => {
             this.search();
@@ -214,6 +215,50 @@ export class ThucdonComponent {
         window.URL.revokeObjectURL(url);
       }
     );
+  }
+  toggleTrangThai(item: any): void {
+    // Nếu đang bật => chuyển thành tắt
+    if (item.trangThai === 1) {
+      const updatedItem = { ...item, trangThai: 0 };
+      this.thucDonService.updateThucDon(item.id, updatedItem).subscribe({
+        next: (res: any) => {
+          if (res.data) item.trangThai = 0;
+          else alert('Cập nhật thất bại');
+        },
+        error: () => alert('Cập nhật thất bại')
+      });
+    } else {
+      // Nếu đang tắt => bật, và tắt tất cả cái đang bật khác
+      const dangHoatDong = this.thucDonPaging.find(x => x.trangThai === 1);
+  
+      const updateCalls = [];
+  
+      // Nếu có thực đơn khác đang hoạt động thì tắt nó
+      if (dangHoatDong) {
+        const updateOff = {
+          ...dangHoatDong,
+          trangThai: 0
+        };
+        updateCalls.push(this.thucDonService.updateThucDon(dangHoatDong.id, updateOff));
+      }
+  
+      // Bật thực đơn được chọn
+      const updateOn = {
+        ...item,
+        trangThai: 1
+      };
+      updateCalls.push(this.thucDonService.updateThucDon(item.id, updateOn));
+  
+      // Gửi tất cả gọi API
+      forkJoin(updateCalls).subscribe({
+        next: (results: any) => {
+          // cập nhật local state sau khi thành công
+          if (dangHoatDong) dangHoatDong.trangThai = 0;
+          item.trangThai = 1;
+        },
+        error: () => alert('Cập nhật thất bại')
+      });
+    }
   }
 
 }

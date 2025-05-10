@@ -88,6 +88,7 @@ import { ThucDonStore } from './menu/thucdon/store/thuc-don.store';
 import { ThucDonService } from './menu/thucdon/services/thucdon.service'; 
 import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.component';
 import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTietTD.component';
+import { DonOrderService } from './menugoimon/services/donorder.service';
 
 
 
@@ -180,7 +181,8 @@ import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTie
     giamgiaService,
     GiamGiaStore,
     ThucDonStore,
-    ThucDonService
+    ThucDonService,
+    DonOrderService
   ]
 })
 export class LayoutModule {}

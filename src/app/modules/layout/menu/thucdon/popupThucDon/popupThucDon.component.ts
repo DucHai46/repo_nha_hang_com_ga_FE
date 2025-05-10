@@ -80,7 +80,7 @@ export class PopupThucDonComponent implements OnInit {
   }
   updateData(): void {  
     const loaiMonAnsFromForm = this.formData.loaiMonAns;    
-    console.log('Dữ liệu loaiMonAnsFromForm:', loaiMonAnsFromForm);
+    // console.log('Dữ liệu loaiMonAnsFromForm:', loaiMonAnsFromForm);
     this.loaiSelections = loaiMonAnsFromForm.map((loai: any) => ({
       selectedLoaiId: loai.id,
       selectedLoaiName: loai.name,
@@ -94,7 +94,7 @@ export class PopupThucDonComponent implements OnInit {
         }
       }))
     }));  
-    console.log('Dữ liệu loaiSelections:', this.loaiSelections);
+    // console.log('Dữ liệu loaiSelections:', this.loaiSelections);
     // Gọi API để lấy danh sách món ăn cho mỗi loại
     this.loaiSelections.forEach((loai, index) => {
         this.monAnService.getMonAn({ idLoaiMonAn: loai.selectedLoaiId }).subscribe({
@@ -107,14 +107,14 @@ export class PopupThucDonComponent implements OnInit {
               hinhAnh: nl.hinhAnh,
               giaTien: nl.giaTien
             }));
-            console.log(this.loaiSelections[index].monAns);
+            // console.log(this.loaiSelections[index].monAns);
           },
           error: err => {
             console.error('Lỗi khi lấy món ăn:', err);
           }
         });
     });
-    console.log(this.loaiSelections);
+    // console.log(this.loaiSelections);
     const comboFromForm = this.formData.combos;    
     this.comboSelections = comboFromForm.map((loai: any) => ({
       selectedComboId: loai.id,
@@ -237,51 +237,50 @@ export class PopupThucDonComponent implements OnInit {
     const dataToSend = {
       id: this.formData.id,
       tenThucDon:  this.formData.tenThucDon,
-      trangThai: this.formData.trangThai,
+      trangThai: 0,
       loaiMonAns: allMonAns,
       combos:allCombos
     };
-    if (this.formData.trangThai == 1) {
-      // Kiểm tra các thực đơn đang hoạt động
-      this.thucDonService.getThucDon({ trangThai: 1 }).subscribe({
-        next: (res: any) => {
-          // Kiểm tra nếu res.data và res.data.data có hợp lệ không
-          if (res && res.data && res.data.data) {
-            // Lọc danh sách thực đơn đang hoạt động và không phải là thực đơn hiện tại
-            const activeThucDons = res.data.data.filter((td: any) => td.trangThai === 1 && td.id !== this.formData.id);
-              // Cập nhật tất cả thực đơn khác về trạng thái "Không hoạt động"
-            const updateObservables = activeThucDons.map((td: any) =>
-              this.thucDonService.updateThucDon(td.id, { ...td, trangThai: 0 })
-            );
-            forkJoin(updateObservables).subscribe({
-              next: () => {
-                  // Sau khi cập nhật trạng thái các thực đơn khác về "Không hoạt động", lưu thực đơn mới với trạng thái "Hoạt động"
-                this.save.emit(dataToSend);
-              },
-              error: (err: any) => {
-                console.log('Lỗi khi cập nhật trạng thái các thực đơn:', err);
-              }
-            });
+    // if (this.formData.trangThai == 1) {
+    //   // Kiểm tra các thực đơn đang hoạt động
+    //   this.thucDonService.getThucDon({ trangThai: 1 }).subscribe({
+    //     next: (res: any) => {
+    //         // Lọc danh sách thực đơn đang hoạt động và không phải là thực đơn hiện tại
+    //         const activeThucDons = res.data.data.filter((td: any) => td.trangThai === 1 && td.id !== this.formData.id);
+    //           // Cập nhật tất cả thực đơn khác về trạng thái "Không hoạt động"
+    //         const updateObservables = activeThucDons.map((td: any) =>
+    //           this.thucDonService.updateThucDon(td.id, { ...td, trangThai: 0 })
+    //         );
+    //         forkJoin(updateObservables).subscribe({
+    //           next: () => {
+    //               // Sau khi cập nhật trạng thái các thực đơn khác về "Không hoạt động", lưu thực đơn mới với trạng thái "Hoạt động"
+    //             this.save.emit(dataToSend);
+    //           },
+    //           error: (err: any) => {
+    //             console.log('Lỗi khi cập nhật trạng thái các thực đơn:', err);
+    //           }
+    //         });
+    //         console.log("activeThucDons = ",activeThucDons);
+    //         console.log("res = ",res.data.data);
 
-          } else {
-            // Nếu không có thực đơn nào đang hoạt động, lưu luôn thực đơn này với trạng thái "Hoạt động"
-            this.save.emit(dataToSend);
-          }
-        },
-        error: (err: any) => {
-          console.log('Lỗi khi lấy danh sách thực đơn:', err);
-        }
-      });
-    } else {
-      // Nếu trạng thái không phải "Hoạt động", trực tiếp lưu thực đơn này
-      this.save.emit(dataToSend);
-    }
+    //     },
+    //     error: (err: any) => {
+    //       console.log('Lỗi khi lấy danh sách thực đơn:', err);
+    //     }
+    //   });
+    // } else {
+    //   // Nếu trạng thái không phải "Hoạt động", trực tiếp lưu thực đơn này
+    //   this.save.emit(dataToSend);
+    //   return;
+    // }
+    
     this.save.emit(dataToSend);
 
 
     // this.save.emit(dataToSend);
     // console.log(dataToSend);
   }
+
 
   onCancel(): void {
     this.close.emit();

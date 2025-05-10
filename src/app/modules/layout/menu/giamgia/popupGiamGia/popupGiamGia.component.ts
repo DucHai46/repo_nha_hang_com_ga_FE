@@ -9,7 +9,7 @@ export class PopupGiamGiaComponent {
     tenGiamGia: '',
     ngayBatDau: '',
     ngayKetThuc: '',
-    giaTri: '',
+    giaTri: 0,
     moTa: '',
   };
 
