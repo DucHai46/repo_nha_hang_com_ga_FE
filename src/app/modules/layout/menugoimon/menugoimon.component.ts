@@ -248,12 +248,18 @@ export class MenugoimonComponent implements OnInit {
   // constructor(public router: Router) {}
   
   chuyenSangXacNhan() {
+    if(this.id == '' || this.id == null){
+      return;
+    }
     console.log(this.itemsMonAn);
     this.router.navigate(['/xacnhangoimon'], {
       state: { selectedItemsMA: this.selectedItemsMA,id:this.id }, // Truyền selectedItemsMA
     });
   }
   chuyenSangChiTiet(){
+    if(this.id == '' || this.id == null){
+      return;
+    }
     this.router.navigate(['/chitietdon'], {
       state: {id:this.id }, // Truyền selectedItemsMA
     });

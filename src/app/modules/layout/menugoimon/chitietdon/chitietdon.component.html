@@ -8,61 +8,67 @@
   </button>
 </div>
 <div class="pt-20 px-4 pb-20">
-<div *ngFor="let chiTiet of chiTietDonOrder" class="mb-4 border p-3 rounded shadow">
+  <div
+    *ngFor="let chiTiet of chiTietDonOrder"
+    class="mb-4 border p-3 rounded shadow"
+  >
     <h3 class="font-bold mb-2 text-base">
-    Chi tiết đơn 
-    (
-    Trạng thái: {{ chiTiet.trangThai === 1 ? 'Đã tiếp nhận' : 'Chờ tiếp nhận' }}
-    )
+      Chi tiết đơn ( Trạng thái:
+      {{ chiTiet.trangThai === 1 ? "Đã tiếp nhận" : "Chờ tiếp nhận" }}
+      )
     </h3>
 
-  <!-- Món ăn -->
-  <div *ngIf="chiTiet.monAns?.length">
-    <h4 class="font-semibold text-sm">Món Ăn:</h4>
-    <div *ngFor="let mon of chiTiet.monAns" class="border-b py-2">
-
-      <div class="flex justify-between text-sm font-medium">
-        <span>{{ mon.monAn?.name || mon.monAn }}</span>
-        <span>Số lượng: {{ mon.soLuong }}</span>
-        <span [ngClass]="{
-            'text-green-600 font-semibold': mon.monAn_trangThai === 1,
-            'text-yellow-600 font-semibold': mon.monAn_trangThai === 0
-        }">
+    <!-- Món ăn -->
+    <div *ngIf="chiTiet.monAns?.length">
+      <h4 class="font-semibold text-sm">Món Ăn:</h4>
+      <div *ngFor="let mon of chiTiet.monAns" class="border-b py-2">
+        <div class="flex justify-between text-sm font-medium">
+          <span>{{ mon.monAn?.name || mon.monAn }}</span>
+          <span>Số lượng: {{ mon.soLuong }}</span>
+          <span
+            [ngClass]="{
+              'text-green-600 font-semibold': mon.monAn_trangThai === 1,
+              'text-yellow-600 font-semibold': mon.monAn_trangThai === 0
+            }"
+          >
             Trạng thái:
-            {{ mon.monAn_trangThai === 1 ? 'Đã phục vụ' : 'Đang xử lý' }}
-        </span>
+            {{ mon.monAn_trangThai === 1 ? "Đã phục vụ" : "Đang xử lý" }}
+          </span>
+        </div>
+        <!-- Dòng dưới: mô tả -->
+        <div class="text-xs text-gray-600 mt-1 italic">
+          {{ mon.moTa }}
+        </div>
       </div>
-      <!-- Dòng dưới: mô tả -->
-      <div class="text-xs text-gray-600 mt-1 italic">
-        {{ mon.moTa }}
+    </div>
+
+    <!-- Combo -->
+    <div *ngIf="chiTiet.comBos?.length" class="mt-3">
+      <h4 class="font-semibold text-sm">Combo:</h4>
+      <div *ngFor="let combo of chiTiet.comBos" class="border-b py-2">
+        <div class="flex justify-between text-sm font-medium">
+          <span>{{ combo.comBo?.name || combo.comBo }}</span>
+          <span>Số lượng: {{ combo.soLuong }}</span>
+          <span
+            [ngClass]="{
+              'text-green-600 font-semibold': combo.comBo_trangThai === 1,
+              'text-yellow-600 font-semibold': combo.comBo_trangThai === 0
+            }"
+          >
+            Trạng thái:
+            {{ combo.comBo_trangThai === 1 ? "Đã phục vụ" : "Đang xử lý" }}
+          </span>
+        </div>
+        <div class="text-xs text-gray-600 mt-1 italic">
+          {{ combo.moTa }}
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Combo -->
-  <div *ngIf="chiTiet.comBos?.length" class="mt-3">
-    <h4 class="font-semibold text-sm">Combo:</h4>
-    <div *ngFor="let combo of chiTiet.comBos" class="border-b py-2">
-      <div class="flex justify-between text-sm font-medium">
-        <span>{{ combo.comBo?.name || combo.comBo }}</span>
-        <span>Số lượng: {{ combo.soLuong }}</span>
-        <span [ngClass]="{
-            'text-green-600 font-semibold': combo.comBo_trangThai === 1,
-            'text-yellow-600 font-semibold': combo.comBo_trangThai === 0
-        }">
-            Trạng thái:
-            {{ combo.comBo_trangThai === 1 ? 'Đã phục vụ' : 'Đang xử lý' }}
-        </span>
-      </div>
-      <div class="text-xs text-gray-600 mt-1 italic">
-        {{ combo.moTa }}
-      </div>
-    </div>
+  <!-- Tổng tiền (dưới cùng) -->
+  <div
+    class="fixed bottom-0 left-0 w-full z-50 bg-blue-500 text-white shadow px-4 py-3 text-center font-semibold text-lg"
+  >
+    Tổng tiền: {{ tongTien | number }} ₫
   </div>
-</div>
-<!-- Tổng tiền (dưới cùng) -->
-<div class="fixed bottom-0 left-0 w-full z-50 bg-white shadow px-4 py-3 text-center font-semibold text-lg">
-  Tổng tiền: {{ tongTien | number }} ₫
-</div>
-
 </div>

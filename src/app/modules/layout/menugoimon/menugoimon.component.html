@@ -14,7 +14,9 @@
         class="flex-1 bg-transparent border-none outline-none text-gray-600 placeholder-gray-400 text-base"
         placeholder="Bạn muốn tìm món gì?"
       />
-      <button  (click)="chuyenSangChiTiet()"><i class="fas fa-ellipsis-v"></i></button>
+      <button (click)="chuyenSangChiTiet()">
+        <i class="fas fa-ellipsis-v text-blue-500"></i>
+      </button>
     </div>
 
     <!-- Thanh danh mục -->
@@ -26,8 +28,8 @@
           *ngFor="let category of loaiMonAn"
           [ngClass]="
             selectedItem === category
-              ? 'bg-blue-500 text-white'
-              : 'bg-white text-black'
+              ? '!bg-blue-500 !text-white'
+              : '!bg-white !text-black'
           "
           (click)="selectCategory(category, $event)"
           class="text-center py-2 px-4 rounded-lg border shadow-md min-w-[100px] max-w-[120px] whitespace-nowrap overflow-hidden text-ellipsis hover:bg-orange-300"
@@ -53,11 +55,11 @@
       *ngFor="let item of getMonAnTheoDanhMuc(category.ma)"
       class="p-4 bg-white rounded-lg shadow-lg flex flex-col justify-between"
     >
-    <img
-      [src]="getImageUrl(item.hinhAnh)"
-      alt="{{ item.ten }}"
-      class="rounded-lg w-full h-35 object-cover"
-    />
+      <img
+        [src]="getImageUrl(item.hinhAnh)"
+        alt="{{ item.ten }}"
+        class="rounded-lg w-full h-35 object-cover"
+      />
       <h3 class="mt-2 text-lg font-bold">{{ item.ten }}</h3>
       <p class="text-black-500 font-semibold">{{ item.gia | number }} VND</p>
       <!-- Nút tùy thuộc vào trạng thái -->
@@ -66,7 +68,7 @@
         <div *ngIf="item.soLuong === 0">
           <button
             (click)="tangSoLuong(item.ma)"
-            class="bg-blue-500 text-white rounded-full p-3 text-lg"
+            class="px-2 py-1 bg-blue-500 rounded-lg"
           >
             +
           </button>
@@ -76,14 +78,14 @@
         <div *ngIf="item.soLuong > 0" class="flex items-center">
           <button
             (click)="giamSoLuong(item.ma)"
-            class="px-2 py-1 bg-gray-300 rounded-lg"
+            class="px-2 py-1 bg-gray-300 rounded-lg !text-black"
           >
             -
           </button>
           <span class="mx-3 text-lg">{{ item.soLuong }}</span>
           <button
             (click)="tangSoLuong(item.ma)"
-            class="px-2 py-1 bg-gray-300 rounded-lg"
+            class="px-2 py-1 bg-gray-300 rounded-lg !text-black"
           >
             +
           </button>
@@ -96,15 +98,17 @@
 <!-- Thanh tổng tiền, chỉ hiển thị khi có ít nhất 1 món -->
 <div
   *ngIf="coMonAnDuocChon()"
-  class="fixed-bottom-bar fixed bottom-0 left-0 w-full bg-blue-500 text-white text-center shadow-lg"
+  class="fixed-bottom-bar fixed bottom-0 left-0 w-full bg-blue-500 text-white shadow-lg"
 >
-  <span class="text-lg font-bold"
-    >Tổng tiền: {{ tinhTongTien() | number }} VND</span
-  >
-  <button
-    class="ml-4 bg-white text-blue-500 rounded-lg font-bold"
-    (click)="chuyenSangXacNhan()"
-  >
-    Xác nhận
-  </button>
+  <div class="flex items-center justify-between px-4 py-2">
+    <span class="text-lg font-bold"
+      >Tổng tiền: {{ tinhTongTien() | number }} VND</span
+    >
+    <button
+      class="bg-white hover:bg-gray-100 !text-blue-500 rounded-lg font-bold px-4 py-2"
+      (click)="chuyenSangXacNhan()"
+    >
+      Xác nhận
+    </button>
+  </div>
 </div>

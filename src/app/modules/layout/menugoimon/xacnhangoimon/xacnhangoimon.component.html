@@ -1,44 +1,68 @@
 <div class="xac-nhan-container">
-    <div class="header">
-      <button class="btn-back" (click)="troVeMenugoimon()">
-        <i class="fal fa-arrow-left text-xl text-blue-500"></i>
-      </button>
-      <h3 class="title">Các món đang chọn</h3>
-      <button class="btn-clear-cart" (click)="xoaTatCa()">Xóa tất cả</button>
-    </div>
-  
-    <div *ngIf="selectedItemsMA.length > 0; else emptyCart">
-        <div class="selected-item" *ngFor="let item of selectedItemsMA">
-          <div class="item-container">
-            <img [src]="item.hinhAnh" alt="{{ item.ten }}" class="item-image" />
-            <div class="item-details">
-              <p class="item-name">{{ item.ten }}</p>
-              <p class="item-price">{{ item.gia | number }} VND</p>
-            </div>
-      
-            <div class="item-quantity">
-              <button class="btn-quantity" (click)="giamSoLuong(item.ma)">-</button>
-              <span>{{ item.soLuong }}</span>
-              <button class="btn-quantity" (click)="tangSoLuong(item.ma)">+</button>
-            </div>
-          </div>
-      
-          <!-- Thêm dòng input nhắn nhủ cho mỗi món -->
-          <div class="note-container">
-            <input type="text" class="note-input" placeholder="Bạn muốn nhắn nhủ gì?" [(ngModel)]="item.ghiChu" />
-          </div>
-        </div>
-        <div class="total-price">
-          <p class="total-text"></p>
-        </div>
-    </div>
-    <div *ngIf="selectedItemsMA.length > 0"class="fixed-bottom-bar fixed bottom-0 left-0 w-full bg-blue-500 text-white text-center shadow-lg">
-      <span  class="text-lg font-bold">Tổng tiền: {{ tinhTongTien() | number }} VND</span>
-      <button (click)="xacNhanDonOrder()" class="ml-4 bg-white text-blue-500 rounded-lg font-bold">Xác nhận</button>
-    </div>
+  <div class="header">
+    <button class="btn-back" (click)="troVeMenugoimon()">
+      <i class="fal fa-arrow-left text-xl text-blue-500"></i>
+    </button>
+    <h3 class="title">Các món đang chọn</h3>
+    <button class="btn-clear-cart" (click)="xoaTatCa()">Xóa tất cả</button>
+  </div>
 
-    <ng-template #emptyCart>
-      <p>Không có món ăn nào được chọn!</p>
-    </ng-template>
+  <div *ngIf="selectedItemsMA.length > 0; else emptyCart">
+    <div class="selected-item" *ngFor="let item of selectedItemsMA">
+      <div class="item-container">
+        <img [src]="item.hinhAnh" alt="{{ item.ten }}" class="item-image" />
+        <div class="item-details">
+          <p class="item-name">{{ item.ten }}</p>
+          <p class="item-price">{{ item.gia | number }} VND</p>
+        </div>
+
+        <div class="item-quantity">
+          <button
+            class="px-2 py-1 bg-gray-300 rounded-lg !text-black"
+            (click)="giamSoLuong(item.ma)"
+          >
+            -
+          </button>
+          <span>{{ item.soLuong }}</span>
+          <button
+            class="px-2 py-1 bg-gray-300 rounded-lg !text-black"
+            (click)="tangSoLuong(item.ma)"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <!-- Thêm dòng input nhắn nhủ cho mỗi món -->
+      <div class="note-container">
+        <input
+          type="text"
+          class="note-input"
+          placeholder="Bạn muốn nhắn nhủ gì?"
+          [(ngModel)]="item.ghiChu"
+        />
+      </div>
+    </div>
+    <div class="total-price">
+      <p class="total-text"></p>
+    </div>
+  </div>
+  <div
+    *ngIf="selectedItemsMA.length > 0"
+    class="fixed-bottom-bar fixed bottom-0 left-0 w-full bg-blue-500 text-white text-center shadow-lg"
+  >
+    <span class="text-lg font-bold"
+      >Tổng tiền: {{ tinhTongTien() | number }} VND</span
+    >
+    <button
+      (click)="xacNhanDonOrder()"
+      class="!ml-4 bg-white !text-blue-500 rounded-lg font-bold"
+    >
+      Xác nhận
+    </button>
+  </div>
+
+  <ng-template #emptyCart>
+    <p>Không có món ăn nào được chọn!</p>
+  </ng-template>
 </div>
-  

@@ -75,6 +75,9 @@ export class XacnhangoimonComponent implements OnInit  {
 
   loaiDon="681c59dcfb5b076f5440df92"
   xacNhanDonOrder(){
+    if(this.id == '' || this.id == null){
+      return;
+    }
     console.log(this.selectedItemsMA);
     const don = this.donOrder.find((td: any) => td.trangThai === 0 && td.ban.id === this.id);
     const combo=this.selectedItemsMA.filter((td: any) => td.danhMuc === 'comboMonAn');
