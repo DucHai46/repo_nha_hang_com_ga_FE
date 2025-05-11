@@ -1,43 +1,132 @@
 <div class="popup-backdrop">
-    <div class="popup-box">
-        <div class="p-5">
-            <h2 class="text-2xl font-bold mb-5">
-              {{ isEditMode ? "Sửa Danh Mục" : "Thêm Danh Mục" }}
-            </h2>
-            <form>
-              <div class="form-group">
-                <label for="materialName">Tên danh mục món ăn:</label>
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        {{
+          isEditMode ? "Sửa Menu" : isDetailMode ? "Chi tiết Menu" : "Thêm Menu"
+        }}
+      </h2>
+      <form>
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Left Column -->
+          <div class="space-y-4">
+            <div class="form-group">
+              <label for="materialName">Tên menu:</label>
+              <input
+                type="text"
+                id="materialName"
+                [(ngModel)]="formData.label"
+                name="label"
+                placeholder="Nhập tên menu..."
+                class="w-full"
+                [disabled]="isDetailMode"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="description">Link menu:</label>
+              <textarea
+                id="description"
+                [(ngModel)]="formData.routeLink"
+                name="routeLink"
+                placeholder="Nhập link menu..."
+                class="w-full"
+                [disabled]="isDetailMode"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Icon menu:</label>
+              <textarea
+                id="description"
+                [(ngModel)]="formData.icon"
+                name="icon"
+                placeholder="Nhập icon menu..."
+                class="w-full"
+                [disabled]="isDetailMode"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Vị trí:</label>
+              <input
+                type="number"
+                id="description"
+                [(ngModel)]="formData.position"
+                name="position"
+                placeholder="Nhập vị trí menu..."
+                class="w-full"
+                [disabled]="isDetailMode"
+              />
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="space-y-4">
+            <div class="form-group">
+              <label for="description">Danh mục cha:</label>
+              <select
+                id="description"
+                [(ngModel)]="formData.parent.id"
+                name="parent"
+                class="w-full"
+                [disabled]="isDetailMode"
+              >
+                <option value="">Chọn danh mục cha</option>
+                <option *ngFor="let item of menuDynamic" [value]="item.id">
+                  {{ item.label }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Trạng thái:</label>
+              <label class="relative inline-flex items-center cursor-pointer">
                 <input
-                  type="text"
-                  id="materialName"
-                  [(ngModel)]="formData.tenDanhMuc"
-                  name="tenDanhMuc"
-                  placeholder="Nhập tên danh mục..."
+                  type="checkbox"
+                  [(ngModel)]="formData.isActive"
+                  name="isActive"
+                  class="sr-only peer"
+                  [disabled]="isDetailMode"
                 />
-              </div>
-          
-              <div class="form-group">
-                <label for="description">Mô Tả:</label>
-                <textarea
-                  id="description"
-                  [(ngModel)]="formData.moTa"
-                  name="moTa"
-                  placeholder="Nhập mô tả..."
-                ></textarea>
-              </div>
-          
-              <div class="flex justify-end gap-2">
-                <button type="button" class="btn cancel-btn" (click)="onCancel()">
-                  Hủy
-                </button>
-                <button type="button" class="btn save-btn" (click)="onSave()">Lưu</button>
-              </div>
-            </form>
-        </div>       
-    
-    
+                <div
+                  class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+                ></div>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Trạng thái mở:</label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="formData.isOpen"
+                  name="isOpen"
+                  class="sr-only peer"
+                  [disabled]="isDetailMode"
+                />
+                <div
+                  class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 mt-6">
+          <button type="button" class="btn cancel-btn" (click)="onCancel()">
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="btn save-btn"
+            (click)="onSave()"
+            *ngIf="!isDetailMode"
+          >
+            Lưu
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
-
-
-  

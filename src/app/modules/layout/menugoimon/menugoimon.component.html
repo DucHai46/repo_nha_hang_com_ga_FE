@@ -56,8 +56,8 @@
       class="p-4 bg-white rounded-lg shadow-lg flex flex-col justify-between"
     >
       <img
-        [src]="getImageUrl(item.hinhAnh)"
-        alt="{{ item.ten }}"
+        [src]="imageUrls[item.ma]"
+        alt="Image Preview"
         class="rounded-lg w-full h-35 object-cover"
       />
       <h3 class="mt-2 text-lg font-bold">{{ item.ten }}</h3>

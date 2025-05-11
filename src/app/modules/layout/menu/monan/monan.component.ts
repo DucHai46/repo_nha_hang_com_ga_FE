@@ -76,7 +76,7 @@ export class MonanComponent implements OnInit {
       {
         next: (res: any) => {
           this.monAnPaging = res.data.data;
-          console.log(this.monAnPaging);
+          this.loadAllImages();
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -294,17 +294,19 @@ export class MonanComponent implements OnInit {
   closeChiTiet(): void {
     this.isChiTietOpen = false;
   }
-  imageUrl: string | null = null;
-
-  download1(fileId: string): void {
-    this.fileService.downloadFile(fileId).subscribe(
-      (response: Blob) => {
-        // Tạo URL đối tượng từ blob
-        const url = window.URL.createObjectURL(response);
-        
-        // Lưu URL đối tượng để sử dụng trong HTML
-        this.imageUrl = url;
+  imageUrls: { [key: string]: string } = {};
+  loadAllImages(): void {
+    for (let item of this.monAnPaging) {
+      const parsed = this.parseJSON(item.hinhAnh);
+      if (parsed?.id && item.id) {
+        this.fileService.downloadFile(parsed.id).subscribe(
+          (blob: Blob) => {
+            const url = URL.createObjectURL(blob);
+            this.imageUrls[item.id] = url;
+          },
+          (error) => console.error('Lỗi tải ảnh cho', item.tenMonAn, error)
+        );
       }
-    );
+    }
   }
 }

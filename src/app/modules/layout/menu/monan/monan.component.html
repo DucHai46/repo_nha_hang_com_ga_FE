@@ -140,12 +140,12 @@
               <!-- <td class="px-6 py-4" style="max-width: 200px;">
                   <a (click)="download(parseJSON(item.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(item.hinhAnh)?.name }}</a>
               </td> -->
-              <td class="px-6 py-4" style="max-width: 200px;">
-                <a (click)="download1(parseJSON(item.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(item.hinhAnh)?.name }}</a>
-                <div *ngIf="imageUrl">
-                  <img [src]="imageUrl" alt="Image Preview" style="max-width: 100px; max-height: 100px;" />
-                </div>
-              </td>
+                <td class="px-6 py-4" style="max-width: 200px;">
+                  <div class="underline text-blue-600">{{ parseJSON(item.hinhAnh)?.name }}</div>
+                  <div *ngIf="imageUrls[item.id]">
+                    <img [src]="imageUrls[item.id]" alt="Image Preview" style="max-width: 100px; max-height: 100px;" />
+                  </div>
+                </td>
               <td class="px-6 py-4">
                 {{ item.loaiMonAn.name }}
               </td>

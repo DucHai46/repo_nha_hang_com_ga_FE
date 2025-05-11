@@ -68,6 +68,7 @@ export class MenuDynamicComponent implements OnInit {
   }
   isPopupOpen = false;
   isEditMode = false;
+  isDetailMode = false;
   formData: any = {}
 
   openAddPopup(): void {
@@ -78,8 +79,9 @@ export class MenuDynamicComponent implements OnInit {
   closePopup(): void {
     this.isPopupOpen = false;
     this.isEditMode = false;
+    this.isDetailMode = false;
   }
-  onSaveCongThuc(body: any): void {
+  onSaveMenuDynamic(body: any): void {
     console.log(body);
   
     if (!body) return;
@@ -89,7 +91,7 @@ export class MenuDynamicComponent implements OnInit {
       this.menuDynamicService.updateMenuDynamic(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenDanhMuc = '';
+            this.searchForm.label = '';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -175,7 +177,7 @@ export class MenuDynamicComponent implements OnInit {
    openDeletePopup(item: any): void {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         width: '400px',
-        data: { message: `Bạn có chắc chắn muốn xóa "${item.tenDanhMuc}" không?` },
+        data: { message: `Bạn có chắc chắn muốn xóa "${item.label}" không?` },
       });
   
       dialogRef.afterClosed().subscribe((result) => {
@@ -218,5 +220,32 @@ export class MenuDynamicComponent implements OnInit {
         }
       });
     }
+  toggleActive(item: any): void {
+    const newStatus = !item.isActive;
+    item.isActive = newStatus;
+    item.parent = item.parent.id;
+    this.menuDynamicService.updateMenuDynamic(item.id, item).subscribe({
+      next: (res: any) => {
+      if (res.data) {
+        this.search();
+      } else {}
+    },
+    error: () => this.notification.create(
+      'error',
+      'Thông báo!',
+      `Cập nhật thất bại`, {
+      nzClass: 'notification-error',
+      nzDuration: 2000
+    })
+  });
+  }
 
+  openChiTietPopup(item: any): void {
+    this.isPopupOpen = true;
+    this.isDetailMode = true; 
+    this.menuDynamicService.getMenuDynamicById(item.id).subscribe((response: any) => {
+    this.formData = response.data;  
+    console.log(this.formData);
+    });      
+  }
 }

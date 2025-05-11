@@ -1,7 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TuDoService } from '../menu/tudo/services/tudo.service';
+import { MenuDynamicService } from '../menu/menudynamic/services/menudynamic.service';
+import { MenuDynamic } from '../../../models/MenuDynamic';
 
 interface MenuItem {
+  id?: string;
   routeLink?: string;
   icon: string;
   label: string;
@@ -15,155 +19,75 @@ interface MenuItem {
   // imports :[RouterModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
-
 })
-export class SidenavComponent {
+
+export class SidenavComponent implements OnInit {
+
+  constructor(private menuService: MenuDynamicService) { }
+
+  menuItems: MenuDynamic[] = [];
+
+  ngOnInit(): void {
+    const params = {
+      isPaging: false,
+      isActive: true,
+    }
+    this.menuService.getMenuDynamic(params).subscribe({
+      next: (res: any) => {
+        if(res.result == 1){
+          this.menuItems = res.data.data;
+          this.convertToMenuItem(this.menuItems);
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
   isSideNavCollapsed = input.required<boolean>();
   changeIsSideNavCollapsed = output<boolean>();
+
+  convertToMenuItem(menuItems: MenuDynamic[]): void{
+    const sortedMenuItems = [...this.menuItems].sort((a, b) => Number(a.position) - Number(b.position));
+    
+    sortedMenuItems.forEach(item => {
+      if(item.parent.id == null && item.isActive == true){
+        this.items.push({
+          id: item.id,
+          routeLink: item.routeLink,
+          icon: item.icon,
+          label: item.label,
+          isOpen: item.isOpen,
+          children: []
+        });
+      }
+    });
+
+    this.items.sort((a, b) => {
+      const aItem = sortedMenuItems.find(item => item.id === a.id);
+      const bItem = sortedMenuItems.find(item => item.id === b.id);
+      return Number(aItem?.position) - Number(bItem?.position);
+    });
+
+    this.items.forEach(item => {
+      const childItems = sortedMenuItems
+        .filter(menuItem => menuItem.parent.id === item.id && menuItem.isActive === true)
+        .sort((a, b) => Number(a.position) - Number(b.position));
+
+      childItems.forEach(childItem => {
+        item.children?.push({
+          id: childItem.id,
+          routeLink: childItem.routeLink,
+          icon: childItem.icon,
+          label: childItem.label,
+          isOpen: childItem.isOpen,
+          children: []
+        });
+      });
+    });
+  }
   
   items: MenuItem[] = [
-    {
-      icon: 'fal fa-cogs',
-      label: 'Quản trị hệ thống',
-      isOpen: false,
-      children: [
-        {
-          routeLink: 'main/menudynamic',
-          icon: 'fal fa-box',
-          label: 'Quản lý menu'
-        },
-        {
-          routeLink: 'main/nhahang',
-          icon: 'fal fa-building',
-          label: 'Quản lý thông tin nhà hàng'
-        },
-      ]
-    },
-    {
-      icon: 'fal fa-box-open',
-      label: 'Quản lý nguyên liệu',
-      isOpen: false,
-      children: [
-        {
-          routeLink: 'main/danhmucnguyenlieu',
-          icon: 'fal fa-box',
-          label: 'Danh mục nguyên liệu'
-        },
-        {
-          routeLink: 'main/loainguyenlieu',
-          icon: 'fal fa-tags',
-          label: 'Loại nguyên liệu'
-        },
-        {
-          routeLink: 'main/nguyenlieu',
-          icon: 'fal fa-onion',
-          label: 'Nguyên liệu'
-        },
-        {
-          routeLink: 'main/donvitinh',
-          icon: 'fal fa-calculator',
-          label: 'Đơn vị tính'
-        }
-
-      ]
-    },
-    {
-      icon: 'fal fa-utensils',
-      label: 'Quản lý món ăn',
-      isOpen: false,
-      children: [
-        {
-          routeLink: 'main/danhmucmonan',
-          icon: 'fal fa-utensils',
-          label: 'Danh mục món ăn'
-        },
-        {
-          routeLink: 'main/loaimonan',
-          icon: 'fal fa-tags',
-          label: 'Loại món ăn'
-        },
-        {
-          routeLink: 'main/monan',
-          icon: 'fal fa-drumstick-bite',
-          label: 'Món ăn'
-        },
-      ]
-    },
-    {
-      icon: 'fas fa-clipboard-list',
-      label: 'Quản lý thực đơn',
-      isOpen: false,
-      children: [
-        {
-          routeLink: 'main/congthuc',
-          icon: 'fal fa-book-open',
-          label: 'Công thức'
-        },
-        {
-          routeLink: 'main/combo',
-          icon: 'fal fa-concierge-bell',
-          label: 'Combo'
-        },
-        {
-          routeLink: 'main/thucdon',
-          icon: 'fal fa-th-list',
-          label: 'Thực đơn'
-        },
-      ]
-    },
-    {
-      icon: 'fal fa-table',
-      label: 'Quản lý bàn ăn',
-      isOpen: false,
-      children: [
-        {
-          routeLink: 'main/loaibanan',
-          icon: 'fal fa-table',
-          label: 'Loại bàn ăn'
-        },
-        {
-          routeLink: 'main/banan',
-          icon: 'fal fa-table',
-          label: 'Bàn ăn'
-        },
-      ]
-    },
-    {
-      icon: 'fal fa-star',
-      label: 'Giảm giá & khuyến mại',
-      isOpen: false,
-      children: [
-        {
-          routeLink: 'main/khuyenmai',
-          icon: 'fal fa-gift',
-          label: 'Khuyến mại'
-        },
-        {
-          routeLink: 'main/giamgia',
-          icon: 'fal fa-gift',
-          label: 'Giảm giá'
-        },
-
-      ]
-    },
-    {
-      icon: 'fal fa-cabinet-filing',
-      label: 'Tủ đồ',
-      isOpen: false,
-      children: [
-        {
-          routeLink: 'main/loaitudo',
-          icon: 'fal fa-door-closed',
-          label: 'Loại tủ đồ'
-        },
-        {
-          routeLink: 'main/tudo',
-          icon: 'fal fa-door-closed',
-          label: 'Tủ đồ'
-        },
-
-      ]
-    },
   ];
 
   toggleCollapse(): void {

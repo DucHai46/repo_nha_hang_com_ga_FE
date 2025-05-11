@@ -91,8 +91,6 @@ import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.
 import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTietTD.component';
 import { DonOrderService } from './menugoimon/services/donorder.service';
 import { ChitietdonComponent } from './menugoimon/chitietdon/chitietdon.component';
-
-
 import { MenuDynamicComponent } from './menu/menudynamic/menudynamic.component';
 import { PopupMenuDynamicComponent } from './menu/menudynamic/popupMenuDynamic/popupMenuDynamic.component';
 import { MenuDynamicStore } from './menu/menudynamic/store/menu-dynamic.store';
@@ -147,6 +145,7 @@ import { PopupQRComponent } from './menu/banan/popupQR/popupQR.component';
     ThucdonComponent,
     PopupThucDonComponent,
     PopupChiTietTDComponent,
+    ChitietdonComponent,
     MenuDynamicComponent,
     PopupMenuDynamicComponent,
     NhaHangComponent,
