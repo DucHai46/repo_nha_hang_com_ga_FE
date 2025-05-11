@@ -6,6 +6,7 @@ import { MonAnService } from '../menu/monan/services/monan.service';
 import { LoaiMonAn } from '../../../models/LoaiMonAn';
 import { ThucDon} from '../../../models/ThucDon';
 import { MonAn } from '../../../models/MonAn';
+import { FileService } from '../../../core/services/file.service';
 
 
 @Component({
@@ -84,7 +85,8 @@ export class MenugoimonComponent implements OnInit {
     private thucDonService: ThucDonService,
     private loaiMonAnService: LoaimonanService,
     private monAnService: MonAnService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fileService: FileService
   ) {}
   ngOnInit() {
     const updatedSelectedItems = history.state?.updatedSelectedItems;
@@ -109,6 +111,7 @@ export class MenugoimonComponent implements OnInit {
         this.itemsRoot2 = await this.taoDanhSachMonAn(this.thucDon);
         this.combo = this.taoDanhSachCombo(this.thucDon);
         this.itemsMonAn = [...this.itemsRoot2, ...this.combo];
+        this.loadAllImages();
 
         if (updatedSelectedItems) {
 
@@ -330,4 +333,31 @@ export class MenugoimonComponent implements OnInit {
       return ''; // hoặc ảnh mặc định nếu parse lỗi
     }
   }
+imageUrls: { [key: string]: string } = {};
+
+  parseJSON(jsonString: string): any {
+    try {
+      return JSON.parse(jsonString);
+    } catch (error) {
+      return null;
+    }
+  }
+  loadAllImages(): void {
+    for (let category of this.loaiMonAn) {
+      const danhSachMonAn = this.getMonAnTheoDanhMuc(category.ma);
+      for (let item of danhSachMonAn) {
+        const parsed = this.parseJSON(item.hinhAnh);
+        if (parsed?.id && item.ma) {
+          this.fileService.downloadFile(parsed.id).subscribe(
+            (blob: Blob) => {
+              const url = URL.createObjectURL(blob);
+              this.imageUrls[item.ma] = url;
+            },
+            (error) => console.error('Lỗi tải ảnh:', item.tenMonAn, error)
+          );
+        }
+      }
+    }
+  }
+
 }
