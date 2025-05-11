@@ -45,6 +45,7 @@ export class PopupMenuDynamicComponent implements OnInit {
   }
 
   @Input() isEditMode: boolean = false;
+  @Input() isDetailMode: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
   

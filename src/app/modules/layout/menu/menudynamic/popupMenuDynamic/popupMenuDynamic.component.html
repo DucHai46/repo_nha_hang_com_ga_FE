@@ -2,7 +2,9 @@
   <div class="popup-box">
     <div class="p-5">
       <h2 class="text-2xl font-bold mb-5">
-        {{ isEditMode ? "Sửa Menu" : "Thêm Menu" }}
+        {{
+          isEditMode ? "Sửa Menu" : isDetailMode ? "Chi tiết Menu" : "Thêm Menu"
+        }}
       </h2>
       <form>
         <div class="grid grid-cols-2 gap-4">
@@ -17,6 +19,7 @@
                 name="label"
                 placeholder="Nhập tên menu..."
                 class="w-full"
+                [disabled]="isDetailMode"
               />
             </div>
 
@@ -28,6 +31,7 @@
                 name="routeLink"
                 placeholder="Nhập link menu..."
                 class="w-full"
+                [disabled]="isDetailMode"
               ></textarea>
             </div>
 
@@ -39,6 +43,7 @@
                 name="icon"
                 placeholder="Nhập icon menu..."
                 class="w-full"
+                [disabled]="isDetailMode"
               ></textarea>
             </div>
 
@@ -51,6 +56,7 @@
                 name="position"
                 placeholder="Nhập vị trí menu..."
                 class="w-full"
+                [disabled]="isDetailMode"
               />
             </div>
           </div>
@@ -64,6 +70,7 @@
                 [(ngModel)]="formData.parent.id"
                 name="parent"
                 class="w-full"
+                [disabled]="isDetailMode"
               >
                 <option value="">Chọn danh mục cha</option>
                 <option *ngFor="let item of menuDynamic" [value]="item.id">
@@ -80,6 +87,7 @@
                   [(ngModel)]="formData.isActive"
                   name="isActive"
                   class="sr-only peer"
+                  [disabled]="isDetailMode"
                 />
                 <div
                   class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
@@ -95,6 +103,7 @@
                   [(ngModel)]="formData.isOpen"
                   name="isOpen"
                   class="sr-only peer"
+                  [disabled]="isDetailMode"
                 />
                 <div
                   class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
@@ -108,7 +117,12 @@
           <button type="button" class="btn cancel-btn" (click)="onCancel()">
             Hủy
           </button>
-          <button type="button" class="btn save-btn" (click)="onSave()">
+          <button
+            type="button"
+            class="btn save-btn"
+            (click)="onSave()"
+            *ngIf="!isDetailMode"
+          >
             Lưu
           </button>
         </div>

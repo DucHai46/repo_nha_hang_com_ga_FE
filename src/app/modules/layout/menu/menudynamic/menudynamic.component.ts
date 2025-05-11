@@ -68,6 +68,7 @@ export class MenuDynamicComponent implements OnInit {
   }
   isPopupOpen = false;
   isEditMode = false;
+  isDetailMode = false;
   formData: any = {}
 
   openAddPopup(): void {
@@ -78,6 +79,7 @@ export class MenuDynamicComponent implements OnInit {
   closePopup(): void {
     this.isPopupOpen = false;
     this.isEditMode = false;
+    this.isDetailMode = false;
   }
   onSaveMenuDynamic(body: any): void {
     console.log(body);
@@ -236,5 +238,14 @@ export class MenuDynamicComponent implements OnInit {
       nzDuration: 2000
     })
   });
+  }
+
+  openChiTietPopup(item: any): void {
+    this.isPopupOpen = true;
+    this.isDetailMode = true; 
+    this.menuDynamicService.getMenuDynamicById(item.id).subscribe((response: any) => {
+    this.formData = response.data;  
+    console.log(this.formData);
+    });      
   }
 }
