@@ -175,7 +175,7 @@ export class MenuDynamicComponent implements OnInit {
    openDeletePopup(item: any): void {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         width: '400px',
-        data: { message: `Bạn có chắc chắn muốn xóa "${item.tenDanhMuc}" không?` },
+        data: { message: `Bạn có chắc chắn muốn xóa "${item.label}" không?` },
       });
   
       dialogRef.afterClosed().subscribe((result) => {
