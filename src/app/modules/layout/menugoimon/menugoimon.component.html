@@ -61,7 +61,23 @@
         class="rounded-lg w-full h-35 object-cover"
       />
       <h3 class="mt-2 text-lg font-bold">{{ item.ten }}</h3>
-      <p class="text-black-500 font-semibold">{{ item.gia | number }} VND</p>
+      <div *ngIf="item.giamGia > 0; else noDiscount">
+        <p class="text-red-600 text-xl font-bold">
+          {{ (item.gia * (1 - item.giamGia / 100)) | number:'1.0-0' }}₫
+        </p>
+        <div class="text-red-600 font-bold">
+          <span class="line-through text-gray-400 mr-1">{{ item.gia | number }}₫</span>
+          <span>-{{ item.giamGia }}%</span>
+        </div>
+      </div>
+
+      <!-- Nếu không giảm giá -->
+      <ng-template #noDiscount>
+        <p class="text-red-600 text-xl font-bold">
+          {{ item.gia | number:'1.0-0' }}₫
+        </p>
+      </ng-template>
+
       <!-- Nút tùy thuộc vào trạng thái -->
       <div class="mt-3">
         <!-- Nếu số lượng là 0, hiện nút "+" -->

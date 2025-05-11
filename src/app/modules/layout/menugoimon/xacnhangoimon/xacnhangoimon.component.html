@@ -10,10 +10,15 @@
   <div *ngIf="selectedItemsMA.length > 0; else emptyCart">
     <div class="selected-item" *ngFor="let item of selectedItemsMA">
       <div class="item-container">
-        <img [src]="item.hinhAnh" alt="{{ item.ten }}" class="item-image" />
+        <img [src]="imageUrls[item.ma]" alt="{{ item.ten }}" class="item-image" />
         <div class="item-details">
           <p class="item-name">{{ item.ten }}</p>
-          <p class="item-price">{{ item.gia | number }} VND</p>
+          <div *ngIf="item.giamGia > 0; else noDiscount">
+            <p class="item-price">{{ item.gia*(1-item.giamGia/100) | number }} VND</p>
+          </div>
+          <ng-template #noDiscount>
+            <p class="item-price">{{ item.gia | number }} VND</p>
+          </ng-template>
         </div>
 
         <div class="item-quantity">

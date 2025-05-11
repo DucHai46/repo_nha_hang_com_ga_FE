@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { DonOrderService } from '../services/donorder.service';
+import { FileService } from '../../../../core/services/file.service';
 
 @Component({
   selector: 'app-xacnhangoimon',
@@ -19,9 +20,10 @@ export class XacnhangoimonComponent implements OnInit  {
           }
         }
       )
+      this.loadImagesForSelectedItems();
   }
 
-  constructor(public router: Router,private donOrderService: DonOrderService) {
+  constructor(public router: Router,private donOrderService: DonOrderService, private fileService: FileService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['selectedItemsMA']) {
       this.selectedItemsMA = navigation.extras.state['selectedItemsMA'];
@@ -194,4 +196,29 @@ export class XacnhangoimonComponent implements OnInit  {
 
   }
 
+  imageUrls: { [key: string]: string } = {};
+  parseJSON(jsonString: string): any {
+    try {
+      return JSON.parse(jsonString);
+    } catch (error) {
+      return null;
+    }
+  }
+  loadImagesForSelectedItems(): void {
+  for (let item of this.selectedItemsMA) {
+    const parsed = this.parseJSON(item.hinhAnh);
+    if (parsed?.id && item.ma) {
+      this.fileService.downloadFile(parsed.id).subscribe(
+        (blob: Blob) => {
+          const url = URL.createObjectURL(blob);
+          this.imageUrls[item.ma] = url;
+        },
+        (err) => {
+          console.error('Không tải được ảnh:', item.ten, err);
+          this.imageUrls[item.ma] = 'assets/images/default-image.png'; // ảnh mặc định nếu cần
+        }
+      );
+    }
+  }
+}
 }

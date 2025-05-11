@@ -111,6 +111,7 @@ export class MenugoimonComponent implements OnInit {
         this.itemsRoot2 = await this.taoDanhSachMonAn(this.thucDon);
         this.combo = this.taoDanhSachCombo(this.thucDon);
         this.itemsMonAn = [...this.itemsRoot2, ...this.combo];
+        console.log(this.itemsMonAn);
         this.loadAllImages();
 
         if (updatedSelectedItems) {
@@ -175,6 +176,7 @@ export class MenugoimonComponent implements OnInit {
                 hinhAnh: loaiMon.hinhAnh,
                 gia: loaiMon.giaTien,
                 soLuong: 0,
+                giamGia:0,
                 ghiChu:"",
                 danhMuc:"comboMonAn"
               });
