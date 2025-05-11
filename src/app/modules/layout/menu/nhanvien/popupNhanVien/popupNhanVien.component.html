@@ -1,0 +1,101 @@
+<div class="popup-backdrop">
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        {{ isEditMode ? "Sửa Nhân Viên" : "Thêm Nhân Viên" }}
+      </h2>
+      <form>
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Cột 1 -->
+          <div class="space-y-4">
+            <div class="form-group">
+              <label for="materialName">Tên Nhân Viên:</label>
+              <input
+                type="text"
+                id="materialName"
+                [(ngModel)]="formData.tenNhanVien"
+                name="tenNhanVien"
+                placeholder="Nhập tên nhân viên..."
+                class="w-full"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Số Điện Thoại:</label>
+              <input
+                type="text"
+                id="phone"
+                [(ngModel)]="formData.soDienThoai"
+                name="soDienThoai"
+                placeholder="Nhập số điện thoại..."
+                class="w-full"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                [(ngModel)]="formData.email"
+                name="email"
+                placeholder="Nhập email..."
+                class="w-full"
+              />
+            </div>
+          </div>
+
+          <!-- Cột 2 -->
+          <div class="space-y-4">
+            <div class="form-group">
+              <label for="address">Địa Chỉ:</label>
+              <input
+                type="text"
+                id="address"
+                [(ngModel)]="formData.diaChi"
+                name="diaChi"
+                placeholder="Nhập địa chỉ..."
+                class="w-full"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="birthday">Ngày Sinh:</label>
+              <input
+                type="date"
+                id="birthday"
+                [(ngModel)]="formData.ngaySinh"
+                name="ngaySinh"
+                class="w-full"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="position">Chức Vụ:</label>
+              <select
+                id="position"
+                [(ngModel)]="formData.chucVu"
+                name="chucVu"
+                placeholder="Nhập chức vụ..."
+                class="w-full border border-gray-300 rounded-md p-2"
+              >
+                <option *ngFor="let item of chucVuList" [value]="item.id">
+                  {{ item.tenChucVu }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 mt-6">
+          <button type="button" class="btn cancel-btn" (click)="onCancel()">
+            Hủy
+          </button>
+          <button type="button" class="btn save-btn" (click)="onSave()">
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

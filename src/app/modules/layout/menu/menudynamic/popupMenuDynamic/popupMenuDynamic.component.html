@@ -69,10 +69,9 @@
                 id="description"
                 [(ngModel)]="formData.parent.id"
                 name="parent"
-                class="w-full"
+                class="w-full border border-gray-300 rounded-md p-2"
                 [disabled]="isDetailMode"
               >
-                <option value="">Chọn danh mục cha</option>
                 <option *ngFor="let item of menuDynamic" [value]="item.id">
                   {{ item.label }}
                 </option>

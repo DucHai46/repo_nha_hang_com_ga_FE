@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { QRCodeModule } from 'angularx-qrcode';
-import {ThongtinchungComponent} from "./menu/admin/thongtinchung/thongtinchung.component";
-import {MenuRoutes} from "./menu/menu.routes";
-import {MenuComponent} from "./menu/menu.component";
+import { ThongtinchungComponent } from "./menu/admin/thongtinchung/thongtinchung.component";
+import { MenuRoutes } from "./menu/menu.routes";
+import { MenuComponent } from "./menu/menu.component";
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MonanComponent } from './menu/monan/monan.component';
 import { MainComponent } from './main/main.component';
@@ -51,7 +51,7 @@ import { NguyenlieuComponent } from './menu/nguyenlieu/nguyenlieu.component';
 import { NguyenlieuService } from './menu/nguyenlieu/services/nguyenlieu.service';
 import { NguyenLieuStore } from './menu/nguyenlieu/store/nguyen-lieu.store';
 import { LoaimonanComponent } from './menu/loaimonan/loaimonan.component';
-import { LoaimonanService} from './menu/loaimonan/services/loaimonan.service';
+import { LoaimonanService } from './menu/loaimonan/services/loaimonan.service';
 import { LoaiMonAnStore } from './menu/loaimonan/store/loai-mon-an.store';
 import { CongthucComponent } from './menu/congthuc/congthuc.component';
 import { CongthucService } from './menu/congthuc/services/congthuc.service';
@@ -86,7 +86,7 @@ import { PopupChiTietComponent } from './menu/congthuc/popupChiTiet/popupChiTiet
 import { PopupChiTietCBComponent } from './menu/combo/popupChiTiet/popupChiTietCB.component';
 import { ThucdonComponent } from './menu/thucdon/thucdon.component';
 import { ThucDonStore } from './menu/thucdon/store/thuc-don.store';
-import { ThucDonService } from './menu/thucdon/services/thucdon.service'; 
+import { ThucDonService } from './menu/thucdon/services/thucdon.service';
 import { PopupThucDonComponent } from './menu/thucdon/popupThucDon/popupThucDon.component';
 import { PopupChiTietTDComponent } from './menu/thucdon/popupChiTiet/popupChiTietTD.component';
 import { DonOrderService } from './menugoimon/services/donorder.service';
@@ -100,6 +100,15 @@ import { PopupNhaHangComponent } from './menu/nhahang/popupNhaHang/popupNhaHang.
 import { NhaHangStore } from './menu/nhahang/store/nha-hangstore';
 import { NhaHangService } from './menu/nhahang/services/nhahang.service';
 import { PopupQRComponent } from './menu/banan/popupQR/popupQR.component';
+import { ChucVuComponent } from './menu/chucvu/chucvu.component';
+import { PopupChucVuComponent } from './menu/chucvu/popupChucVu/popupChucVu.component';
+import { ChucVuStore } from './menu/chucvu/store/chuc-vu.store';
+import { ChucVuService } from './menu/chucvu/services/chucvu.service';
+import { NhanVienComponent } from './menu/nhanvien/nhanvien.component';
+import { PopupNhanVienComponent } from './menu/nhanvien/popupNhanVien/popupNhanVien.component';
+import { NhanVienService } from './menu/nhanvien/services/nhanvien.service';
+import { NhanVienStore } from './menu/nhanvien/store/nhan-vien.store';
+
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -151,7 +160,11 @@ import { PopupQRComponent } from './menu/banan/popupQR/popupQR.component';
     NhaHangComponent,
     PopupNhaHangComponent,
     ChitietdonComponent,
-    PopupQRComponent
+    PopupQRComponent,
+    ChucVuComponent,
+    PopupChucVuComponent,
+    NhanVienComponent,
+    PopupNhanVienComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -202,7 +215,11 @@ import { PopupQRComponent } from './menu/banan/popupQR/popupQR.component';
     MenuDynamicStore,
     MenuDynamicService,
     NhaHangStore,
-    NhaHangService
+    NhaHangService,
+    ChucVuStore,
+    ChucVuService,
+    NhanVienStore,
+    NhanVienService
   ]
 })
-export class LayoutModule {}
+export class LayoutModule { }

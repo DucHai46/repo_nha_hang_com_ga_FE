@@ -24,10 +24,14 @@ import { ThucdonComponent } from '../modules/layout/menu/thucdon/thucdon.compone
 import { MenuDynamicComponent } from '../modules/layout/menu/menudynamic/menudynamic.component';
 import { NhaHangComponent } from '../modules/layout/menu/nhahang/nhahang.component';
 import { ChitietdonComponent } from '../modules/layout/menugoimon/chitietdon/chitietdon.component';
+import { ChucVuComponent } from '../modules/layout/menu/chucvu/chucvu.component';
+import { NhanVienComponent } from '../modules/layout/menu/nhanvien/nhanvien.component';
 export const remoteRoutes: Route[] = [
-  { path: '', component: RemoteEntryComponent,
+  {
+    path: '', component: RemoteEntryComponent,
     children: [
-      { path: 'main', 
+      {
+        path: 'main',
         component: MainComponent,
         canActivate: [AuthGuard],
         children: [
@@ -42,14 +46,16 @@ export const remoteRoutes: Route[] = [
           { path: 'khuyenmai', component: KhuyenmaiComponent },
           { path: 'donvitinh', component: DonvitinhComponent },
           { path: 'loaitudo', component: LoaitudoComponent },
-          { path: 'tudo', component: TudoComponent  },
+          { path: 'tudo', component: TudoComponent },
           { path: 'nguyenlieu', component: NguyenlieuComponent },
           { path: 'loaimonan', component: LoaimonanComponent },
           { path: 'congthuc', component: CongthucComponent },
           { path: 'giamgia', component: GiamgiaComponent },
           { path: 'monan', component: MonanComponent },
           { path: 'combo', component: ComboComponent },
-          { path: 'thucdon', component:ThucdonComponent  },
+          { path: 'thucdon', component: ThucdonComponent },
+          { path: 'chucvu', component: ChucVuComponent },
+          { path: 'nhanvien', component: NhanVienComponent },
 
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },
@@ -69,7 +75,7 @@ export const remoteRoutes: Route[] = [
     path: 'xacnhangoimon',
     component: XacnhangoimonComponent,
   },
-    {
+  {
     path: 'chitietdon',
     component: ChitietdonComponent,
   },
