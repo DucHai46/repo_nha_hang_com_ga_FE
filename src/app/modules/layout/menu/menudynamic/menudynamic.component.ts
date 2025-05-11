@@ -79,7 +79,7 @@ export class MenuDynamicComponent implements OnInit {
     this.isPopupOpen = false;
     this.isEditMode = false;
   }
-  onSaveCongThuc(body: any): void {
+  onSaveMenuDynamic(body: any): void {
     console.log(body);
   
     if (!body) return;
@@ -89,7 +89,7 @@ export class MenuDynamicComponent implements OnInit {
       this.menuDynamicService.updateMenuDynamic(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenDanhMuc = '';
+            this.searchForm.label = '';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -218,5 +218,23 @@ export class MenuDynamicComponent implements OnInit {
         }
       });
     }
-
+  toggleActive(item: any): void {
+    const newStatus = !item.isActive;
+    item.isActive = newStatus;
+    item.parent = item.parent.id;
+    this.menuDynamicService.updateMenuDynamic(item.id, item).subscribe({
+      next: (res: any) => {
+      if (res.data) {
+        this.search();
+      } else {}
+    },
+    error: () => this.notification.create(
+      'error',
+      'Thông báo!',
+      `Cập nhật thất bại`, {
+      nzClass: 'notification-error',
+      nzDuration: 2000
+    })
+  });
+  }
 }
