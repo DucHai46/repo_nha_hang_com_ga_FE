@@ -108,6 +108,9 @@ import { NhanVienComponent } from './menu/nhanvien/nhanvien.component';
 import { PopupNhanVienComponent } from './menu/nhanvien/popupNhanVien/popupNhanVien.component';
 import { NhanVienService } from './menu/nhanvien/services/nhanvien.service';
 import { NhanVienStore } from './menu/nhanvien/store/nhan-vien.store';
+import { BanggiaComponent } from './menu/banggia/banggia.component';
+import { BangGiaService } from './menu/banggia/services/banggia.service';
+import { BangGiaStore } from './menu/banggia/store/bang-gia.store';
 
 
 @NgModule({
@@ -164,7 +167,8 @@ import { NhanVienStore } from './menu/nhanvien/store/nhan-vien.store';
     ChucVuComponent,
     PopupChucVuComponent,
     NhanVienComponent,
-    PopupNhanVienComponent
+    PopupNhanVienComponent,
+    BanggiaComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -219,7 +223,9 @@ import { NhanVienStore } from './menu/nhanvien/store/nhan-vien.store';
     ChucVuStore,
     ChucVuService,
     NhanVienStore,
-    NhanVienService
+    NhanVienService,
+    BangGiaStore,
+    BangGiaService
   ]
 })
 export class LayoutModule { }

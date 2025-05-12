@@ -26,6 +26,7 @@ import { NhaHangComponent } from '../modules/layout/menu/nhahang/nhahang.compone
 import { ChitietdonComponent } from '../modules/layout/menugoimon/chitietdon/chitietdon.component';
 import { ChucVuComponent } from '../modules/layout/menu/chucvu/chucvu.component';
 import { NhanVienComponent } from '../modules/layout/menu/nhanvien/nhanvien.component';
+import { BanggiaComponent } from '../modules/layout/menu/banggia/banggia.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -56,6 +57,7 @@ export const remoteRoutes: Route[] = [
           { path: 'thucdon', component: ThucdonComponent },
           { path: 'chucvu', component: ChucVuComponent },
           { path: 'nhanvien', component: NhanVienComponent },
+          { path: 'banggia', component: BanggiaComponent },
 
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },

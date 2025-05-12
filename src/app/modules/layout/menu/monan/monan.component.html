@@ -137,15 +137,15 @@
               <td class="px-6 py-4">
                 {{ item.tenMonAn }}
               </td>
-              <!-- <td class="px-6 py-4" style="max-width: 200px;">
+              <td class="px-6 py-4" style="max-width: 200px;">
                   <a (click)="download(parseJSON(item.hinhAnh)?.id)" class="underline text-blue-600">{{ parseJSON(item.hinhAnh)?.name }}</a>
-              </td> -->
-                <td class="px-6 py-4" style="max-width: 200px;">
+              </td>
+                <!-- <td class="px-6 py-4" style="max-width: 200px;">
                   <div class="underline text-blue-600">{{ parseJSON(item.hinhAnh)?.name }}</div>
                   <div *ngIf="imageUrls[item.id]">
                     <img [src]="imageUrls[item.id]" alt="Image Preview" style="max-width: 100px; max-height: 100px;" />
                   </div>
-                </td>
+                </td> -->
               <td class="px-6 py-4">
                 {{ item.loaiMonAn.name }}
               </td>
@@ -252,7 +252,7 @@
             <button 
               (click)="changePage(paging.page - 1)"
               [disabled]="paging.page === 1"
-              class="px-3 py-1 border rounded disabled:opacity-50"
+              class="!text-black px-3 py-1 border rounded disabled:opacity-50"
             >
               Previous
             </button>
@@ -264,7 +264,7 @@
             <button 
               (click)="changePage(paging.page + 1)"
               [disabled]="paging.page === totalPages"
-              class="px-3 py-1 border rounded disabled:opacity-50"
+              class="!text-black px-3 py-1 border rounded disabled:opacity-50"
             >
               Next
             </button>

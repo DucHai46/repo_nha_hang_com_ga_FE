@@ -1,4 +1,5 @@
 export interface MonAn {
+  id: string;
   tenMonAn: string;
   loaiMonAn: {
     id: string;

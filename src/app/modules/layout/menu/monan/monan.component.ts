@@ -11,7 +11,9 @@ import { giamgiaService } from '../giamgia/services/giamgia.service';
 import { CongThuc } from '../../../../models/CongThuc';
 import { CongthucService } from '../congthuc/services/congthuc.service'; 
 import { FileService } from '../../../../core/services/file.service';
+import { BangGia } from '../../../../models/BangGia';
 
+import { BangGiaService } from '../banggia/services/banggia.service';
 
 
 @Component({
@@ -26,12 +28,14 @@ export class MonanComponent implements OnInit {
     private fileService: FileService,
     private loaiMonAnService: LoaimonanService,
     private giamgiaService: giamgiaService,
+    private bangGiaService: BangGiaService,
     private congthucService: CongthucService) {}
   monAnPaging: any[] = [];
   itemsSearch: any[] = [];
   loaiMonAn: LoaiMonAn[] = [];
   giamGia: GiamGia[] = [];
   congThuc: CongThuc[] = [];
+
   paging: any = {
     page: 1,
     size: 10,
@@ -119,6 +123,7 @@ export class MonanComponent implements OnInit {
   }
   onSaveCongThuc(body: any): void {
     console.log(body);
+
   
     if (!body) return;
   
@@ -127,6 +132,14 @@ export class MonanComponent implements OnInit {
       this.monAnService.updateMonAn(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
+            const bangGia={
+              monAn:res.data.id,
+              giaTri:res.data.giaTien,
+              tenGia:'Giá của món ' + res.data.tenMonAn,
+            };
+            console.log(bangGia);
+            this.bangGiaService.addBangGia(bangGia).subscribe();
+            console.log(bangGia);
             this.searchForm.tenMonAn = '';
             this.searchForm.tenLoaiMonAn='';
             this.searchForm.giaTien='';
@@ -164,10 +177,18 @@ export class MonanComponent implements OnInit {
         )
       });
     } else {
+      console.log(body);
       // Thêm mới bàn
       this.monAnService.addMonAn(body).subscribe({
         next: (res: any) => {
           if (res.data) {
+            const bangGia={
+              monAn:res.data.id,
+              giaTri:res.data.giaTien,
+              tenGia:'Giá của món ' + res.data.tenMonAn,
+            };
+            console.log(bangGia);
+            this.bangGiaService.addBangGia(bangGia).subscribe();
             this.searchForm.tenMonAn = '';
             this.searchForm.tenLoaiMonAn='';
             this.searchForm.giaTien='';

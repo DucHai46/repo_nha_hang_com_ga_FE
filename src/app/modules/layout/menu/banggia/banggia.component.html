@@ -1,7 +1,7 @@
 <div class="mt-10 mr-10">
     <!-- nhãn -->
     <div class="flex flex-row gap-4 mb-5">
-      <p class="text-2xl font-bold">Loại món ăn</p>
+      <p class="text-2xl font-bold">Bảng giá</p>
     </div>
     <!-- form search -->
     <div
@@ -10,27 +10,17 @@
       <!-- form -->
       <div class="flex flex-row gap-4">
         <div class="flex flex-col gap-2">
-          <label for="searchTenLoai">Tên loại</label>
-          <input
-            class="border border-gray-300 rounded-md p-2"
-            id="searchTenLoai"
-            [(ngModel)]="searchForm.tenLoai"
-            type="text"
-            placeholder="Tìm kiếm"
-          />
-        </div>
-        <div class="flex flex-col gap-2">
-          <label for="searchDanhMucMonAn">Danh mục món ăn</label>
+          <label for="searchDanhMucMonAn">Món ăn</label>
           <select
             class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
             id="searchDanhMucMonAn"
-            [(ngModel)]="searchForm.danhMucMonAnId"
+            [(ngModel)]="searchForm.idMonAn"
           >
             <option
-              *ngFor="let danhMuc of danhMucMonAn"
+              *ngFor="let danhMuc of monAn"
               [value]="danhMuc.id"
             >
-              {{ danhMuc.tenDanhMuc }}
+              {{ danhMuc.tenMonAn }}
             </option>
           </select>
         </div>
@@ -87,12 +77,6 @@
     <!-- table -->
     <div class="flex flex-col gap-4 p-5 bg-white rounded-lg w-full mt-5">
       <div class="flex justify-end">
-        <button
-          (click)="openAddPopup()"
-          class="bg-blue-500 text-white px-4 py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-blue-600 active:scale-95 focus:outline-none shadow-md hover:shadow-lg"
-        >
-          Thêm
-        </button>
       </div>
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right">
@@ -100,16 +84,16 @@
             <tr>
               <th scope="col" class="px-6 py-3">STT</th>
               <!-- <th scope="col" class="px-6 py-3">Mã loại</th> -->
-              <th scope="col" class="px-6 py-3">Tên loại</th>
-              <th scope="col" class="px-6 py-3">Mô tả</th>
-              <th scope="col" class="px-6 py-3">Danh mục</th>
-              <th scope="col" class="px-6 py-3">Thao tác</th>
+              <th scope="col" class="px-6 py-3">Tên giá</th>
+              <th scope="col" class="px-6 py-3">Giá trị</th>
+              <th scope="col" class="px-6 py-3">Món ăn</th>
+              <th scope="col" class="px-6 py-3">Ngày áp dụng</th>
             </tr>
           </thead>
           <tbody>
             <tr
               class="border-b dark:border-gray-700 border-gray-200"
-              *ngFor="let item of loaiMonAnPaging; let i = index"
+              *ngFor="let item of bangGiaPaging; let i = index"
             >
               <td
                 scope="row"
@@ -121,70 +105,16 @@
                 {{ item.ma }}
               </td> -->
               <td class="px-6 py-4">
-                {{ item.tenLoai }}
+                {{ item.tenGia }}
               </td>
               <td class="px-6 py-4">
-                {{ item.moTa }}
+                {{ item.giaTri }}
               </td>
               <td class="px-6 py-4">
-                {{ item.danhMucMonAn.name }}
+                {{ item.monAn.name }}
               </td>
-              <td
-                class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
-              >
-                <button
-                  (click)="openEditPopup(item)"
-                  class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
-                >
-                  <p
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-800"
-                  >
-                    <svg
-                      class="w-6 h-6 text-blue-600 dark:text-blue-500"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                      />
-                    </svg>
-                  </p>
-                </button>
-  
-                <button
-                  (click)="openDeletePopup(item)"
-                  class="transition-transform transform hover:scale-105 hover:bg-red-100 focus:outline-none rounded-lg px-2 py-1"
-                >
-                  <p
-                    class="font-medium text-red-600 dark:text-red-500 hover:text-red-800"
-                  >
-                    <svg
-                      class="w-6 h-6 text-red-600 dark:text-red-500"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                      />
-                    </svg>
-                  </p>
-                </button>
+                <td class="px-6 py-4">
+                {{ item.createdDate| date:'dd/MM/yyyy' }}
               </td>
             </tr>
           </tbody>
@@ -235,11 +165,3 @@
       </div>
     </div>
   </div>
-  <app-popupLoaiMA
-  *ngIf="isPopupOpen"
-  [isEditMode]="isEditMode"
-  [formData]="formData"
-  (close)="closePopup()"
-  (save)="onSaveCongThuc($event)"
-></app-popupLoaiMA>
-  
