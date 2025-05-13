@@ -48,6 +48,7 @@ export class MonanComponent implements OnInit {
         {
           next: (res: any) => {
             this.loaiMonAn = res.data.data;
+            // console.log(this.loaiMonAn);
           }
         }
       )
@@ -69,7 +70,7 @@ export class MonanComponent implements OnInit {
   }
   searchForm: any={
     tenMonAn: '',
-    tenLoaiMonAn: '',
+    idLoaiMonAn: '',
     giaTien: '',
   }
   search() {
@@ -80,6 +81,7 @@ export class MonanComponent implements OnInit {
       {
         next: (res: any) => {
           this.monAnPaging = res.data.data;
+          console.log(this.monAnPaging);
           this.loadAllImages();
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
@@ -105,7 +107,7 @@ export class MonanComponent implements OnInit {
   }
   reset(){
     this.searchForm.tenMonAn = '';
-    this.searchForm.tenLoaiMonAn='';
+    this.searchForm.idLoaiMonAn='';
     this.searchForm.giaTien='';
     this.search();
   }
@@ -113,6 +115,7 @@ export class MonanComponent implements OnInit {
   isEditMode = false;
   formData: any = {}
   openAddPopup(): void {
+          console.log(this.loaiMonAn);
     this.isPopupOpen = true;
     this.isEditMode = false;
     this.formData = {};
@@ -141,7 +144,7 @@ export class MonanComponent implements OnInit {
             this.bangGiaService.addBangGia(bangGia).subscribe();
             console.log(bangGia);
             this.searchForm.tenMonAn = '';
-            this.searchForm.tenLoaiMonAn='';
+            this.searchForm.idLoaiMonAn='';
             this.searchForm.giaTien='';
             this.search();
             this.closePopup();
@@ -190,7 +193,7 @@ export class MonanComponent implements OnInit {
             console.log(bangGia);
             this.bangGiaService.addBangGia(bangGia).subscribe();
             this.searchForm.tenMonAn = '';
-            this.searchForm.tenLoaiMonAn='';
+            this.searchForm.idLoaiMonAn='';
             this.searchForm.giaTien='';
             this.search();
             this.closePopup();
