@@ -1,3 +1,4 @@
+import { LoaiDonOrder } from './../../models/LoaiDonOrder';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -111,6 +112,18 @@ import { NhanVienStore } from './menu/nhanvien/store/nhan-vien.store';
 import { BanggiaComponent } from './menu/banggia/banggia.component';
 import { BangGiaService } from './menu/banggia/services/banggia.service';
 import { BangGiaStore } from './menu/banggia/store/bang-gia.store';
+import { LoaidonorderComponent } from './menu/loaidonorder/loaidonorder.component';
+import { PopupLoaidonComponent } from './menu/loaidonorder/popup-loaidon/popup-loaidon.component';
+import { LoaiDonOrderStore } from './menu/loaidonorder/store/loai-don-order.store';
+import { LoaidonorderService } from './menu/loaidonorder/services/loaidonorder.service';
+import { DonorderComponent } from './menu/donorder/donorder.component';
+import { KhachhangComponent } from './menu/khachhang/khachhang.component';
+import { PopupKhachhangComponent } from './menu/khachhang/popupKhachhang/popupKhachhang.component';
+import { KhachHangService } from './menu/khachhang/services/khachhang.service';
+import { KhachHangStore } from './menu/khachhang/store/khach-hang.store';
+import { DonOrderStore } from './menu/donorder/store/don-order.store';
+import { PopupChiTietDonOrderComponent } from './menu/donorder/popupChiTietDonOrder/popupChiTietDonOrder.component';
+
 
 
 @NgModule({
@@ -168,7 +181,13 @@ import { BangGiaStore } from './menu/banggia/store/bang-gia.store';
     PopupChucVuComponent,
     NhanVienComponent,
     PopupNhanVienComponent,
-    BanggiaComponent
+    BanggiaComponent,
+    LoaidonorderComponent,
+    PopupLoaidonComponent,
+    DonorderComponent,
+    KhachhangComponent,
+    PopupKhachhangComponent,
+    PopupChiTietDonOrderComponent,
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -225,7 +244,13 @@ import { BangGiaStore } from './menu/banggia/store/bang-gia.store';
     NhanVienStore,
     NhanVienService,
     BangGiaStore,
-    BangGiaService
+    BangGiaService,
+    LoaiDonOrderStore,
+    LoaidonorderService,
+    KhachHangService,
+    KhachHangStore,
+    DonOrderStore,
+    DonOrderService
   ]
 })
 export class LayoutModule { }

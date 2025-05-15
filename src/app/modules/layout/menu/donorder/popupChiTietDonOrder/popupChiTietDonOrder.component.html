@@ -1,0 +1,272 @@
+<div class="popup-backdrop">
+  <div
+    class="popup-box bg-white rounded-lg p-6 shadow-lg max-w-5xl mx-auto relative"
+  >
+    <button
+      (click)="closePopup()"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl"
+    >
+      &times;
+    </button>
+
+    <h2 class="text-2xl font-bold mb-6 text-center text-2xl">
+      {{ formData.tenDon }}
+    </h2>
+
+    <div *ngFor="let ct of formData.chiTietDonOrder; let ctIndex = index">
+      <div class="space-y-6">
+        <!-- Tên đơn order -->
+        <div class="mt-4">
+          <div class="flex justify-between">
+            <h3 class="font-semibold text-gray-700 mb-1 text-xl">
+              Order lần {{ ctIndex + 1 }}
+            </h3>
+            <button
+              class="border rounded-full bg-red-200 text-white p-1"
+              (click)="toggleStatus(ct, ctIndex)"
+              *ngIf="ct.trangThai == 0"
+            >
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 11.917 9.724 16.5 19 7.5"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div *ngIf="ct.monAns.length != 0">
+            <h3 class="font-semibold text-gray-700 mb-3">Danh sách món ăn:</h3>
+
+            <div class="overflow-x-auto">
+              <table
+                class="min-w-full table-auto border-collapse border border-gray-300"
+              >
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      STT
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Tên món ăn
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Số lượng
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Giá tiền
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Mô tả
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Trạng thái
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container>
+                    <tr
+                      *ngFor="let ma of ct.monAns; let maIndex = index"
+                      class="hover:bg-gray-50"
+                    >
+                      <td class="border border-gray-300 px-4 py-2">
+                        {{ maIndex + 1 }}
+                      </td>
+
+                      <td class="border border-gray-300 px-4 py-2">
+                        {{ ma.monAn.name }}
+                      </td>
+                      <td class="border border-gray-300 px-4 py-2">
+                        {{ ma.soLuong }}
+                      </td>
+
+                      <td class="border border-gray-300 px-4 py-2">
+                        {{ ma.giaTien | number : "1.0-0" }}
+                      </td>
+
+                      <td class="border border-gray-300 px-4 py-2">
+                        {{ ma.moTa }}
+                      </td>
+
+                      <td class="border border-gray-300 px-4 py-2">
+                        <div class="flex items-center">
+                          <span
+                            [ngClass]="{
+                              'text-green-600': ma.monAn_trangThai === 1,
+                              'text-yellow-600': ma.monAn_trangThai === 0
+                            }"
+                            class="mr-2"
+                            >{{
+                              ma.monAn_trangThai === 1
+                                ? "Đã hoàn thành"
+                                : "Đang chế biến"
+                            }}</span
+                          >
+
+                          <!-- Switch Button -->
+                          <label
+                            class="inline-flex items-center cursor-pointer relative"
+                          >
+                            <input
+                              type="checkbox"
+                              [checked]="ma.monAn_trangThai === 1"
+                              (click)="toggleFoodStatus(ma, ctIndex, maIndex)"
+                              class="sr-only peer"
+                              [disabled]="ct.trangThai == 0"
+                            />
+                            <div
+                              class="w-11 h-6 bg-gray-200 rounded-full transition-colors duration-200 peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:bg-blue-600"
+                            ></div>
+                            <div
+                              class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-200 peer-checked:translate-x-5"
+                            ></div>
+                          </label>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div *ngIf="ct.comBos.length != 0">
+            <h3 class="font-semibold text-gray-700 mb-3">Danh sách combo:</h3>
+
+            <div class="overflow-x-auto">
+              <table
+                class="min-w-full table-auto border-collapse border border-gray-300"
+              >
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      STT
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Tên combo
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Số lượng
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Giá tiền
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Mô tả
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">
+                      Trạng thái
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container>
+                    <tr
+                      *ngFor="let ma of ct.comBos; let maIndex = index"
+                      class="hover:bg-gray-50"
+                    >
+                      <td class="border border-gray-300 px-4 py-2">
+                        {{ maIndex + 1 }}
+                      </td>
+
+                      <td
+                        class="border border-gray-300 px-4 py-2"
+                        (mousemove)="onMouseMove($event, ma)"
+                        (mouseenter)="showPopup = true"
+                        (mouseleave)="onMouseLeave()"
+                      >
+                        <a>{{ ma.comBo.name }}</a>
+                      </td>
+                      <td class="border border-gray-300 px-4 py-2">
+                        {{ ma.soLuong }}
+                      </td>
+
+                      <td class="border border-gray-300 px-4 py-2">
+                        {{ ma.giaTien | number : "1.0-0" }}
+                      </td>
+
+                      <td class="border border-gray-300 px-4 py-2">
+                        {{ ma.moTa }}
+                      </td>
+
+                      <td class="border border-gray-300 px-4 py-2">
+                        <div class="flex items-center">
+                          <span
+                            [ngClass]="{
+                              'text-green-600': ma.comBo_trangThai === 1,
+                              'text-yellow-600': ma.comBo_trangThai === 0
+                            }"
+                            class="mr-2"
+                            >{{
+                              ma.comBo_trangThai === 1
+                                ? "Đã hoàn thành"
+                                : "Đang chế biến"
+                            }}</span
+                          >
+
+                          <!-- Switch Button -->
+                          <label
+                            class="inline-flex items-center cursor-pointer relative"
+                          >
+                            <input
+                              type="checkbox"
+                              [checked]="ma.comBo_trangThai === 1"
+                              (click)="toggleComboStatus(ma, ctIndex, maIndex)"
+                              class="sr-only peer"
+                              [disabled]="ct.trangThai == 0"
+                            />
+                            <div
+                              class="w-11 h-6 bg-gray-200 rounded-full transition-colors duration-200 peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:bg-blue-600"
+                            ></div>
+                            <div
+                              class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-200 peer-checked:translate-x-5"
+                            ></div>
+                          </label>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex items-end justify-end">
+      <button
+        (click)="closePopup()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition ml-auto"
+      >
+        Đóng
+      </button>
+    </div>
+  </div>
+</div>
+<div
+  class="popup"
+  *ngIf="hoveredItem"
+  [ngStyle]="{ 'top.px': popupY, 'left.px': popupX }"
+>
+  <div class="popup-content">
+    <div class="text">
+      <div *ngFor="let item of hoveredItem.loaiMonAns">
+        <div *ngFor="let item1 of item.monAns">
+          <p><strong>Tên món ăn:</strong> {{ item1?.tenMonAn }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

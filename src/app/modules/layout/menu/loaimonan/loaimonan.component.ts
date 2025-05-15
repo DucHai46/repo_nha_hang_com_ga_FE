@@ -28,7 +28,7 @@ export class LoaimonanComponent implements OnInit {
 
   totalPages = 0;
   ngOnInit(): void {
-    this.store.setItems$(this.loaiMonAnPaging);  
+    // this.store.setItems$(this.loaiMonAnPaging);  
     this.danhMucMonAnService.getDanhMucMonAn({}).subscribe(
       {
         next: (res: any) => {

@@ -27,6 +27,11 @@ import { ChitietdonComponent } from '../modules/layout/menugoimon/chitietdon/chi
 import { ChucVuComponent } from '../modules/layout/menu/chucvu/chucvu.component';
 import { NhanVienComponent } from '../modules/layout/menu/nhanvien/nhanvien.component';
 import { BanggiaComponent } from '../modules/layout/menu/banggia/banggia.component';
+import { LoaidonorderComponent } from '../modules/layout/menu/loaidonorder/loaidonorder.component';
+import { KhachhangComponent } from '../modules/layout/menu/khachhang/khachhang.component';
+import { DonorderComponent } from '../modules/layout/menu/donorder/donorder.component';
+
+
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -58,6 +63,9 @@ export const remoteRoutes: Route[] = [
           { path: 'chucvu', component: ChucVuComponent },
           { path: 'nhanvien', component: NhanVienComponent },
           { path: 'banggia', component: BanggiaComponent },
+          { path: 'loaidonorder', component: LoaidonorderComponent },
+          { path: 'khachhang', component: KhachhangComponent},
+          { path: 'donorder', component: DonorderComponent },
 
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },

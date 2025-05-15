@@ -1,28 +1,7 @@
 <div class="mt-10 mr-10">
   <!-- nhãn -->
   <div class="flex flex-row gap-4 mb-5">
-    <!-- <p class="flex justify-center items-center">
-      <a
-        ><svg
-          class="w-6 h-6 text-gray-800 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m15 19-7-7 7-7"
-          />
-        </svg>
-      </a>
-    </p> -->
-    <p class="text-2xl font-bold">Loại bàn ăn</p>
+    <p class="text-2xl font-bold">Đơn Order</p>
   </div>
   <!-- form search -->
   <div
@@ -30,29 +9,38 @@
   >
     <!-- form -->
     <div class="flex flex-row gap-4">
-      <!-- <div class="flex flex-col gap-2">
-        <label for="searchMa">Mã danh mục</label>
+      <div class="flex flex-col gap-2">
+        <label for="searchTenDonOrder">Tên Đơn Order</label>
         <input
           class="border border-gray-300 rounded-md p-2"
-          id="searchMa"
-          [(ngModel)]="searchForm.ma"
+          id="searchTenDonOrder"
+          [(ngModel)]="searchForm.tenDon"
           type="text"
           placeholder="Tìm kiếm"
         />
-      </div> -->
+      </div>
       <div class="flex flex-col gap-2">
-        <label for="searchTen">Tên </label>
-        <input
+        <label for="giaTri">Khách Hàng</label>
+        <!-- <input
           class="border border-gray-300 rounded-md p-2"
-          id="searchTen"
-          [(ngModel)]="searchForm.tenLoai"
+          id="khachHang"
+          [(ngModel)]="searchForm.khachHang"
           type="text"
-          placeholder="Tên loại bàn"
-        />
+          placeholder="Tìm kiếm"
+        /> -->
+        <select
+          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          id="khachHang"
+          [(ngModel)]="searchForm.khachHang"
+        >
+          <option *ngFor="let kh of khachHang" [value]="kh.id">
+            {{ kh.tenKhachHang }}
+          </option>
+        </select>
       </div>
     </div>
     <!-- button -->
-    <div class="flex flex-row gap-2 justify-center items-center">
+    <div class="flex flex-row gap-4 justify-center items-center">
       <button
         class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
         (click)="reset()"
@@ -102,49 +90,68 @@
   </div>
   <!-- table -->
   <div class="flex flex-col gap-4 p-5 bg-white rounded-lg w-full mt-5">
-    <div class="flex justify-end">
+    <!-- <div class="flex justify-end">
       <button
         (click)="openAddPopup()"
         class="bg-blue-500 text-white px-4 py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-blue-600 active:scale-95 focus:outline-none shadow-md hover:shadow-lg"
       >
         Thêm
       </button>
-    </div>
+    </div> -->
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right">
-        <thead class="text-xs uppercase text-center">
+        <thead class="text-xs text-gray-700 uppercase text-center">
           <tr>
             <th scope="col" class="px-6 py-3">STT</th>
-            <!-- <th scope="col" class="px-6 py-3">Mã danh mục</th> -->
-            <th scope="col" class="px-6 py-3">Tên loại bàn</th>
-            <th scope="col" class="px-6 py-3">Mô tả</th>
+            <th scope="col" class="px-6 py-3">Tên Đơn Order</th>
+            <th scope="col" class="px-6 py-3">Loại Đơn</th>
+            <th scope="col" class="px-6 py-3">Bàn</th>
+            <th scope="col" class="px-6 py-3">Khách Hàng</th>
+            <th scope="col" class="px-6 py-3">Trạng Thái</th>
             <th scope="col" class="px-6 py-3">Thao tác</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="border-b dark:border-gray-700 border-gray-200"
-            *ngFor="let item of loaiBanAnPaging; let i = index"
+            *ngFor="let item of donOrderPaging; let i = index"
           >
-            <td class="px-6 py-4 font-medium whitespace-nowrap text-center">
-              {{ i + 1 }}
-            </td>
-            <!-- <th
+            <td
               scope="row"
-              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="px-6 py-4 font-medium whitespace-nowrap text-center"
             >
-              {{ item.ma }}
-            </th> -->
-            <td class="px-6 py-4">
-              {{ item.tenLoai }}
+              {{ i + 1 + (paging.page - 1) * paging.size }}
             </td>
             <td class="px-6 py-4">
-              {{ item.moTa }}
+              {{ item.tenDon }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.loaiDon.name }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.ban.name }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.khachHang.name }}
+            </td>
+
+            <!-- <td class="px-6 py-4" style="min-width: 300px; max-width: 400px; white-space: normal;">
+                <ul>
+                  <li *ngFor="let item of item.nguyenLieus">
+                    - {{item.nguyenLieu.name}} ({{item.soLuong}} {{item.ghiChu ? '- ' + item.ghiChu : ''}})
+                  </li>
+                </ul>
+              </td> -->
+            <!-- <td class="px-6 py-4">
+              {{ item.giaTien | number : "1.0-0" }}
+            </td> -->
+            <td class="px-6 py-4">
+              {{ item.trangThai }}
             </td>
             <td
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
             >
-              <button
+              <!--  
                 (click)="openEditPopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
               >
@@ -169,8 +176,8 @@
                     />
                   </svg>
                 </p>
-              </button>
-
+              </button> -->
+              <!-- 
               <button
                 (click)="openDeletePopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-red-100 focus:outline-none rounded-lg px-2 py-1"
@@ -196,6 +203,25 @@
                     />
                   </svg>
                 </p>
+              </button> -->
+              <button
+                (click)="openChiTietPopup(item)"
+                class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
+              >
+                <svg
+                  class="w-6 h-6 text-blue-600 dark:text-blue-400"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-3 8c-4.418 0-8-5.373-8-8s3.582-8 8-8 8 5.373 8 8-3.582 8-8 8z"
+                  />
+                </svg>
               </button>
             </td>
           </tr>
@@ -243,10 +269,17 @@
     </div>
   </div>
 </div>
-<app-popupLoaiBanAn
+
+<!-- <app-popupCombo
   *ngIf="isPopupOpen"
   [isEditMode]="isEditMode"
   [formData]="formData"
   (close)="closePopup()"
   (save)="onSaveCongThuc($event)"
-></app-popupLoaiBanAn>
+></app-popupCombo> -->
+
+<app-popupChiTietDonOrder
+  *ngIf="isChiTietOpen"
+  [formData]="formData"
+  (close)="closeChiTiet()"
+></app-popupChiTietDonOrder>
