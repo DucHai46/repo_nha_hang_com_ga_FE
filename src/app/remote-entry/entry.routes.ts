@@ -30,8 +30,8 @@ import { BanggiaComponent } from '../modules/layout/menu/banggia/banggia.compone
 import { LoaidonorderComponent } from '../modules/layout/menu/loaidonorder/loaidonorder.component';
 import { KhachhangComponent } from '../modules/layout/menu/khachhang/khachhang.component';
 import { DonorderComponent } from '../modules/layout/menu/donorder/donorder.component';
-
-
+import { PhieunhapComponent } from '../modules/layout/menu/phieunhap/phieunhap.component';
+import { NhacungcapComponent } from '../modules/layout/menu/nhacungcap/nhacungcap.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -66,6 +66,9 @@ export const remoteRoutes: Route[] = [
           { path: 'loaidonorder', component: LoaidonorderComponent },
           { path: 'khachhang', component: KhachhangComponent},
           { path: 'donorder', component: DonorderComponent },
+          { path: 'phieunhap', component: PhieunhapComponent },
+          { path: 'nhacungcap', component: NhacungcapComponent },
+
 
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },
