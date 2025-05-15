@@ -1,0 +1,272 @@
+<div class="popup-backdrop">
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        {{ isEditMode ? "Sửa phiếu nhập " : "Thêm phiếu nhập" }}
+      </h2>
+      <form>
+        <div class="form-group">
+          <label for="tenPhieuNhap">Tên phiếu nhập</label>
+          <input
+            type="text"
+            id="tenPhieuNhap"
+            [(ngModel)]="formData.tenPhieu"
+            name="TenPhieuNhap"
+            placeholder="Nhập tên combo..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="tenNguoiGiao">Tên người giao</label>
+          <input
+            type="text"
+            id="tenNguoiGiao"
+            [(ngModel)]="formData.tenNguoiGiao"
+            name="TenNguoiGiao"
+            placeholder="Nhập tên người giao..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="nhaCungCap">Nhà cung cấp:</label>
+          <select
+            id="nhaCungCap"
+            [(ngModel)]="formData.nhaCungCap"
+            name="NhaCungCap"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let danhMuc of nhaCungCap" [ngValue]="danhMuc.id">
+              {{ danhMuc.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nhân viên">Nhân viên:</label>
+          <select
+            id="nhanVien"
+            [(ngModel)]="formData.nhanVien"
+            name="NhanVien"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let danhMuc of nhanVien" [ngValue]="danhMuc.id">
+              {{ danhMuc.name }}
+            </option>
+          </select>
+        </div>
+
+        <!-- ------------------------------------------------- -------------------------------------------------------------->
+        <div
+          *ngFor="
+            let loai of nguyenLieuSelection;
+            let i = index;
+            trackBy: trackByIndex
+          "
+          class="relative bg-gray-100 border rounded-xl p-4 mb-4 space-y-3"
+        >
+          <button
+            (click)="removeNguyenLieuSelection(i)"
+            class="absolute top-2 right-2 !text-red-500 !hover:text-red-700 text-lg font-bold"
+          >
+            &times;
+          </button>
+          <label class="text-sm font-medium text-gray-700"
+            >Nguyên liệu {{ i + 1 }}</label
+          >
+
+          <div class="form-group">
+            <label [for]="'materialName_' + i">Tên nguyên liệu:</label>
+            <input
+              type="text"
+              [id]="'materialName_' + i"
+              [(ngModel)]="loai.tenNguyenLieu"
+              [name]="'ten_' + i"
+              placeholder="Nhập tên nguyên liệu..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'moTa_' + i">Mô tả:</label>
+            <input
+              type="text"
+              [id]="'moTa_' + i"
+              [(ngModel)]="loai.moTa"
+              [name]="'mota_' + i"
+              placeholder="Nhập mô tả..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'hanSuDung_' + i">Hạn sử dụng:</label>
+            <input
+              type="date"
+              [id]="'hanSuDung_' + i"
+              [(ngModel)]="loai.hanSuDung"
+              [name]="'hanSuDung_' + i"
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'category_' + i">Loại nguyên liệu:</label>
+            <select
+              [id]="'category_' + i"
+              [(ngModel)]="loai.loaiNguyenLieu"
+              [name]="'loaiNguyenLieu_' + i"
+              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+            >
+              <option
+                *ngFor="let danhMuc of loaiNguyenLieu"
+                [ngValue]="danhMuc.id"
+              >
+                {{ danhMuc.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label [for]="'tuDo_' + i">Tủ đồ:</label>
+            <select
+              [id]="'tuDo_' + i"
+              [(ngModel)]="loai.tuDo"
+              [name]="'tuDo_' + i"
+              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+            >
+              <option *ngFor="let danhMuc of tuDo" [ngValue]="danhMuc.id">
+                {{ danhMuc.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label [for]="'donViTinh_' + i">Đơn vị tính:</label>
+            <select
+              [id]="'donViTinh_' + i"
+              [(ngModel)]="loai.donViTinh"
+              [name]="'donViTinh_' + i"
+              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+            >
+              <option *ngFor="let danhMuc of donViTinh" [ngValue]="danhMuc.id">
+                {{ danhMuc.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label [for]="'trangThai_' + i">Trạng thái:</label>
+            <select
+              [id]="'trangThai_' + i"
+              [(ngModel)]="loai.trangThai"
+              [name]="'trangThai_' + i"
+              required
+            >
+              <option [ngValue]="0">Hàng mới</option>
+              <option [ngValue]="1">Đang sử dụng</option>
+              <option [ngValue]="2">Đã qua sử dụng</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label [for]="'soLuong_' + i">Số lượng:</label>
+            <input
+              type="number"
+              [id]="'soLuong_' + i"
+              [(ngModel)]="loai.soLuong"
+              [name]="'soLuong_' + i"
+              (ngModelChange)="updateThanhTien(loai)"
+              min="0"
+              max="100"
+              placeholder="Nhập số lượng nguyên liệu..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'donGia_' + i">Đơn giá:</label>
+            <input
+              type="number"
+              [id]="'donGia_' + i"
+              [(ngModel)]="loai.donGia"
+              (ngModelChange)="updateThanhTien(loai)"
+              [name]="'donGia_' + i"
+              min="0"
+              placeholder="Nhập đơn giá..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'thanhTien_' + i">Thành tiền:</label>
+            <input
+              type="number"
+              [id]="'thanhTien_' + i"
+              [(ngModel)]="loai.thanhTien"
+              [name]="'thanhTien_' + i"
+              min="0"
+              placeholder="Thành tiền..."
+              readonly
+            />
+          </div>
+        </div>
+
+        <button
+          (click)="addNguyenLieuRow()"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto"
+        >
+          Thêm nguyên liệu
+        </button>
+
+        <!------ ------------------------------------------------------------------------------------------------------------ -->
+        <div class="form-group">
+          <label for="dienGiai">Diễn giải:</label>
+          <textarea
+            id="dienGiai"
+            [(ngModel)]="formData.dienGiai"
+            name="DienGiai"
+            placeholder="Nhập diễn giải..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="diaDiem">Địa điểm:</label>
+          <textarea
+            id="diaDiem"
+            [(ngModel)]="formData.diaDiem"
+            name="DiaDiem"
+            placeholder="Nhập địa điểm..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="ghiChu">Ghi chú:</label>
+          <textarea
+            id="ghiChu"
+            [(ngModel)]="formData.ghiChu"
+            name="GhiChu"
+            placeholder="Nhập ghi chú..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="tongTien">Tổng tiền:</label>
+          <input
+            type="number"
+            id="tongTien"
+            [(ngModel)]="formData.tongTien"
+            name="TongTien"
+            readonly
+          />
+        </div>
+
+        <div class="popup-actions mt-6">
+          <button
+            type="button"
+            class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition w-full sm:w-auto"
+            (click)="onCancel()"
+          >
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto"
+            (click)="onSave()"
+          >
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

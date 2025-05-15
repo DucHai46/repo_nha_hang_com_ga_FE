@@ -111,6 +111,15 @@ import { NhanVienStore } from './menu/nhanvien/store/nhan-vien.store';
 import { BanggiaComponent } from './menu/banggia/banggia.component';
 import { BangGiaService } from './menu/banggia/services/banggia.service';
 import { BangGiaStore } from './menu/banggia/store/bang-gia.store';
+import { PhieunhapComponent } from './menu/phieunhap/phieunhap.component';
+import { PhieuNhapStore } from './menu/phieunhap/store/phieu-nhap.store';
+import { PhieuNhapService } from './menu/phieunhap/services/phieunhap.service';
+import { PopupPhieuNhapComponent } from './menu/phieunhap/popupPhieuNhap/popupPhieuNhap.component';
+import { NhacungcapComponent } from './menu/nhacungcap/nhacungcap.component';
+import { NhaCungCapService } from './menu/nhacungcap/services/nhacungcap.service';
+import { NhaCungCapStore } from './menu/nhacungcap/store/nha-cung-cap.store';
+import { PopupNhaCungCapComponent } from './menu/nhacungcap/popupNhaCungCap/popupNhaCungCap.component';
+import { PopupChiTietPhieuNhapComponent } from './menu/phieunhap/popupChiTiet/popupChiTietPhieuNhap.component';
 
 
 @NgModule({
@@ -168,7 +177,12 @@ import { BangGiaStore } from './menu/banggia/store/bang-gia.store';
     PopupChucVuComponent,
     NhanVienComponent,
     PopupNhanVienComponent,
-    BanggiaComponent
+    BanggiaComponent,
+    PhieunhapComponent,
+    PopupPhieuNhapComponent,
+    NhacungcapComponent,
+    PopupNhaCungCapComponent,
+    PopupChiTietPhieuNhapComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -225,7 +239,11 @@ import { BangGiaStore } from './menu/banggia/store/bang-gia.store';
     NhanVienStore,
     NhanVienService,
     BangGiaStore,
-    BangGiaService
+    BangGiaService,
+    PhieuNhapStore,
+    PhieuNhapService,
+    NhaCungCapStore,
+    NhaCungCapService
   ]
 })
 export class LayoutModule { }

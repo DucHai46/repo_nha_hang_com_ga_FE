@@ -23,7 +23,7 @@
               <!-- Lặp qua các loại nguyên liệu -->
               <div *ngFor="let loai of loaiSelections; let i = index" class="relative bg-gray-100 border rounded-xl p-4 mb-4 space-y-3">
                 <button (click)="removeLoaiSelection(i)"
-                class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-lg font-bold">
+                class="absolute top-2 right-2 !text-red-500 !hover:text-red-700 !text-lg !font-bold">
                   &times;
                 </button>
                 <!-- Dropdown chọn loại nguyên liệu -->
@@ -108,7 +108,7 @@
          
               <div *ngFor="let loai of comboSelections; let i = index" class="relative bg-gray-100 border rounded-xl p-4 mb-4 space-y-3">
                 <button (click)="removeComboSelection(i)"
-                class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-lg font-bold">
+                class="absolute top-2 right-2 !text-red-500 !hover:text-red-700 !text-lg !font-bold">
                   &times;
                 </button>
                 <label class="text-sm font-medium text-gray-700">Combo {{ i + 1 }}</label>
