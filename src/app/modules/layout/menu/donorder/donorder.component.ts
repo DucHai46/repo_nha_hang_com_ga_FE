@@ -8,6 +8,7 @@ import { LoaidonorderService } from '../loaidonorder/services/loaidonorder.servi
 import { DonOrderService } from './services/donorder.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
+import { OrderSignalRServiceService } from '../../../../core/services/OrderSignalRService.service';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class DonorderComponent implements OnInit {
     private loaiDonOrderService: LoaidonorderService,
     private banAnService: BanAnService,
     private khachHangService: KhachHangService,
+    private orderSignalRService: OrderSignalRServiceService,
 
   ) { }
   donOrderPaging: any[] = [];
@@ -41,27 +43,6 @@ export class DonorderComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.setItems$(this.donOrderPaging);
-    // this.donOrderService.getDonOrder({}).subscribe({
-    //   next: (res: any) => {
-    //     this.donOrderPaging = res.data.data;
-    //     console.log(this.donOrderPaging);
-    //   }
-    // });
-
-    // this.loaiDonOrderService.getLoaidonorder({}).subscribe({
-    //   next: (res: any) => {
-    //     this.loaiDonOrder = res.data.data;
-    //     console.log(this.loaiDonOrder);
-    //   }
-    // });
-
-    // this.banAnService.getBanAn({}).subscribe({
-    //   next: (res: any) => {
-    //     this.banAn = res.data.data;
-    //     console.log(this.banAn);
-    //   }
-    // });
-
     this.khachHangService.getKhachHang({}).subscribe({
       next: (res: any) => {
         this.khachHang = res.data.data;
@@ -70,6 +51,19 @@ export class DonorderComponent implements OnInit {
     });
 
     this.search();
+    this.orderSignalRService.startConnection();
+    this.orderSignalRService.addOrderListener((message) => {
+      this.notification.create(
+        'success',
+        'Thông báo!',
+        `Có đơn mới: ${message}`,
+        {
+          nzClass: 'notification-success',
+          nzDuration: 2000
+        }
+      );
+      this.search();
+    });
   }
 
 
