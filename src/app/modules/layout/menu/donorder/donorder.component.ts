@@ -15,7 +15,7 @@ import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialo
   templateUrl: './donorder.component.html',
   styleUrl: './donorder.component.scss'
 })
-export class DonorderComponent implements OnInit  {
+export class DonorderComponent implements OnInit {
   constructor(
     private store: DonOrderStore,
     private dialog: MatDialog,
@@ -24,8 +24,8 @@ export class DonorderComponent implements OnInit  {
     private loaiDonOrderService: LoaidonorderService,
     private banAnService: BanAnService,
     private khachHangService: KhachHangService,
-   
-  ) {}
+
+  ) { }
   donOrderPaging: any[] = [];
   loaiDonOrder: any[] = [];
   banAn: any[] = [];
@@ -72,6 +72,22 @@ export class DonorderComponent implements OnInit  {
     this.search();
   }
 
+
+  // Phương thức lấy danh sách ID khách hàng từ tên khách hàng
+  // getKhachHangIdsByName(tenKhachHang: string): { khachHangIds: string[] } {
+  //   if (!tenKhachHang || tenKhachHang.trim() === '') {
+  //     return { khachHangIds: [] };
+  //   }
+
+  //   const tenKhachHangLowerCase = tenKhachHang.toLowerCase().trim();
+  //   const filteredKhachHang = this.khachHang.filter(kh => 
+  //     kh.tenKhachHang && kh.tenKhachHang.toLowerCase().includes(tenKhachHangLowerCase)
+  //   );
+
+  //   return { khachHangIds: filteredKhachHang.map(kh => kh.id) };
+  // }
+
+
   searchForm: any = {
     tenDon: '',
     khachHangs: '',
@@ -81,7 +97,7 @@ export class DonorderComponent implements OnInit  {
     tenKhachHang: '',
   }
 
-  search(){
+  search() {
 
     console.log('Search form:', this.searchForm);
     if (this.searchForm.khachHangs) {
@@ -94,34 +110,23 @@ export class DonorderComponent implements OnInit  {
           this.khachHang = res.data.data;
           this.khachHangIds = res.data.data.map((kh: any) => kh.id);
           this.searchForm.khachHang = this.khachHangIds;
-          console.log('Formatted khachHang:', this.searchForm.khachHang);
-          console.log(this.khachHangIds);
+          this.searchDonOrder();
           // console.log(this.khachHang);
         }
-    });
-     } else {
-    //   // Nếu không nhập tên khách hàng, xóa khachHangIds khỏi searchForm nếu có
+      });
+    } else {
+      //   // Nếu không nhập tên khách hàng, xóa khachHangIds khỏi searchForm nếu có
       if (this.khachHangIds) {
         this.khachHangIds = [];
       }
+      this.searchDonOrder();
     }
-    
+  }
 
+  searchDonOrder() {
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    // this.searchForm.khachHang = this.khachHangIds;
-    
-    // Nếu có nhập tên khách hàng, lấy danh sách ID khách hàng
-    // if (this.searchForm.khachHang && this.searchForm.khachHang.trim() !== '') {
-    //   const result = this.getKhachHangIdsByName(this.searchForm.khachHang);
-    //   this.searchForm.khachHangIds = result.khachHangIds;
-    // } else {
-    //   // Nếu không nhập tên khách hàng, xóa khachHangIds khỏi searchForm nếu có
-    //   if (this.searchForm.khachHangIds) {
-    //     delete this.searchForm.khachHangIds;
-    //   }
-    // }
     console.log(this.searchForm);
     this.donOrderService.getDonOrder(this.searchForm).subscribe(
       {
@@ -138,11 +143,12 @@ export class DonorderComponent implements OnInit  {
         }
       }
     )
-    this.searchForm.khachHang = this.searchKH.tenKhachHang;
+    // this.searchForm.khachHang = this.searchKH.tenKhachHang;
+
   }
 
 
-   changePage(newPage: number) {
+  changePage(newPage: number) {
     if (newPage < 1 || newPage > this.totalPages) return;
     this.paging.page = newPage;
     this.search();
@@ -156,7 +162,9 @@ export class DonorderComponent implements OnInit  {
 
   reset() {
     this.searchForm.tenDon = '';
-    this.searchForm.khachHang = '';
+    this.searchForm.khachHangs = '';
+    this.khachHangIds = [];
+    this.searchForm.khachHang = [];
     this.search();
   }
 
@@ -165,40 +173,40 @@ export class DonorderComponent implements OnInit  {
   formData: any = {}
   isChiTietOpen = false;
 
-  openAddPopup(): void{
+  openAddPopup(): void {
     // console.log(this.loaiDonOrder);
     this.isPopupOpen = true;
     this.isEditMode = false;
     this.formData = {};
   }
 
-  openChiTietPopup(item: any): void{
+  openChiTietPopup(item: any): void {
     this.isChiTietOpen = true;
     this.formData = item;
     console.log(this.formData);
   }
 
-  closePopup(): void{
+  closePopup(): void {
     this.isPopupOpen = false;
     this.isEditMode = false;
   }
 
-   closeChiTiet(): void {
-      this.isChiTietOpen = false;
-      this.search(); // load lại dữ liệu sau khi đóng chi tiết
-    }
+  closeChiTiet(): void {
+    this.isChiTietOpen = false;
+    this.search(); // load lại dữ liệu sau khi đóng chi tiết
+  }
 
-  onSaveCongThuc(body: any): void{
+  onSaveCongThuc(body: any): void {
     console.log(body);
-    if(!body) return;
+    if (!body) return;
     console.log(body);
 
-    if(this.isEditMode){
+    if (this.isEditMode) {
       // Sửa Đơn Order
       this.donOrderService.updateDonOrder(body.id, body).subscribe({
         next: (res: any) => {
           console.log(res);
-          if(res.data){
+          if (res.data) {
             this.searchForm.tenDon = '';
             this.searchForm.khachHang = '';
             this.search();
@@ -236,7 +244,7 @@ export class DonorderComponent implements OnInit  {
           );
         }
       });
-    } else{
+    } else {
       // Trả về danh sách đơn order
       this.searchForm.tenDon = '';
       this.searchForm.khachHang = '';
@@ -245,61 +253,61 @@ export class DonorderComponent implements OnInit  {
   }
 
   openEditPopup(item: any): void {
-      this.isPopupOpen = true;
-      this.isEditMode = true;
-      this.formData = item;
-      console.log(item);
-      // console.log(this.formData);
-    }
+    this.isPopupOpen = true;
+    this.isEditMode = true;
+    this.formData = item;
+    console.log(item);
+    // console.log(this.formData);
+  }
   openDeletePopup(item: any): void {
-        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-          width: '400px',
-          data: { message: `Bạn có chắc chắn muốn xóa "${item.tenDon}" không?` },
-        });
-    
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-          this.donOrderService.deleteDonOrder(item.id).subscribe(
-            {
-              next: (res: any) => {
-                this.search();
-                this.notification.create(
-                  'success',
-                  'Thông báo!',
-                  `Xóa dữ liệu thành công`,
-                  {
-                    nzClass: 'notification-success',
-                    nzDuration: 2000
-                  }
-                );
-              },
-              error: () => {
-                this.notification.create(
-                  'error',
-                  'Thông báo!',
-                  `Xóa dữ liệu thất bại`,
-                  {
-                    nzClass: 'notification-error',
-                    nzDuration: 2000
-                  }
-                );
-              }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: { message: `Bạn có chắc chắn muốn xóa "${item.tenDon}" không?` },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.donOrderService.deleteDonOrder(item.id).subscribe(
+          {
+            next: (res: any) => {
+              this.search();
+              this.notification.create(
+                'success',
+                'Thông báo!',
+                `Xóa dữ liệu thành công`,
+                {
+                  nzClass: 'notification-success',
+                  nzDuration: 2000
+                }
+              );
+            },
+            error: () => {
+              this.notification.create(
+                'error',
+                'Thông báo!',
+                `Xóa dữ liệu thất bại`,
+                {
+                  nzClass: 'notification-error',
+                  nzDuration: 2000
+                }
+              );
             }
-          )
-          } else {
-            this.notification.create(
-              'error',
-              'Thông báo!',
-              `Xóa dữ liệu thất bại`, {
-              nzClass: 'notification-error',
-              nzDuration: 2000
-            }
-            );
           }
-        });
-      } //
+        )
+      } else {
+        this.notification.create(
+          'error',
+          'Thông báo!',
+          `Xóa dữ liệu thất bại`, {
+          nzClass: 'notification-error',
+          nzDuration: 2000
+        }
+        );
+      }
+    });
+  } //
   // Trong donorder.component.ts thay thế phương thức updateFoodStatus
- 
+
 }
 
 
