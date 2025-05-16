@@ -5,7 +5,7 @@ import { environment } from '../../../../../enviroments/enviroment';
 @Injectable({
   providedIn: 'root'
 })
-export class DonOrderService {
+export class DonOrderAdminService {
 
   private apiUrl = environment.apiUrl;
 

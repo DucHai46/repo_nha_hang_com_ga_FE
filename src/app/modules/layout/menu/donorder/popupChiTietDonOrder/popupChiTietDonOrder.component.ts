@@ -2,7 +2,7 @@ import { ComboService } from './../../combo/services/combo.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileService } from '../../../../../core/services/file.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { DonOrderService } from '../services/donorder.service';
+import { DonOrderAdminService } from '../services/donorderadmin.service';
 
 @Component({
   selector: 'app-popupChiTietDonOrder',
@@ -24,7 +24,7 @@ export class PopupChiTietDonOrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.ComboService.getCombo({}).subscribe({
+    this.ComboService.getCombo({}).subscribe({
       next: (res: any) => {
         this.comBos = res.data.data;
         console.log(this.comBos);
@@ -32,10 +32,10 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       error: (err) => {
         console.error('Lỗi khi lấy thông tin combo:', err);
       }
-    })    
+    })
   }
 
-   onMouseMove(event: MouseEvent, item: any) {
+  onMouseMove(event: MouseEvent, item: any) {
 
     this.hoveredItem = this.comBos.find((combo: any) => combo.id === item.comBo.id);
     console.log(this.hoveredItem);
@@ -58,22 +58,22 @@ export class PopupChiTietDonOrderComponent implements OnInit {
   constructor(
     private fileService: FileService,
     private notification: NzNotificationService,
-    private donOrderService: DonOrderService, // Thêm service vào đây
+    private donOrderService: DonOrderAdminService, // Thêm service vào đây
     private ComboService: ComboService
-  ) {}
+  ) { }
 
   // Phương thức xử lý thay đổi trạng thái món ăn
   toggleFoodStatus(monAn: any, chiTietIndex: number, monAnIndex: number) {
     // Đảo ngược trạng thái hiện tại (0: Đang chế biến, 1: Đã hoàn thành)
     const newStatus = monAn.monAn_trangThai === 1 ? 0 : 1;
     monAn.monAn_trangThai = newStatus;
-    
+
     // Tạo bản sao của đơn order để cập nhật
-    const updatedOrder = {...this.formData};
-    
+    const updatedOrder = { ...this.formData };
+
     // Cập nhật trạng thái món ăn trong bản sao
     updatedOrder.chiTietDonOrder[chiTietIndex].monAns[monAnIndex].monAn_trangThai = newStatus;
-    
+
     // Kiểm tra ID có hợp lệ không trước khi gửi request
     if (!updatedOrder.id || typeof updatedOrder.id !== 'string' || updatedOrder.id.length !== 24) {
       this.notification.create(
@@ -87,7 +87,7 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       );
       return;
     }
-    
+
     // Gọi trực tiếp API updateDonOrder
     updatedOrder.loaiDon = updatedOrder.loaiDon.id;
     updatedOrder.ban = updatedOrder.ban.id;
@@ -103,10 +103,10 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     this.donOrderService.updateDonOrder(updatedOrder.id, updatedOrder).subscribe({
       next: (res: any) => {
         console.log('Cập nhật trạng thái thành công', res);
-        
+
         // Vẫn có thể emit sự kiện để thông báo cho component cha biết đã cập nhật thành công
         // this.updateStatus.emit(res);
-        
+
         // Hiển thị thông báo
         this.formData = res.data;
         this.notification.create(
@@ -139,13 +139,13 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     // Đảo ngược trạng thái hiện tại (0: Đang chế biến, 1: Đã hoàn thành)
     const newStatus = chiTiet.trangThai === 1 ? 0 : 1;
     chiTiet.trangThai = newStatus;
-    
+
     // Tạo bản sao của đơn order để cập nhật
-    const updatedOrder = {...this.formData};
-    
+    const updatedOrder = { ...this.formData };
+
     // Cập nhật trạng thái món ăn trong bản sao
     updatedOrder.chiTietDonOrder[chiTietIndex].trangThai = newStatus;
-    
+
     // Kiểm tra ID có hợp lệ không trước khi gửi request
     if (!updatedOrder.id || typeof updatedOrder.id !== 'string' || updatedOrder.id.length !== 24) {
       this.notification.create(
@@ -159,7 +159,7 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       );
       return;
     }
-    
+
     // Gọi trực tiếp API updateDonOrder
     updatedOrder.loaiDon = updatedOrder.loaiDon.id;
     updatedOrder.ban = updatedOrder.ban.id;
@@ -175,10 +175,10 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     this.donOrderService.updateDonOrder(updatedOrder.id, updatedOrder).subscribe({
       next: (res: any) => {
         console.log('Cập nhật trạng thái thành công', res);
-        
+
         // Vẫn có thể emit sự kiện để thông báo cho component cha biết đã cập nhật thành công
         // this.updateStatus.emit(res);
-        
+
         // Hiển thị thông báo
         this.formData = res.data;
         this.notification.create(
@@ -206,18 +206,18 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     });
   }
 
-   // Phương thức xử lý thay đổi trạng thái combo
+  // Phương thức xử lý thay đổi trạng thái combo
   toggleComboStatus(comBo: any, chiTietIndex: number, comBoIndex: number) {
     // Đảo ngược trạng thái hiện tại (0: Đang chế biến, 1: Đã hoàn thành)
     const newStatus = comBo.comBo_trangThai === 1 ? 0 : 1;
     comBo.comBo_trangThai = newStatus;
-    
+
     // Tạo bản sao của đơn order để cập nhật
-    const updatedOrder = {...this.formData};
-    
+    const updatedOrder = { ...this.formData };
+
     // Cập nhật trạng thái món ăn trong bản sao
     updatedOrder.chiTietDonOrder[chiTietIndex].comBos[comBoIndex].comBo_trangThai = newStatus;
-    
+
     // Kiểm tra ID có hợp lệ không trước khi gửi request
     if (!updatedOrder.id || typeof updatedOrder.id !== 'string' || updatedOrder.id.length !== 24) {
       this.notification.create(
@@ -231,7 +231,7 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       );
       return;
     }
-    
+
     // Gọi trực tiếp API updateDonOrder
     updatedOrder.loaiDon = updatedOrder.loaiDon.id;
     updatedOrder.ban = updatedOrder.ban.id;
@@ -247,10 +247,10 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     this.donOrderService.updateDonOrder(updatedOrder.id, updatedOrder).subscribe({
       next: (res: any) => {
         console.log('Cập nhật trạng thái thành công', res);
-        
+
         // Vẫn có thể emit sự kiện để thông báo cho component cha biết đã cập nhật thành công
         // this.updateStatus.emit(res);
-        
+
         // Hiển thị thông báo
         this.formData = res.data;
         this.notification.create(

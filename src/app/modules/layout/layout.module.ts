@@ -132,7 +132,7 @@ import { NhaCungCapService } from './menu/nhacungcap/services/nhacungcap.service
 import { NhaCungCapStore } from './menu/nhacungcap/store/nha-cung-cap.store';
 import { PopupNhaCungCapComponent } from './menu/nhacungcap/popupNhaCungCap/popupNhaCungCap.component';
 import { PopupChiTietPhieuNhapComponent } from './menu/phieunhap/popupChiTiet/popupChiTietPhieuNhap.component';
-
+import { DonOrderAdminService } from './menu/donorder/services/donorderadmin.service';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -263,11 +263,11 @@ import { PopupChiTietPhieuNhapComponent } from './menu/phieunhap/popupChiTiet/po
     KhachHangService,
     KhachHangStore,
     DonOrderStore,
-    DonOrderService,
     PhieuNhapStore,
     PhieuNhapService,
     NhaCungCapStore,
-    NhaCungCapService
+    NhaCungCapService,
+    DonOrderAdminService
   ]
 })
 export class LayoutModule { }

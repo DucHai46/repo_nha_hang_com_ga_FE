@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { DonOrderStore } from './store/don-order.store';
 import { MatDialog } from '@angular/material/dialog';
 import { LoaidonorderService } from '../loaidonorder/services/loaidonorder.service';
-import { DonOrderService } from './services/donorder.service';
+import { DonOrderAdminService } from './services/donorderadmin.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 import { OrderSignalRServiceService } from '../../../../core/services/OrderSignalRService.service';
@@ -21,7 +21,7 @@ export class DonorderComponent implements OnInit {
     private store: DonOrderStore,
     private dialog: MatDialog,
     private notification: NzNotificationService,
-    private donOrderService: DonOrderService,
+    private donOrderService: DonOrderAdminService,
     private loaiDonOrderService: LoaidonorderService,
     private banAnService: BanAnService,
     private khachHangService: KhachHangService,

@@ -14,6 +14,7 @@ export class ChitietdonComponent implements OnInit {
   tongTien: number = 0;
   id: string = '';
 
+
   troVeMenugoimon() {
     this.router.navigate(['/menugoimon/' + this.id]);
   }
