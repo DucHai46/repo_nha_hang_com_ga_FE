@@ -11,8 +11,11 @@ export class DonOrderService {
 
   constructor(private http: HttpClient) { }
 
-  getDonOrder(params: any) {
+  getDonOrders(params: any) {
     return this.http.post(`${this.apiUrl}/api/don-order/get-All`,  params );
+  }
+  getDonOrder(params: any) {
+    return this.http.post(`${this.apiUrl}/api/don-order`,  params );
   }
 
   getDonOrderById(id: string) {
