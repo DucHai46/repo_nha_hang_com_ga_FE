@@ -21,14 +21,14 @@
       </div>
       <div class="flex flex-col gap-2">
         <label for="giaTri">Khách Hàng</label>
-        <!-- <input
+        <input
           class="border border-gray-300 rounded-md p-2"
           id="khachHang"
-          [(ngModel)]="searchForm.khachHang"
+          [(ngModel)]="searchForm.khachHangs"
           type="text"
           placeholder="Tìm kiếm"
-        /> -->
-        <select
+        />
+        <!-- <select
           class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
           id="khachHang"
           [(ngModel)]="searchForm.khachHang"
@@ -36,7 +36,7 @@
           <option *ngFor="let kh of khachHang" [value]="kh.id">
             {{ kh.tenKhachHang }}
           </option>
-        </select>
+        </select> -->
       </div>
     </div>
     <!-- button -->

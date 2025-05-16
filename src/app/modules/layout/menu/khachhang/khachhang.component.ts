@@ -41,10 +41,12 @@ export class KhachhangComponent implements OnInit  {
     this.searchForm.isPaging = true;
     this.searchForm.pageNumber = this.paging.page;
     this.searchForm.pageSize = this.paging.size;
+    console.log(this.searchForm);
     this.khachhangService.getKhachHang(this.searchForm).subscribe(
       {
         next: (res: any) => {
           this.khachHangPaging = res.data.data;
+          // console.log(this.khachHangPaging);
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;

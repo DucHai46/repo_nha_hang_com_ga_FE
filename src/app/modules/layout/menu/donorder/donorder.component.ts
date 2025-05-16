@@ -30,6 +30,7 @@ export class DonorderComponent implements OnInit  {
   loaiDonOrder: any[] = [];
   banAn: any[] = [];
   khachHang: any[] = [];
+  khachHangIds: any[] = [];
 
   paging: any = {
     page: 1,
@@ -71,16 +72,71 @@ export class DonorderComponent implements OnInit  {
     this.search();
   }
 
+  // Phương thức lấy danh sách ID khách hàng từ tên khách hàng
+  // getKhachHangIdsByName(tenKhachHang: string): { khachHangIds: string[] } {
+  //   if (!tenKhachHang || tenKhachHang.trim() === '') {
+  //     return { khachHangIds: [] };
+  //   }
+    
+  //   const tenKhachHangLowerCase = tenKhachHang.toLowerCase().trim();
+  //   const filteredKhachHang = this.khachHang.filter(kh => 
+  //     kh.tenKhachHang && kh.tenKhachHang.toLowerCase().includes(tenKhachHangLowerCase)
+  //   );
+    
+  //   return { khachHangIds: filteredKhachHang.map(kh => kh.id) };
+  // }
+
   searchForm: any = {
     tenDon: '',
-    khachHang: '',
+    khachHangs: '',
+  }
+
+  searchKH: any = {
+    tenKhachHang: '',
   }
 
   search(){
+
+    console.log('Search form:', this.searchForm);
+    if (this.searchForm.khachHangs) {
+      this.searchKH.isPaging = true; // Lấy tất cả dữ liệu
+      this.searchKH.PageNumber = this.paging.page;
+      this.searchKH.PageSize = this.paging.size;
+      this.searchKH.tenKhachHang = this.searchForm.khachHangs;
+      this.khachHangService.getKhachHang(this.searchKH).subscribe({
+        next: (res: any) => {
+          this.khachHang = res.data.data;
+          this.khachHangIds = res.data.data.map((kh: any) => kh.id);
+          this.searchForm.khachHang = this.khachHangIds;
+          console.log('Formatted khachHang:', this.searchForm.khachHang);
+          console.log(this.khachHangIds);
+          // console.log(this.khachHang);
+        }
+    });
+     } else {
+    //   // Nếu không nhập tên khách hàng, xóa khachHangIds khỏi searchForm nếu có
+      if (this.khachHangIds) {
+        this.khachHangIds = [];
+      }
+    }
+    
+
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    console.log('Search form:', this.searchForm); // Thêm dòng này
+    // this.searchForm.khachHang = this.khachHangIds;
+    
+    // Nếu có nhập tên khách hàng, lấy danh sách ID khách hàng
+    // if (this.searchForm.khachHang && this.searchForm.khachHang.trim() !== '') {
+    //   const result = this.getKhachHangIdsByName(this.searchForm.khachHang);
+    //   this.searchForm.khachHangIds = result.khachHangIds;
+    // } else {
+    //   // Nếu không nhập tên khách hàng, xóa khachHangIds khỏi searchForm nếu có
+    //   if (this.searchForm.khachHangIds) {
+    //     delete this.searchForm.khachHangIds;
+    //   }
+    // }
+    console.log(this.searchForm);
     this.donOrderService.getDonOrder(this.searchForm).subscribe(
       {
         next: (res: any) => {
@@ -92,10 +148,11 @@ export class DonorderComponent implements OnInit  {
           this.totalPages = Math.ceil(this.paging.total / this.paging.size);
         },
         error: (err: any) => {
-          this.notification.error('Lỗi', 'Lấy dữ liệu thất bại');
+          this.notification.error('Lỗi', 'Lấy dữ liệu thất bại');
         }
       }
     )
+    this.searchForm.khachHang = this.searchKH.tenKhachHang;
   }
 
 

@@ -12,7 +12,7 @@ export class DonOrderService {
   constructor(private http: HttpClient) { }
 
   getDonOrder(params: any) {
-    return this.http.get(`${this.apiUrl}/api/don-order`, { params });
+    return this.http.post(`${this.apiUrl}/api/don-order/get-All`,  params );
   }
 
   getDonOrderById(id: string) {
