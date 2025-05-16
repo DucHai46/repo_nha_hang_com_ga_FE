@@ -12,7 +12,7 @@ export class DonOrderService {
   constructor(private http: HttpClient) { }
 
   getDonOrder(params: any) {
-    return this.http.post(`${this.apiUrl}/api/don-order/get-All`,  params );
+    return this.http.post(`${this.apiUrl}/api/don-order/get-All`, params);
   }
 
   getDonOrderById(id: string) {
@@ -24,15 +24,10 @@ export class DonOrderService {
   }
 
   updateDonOrder(id: string, data: any) {
-    return this.http.put(`${this.apiUrl}/api/don-order/${id}`, data);
+    return this.http.put(`${this.apiUrl}/api/don-order/update-status/${id}`, data);
   }
 
   deleteDonOrder(id: string) {
     return this.http.delete(`${this.apiUrl}/api/don-order/${id}`);
-  }
-
-  // Thêm phương thức này vào donorder.service.ts
-  updateFoodStatus(donOrderId: string, monAnData: any) {
-    return this.http.put(`${this.apiUrl}/api/don-order/${donOrderId}/update-food-status`, monAnData);
   }
 }
