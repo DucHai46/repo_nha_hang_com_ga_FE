@@ -72,20 +72,6 @@ export class DonorderComponent implements OnInit  {
     this.search();
   }
 
-  // Phương thức lấy danh sách ID khách hàng từ tên khách hàng
-  // getKhachHangIdsByName(tenKhachHang: string): { khachHangIds: string[] } {
-  //   if (!tenKhachHang || tenKhachHang.trim() === '') {
-  //     return { khachHangIds: [] };
-  //   }
-    
-  //   const tenKhachHangLowerCase = tenKhachHang.toLowerCase().trim();
-  //   const filteredKhachHang = this.khachHang.filter(kh => 
-  //     kh.tenKhachHang && kh.tenKhachHang.toLowerCase().includes(tenKhachHangLowerCase)
-  //   );
-    
-  //   return { khachHangIds: filteredKhachHang.map(kh => kh.id) };
-  // }
-
   searchForm: any = {
     tenDon: '',
     khachHangs: '',
