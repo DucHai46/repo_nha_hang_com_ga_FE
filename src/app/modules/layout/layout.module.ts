@@ -138,6 +138,11 @@ import { PhieuKiemKeService } from './menu/phieukiemke/services/phieukiemke.serv
 import { PhieuKiemKeStore } from './menu/phieukiemke/store/phieu-kiem-ke.store';
 import { PopupPhieuKiemKeComponent } from './menu/phieukiemke/popupPhieuKiemKe/popupPhieuKiemKe.component';
 import { PopupChiTietPhieuKiemKeComponent } from './menu/phieukiemke/popupChiTiet/popupChiTietPhieuKiemKe.component';
+import { PhieuxuatComponent } from './menu/phieuxuat/phieuxuat.component';
+import { PhieuXuatService } from './menu/phieuxuat/services/phieuxuat.service';
+import { PhieuXuatStore } from './menu/phieuxuat/store/phieu-xuat.store';
+import { PopupPhieuXuatComponent } from './menu/phieuxuat/popupPhieuXuat/popupPhieuXuat.component';
+import { PopupChiTietPhieuXuatComponent } from './menu/phieuxuat/popupChiTiet/popupChiTietPhieuXuat.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -207,7 +212,10 @@ import { PopupChiTietPhieuKiemKeComponent } from './menu/phieukiemke/popupChiTie
     PopupChiTietPhieuNhapComponent,
     PhieukiemkeComponent,
     PopupPhieuKiemKeComponent,
-    PopupChiTietPhieuKiemKeComponent
+    PopupChiTietPhieuKiemKeComponent,
+    PhieuxuatComponent,
+    PopupPhieuXuatComponent,
+    PopupChiTietPhieuXuatComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -276,7 +284,9 @@ import { PopupChiTietPhieuKiemKeComponent } from './menu/phieukiemke/popupChiTie
     NhaCungCapService,
     DonOrderAdminService,
     PhieuKiemKeStore,
-    PhieuKiemKeService
+    PhieuKiemKeService,
+    PhieuXuatService,
+    PhieuXuatStore
   ]
 })
 export class LayoutModule { }
