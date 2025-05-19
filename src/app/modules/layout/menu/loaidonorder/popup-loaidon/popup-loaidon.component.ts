@@ -16,7 +16,7 @@ export class PopupLoaidonComponent {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
-  constructor() {}
+  constructor() { }
 
   //Hàm xử lý khi nhấn nút lưu
   onSave(): void {

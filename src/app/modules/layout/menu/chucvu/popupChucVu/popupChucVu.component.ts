@@ -4,25 +4,29 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './popupChucVu.component.html',
   styleUrls: ['./popupChucVu.component.scss']
 })
-export class PopupChucVuComponent {
+export class PopupChucVuComponent implements OnInit {
+
   @Input() formData = {
     tenChucVu: '',
     moTa: '',
   };
-  @Input() isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
+
+  @Input() isEditMode: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
   constructor(
   ) { }
 
 
-  // Hàm xử lý khi nhấn "Lưu"
-  onSave(): void {
-    this.save.emit(this.formData); // Đóng popup và trả về dữ liệu
+  ngOnInit(): void {
+    console.log(this.formData);
   }
 
-  // Hàm xử lý khi nhấn "Hủy"
+  onSave(): void {
+    this.save.emit(this.formData);
+  }
+
   onCancel(): void {
-    this.close.emit(); // Đóng popup mà không trả về dữ liệu
+    this.close.emit();
   }
 }
