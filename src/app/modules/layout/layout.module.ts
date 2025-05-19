@@ -98,7 +98,7 @@ import { MenuDynamicStore } from './menu/menudynamic/store/menu-dynamic.store';
 import { MenuDynamicService } from './menu/menudynamic/services/menudynamic.service';
 import { NhaHangComponent } from './menu/nhahang/nhahang.component';
 import { PopupNhaHangComponent } from './menu/nhahang/popupNhaHang/popupNhaHang.component';
-import { NhaHangStore } from './menu/nhahang/store/nha-hangstore';
+import { NhaHangStore } from './menu/nhahang/store/nha-hang.store';
 import { NhaHangService } from './menu/nhahang/services/nhahang.service';
 import { PopupQRComponent } from './menu/banan/popupQR/popupQR.component';
 import { ChucVuComponent } from './menu/chucvu/chucvu.component';
@@ -138,6 +138,11 @@ import { PhieuKiemKeService } from './menu/phieukiemke/services/phieukiemke.serv
 import { PhieuKiemKeStore } from './menu/phieukiemke/store/phieu-kiem-ke.store';
 import { PopupPhieuKiemKeComponent } from './menu/phieukiemke/popupPhieuKiemKe/popupPhieuKiemKe.component';
 import { PopupChiTietPhieuKiemKeComponent } from './menu/phieukiemke/popupChiTiet/popupChiTietPhieuKiemKe.component';
+import { PhanQuyenComponent } from './menu/phanquyen/phanquyen.component';
+import { PopupPhanQuyenComponent } from './menu/phanquyen/popupPhanQuyen/popupPhanQuyen.component';
+import { PhanQuyenStore } from './menu/phanquyen/store/phan-quyen.store';
+import { PhanQuyenService } from './menu/phanquyen/services/phanquyen.service';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -207,7 +212,9 @@ import { PopupChiTietPhieuKiemKeComponent } from './menu/phieukiemke/popupChiTie
     PopupChiTietPhieuNhapComponent,
     PhieukiemkeComponent,
     PopupPhieuKiemKeComponent,
-    PopupChiTietPhieuKiemKeComponent
+    PopupChiTietPhieuKiemKeComponent,
+    PhanQuyenComponent,
+    PopupPhanQuyenComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -218,7 +225,8 @@ import { PopupChiTietPhieuKiemKeComponent } from './menu/phieukiemke/popupChiTie
     HttpClientModule,
     MatPaginatorModule,
     NzNotificationModule,
-    QRCodeModule
+    QRCodeModule,
+    NzSelectModule
   ],
   exports: [MenuComponent, MainComponent, SidenavComponent, LoginComponent, MenugoimonComponent],
   providers: [
@@ -276,7 +284,9 @@ import { PopupChiTietPhieuKiemKeComponent } from './menu/phieukiemke/popupChiTie
     NhaCungCapService,
     DonOrderAdminService,
     PhieuKiemKeStore,
-    PhieuKiemKeService
+    PhieuKiemKeService,
+    PhanQuyenStore,
+    PhanQuyenService
   ]
 })
 export class LayoutModule { }
