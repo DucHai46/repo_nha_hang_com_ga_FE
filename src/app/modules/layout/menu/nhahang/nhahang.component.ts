@@ -12,7 +12,7 @@ import { FileService } from '../../../../core/services/file.service';
   styleUrl: './nhahang.component.scss'
 })
 export class NhaHangComponent implements OnInit {
-  constructor(private store: NhaHangStore, private dialog: MatDialog, private notification: NzNotificationService, private nhaHangService: NhaHangService, private fileService: FileService) {}
+  constructor(private store: NhaHangStore, private dialog: MatDialog, private notification: NzNotificationService, private nhaHangService: NhaHangService, private fileService: FileService) { }
   nhaHangPaging: NhaHang[] = [];
   itemsSearch: any[] = [];
   paging: any = {
@@ -24,14 +24,14 @@ export class NhaHangComponent implements OnInit {
   totalPages = 0;
   ngOnInit(): void {
     this.search();
-    this.store.setItems$(this.nhaHangPaging);  
+    this.store.setItems$(this.nhaHangPaging);
   }
 
   searchForm: any = {
     label: '',
-  }; 
+  };
 
-  search(){
+  search() {
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
@@ -63,7 +63,7 @@ export class NhaHangComponent implements OnInit {
   }
 
 
-  reset(){
+  reset() {
     this.searchForm.label = '';
     this.search()
   }
@@ -83,9 +83,9 @@ export class NhaHangComponent implements OnInit {
   }
   onSaveNhaHang(body: any): void {
     console.log(body);
-  
+
     if (!body) return;
-  
+
     if (this.isEditMode) {
       // Sửa bàn
       this.nhaHangService.updateNhaHang(body.id, body).subscribe({
@@ -172,21 +172,32 @@ export class NhaHangComponent implements OnInit {
     this.isPopupOpen = true;
     this.isChiTietOpen = false;
     this.isEditMode = true;
-    this.formData = item;
+    this.formData = {
+      id: item.id,
+      tenNhaHang: item.tenNhaHang,
+      diaChi: item.diaChi,
+      soDienThoai: item.soDienThoai,
+      email: item.email,
+      website: item.website,
+      logo: item.logo,
+      banner: item.banner,
+      moTa: item.moTa,
+      isActive: item.isActive
+    }
   }
-  
-   openDeletePopup(item: any): void {
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        width: '400px',
-        data: { message: `Bạn có chắc chắn muốn xóa "${item.tenNhaHang}" không?` },
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.nhaHangService.deleteNhaHang(item.id).subscribe(
-            {
-              next: (res: any) => {
-                if (res.data) {
+
+  openDeletePopup(item: any): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: { message: `Bạn có chắc chắn muốn xóa "${item.tenNhaHang}" không?` },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.nhaHangService.deleteNhaHang(item.id).subscribe(
+          {
+            next: (res: any) => {
+              if (res.data) {
                 this.search();
                 this.notification.create(
                   'success',
@@ -194,7 +205,7 @@ export class NhaHangComponent implements OnInit {
                   `Xóa dữ liệu thành công`, {
                   nzClass: 'notification-success',
                   nzDuration: 2000
-                }); 
+                });
               } else {
                 this.notification.create(
                   'error',
@@ -213,29 +224,29 @@ export class NhaHangComponent implements OnInit {
               nzDuration: 2000
             })
           }
-          )
-        } else {
-          this.notification.create(
-            'error',
-            'Thông báo!',
-            `Xóa thất bại`,
-            {
-              nzClass: 'notification-error',
-              nzDuration: 2000  
-            }
-          );
-        }
-      });
-    }
+        )
+      } else {
+        this.notification.create(
+          'error',
+          'Thông báo!',
+          `Xóa thất bại`,
+          {
+            nzClass: 'notification-error',
+            nzDuration: 2000
+          }
+        );
+      }
+    });
+  }
 
   isChiTietOpen = false;
   openChiTietPopup(item: any): void {
     this.isPopupOpen = true;
-    this.isChiTietOpen = true; 
+    this.isChiTietOpen = true;
     this.nhaHangService.getNhaHangById(item.id).subscribe((response: any) => {
-    this.formData = response.data;  
-    console.log(this.formData);
-    });      
+      this.formData = response.data;
+      console.log(this.formData);
+    });
   }
 
   parseJSON(jsonString: string): any {
@@ -251,10 +262,10 @@ export class NhaHangComponent implements OnInit {
       (response: Blob) => {
         // Create object URL from blob
         const url = window.URL.createObjectURL(response);
-        
+
         // Open preview in new tab
         window.open(url, '_blank');
-        
+
         // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
@@ -273,22 +284,22 @@ export class NhaHangComponent implements OnInit {
         nzDuration: 2000
       });
     }
-    else{ 
+    else {
       item.isActive = newStatus;
       this.nhaHangService.updateNhaHang(item.id, item).subscribe({
         next: (res: any) => {
-        if (res.data) {
-          this.search();
-        } else {}
-      },
-      error: () => this.notification.create(
-        'error',
-        'Thông báo!',
-        `Cập nhật thất bại`, {
-        nzClass: 'notification-error',
-        nzDuration: 2000
-      })
-    });
+          if (res.data) {
+            this.search();
+          } else { }
+        },
+        error: () => this.notification.create(
+          'error',
+          'Thông báo!',
+          `Cập nhật thất bại`, {
+          nzClass: 'notification-error',
+          nzDuration: 2000
+        })
+      });
     }
   }
 }

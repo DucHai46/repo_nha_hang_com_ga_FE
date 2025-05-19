@@ -17,7 +17,7 @@ export class PopupKhachhangComponent {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
-  constructor(){}
+  constructor() { }
 
   onSave(): void {
     this.save.emit(this.formData);

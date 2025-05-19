@@ -11,22 +11,22 @@ import { Result } from 'postcss';
   templateUrl: './khachhang.component.html',
   styleUrl: './khachhang.component.scss'
 })
-export class KhachhangComponent implements OnInit  {
-  constructor (
+export class KhachhangComponent implements OnInit {
+  constructor(
     private store: KhachHangStore,
     private khachhangService: KhachHangService,
     private dialog: MatDialog,
     private notification: NzNotificationService,
-  ){}
+  ) { }
   khachHangPaging: any[] = [];
   itemsSearch: any[] = [];
   paging: any = {
-   page: 1,
-   size: 10,
-   total: 0, 
+    page: 1,
+    size: 10,
+    total: 0,
   };
   totalPages = 0;
-  ngOnInit(): void{
+  ngOnInit(): void {
     // Khởi tạo component
     this.search();
     this.store.setItems$(this.khachHangPaging);
@@ -36,7 +36,7 @@ export class KhachhangComponent implements OnInit  {
     tenKhachHang: ''
   };
 
-  search(){
+  search() {
     console.log(this.paging)
     this.searchForm.isPaging = true;
     this.searchForm.pageNumber = this.paging.page;
@@ -59,8 +59,8 @@ export class KhachhangComponent implements OnInit  {
     )
   }
 
-  changePage(newPage: number){
-    if(newPage < 1 || newPage > this.totalPages) return;
+  changePage(newPage: number) {
+    if (newPage < 1 || newPage > this.totalPages) return;
     this.paging.page = newPage;
     this.search();
   }
@@ -71,7 +71,7 @@ export class KhachhangComponent implements OnInit  {
     this.search();
   }
 
-  reset(){
+  reset() {
     this.searchForm.tenKhachHang = '';
     this.search();
   }
@@ -80,69 +80,69 @@ export class KhachhangComponent implements OnInit  {
   isEditMode = false;
   formData: any = {}
 
-  openAddPopup(){
+  openAddPopup() {
     this.isPopupOpen = true;
     this.isEditMode = false;
     this.formData = {};
   }
 
-  closePopup(){
+  closePopup() {
     this.isPopupOpen = false;
     this.isEditMode = false;
   }
 
-  onSaveCongThuc(body: any): void{
+  onSaveCongThuc(body: any): void {
     console.log(body);
 
-    if(!body) return;
+    if (!body) return;
 
-    if(this.isEditMode){
-     this.khachhangService.updateKhachHang(body.id, body).subscribe(
-      {
-        next: (res: any) => {
-          if(res.data){
-            this.searchForm.tenKhachHang = '';
-            this.search();
-            this.closePopup();
-            this.notification.create(
-              'success',
-              'Thông báo!',
-              `Cập nhật thành công`,
-              {
-                nzClass: 'notification-success',
-                nzDuration: 2000,
-              }
-            );
-          }
-        },
-        error: () => this.notification.create(
-          'error',
-           'Thông báo!',
-           `Cập nhật thất bại`,
-           {
-             nzClass: 'notification-error',
-             nzDuration: 2000,
-           }
-         )
-       } 
-     ); 
+    if (this.isEditMode) {
+      this.khachhangService.updateKhachHang(body.id, body).subscribe(
+        {
+          next: (res: any) => {
+            if (res.data) {
+              this.searchForm.tenKhachHang = '';
+              this.search();
+              this.closePopup();
+              this.notification.create(
+                'success',
+                'Thông báo!',
+                `Cập nhật thành công`,
+                {
+                  nzClass: 'notification-success',
+                  nzDuration: 2000,
+                }
+              );
+            }
+          },
+          error: () => this.notification.create(
+            'error',
+            'Thông báo!',
+            `Cập nhật thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000,
+            }
+          )
+        }
+      );
     } else {
       // Add KH
       this.khachhangService.addKhachHang(body).subscribe(
         {
           next: (res: any) => {
-            if(res.data){
+            if (res.data) {
               this.searchForm.tenKhachHang = '';
               this.search();
               this.closePopup();
               this.notification.create(
-               'success',
+                'success',
                 'Thông báo!',
                 `Thêm mới thành công`,
                 {
                   nzClass: 'notification-success',
-                  nzDuration: 2000    
-                } 
+                  nzDuration: 2000
+                }
               );
             }
           },
@@ -159,21 +159,27 @@ export class KhachhangComponent implements OnInit  {
       );
     }
   }
-  
+
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
-    this.formData = item;
+    this.formData = {
+      id: item.id,
+      tenKhachHang: item.tenKhachHang,
+      diaChi: item.diaChi,
+      email: item.email,
+      soDienThoai: item.soDienThoai,
+    }
   }
 
-  openDeletePopup(item: any): void{
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
+  openDeletePopup(item: any): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
-      data: {message: `Bạn có chắc chắn xóa "${item.tenKhachHang}" không?`},
+      data: { message: `Bạn có chắc chắn xóa "${item.tenKhachHang}" không?` },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if(result){
+      if (result) {
         this.khachhangService.deleteKhachHang(item.id).subscribe(
           {
             next: (res: any) => {
@@ -199,7 +205,7 @@ export class KhachhangComponent implements OnInit  {
             )
           }
         )
-      } else{
+      } else {
         this.notification.create(
           'error',
           'Thông báo!',

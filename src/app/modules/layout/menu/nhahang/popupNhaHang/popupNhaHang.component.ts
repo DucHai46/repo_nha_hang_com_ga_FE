@@ -25,7 +25,7 @@ export class PopupNhaHangComponent {
   constructor(
     private fileService: FileService,
     private notification: NzNotificationService
-  ) {}
+  ) { }
 
   // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
@@ -90,9 +90,9 @@ export class PopupNhaHangComponent {
   }
 
   toggleActive(formData: any): void {
-    if(formData.isActive){
+    if (formData.isActive) {
       formData.isActive = false;
-    }else{
+    } else {
       formData.isActive = true;
     }
   }
