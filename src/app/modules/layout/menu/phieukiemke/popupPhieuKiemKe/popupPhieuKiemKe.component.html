@@ -1,0 +1,209 @@
+<div class="popup-backdrop">
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        {{ isEditMode ? "Sửa phiếu kiểm kê" : "Thêm phiếu kiểm kê" }}
+      </h2>
+      <form>
+        <div class="form-group">
+          <label for="materialName">Tên phiếu</label>
+          <input
+            type="text"
+            id="materialName"
+            [(ngModel)]="formData.tenPhieu"
+            name="tenThucDon"
+            placeholder="Nhập tên Phiếu..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="nhân viên">Nhân viên:</label>
+          <select
+            id="nhanVien"
+            [(ngModel)]="formData.nhanVien"
+            name="NhanVien"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let danhMuc of nhanVien" [ngValue]="danhMuc.id">
+              {{ danhMuc.name }}
+            </option>
+          </select>
+        </div>
+
+        <!-- ------------------------------------------------- --------------------------------------------------->
+
+        <div>
+          <label class="materialName">Nguyên liệu theo loại</label>
+
+          <!-- Lặp qua các loại nguyên liệu -->
+          <div
+            *ngFor="let loai of loaiSelections; let i = index"
+            class="relative bg-gray-100 border rounded-xl p-4 mb-4 space-y-3"
+          >
+            <button
+              (click)="removeLoaiSelection(i)"
+              class="absolute top-2 right-2 !text-red-500 !hover:text-red-700 !text-lg !font-bold"
+            >
+              &times;
+            </button>
+            <!-- Dropdown chọn loại nguyên liệu -->
+            <label class="text-sm font-medium text-gray-700"
+              >Loại nguyên liệu {{ i + 1 }}</label
+            >
+            <div class="flex flex-cols">
+              <select
+                [(ngModel)]="loai.selectedLoaiId"
+                (change)="onLoaiNguyenLieuChange(i)"
+                [ngModelOptions]="{ standalone: true }"
+                class="w-full mt-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <!-- <option value="" disabled selected>Chọn loại nguyên liệu</option> -->
+                <option
+                  *ngFor="let l of loaiNguyenLieu"
+                  [value]="l.id"
+                  [disabled]="isLoaiDuplicate(l.id, i)"
+                >
+                  {{ l.name }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Lặp qua các nguyên liệu đã chọn và hiển thị dropdown, số lượng, ghi chú -->
+            <label
+              *ngIf="loai.selectedLoaiId"
+              class="text-sm font-medium text-gray-700"
+              >Danh sách nguyên liệu</label
+            >
+            <div
+              *ngFor="let item of loai.filteredNguyenLieu; let j = index"
+              class="bg-white p-3 rounded shadow mb-3"
+            >
+              <div class="space-y-4 mb-4">
+                <!-- Một item món ăn -->
+                <div
+                  class="border border-gray-300 rounded-lg p-4 bg-white shadow-sm space-y-3"
+                >
+                  <div class="flex items-baseline gap-1 text-base">
+                    <label [for]="'loaiNguyenLieu_' + j"
+                      >Loại nguyên liệu:</label
+                    >
+                    <div class="font-semibold">
+                      {{ item.name }}
+                    </div>
+                  </div>
+
+                  <div class="flex items-baseline gap-1 text-base">
+                    <label [for]="'soLuong_' + j">Số lượng:</label>
+                    <div class="font-semibold">
+                      {{ item.soLuong }}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label [for]="'soLuong_' + j">Số lượng thực tế:</label>
+                    <input
+                      type="number"
+                      [id]="'soLuong_' + j"
+                      [(ngModel)]="item.soLuongThucTe"
+                      [name]="'soLuong_' + j"
+                      (ngModelChange)="updateChenhLech(item)"
+                      placeholder="Nhập số lượng nguyên liệu..."
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label [for]="'thanhTien_' + j">Chênh lệch:</label>
+                    <input
+                      type="number"
+                      [id]="'thanhTien_' + j"
+                      [(ngModel)]="item.chenhLech"
+                      [name]="'thanhTien_' + j"
+                      placeholder="Chênh lệch..."
+                      readonly
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label [for]="'ghiChu_' + j">Ghi chú:</label>
+                    <input
+                      type="text"
+                      [id]="'ghiChu_' + j"
+                      [(ngModel)]="item.ghiChu"
+                      [name]="'ghiChu_' + j"
+                      placeholder="Nhập ghi chú..."
+                    />
+                  </div>
+
+                  <!-- Nút xóa -->
+                  <div class="text-right">
+                    <button
+                      (click)="removeNguyenLieuInLoai(i, j)"
+                      class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded transition"
+                    >
+                      Xóa
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Chỉ hiển thị nút Thêm nguyên liệu khi loại nguyên liệu được chọn -->
+            <!-- <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto" 
+              (click)="removeLoaiSelection(i)">
+                Xóa
+              </button> -->
+          </div>
+
+          <!-- Nút thêm loại nguyên liệu -->
+          <button
+            (click)="addLoaiSelection()"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto"
+          >
+            Thêm loại nguyên liệu
+          </button>
+        </div>
+        <!-- ------------------------------------------------------------------------------------------------------------ -->
+
+        <!-- ------------------------------------------------------------------------------------------------------------ -->
+
+        <!-- <div class="form-group">
+            <label>Trạng thái:</label>
+            <select [(ngModel)]="formData.trangThai" name="trangThai" class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none" required>
+              <option [ngValue]="0">Không hoạt động</option>
+              <option [ngValue]="1">Hoạt động</option>
+            </select>
+          </div> -->
+        <div class="form-group">
+          <label for="diaDiem">Địa điểm:</label>
+          <textarea
+            id="diaDiem"
+            [(ngModel)]="formData.diaDiem"
+            name="DiaDiem"
+            placeholder="Nhập địa điểm..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="ghiChu">Ghi chú:</label>
+          <textarea
+            id="ghiChu"
+            [(ngModel)]="formData.ghiChu"
+            name="GhiChu"
+            placeholder="Nhập ghi chú..."
+          ></textarea>
+        </div>
+
+        <div class="popup-actions mt-6">
+          <button
+            type="button"
+            class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition w-full sm:w-auto"
+            (click)="onCancel()"
+          >
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto"
+            (click)="onSave()"
+          >
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

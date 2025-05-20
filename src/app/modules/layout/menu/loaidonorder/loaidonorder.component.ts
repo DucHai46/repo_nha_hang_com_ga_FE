@@ -12,13 +12,13 @@ import { LoaiDonOrder } from '../../../../models/LoaiDonOrder';
   templateUrl: './loaidonorder.component.html',
   styleUrl: './loaidonorder.component.scss'
 })
-export class LoaidonorderComponent implements OnInit  {
+export class LoaidonorderComponent implements OnInit {
   constructor(
-    private store: LoaiDonOrderStore, 
+    private store: LoaiDonOrderStore,
     private dialog: MatDialog,
     private notification: NzNotificationService,
     private loaidonorderService: LoaidonorderService
-  ) {}
+  ) { }
   loaiDonOrderPaging: any[] = [];
   // itemsSearch: any [] = [];
   paging: any = {
@@ -31,47 +31,47 @@ export class LoaidonorderComponent implements OnInit  {
     // Khởi tạo component
     this.search();
     this.store.setItems$(this.loaiDonOrderPaging);
-    
+
   }
 
   searchForm: any = {
     tenLoaiDon: ''
   };
   search() {
-   this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
-   this.searchForm.pageNumber = this.paging.page;
-   this.searchForm.pageSize = this.paging.size;
-   this.loaidonorderService.getLoaidonorder(this.searchForm).subscribe(
-    {
-     next: (res: any) => {
-      this.loaiDonOrderPaging = res.data.data;
-      this.paging.page = res.data.paging.currentPage;
-      this.paging.size = res.data.paging.pageSize;
-      this.paging.total = res.data.paging.totalRecords;
-      this.totalPages = Math.ceil(this.paging.total / this.paging.size);
-     },
-     error: (err: any) => {
-      this.notification.error('Lỗi', 'Lấy dữ liệu thất bại');
-     }
-    }
-   ) 
+    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.pageNumber = this.paging.page;
+    this.searchForm.pageSize = this.paging.size;
+    this.loaidonorderService.getLoaidonorder(this.searchForm).subscribe(
+      {
+        next: (res: any) => {
+          this.loaiDonOrderPaging = res.data.data;
+          this.paging.page = res.data.paging.currentPage;
+          this.paging.size = res.data.paging.pageSize;
+          this.paging.total = res.data.paging.totalRecords;
+          this.totalPages = Math.ceil(this.paging.total / this.paging.size);
+        },
+        error: (err: any) => {
+          this.notification.error('Lỗi', 'Lấy dữ liệu thất bại');
+        }
+      }
+    )
   }
 
-  changePage(newPage: number){
-    if(newPage < 1 || newPage > this.totalPages) return;
+  changePage(newPage: number) {
+    if (newPage < 1 || newPage > this.totalPages) return;
     this.paging.page = newPage;
     this.search();
   }
 
-  changePageSize(newSize: number){
+  changePageSize(newSize: number) {
     this.paging.size = newSize;
     this.paging.page = 1; // Reset về trang đầu
     this.search();
   }
 
-  reset(){
-   this.searchForm.tenLoaiDon = '';
-   this.search(); 
+  reset() {
+    this.searchForm.tenLoaiDon = '';
+    this.search();
   }
 
   isPopupOpen = false;
@@ -79,7 +79,7 @@ export class LoaidonorderComponent implements OnInit  {
   formData: any = {}
 
   // Hàm mở popup thêm mới
-  openAddPopup(){
+  openAddPopup() {
     this.isPopupOpen = true;
     this.isEditMode = false;
     this.formData = {};
@@ -93,17 +93,17 @@ export class LoaidonorderComponent implements OnInit  {
 
   onSaveCongThuc(body: any): void {
     console.log(body);
-    
-    if(!body) return;
+
+    if (!body) return;
 
     // Nếu true thì sửa loại đơn order 
-    if(this.isEditMode){
+    if (this.isEditMode) {
       // Sửa loại đơn order 
       this.loaidonorderService.updateLoaidonorder(body.id, body).subscribe(
         {
           next: (res: any) => {
             console.log(res);
-            if(res.data) {
+            if (res.data) {
               this.searchForm.tenLoaiDon = '';
               this.search();
               this.closePopup();
@@ -134,7 +134,7 @@ export class LoaidonorderComponent implements OnInit  {
       this.loaidonorderService.addLoaidonorder(body).subscribe(
         {
           next: (res: any) => {
-            if(res.data) {
+            if (res.data) {
               this.searchForm.tenLoaiDon = '';
               this.search();
               this.closePopup();
@@ -166,54 +166,58 @@ export class LoaidonorderComponent implements OnInit  {
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
-    this.formData = item;
+    this.formData = {
+      id: item.id,
+      tenLoaiDon: item.tenLoaiDon,
+      moTa: item.moTa,
+    }
   }
 
   // Hàm mở popup xác nhận xóa
   openDeletePopup(item: any): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
-     data: { message: `Bạn có chắc chắn muốn xóa "${item.tenLoaiDon}" không?` },
+      data: { message: `Bạn có chắc chắn muốn xóa "${item.tenLoaiDon}" không?` },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if(result) {
-       this.loaidonorderService.deleteLoaidonorder(item.id).subscribe(
-        {
-         next: (res: any) => {
-          this.search();
-          this.notification.create(
-            'success',
-            'Thông báo!',
-            `Xóa thành công`,
-            {
-              nzClass: 'notification-success',
-              nzDuration: 2000
-            }
-          );
-         },
-         error: () => this.notification.create(
+      if (result) {
+        this.loaidonorderService.deleteLoaidonorder(item.id).subscribe(
+          {
+            next: (res: any) => {
+              this.search();
+              this.notification.create(
+                'success',
+                'Thông báo!',
+                `Xóa thành công`,
+                {
+                  nzClass: 'notification-success',
+                  nzDuration: 2000
+                }
+              );
+            },
+            error: () => this.notification.create(
+              'error',
+              'Thông báo!',
+              `Xóa thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            )
+          }
+        )
+      } else {
+        this.notification.create(
           'error',
           'Thông báo!',
           `Xóa thất bại`,
           {
             nzClass: 'notification-error',
             nzDuration: 2000
-          } 
-         )
-        } 
-       ) 
-      } else {
-        this.notification.create(
-          'error',
-          'Thông báo!',
-          `Xóa thất bại`, 
-          {
-            nzClass: 'notification-error',
-            nzDuration: 2000
           }
         )
-      }  
+      }
     });
   }
 }

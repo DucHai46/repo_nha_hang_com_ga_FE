@@ -147,6 +147,7 @@
               <th scope="col" class="px-6 py-3">Mô tả</th>
               <th scope="col" class="px-6 py-3">Đơn vị tính</th>
               <th scope="col" class="px-6 py-3">Số lượng</th>
+              <th scope="col" class="px-6 py-3">Hạn sử dụng</th>
               <th scope="col" class="px-6 py-3">Loại nguyên liệu</th>
               <th scope="col" class="px-6 py-3">Tủ đồ</th>
               <th scope="col" class="px-6 py-3">Trạng thái</th>
@@ -178,6 +179,9 @@
               </td>
               <td class="px-6 py-4">
                 {{ item.soLuong }}
+              </td>
+              <td class="px-6 py-4">
+                {{ item.hanSuDung | date : "dd/MM/yyyy" }}
               </td>
               <td class="px-6 py-4">
                 {{ item.loaiNguyenLieu.name }}

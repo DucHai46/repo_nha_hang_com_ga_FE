@@ -134,6 +134,7 @@ import { NhaCungCapStore } from './menu/nhacungcap/store/nha-cung-cap.store';
 import { PopupNhaCungCapComponent } from './menu/nhacungcap/popupNhaCungCap/popupNhaCungCap.component';
 import { PopupChiTietPhieuNhapComponent } from './menu/phieunhap/popupChiTiet/popupChiTietPhieuNhap.component';
 import { DonOrderAdminService } from './menu/donorder/services/donorderadmin.service';
+
 import { HoadonthanhtoanComponent } from './menu/hoadonthanhtoan/hoadonthanhtoan.component';
 import { PhuphiComponent } from './menu/phuphi/phuphi.component';
 import { PhuPhiStore } from './menu/phuphi/store/phu-phi.store';
@@ -145,6 +146,18 @@ import { PhuongThucThanhToanStore } from './menu/phuongthucthanhtoan/store/phuon
 import { HoaDonThanhToanService } from './menu/hoadonthanhtoan/services/hoadonthanhtoan.service';
 import { HoaDonThanhToanStore } from './menu/hoadonthanhtoan/store/hoa-don-thanh-toan.store';
 import { PopupChiTietHoaDonComponent } from './menu/hoadonthanhtoan/popupChiTietHoaDon/popupChiTietHoaDon.component';
+
+
+import { PhieukiemkeComponent } from './menu/phieukiemke/phieukiemke.component';
+import { PhieuKiemKeService } from './menu/phieukiemke/services/phieukiemke.service';
+import { PhieuKiemKeStore } from './menu/phieukiemke/store/phieu-kiem-ke.store';
+import { PopupPhieuKiemKeComponent } from './menu/phieukiemke/popupPhieuKiemKe/popupPhieuKiemKe.component';
+import { PopupChiTietPhieuKiemKeComponent } from './menu/phieukiemke/popupChiTiet/popupChiTietPhieuKiemKe.component';
+import { PhieuxuatComponent } from './menu/phieuxuat/phieuxuat.component';
+import { PhieuXuatService } from './menu/phieuxuat/services/phieuxuat.service';
+import { PhieuXuatStore } from './menu/phieuxuat/store/phieu-xuat.store';
+import { PopupPhieuXuatComponent } from './menu/phieuxuat/popupPhieuXuat/popupPhieuXuat.component';
+import { PopupChiTietPhieuXuatComponent } from './menu/phieuxuat/popupChiTiet/popupChiTietPhieuXuat.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -213,12 +226,20 @@ import { PopupChiTietHoaDonComponent } from './menu/hoadonthanhtoan/popupChiTiet
     NhacungcapComponent,
     PopupNhaCungCapComponent,
     PopupChiTietPhieuNhapComponent,
+
     HoadonthanhtoanComponent,
     PhuphiComponent,
     PopupPhuPhiComponent,
     PhuongthucthanhtoanComponent,
     PopupChiTietHoaDonComponent,
     PopupThanhToanComponent,
+
+    PhieukiemkeComponent,
+    PopupPhieuKiemKeComponent,
+    PopupChiTietPhieuKiemKeComponent,
+    PhieuxuatComponent,
+    PopupPhieuXuatComponent,
+    PopupChiTietPhieuXuatComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -286,12 +307,19 @@ import { PopupChiTietHoaDonComponent } from './menu/hoadonthanhtoan/popupChiTiet
     NhaCungCapStore,
     NhaCungCapService,
     DonOrderAdminService,
+
     PhuPhiStore,
     PhuPhiService,
     PhuongThucThanhToanService,
     PhuongThucThanhToanStore,
     HoaDonThanhToanService,
     HoaDonThanhToanStore,
+
+    PhieuKiemKeStore,
+    PhieuKiemKeService,
+    PhieuXuatService,
+    PhieuXuatStore
+
   ]
 })
 export class LayoutModule { }
