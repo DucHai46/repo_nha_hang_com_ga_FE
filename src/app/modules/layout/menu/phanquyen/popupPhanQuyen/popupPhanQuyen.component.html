@@ -35,6 +35,7 @@
                 [(ngModel)]="formData.danhSachMenu"
                 name="danhSachMenu"
                 class="w-full"
+                [disabled]="isChiTietOpen"
               >
                 @for (item of menuDynamic; track item) {
                 <nz-option

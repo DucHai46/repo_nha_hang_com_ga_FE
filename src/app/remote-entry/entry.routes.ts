@@ -49,40 +49,50 @@ export const remoteRoutes: Route[] = [
         canActivate: [AuthGuard],
         children: [
           // { path: 'dashboard', component: MonanComponent },
+          //Quản trị hệ thống
           { path: 'menudynamic', component: MenuDynamicComponent },
           { path: 'nhahang', component: NhaHangComponent },
-          { path: 'danhmucnguyenlieu', component: DanhmucnguyenlieuComponent },
-          { path: 'danhmucmonan', component: DanhmucmonanComponent },
-          { path: 'loainguyenlieu', component: LoainguyenlieuComponent },
-          { path: 'loaibanan', component: LoaibananComponent },
-          { path: 'banan', component: BananComponent },
-          { path: 'khuyenmai', component: KhuyenmaiComponent },
+          { path: 'nhanvien', component: NhanVienComponent },
+          { path: 'phanquyen', component: PhanQuyenComponent },
+          { path: 'khachhang', component: KhachhangComponent },
           { path: 'donvitinh', component: DonvitinhComponent },
-          { path: 'loaitudo', component: LoaitudoComponent },
-          { path: 'tudo', component: TudoComponent },
-          { path: 'nguyenlieu', component: NguyenlieuComponent },
-          { path: 'loaimonan', component: LoaimonanComponent },
+          { path: 'khuyenmai', component: KhuyenmaiComponent },
           { path: 'congthuc', component: CongthucComponent },
           { path: 'giamgia', component: GiamgiaComponent },
+          { path: 'chucvu', component: ChucVuComponent },
+          { path: 'phuphi', component: PhuphiComponent },
+          { path: 'banggia', component: BanggiaComponent },
+          { path: 'nhacungcap', component: NhacungcapComponent },
+
+          //Quản lý nguyên liệu
+          { path: 'danhmucnguyenlieu', component: DanhmucnguyenlieuComponent },
+          { path: 'loainguyenlieu', component: LoainguyenlieuComponent },
+          { path: 'nguyenlieu', component: NguyenlieuComponent },
+
+          //Quản lý món ăn - thực đơn
+          { path: 'danhmucmonan', component: DanhmucmonanComponent },
+          { path: 'loaimonan', component: LoaimonanComponent },
           { path: 'monan', component: MonanComponent },
           { path: 'combo', component: ComboComponent },
           { path: 'thucdon', component: ThucdonComponent },
-          { path: 'chucvu', component: ChucVuComponent },
-          { path: 'nhanvien', component: NhanVienComponent },
-          { path: 'banggia', component: BanggiaComponent },
+
+          //Quản lý bàn ăn
+          { path: 'loaibanan', component: LoaibananComponent },
+          { path: 'banan', component: BananComponent },
+
+          //Quản lý tủ đồ
+          { path: 'loaitudo', component: LoaitudoComponent },
+          { path: 'tudo', component: TudoComponent },
+
+          //Quản lý đơn hàng
           { path: 'loaidonorder', component: LoaidonorderComponent },
-          { path: 'khachhang', component: KhachhangComponent },
           { path: 'donorder', component: DonorderComponent },
-          { path: 'phieunhap', component: PhieunhapComponent },
-          { path: 'nhacungcap', component: NhacungcapComponent },
 
-          { path: 'phuphi', component: PhuphiComponent },
+          //Quản lý hóa đơn - phiếu
           { path: 'hoadon', component: HoadonthanhtoanComponent },
-
-
           { path: 'phieukiemke', component: PhieukiemkeComponent },
           { path: 'phieuxuat', component: PhieuxuatComponent },
-          { path: 'phanquyen', component: PhanQuyenComponent },
+          { path: 'phieunhap', component: PhieunhapComponent },
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]
