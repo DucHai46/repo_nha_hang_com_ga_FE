@@ -1,0 +1,98 @@
+.popup-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .popup-box {
+    background: white;
+    padding: 20px;
+    width: 80vw;             
+    max-width: 1200px;        
+    min-width: 800px;        
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    max-height: 90vh;        
+    overflow-y: auto;        
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .popup-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .cancel-btn {
+    background-color: #ff4d4d;
+    color: white;
+    
+    &:hover {
+      background-color: #e60000;
+    }
+  }
+
+  .save-btn {
+    background-color: #007bff;
+    color: white;
+    
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+

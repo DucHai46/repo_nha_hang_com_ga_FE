@@ -99,7 +99,7 @@ import { MenuDynamicStore } from './menu/menudynamic/store/menu-dynamic.store';
 import { MenuDynamicService } from './menu/menudynamic/services/menudynamic.service';
 import { NhaHangComponent } from './menu/nhahang/nhahang.component';
 import { PopupNhaHangComponent } from './menu/nhahang/popupNhaHang/popupNhaHang.component';
-import { NhaHangStore } from './menu/nhahang/store/nha-hangstore';
+import { NhaHangStore } from './menu/nhahang/store/nha-hang.store';
 import { NhaHangService } from './menu/nhahang/services/nhahang.service';
 import { PopupQRComponent } from './menu/banan/popupQR/popupQR.component';
 import { ChucVuComponent } from './menu/chucvu/chucvu.component';
@@ -158,7 +158,11 @@ import { PhieuXuatService } from './menu/phieuxuat/services/phieuxuat.service';
 import { PhieuXuatStore } from './menu/phieuxuat/store/phieu-xuat.store';
 import { PopupPhieuXuatComponent } from './menu/phieuxuat/popupPhieuXuat/popupPhieuXuat.component';
 import { PopupChiTietPhieuXuatComponent } from './menu/phieuxuat/popupChiTiet/popupChiTietPhieuXuat.component';
-
+import { PhanQuyenComponent } from './menu/phanquyen/phanquyen.component';
+import { PopupPhanQuyenComponent } from './menu/phanquyen/popupPhanQuyen/popupPhanQuyen.component';
+import { PhanQuyenStore } from './menu/phanquyen/store/phan-quyen.store';
+import { PhanQuyenService } from './menu/phanquyen/services/phanquyen.service';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -233,13 +237,14 @@ import { PopupChiTietPhieuXuatComponent } from './menu/phieuxuat/popupChiTiet/po
     PhuongthucthanhtoanComponent,
     PopupChiTietHoaDonComponent,
     PopupThanhToanComponent,
-
     PhieukiemkeComponent,
     PopupPhieuKiemKeComponent,
     PopupChiTietPhieuKiemKeComponent,
     PhieuxuatComponent,
     PopupPhieuXuatComponent,
-    PopupChiTietPhieuXuatComponent
+    PopupChiTietPhieuXuatComponent,
+    PhanQuyenComponent,
+    PopupPhanQuyenComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -250,7 +255,8 @@ import { PopupChiTietPhieuXuatComponent } from './menu/phieuxuat/popupChiTiet/po
     HttpClientModule,
     MatPaginatorModule,
     NzNotificationModule,
-    QRCodeModule
+    QRCodeModule,
+    NzSelectModule
   ],
   exports: [MenuComponent, MainComponent, SidenavComponent, LoginComponent, MenugoimonComponent],
   providers: [
@@ -318,8 +324,9 @@ import { PopupChiTietPhieuXuatComponent } from './menu/phieuxuat/popupChiTiet/po
     PhieuKiemKeStore,
     PhieuKiemKeService,
     PhieuXuatService,
-    PhieuXuatStore
-
+    PhieuXuatStore,
+    PhanQuyenStore,
+    PhanQuyenService
   ]
 })
 export class LayoutModule { }

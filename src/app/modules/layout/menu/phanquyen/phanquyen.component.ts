@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { NhaHangStore } from './store/nha-hang.store';
+import { PhanQuyenStore } from './store/phan-quyen.store';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
-import { NhaHangService } from './services/nhahang.service';
-import { NhaHang } from '../../../../models/NhaHang';
+import { PhanQuyenService } from './services/phanquyen.service';
+import { PhanQuyen } from '../../../../models/PhanQuyen';
 import { FileService } from '../../../../core/services/file.service';
 @Component({
-  selector: 'app-nhahang',
-  templateUrl: './nhahang.component.html',
-  styleUrl: './nhahang.component.scss'
+  selector: 'app-phanquyen',
+  templateUrl: './phanquyen.component.html',
+  styleUrl: './phanquyen.component.scss'
 })
-export class NhaHangComponent implements OnInit {
-  constructor(private store: NhaHangStore, private dialog: MatDialog, private notification: NzNotificationService, private nhaHangService: NhaHangService, private fileService: FileService) { }
-  nhaHangPaging: NhaHang[] = [];
+export class PhanQuyenComponent implements OnInit {
+  constructor(private store: PhanQuyenStore, private dialog: MatDialog, private notification: NzNotificationService, private phanQuyenService: PhanQuyenService, private fileService: FileService) { }
+  phanQuyenPaging: PhanQuyen[] = [];
   itemsSearch: any[] = [];
   paging: any = {
     page: 1,
@@ -24,7 +24,7 @@ export class NhaHangComponent implements OnInit {
   totalPages = 0;
   ngOnInit(): void {
     this.search();
-    this.store.setItems$(this.nhaHangPaging);
+    this.store.setItems$(this.phanQuyenPaging);
   }
 
   searchForm: any = {
@@ -35,10 +35,10 @@ export class NhaHangComponent implements OnInit {
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    this.nhaHangService.getNhaHang(this.searchForm).subscribe(
+    this.phanQuyenService.getPhanQuyen(this.searchForm).subscribe(
       {
         next: (res: any) => {
-          this.nhaHangPaging = res.data.data;
+          this.phanQuyenPaging = res.data.data;
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -81,17 +81,17 @@ export class NhaHangComponent implements OnInit {
     this.isPopupOpen = false;
     this.isEditMode = false;
   }
-  onSaveNhaHang(body: any): void {
+  onSavePhanQuyen(body: any): void {
     console.log(body);
 
     if (!body) return;
 
     if (this.isEditMode) {
       // Sửa bàn
-      this.nhaHangService.updateNhaHang(body.id, body).subscribe({
+      this.phanQuyenService.updatePhanQuyen(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenNhaHang = '';
+            this.searchForm.tenPhanQuyen = '';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -127,10 +127,10 @@ export class NhaHangComponent implements OnInit {
       });
     } else {
       // Thêm mới bàn
-      this.nhaHangService.addNhaHang(body).subscribe({
+      this.phanQuyenService.addPhanQuyen(body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenNhaHang = '';
+            this.searchForm.tenPhanQuyen = '';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -174,27 +174,21 @@ export class NhaHangComponent implements OnInit {
     this.isEditMode = true;
     this.formData = {
       id: item.id,
-      tenNhaHang: item.tenNhaHang,
-      diaChi: item.diaChi,
-      soDienThoai: item.soDienThoai,
-      email: item.email,
-      website: item.website,
-      logo: item.logo,
-      banner: item.banner,
-      moTa: item.moTa,
-      isActive: item.isActive
+      tenPhanQuyen: item.tenPhanQuyen,
+      danhSachMenu: item.danhSachMenu,
+      moTa: item.moTa
     }
   }
 
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
-      data: { message: `Bạn có chắc chắn muốn xóa "${item.tenNhaHang}" không?` },
+      data: { message: `Bạn có chắc chắn muốn xóa "${item.tenPhanQuyen}" không?` },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.nhaHangService.deleteNhaHang(item.id).subscribe(
+        this.phanQuyenService.deletePhanQuyen(item.id).subscribe(
           {
             next: (res: any) => {
               if (res.data) {
@@ -243,7 +237,7 @@ export class NhaHangComponent implements OnInit {
   openChiTietPopup(item: any): void {
     this.isPopupOpen = true;
     this.isChiTietOpen = true;
-    this.nhaHangService.getNhaHangById(item.id).subscribe((response: any) => {
+    this.phanQuyenService.getPhanQuyenById(item.id).subscribe((response: any) => {
       this.formData = response.data;
       console.log(this.formData);
     });
@@ -275,31 +269,31 @@ export class NhaHangComponent implements OnInit {
   toggleActive(item: any): void {
     const newStatus = !item.isActive;
     // Nếu đang bật và đã có nhà hàng khác active thì không cho bật
-    if (newStatus && this.nhaHangPaging.some(i => i.isActive)) {
-      this.notification.create(
-        'error',
-        'Thông báo!',
-        `Chỉ có thể có 1 nhà hàng được kích hoạt tại một thời điểm.`, {
-        nzClass: 'notification-error',
-        nzDuration: 2000
-      });
-    }
-    else {
-      item.isActive = newStatus;
-      this.nhaHangService.updateNhaHang(item.id, item).subscribe({
-        next: (res: any) => {
-          if (res.data) {
-            this.search();
-          } else { }
-        },
-        error: () => this.notification.create(
-          'error',
-          'Thông báo!',
-          `Cập nhật thất bại`, {
-          nzClass: 'notification-error',
-          nzDuration: 2000
-        })
-      });
-    }
+    // if (newStatus && this.phanQuyenPaging.some(i => i.isActive)) {
+    //   this.notification.create(
+    //     'error',
+    //     'Thông báo!',
+    //     `Chỉ có thể có 1 nhà hàng được kích hoạt tại một thời điểm.`, {
+    //     nzClass: 'notification-error',
+    //     nzDuration: 2000
+    //   });
+    // }
+    // else {
+    //   item.isActive = newStatus;
+    //   this.phanQuyenService.updatePhanQuyen(item.id, item).subscribe({
+    //     next: (res: any) => {
+    //       if (res.data) {
+    //         this.search();
+    //       } else { }
+    //     },
+    //     error: () => this.notification.create(
+    //       'error',
+    //       'Thông báo!',
+    //       `Cập nhật thất bại`, {
+    //       nzClass: 'notification-error',
+    //       nzDuration: 2000
+    //     })
+    //   });
+    // }
   }
 }
