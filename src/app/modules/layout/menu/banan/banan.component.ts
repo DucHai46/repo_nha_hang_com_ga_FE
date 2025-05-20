@@ -84,7 +84,7 @@ export class BananComponent implements OnInit   {
 
   reset(){
     this.searchForm.tenBan = '';
-    this.searchForm.loaiBanId = '';
+    this.searchForm.idLoaiBan = '';
     this.searchForm.trangThai = '';
     this.search();
   }
@@ -112,7 +112,7 @@ export class BananComponent implements OnInit   {
         next: (res: any) => {
           if (res.data) {
             this.searchForm.tenBan = '';
-            this.searchForm.loaiBanId = '';
+            this.searchForm.idLoaiBan = '';
             this.searchForm.trangThai = '';
             this.search();
             this.closePopup();
@@ -155,7 +155,7 @@ export class BananComponent implements OnInit   {
         next: (res: any) => {
           if (res.data) {
             this.searchForm.tenBan = '';
-            this.searchForm.loaiBanId = '';
+            this.searchForm.idLoaiBan = '';
             this.searchForm.trangThai = '';
             this.search();
             this.closePopup();
