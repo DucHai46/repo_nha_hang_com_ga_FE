@@ -1,7 +1,7 @@
 <div class="mt-10 mr-10">
   <!-- nhãn -->
   <div class="flex flex-row gap-4 mb-5">
-    <p class="text-2xl font-bold">Đơn Order</p>
+    <p class="text-2xl font-bold">Hóa đơn thanh toán</p>
   </div>
   <!-- form search -->
   <div
@@ -10,21 +10,21 @@
     <!-- form -->
     <div class="flex flex-row gap-4">
       <div class="flex flex-col gap-2">
-        <label for="searchTenDonOrder">Tên Đơn Order</label>
+        <label for="searchTenDonOrder">Tên hóa đơn</label>
         <input
           class="border border-gray-300 rounded-md p-2"
           id="searchTenDonOrder"
-          [(ngModel)]="searchForm.tenDon"
+          [(ngModel)]="searchForm.tenHoaDon"
           type="text"
           placeholder="Tìm kiếm"
         />
       </div>
       <div class="flex flex-col gap-2">
-        <label for="giaTri">Khách Hàng</label>
+        <label for="giaTri">Nhân viên</label>
         <input
           class="border border-gray-300 rounded-md p-2"
           id="khachHang"
-          [(ngModel)]="searchForm.khachHangs"
+          [(ngModel)]="searchForm.nhanViens"
           type="text"
           placeholder="Tìm kiếm"
         />
@@ -103,10 +103,9 @@
         <thead class="text-xs text-gray-700 uppercase text-center">
           <tr>
             <th scope="col" class="px-6 py-3">STT</th>
-            <th scope="col" class="px-6 py-3">Tên Đơn Order</th>
-            <th scope="col" class="px-6 py-3">Loại Đơn</th>
-            <th scope="col" class="px-6 py-3">Bàn</th>
-            <th scope="col" class="px-6 py-3">Khách Hàng</th>
+            <th scope="col" class="px-6 py-3">Tên hóa đơn</th>
+            <th scope="col" class="px-6 py-3">Tên đơn order</th>
+            <th scope="col" class="px-6 py-3">Nhân viên</th>
             <th scope="col" class="px-6 py-3">Trạng Thái</th>
             <th scope="col" class="px-6 py-3">Thao tác</th>
           </tr>
@@ -114,7 +113,7 @@
         <tbody>
           <tr
             class="border-b dark:border-gray-700 border-gray-200"
-            *ngFor="let item of donOrderPaging; let i = index"
+            *ngFor="let item of hoaDonPaging; let i = index"
           >
             <td
               scope="row"
@@ -123,16 +122,17 @@
               {{ i + 1 + (paging.page - 1) * paging.size }}
             </td>
             <td class="px-6 py-4">
-              {{ item.tenDon }}
+              {{ item.tenHoaDon }}
             </td>
             <td class="px-6 py-4">
-              {{ item.loaiDon.name }}
+              {{ item.donOrder.name }}
             </td>
             <td class="px-6 py-4">
-              {{ item.ban.name }}
+              {{ item.nhanVien.name }}
             </td>
+
             <td class="px-6 py-4">
-              {{ item.khachHang.name }}
+              {{ item.trangThai ? "Đã thanh toán" : "Chưa thanh toán" }}
             </td>
 
             <!-- <td class="px-6 py-4" style="min-width: 300px; max-width: 400px; white-space: normal;">
@@ -145,14 +145,11 @@
             <!-- <td class="px-6 py-4">
               {{ item.giaTien | number : "1.0-0" }}
             </td> -->
-            <td class="px-6 py-4">
-              {{ item.trangThai ? "Đã thanh toán" : "Chưa thanh toán" }}
-            </td>
             <td
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
             >
-              <button
-                (click)="openAddHoaDonPopup(item)"
+              <!--  
+                (click)="openEditPopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
               >
                 <p
@@ -176,8 +173,8 @@
                     />
                   </svg>
                 </p>
-              </button>
-              <!-- 
+              </button> -->
+
               <button
                 (click)="openDeletePopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-red-100 focus:outline-none rounded-lg px-2 py-1"
@@ -203,7 +200,7 @@
                     />
                   </svg>
                 </p>
-              </button> -->
+              </button>
               <button
                 (click)="openChiTietPopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
@@ -270,16 +267,16 @@
   </div>
 </div>
 
-<app-popupThanhToan
+<!-- <app-popupCombo
   *ngIf="isPopupOpen"
-  [isAddMode]="isAddMode"
+  [isEditMode]="isEditMode"
   [formData]="formData"
   (close)="closePopup()"
   (save)="onSaveCongThuc($event)"
-></app-popupThanhToan>
+></app-popupCombo> -->
 
-<app-popupChiTietDonOrder
+<app-popupChiTietHoaDon
   *ngIf="isChiTietOpen"
   [formData]="formData"
   (close)="closeChiTiet()"
-></app-popupChiTietDonOrder>
+></app-popupChiTietHoaDon>

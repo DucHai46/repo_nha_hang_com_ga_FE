@@ -1,3 +1,4 @@
+import { PopupThanhToanComponent } from './menu/donorder/popupThanhToan/popupThanhToan.component';
 import { LoaiDonOrder } from './../../models/LoaiDonOrder';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -133,6 +134,17 @@ import { NhaCungCapStore } from './menu/nhacungcap/store/nha-cung-cap.store';
 import { PopupNhaCungCapComponent } from './menu/nhacungcap/popupNhaCungCap/popupNhaCungCap.component';
 import { PopupChiTietPhieuNhapComponent } from './menu/phieunhap/popupChiTiet/popupChiTietPhieuNhap.component';
 import { DonOrderAdminService } from './menu/donorder/services/donorderadmin.service';
+import { HoadonthanhtoanComponent } from './menu/hoadonthanhtoan/hoadonthanhtoan.component';
+import { PhuphiComponent } from './menu/phuphi/phuphi.component';
+import { PhuPhiStore } from './menu/phuphi/store/phu-phi.store';
+import { PhuPhiService } from './menu/phuphi/services/phuphi.service';
+import { PopupPhuPhiComponent } from './menu/phuphi/popupPhuPhi/popupPhuPhi.component';
+import { PhuongthucthanhtoanComponent } from './menu/phuongthucthanhtoan/phuongthucthanhtoan.component';
+import { PhuongThucThanhToanService } from './menu/phuongthucthanhtoan/services/phuongthucthanhtoan.service';
+import { PhuongThucThanhToanStore } from './menu/phuongthucthanhtoan/store/phuong-thuc-thanh-toan.store';
+import { HoaDonThanhToanService } from './menu/hoadonthanhtoan/services/hoadonthanhtoan.service';
+import { HoaDonThanhToanStore } from './menu/hoadonthanhtoan/store/hoa-don-thanh-toan.store';
+import { PopupChiTietHoaDonComponent } from './menu/hoadonthanhtoan/popupChiTietHoaDon/popupChiTietHoaDon.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -200,7 +212,13 @@ import { DonOrderAdminService } from './menu/donorder/services/donorderadmin.ser
     PopupPhieuNhapComponent,
     NhacungcapComponent,
     PopupNhaCungCapComponent,
-    PopupChiTietPhieuNhapComponent
+    PopupChiTietPhieuNhapComponent,
+    HoadonthanhtoanComponent,
+    PhuphiComponent,
+    PopupPhuPhiComponent,
+    PhuongthucthanhtoanComponent,
+    PopupChiTietHoaDonComponent,
+    PopupThanhToanComponent,
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -267,7 +285,13 @@ import { DonOrderAdminService } from './menu/donorder/services/donorderadmin.ser
     PhieuNhapService,
     NhaCungCapStore,
     NhaCungCapService,
-    DonOrderAdminService
+    DonOrderAdminService,
+    PhuPhiStore,
+    PhuPhiService,
+    PhuongThucThanhToanService,
+    PhuongThucThanhToanStore,
+    HoaDonThanhToanService,
+    HoaDonThanhToanStore,
   ]
 })
 export class LayoutModule { }

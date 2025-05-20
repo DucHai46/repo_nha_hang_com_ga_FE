@@ -1,0 +1,86 @@
+/* Tăng chiều rộng hóa đơn */
+.receipt {
+    width: 600px;
+    /* hoặc 100% nếu bạn muốn nó linh hoạt */
+    font-family: "Courier New", monospace;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    max-height: 90vh;
+    /* Giới hạn chiều cao để không vượt màn hình */
+    overflow-y: auto;
+    /* Bật cuộn dọc khi nội dung dài */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    text-align: center;
+}
+
+.logo {
+    width: 80px;
+    margin: 0 auto 10px;
+}
+
+h2,
+h3 {
+    margin: 0;
+}
+
+.info p,
+.total p,
+.note p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+/* Tùy chỉnh lại bảng với chiều rộng lớn hơn */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+th,
+td {
+    border-bottom: 1px dashed #ccc;
+    padding: 6px 4px;
+    text-align: left;
+}
+
+.category td {
+    font-weight: bold;
+    border-bottom: none;
+    padding-top: 8px;
+}
+
+.total {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.qr {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.qr img {
+    width: 120px;
+    margin-top: 5px;
+}
+
+.popup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}

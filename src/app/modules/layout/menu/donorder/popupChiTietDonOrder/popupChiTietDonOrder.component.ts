@@ -10,7 +10,7 @@ import { DonOrderAdminService } from '../services/donorderadmin.service';
   styleUrl: './popupChiTietDonOrder.component.scss'
 })
 export class PopupChiTietDonOrderComponent implements OnInit {
-  @Input() formData: any;     // Nhận dữ liệu công thức từ bên ngoài
+  @Input() formData: any;     // Nhận dữ liệu đơn order từ bên ngoài
   @Output() close = new EventEmitter<void>(); // Khi bấm nút đóng
   @Output() updateStatus = new EventEmitter<any>(); // Emit sự kiện khi cập nhật trạng thái
   showPopup = false;

@@ -1,0 +1,58 @@
+<div class="popup-backdrop">
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        {{ isEditMode ? "Sửa Loại Đơn" : "Thêm Phụ Phí" }}
+      </h2>
+      <form>
+        <div class="form-group">
+          <label for="materialName">Tên Phụ Phí:</label>
+          <input
+            type="text"
+            id="materialName"
+            [(ngModel)]="formData.tenPhuPhi"
+            name="tenLoai"
+            placeholder="Nhập tên phụ phí..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="materialName">Giá Trị:</label>
+          <input
+            type="text"
+            id="materialName"
+            [(ngModel)]="formData.giaTri"
+            name="giaTri"
+            placeholder="Nhập giá trị..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Mô Tả:</label>
+          <textarea
+            id="description"
+            [(ngModel)]="formData.moTa"
+            name="moTa"
+            placeholder="Nhập mô tả..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="description">Trạng Thái:</label>
+          <select [(ngModel)]="formData.trangThai" name="trangThai">
+            <option value="1">Hoạt Động</option>
+            <option value="0">Ngừng Hoạt Động</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="button" class="btn cancel-btn" (click)="onCancel()">
+            Hủy
+          </button>
+          <button type="button" class="btn save-btn" (click)="onSave()">
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

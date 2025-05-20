@@ -1,0 +1,126 @@
+<div class="popup-backdrop">
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        <!-- {{ isEditMode ? "Sửa Loại Đơn" : "Thêm Loại Đơn" }} -->
+        {{ "Tạo hóa đơn" }}
+      </h2>
+      <form>
+        <div class="form-group">
+          <label for="materialName">Tên hóa đơn:</label>
+          <input
+            type="text"
+            id="materialName"
+            name="tenHoaDon"
+            [(ngModel)]="form.tenHoaDon"
+            placeholder="Nhập tên hóa đơn..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="materialName">Nhà hàng:</label>
+          <input
+            type="text"
+            id="materialName"
+            name="tenNhaHang"
+            value="{{ nhaHangs.tenNhaHang }}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="materialName">Đơn order:</label>
+          <input
+            type="text"
+            id="materialName"
+            value="{{ formData.tenDon }}"
+            name="tenDonOrder"
+          />
+        </div>
+        <div class="form-group">
+          <label for="materialName">Nhân viên:</label>
+          <select
+            id="dvt"
+            [(ngModel)]="form.nhanVien"
+            name="nhanvien"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let nv of nhanVien" [ngValue]="nv">
+              {{ nv.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="materialName">Giờ vào:</label>
+          <input
+            type="datetime-local"
+            disabled
+            id="materialName"
+            [value]="formData.createdDate"
+            name="gioVao"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="materialName">Số người:</label>
+          <input
+            type="text"
+            id="materialName"
+            name="songuoi"
+            [(ngModel)]="form.soNguoi"
+            placeholder="Nhập số người..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="materialName">Phụ phí:</label>
+          <select
+            id="dvt"
+            [(ngModel)]="form.phuPhi"
+            name="phuphi"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let x of phuPhi" [ngValue]="x">
+              {{ x.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="materialName">Phương thức thanh toán:</label>
+          <select
+            id="pttt"
+            [(ngModel)]="form.phuongThucThanhToan"
+            name="phuongthucthanhtoan"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let x of phuongThucThanhToan" [ngValue]="x">
+              {{ x.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="materialName">Trạng thái:</label>
+          <input
+            type="hidden"
+            name="trangthai"
+            value="0"
+            [(ngModel)]="form.trangThai"
+          />
+          <input
+            type="text"
+            value="Chưa thanh toán"
+            disabled
+            class="border border-gray-300 rounded-md p-2 w-full bg-gray-100"
+          />
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="button" class="btn cancel-btn" (click)="onCancel()">
+            Hủy
+          </button>
+          <button type="button" class="btn save-btn" (click)="onSave()">
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<div class="popup-backdrop">
+  <div class="receipt">
+    <div class="header">
+      <img src="assets/logo.png" alt="Logo" class="logo" />
+      <h2>{{ nhaHang.tenNhaHang }}</h2>
+      <p>COM GÀ SINGAPORE</p>
+      <p>{{ nhaHang.diaChi }}</p>
+      <p>Hotline: {{ nhaHang.soDienThoai }}</p>
+    </div>
+
+    <h3 class="text-center">PHIẾU TẠM TÍNH</h3>
+
+    <div class="info">
+      <p>
+        Số HĐ Ticket: <span>{{ formData.id }}</span>
+      </p>
+      <p>
+        Ngày/giờ vào:
+        <span>{{ donOrder.createdDate | date : "yyyy-mm-dd HH:mm:ss" }} </span>
+      </p>
+      <p>
+        Ngày/giờ ra:
+        <span>{{ formData.gioRa | date : "yyyy-mm-dd HH:mm:ss" }}</span>
+      </p>
+      <p>
+        Thu ngân: <span>{{ nhanVien.tenNhanVien }}</span>
+      </p>
+      <p>Số khách: <span>3</span></p>
+      <p>
+        Bàn: <span>{{ donOrder.ban.name }}</span>
+      </p>
+      <p>
+        Khách hàng: <span>{{ donOrder?.khachHang?.name || "Chiến" }}</span>
+      </p>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tên món</th>
+          <th>SL</th>
+          <th>Đơn giá</th>
+          <th>Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Hiển thị danh sách món ăn -->
+        <tr class="category" *ngIf="listMonAns.length > 0">
+          <td colspan="5">1 - MÓN ĂN</td>
+        </tr>
+        <tr *ngFor="let item of listMonAns; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.count }}</td>
+          <td>{{ item.price }} VND</td>
+          <td>{{ item.count * item.price }} VND</td>
+        </tr>
+
+        <!-- Hiển thị danh sách combo -->
+        <tr class="category" *ngIf="listCombos.length > 0">
+          <td colspan="5">2 - COMBO</td>
+        </tr>
+        <tr *ngFor="let item of listCombos; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.count }}</td>
+          <td>{{ item.price }} VND</td>
+          <td>{{ item.count * item.price }} VND</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="total">
+      <p>
+        Tổng tiền: <strong>{{ donOrder?.tongTien | number }} VND</strong>
+      </p>
+      <p>
+        Phụ phí:
+        <strong>({{ phuPhi.tenPhuPhi }}) {{ phuPhi.giaTri }}%</strong>
+      </p>
+      <p>
+        Thanh toán Total:
+        <strong
+          >{{
+            donOrder?.tongTien + donOrder?.tongTien * phuPhi.giaTri * 0.01
+              | number
+          }}
+          VND</strong
+        >
+      </p>
+    </div>
+
+    <div class="note">
+      <p>Giá trên đã bao gồm VAT 8% nếu khách yêu cầu xuất hóa đơn VAT.</p>
+      <p>Cảm ơn quý khách và hẹn gặp lại!!!</p>
+    </div>
+
+    <div class="qr">
+      <p>Quý khách vui lòng quét mã QR để thanh toán</p>
+      <img src="assets/qr-code.png" alt="QR Code" />
+    </div>
+  </div>
+</div>

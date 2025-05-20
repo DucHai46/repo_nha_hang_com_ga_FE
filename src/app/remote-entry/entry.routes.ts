@@ -32,6 +32,8 @@ import { KhachhangComponent } from '../modules/layout/menu/khachhang/khachhang.c
 import { DonorderComponent } from '../modules/layout/menu/donorder/donorder.component';
 import { PhieunhapComponent } from '../modules/layout/menu/phieunhap/phieunhap.component';
 import { NhacungcapComponent } from '../modules/layout/menu/nhacungcap/nhacungcap.component';
+import { PhuphiComponent } from '../modules/layout/menu/phuphi/phuphi.component';
+import { HoadonthanhtoanComponent } from '../modules/layout/menu/hoadonthanhtoan/hoadonthanhtoan.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -68,6 +70,8 @@ export const remoteRoutes: Route[] = [
           { path: 'donorder', component: DonorderComponent },
           { path: 'phieunhap', component: PhieunhapComponent },
           { path: 'nhacungcap', component: NhacungcapComponent },
+          { path: 'phuphi' , component: PhuphiComponent },
+          { path: 'hoadon' , component: HoadonthanhtoanComponent },
 
 
 
