@@ -163,6 +163,11 @@ import { PopupPhanQuyenComponent } from './menu/phanquyen/popupPhanQuyen/popupPh
 import { PhanQuyenStore } from './menu/phanquyen/store/phan-quyen.store';
 import { PhanQuyenService } from './menu/phanquyen/services/phanquyen.service';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { PhieuthanhlyComponent } from './menu/phieuthanhly/phieuthanhly.component';
+import { PhieuThanhLyService } from './menu/phieuthanhly/services/phieuthanhly.service';
+import { PhieuThanhLyStore } from './menu/phieuthanhly/store/phieu-thanh-ly.store';
+import { PopupPhieuThanhLyComponent } from './menu/phieuthanhly/popupPhieuThanhLy/popupPhieuThanhLy.component';
+import { PopupChiTietPhieuThanhLyComponent } from './menu/phieuthanhly/popupChiTiet/popupChiTietPhieuThanhLy.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -244,7 +249,10 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     PopupPhieuXuatComponent,
     PopupChiTietPhieuXuatComponent,
     PhanQuyenComponent,
-    PopupPhanQuyenComponent
+    PopupPhanQuyenComponent,
+    PhieuthanhlyComponent,
+    PopupPhieuThanhLyComponent,
+    PopupChiTietPhieuThanhLyComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -326,7 +334,9 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     PhieuXuatService,
     PhieuXuatStore,
     PhanQuyenStore,
-    PhanQuyenService
+    PhanQuyenService, 
+    PhieuThanhLyService,
+    PhieuThanhLyStore
   ]
 })
 export class LayoutModule { }
