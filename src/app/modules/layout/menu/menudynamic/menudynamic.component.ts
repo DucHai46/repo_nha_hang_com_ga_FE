@@ -35,7 +35,7 @@ export class MenuDynamicComponent implements OnInit {
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    this.menuDynamicService.getMenuDynamicByRole(this.searchForm).subscribe(
+    this.menuDynamicService.getMenuDynamic(this.searchForm).subscribe(
       {
         next: (res: any) => {
           this.menuDynamicPaging = res.data.data;
