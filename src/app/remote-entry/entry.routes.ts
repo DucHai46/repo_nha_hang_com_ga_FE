@@ -39,6 +39,7 @@ import { HoadonthanhtoanComponent } from '../modules/layout/menu/hoadonthanhtoan
 import { PhieukiemkeComponent } from '../modules/layout/menu/phieukiemke/phieukiemke.component';
 import { PhieuxuatComponent } from '../modules/layout/menu/phieuxuat/phieuxuat.component';
 import { PhanQuyenComponent } from '../modules/layout/menu/phanquyen/phanquyen.component';
+import { UserComponent } from '../modules/layout/menu/user/user.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -93,6 +94,7 @@ export const remoteRoutes: Route[] = [
           { path: 'phieukiemke', component: PhieukiemkeComponent },
           { path: 'phieuxuat', component: PhieuxuatComponent },
           { path: 'phieunhap', component: PhieunhapComponent },
+          { path: 'user', component: UserComponent },
 
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]

@@ -146,8 +146,8 @@ import { PhuongThucThanhToanStore } from './menu/phuongthucthanhtoan/store/phuon
 import { HoaDonThanhToanService } from './menu/hoadonthanhtoan/services/hoadonthanhtoan.service';
 import { HoaDonThanhToanStore } from './menu/hoadonthanhtoan/store/hoa-don-thanh-toan.store';
 import { PopupChiTietHoaDonComponent } from './menu/hoadonthanhtoan/popupChiTietHoaDon/popupChiTietHoaDon.component';
-
-
+import { UserComponent } from './menu/user/user.component';
+import { PopupUserComponent } from './menu/user/popupUser/popupUser.component';
 import { PhieukiemkeComponent } from './menu/phieukiemke/phieukiemke.component';
 import { PhieuKiemKeService } from './menu/phieukiemke/services/phieukiemke.service';
 import { PhieuKiemKeStore } from './menu/phieukiemke/store/phieu-kiem-ke.store';
@@ -163,6 +163,10 @@ import { PopupPhanQuyenComponent } from './menu/phanquyen/popupPhanQuyen/popupPh
 import { PhanQuyenStore } from './menu/phanquyen/store/phan-quyen.store';
 import { PhanQuyenService } from './menu/phanquyen/services/phanquyen.service';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { UserStore } from './menu/user/store/user.store';
+import { UserService } from './menu/user/services/user.service';
+import { PopupChangePasswordComponent } from './menu/user/popupChangePass/popupChangePass.component';
+import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPhanQuyenUser.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -244,7 +248,11 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     PopupPhieuXuatComponent,
     PopupChiTietPhieuXuatComponent,
     PhanQuyenComponent,
-    PopupPhanQuyenComponent
+    PopupPhanQuyenComponent,
+    UserComponent,
+    PopupUserComponent,
+    PopupChangePasswordComponent,
+    PopupPhanQuyenUserComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -326,7 +334,9 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     PhieuXuatService,
     PhieuXuatStore,
     PhanQuyenStore,
-    PhanQuyenService
+    PhanQuyenService,
+    UserStore,
+    UserService
   ]
 })
 export class LayoutModule { }

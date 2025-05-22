@@ -30,4 +30,12 @@ export class MenuDynamicService {
   deleteMenuDynamic(id: string) {
     return this.http.delete(`${this.apiUrl}/api/menu-dynamic/${id}`);
   }
+
+  getListMenuDynamic(id: string) {
+    return this.http.get(`${this.apiUrl}/api/phan-quyen/${id}`);
+  }
+
+  getMenuDynamicByRole(data: any) {
+    return this.http.post(`${this.apiUrl}/api/menu-dynamic/phan-quyen`, data);
+  }
 }

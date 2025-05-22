@@ -26,32 +26,37 @@ export class SidenavComponent implements OnInit {
   constructor(private menuService: MenuDynamicService) { }
 
   menuItems: MenuDynamic[] = [];
+  listMenuDynamic: any[] = [];
+  token = localStorage.getItem('token');
 
   ngOnInit(): void {
-    const params = {
-      isPaging: false,
-      isActive: true,
+    if (this.token) {
+      const decodedToken = JSON.parse(atob(this.token.split('.')[1]));
+      const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      this.menuService.getListMenuDynamic(role).subscribe((res: any) => {
+        this.listMenuDynamic = res.data.danhSachMenu;
+        this.menuService.getMenuDynamicByRole(this.listMenuDynamic).subscribe({
+          next: (res: any) => {
+            if (res.result == 1) {
+              this.menuItems = res.data.data;
+              this.convertToMenuItem(this.menuItems);
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+          }
+        });
+      });
     }
-    this.menuService.getMenuDynamic(params).subscribe({
-      next: (res: any) => {
-        if(res.result == 1){
-          this.menuItems = res.data.data;
-          this.convertToMenuItem(this.menuItems);
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      }
-    });
   }
   isSideNavCollapsed = input.required<boolean>();
   changeIsSideNavCollapsed = output<boolean>();
 
-  convertToMenuItem(menuItems: MenuDynamic[]): void{
+  convertToMenuItem(menuItems: MenuDynamic[]): void {
     const sortedMenuItems = [...this.menuItems].sort((a, b) => Number(a.position) - Number(b.position));
-    
+
     sortedMenuItems.forEach(item => {
-      if(item.parent.id == null && item.isActive == true){
+      if (item.parent.id == null && item.isActive == true) {
         this.items.push({
           id: item.id,
           routeLink: item.routeLink,
@@ -86,7 +91,7 @@ export class SidenavComponent implements OnInit {
       });
     });
   }
-  
+
   items: MenuItem[] = [
   ];
 
