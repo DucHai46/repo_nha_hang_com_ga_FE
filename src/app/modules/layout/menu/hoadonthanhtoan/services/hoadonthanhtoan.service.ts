@@ -13,7 +13,7 @@ export class HoaDonThanhToanService {
   constructor(private http: HttpClient) { }
 
   getHoaDonThanhToan(params: any) {
-    return this.http.get(`${this.apiUrl}/api/hoa-don-thanh-toan`, params);
+    return this.http.get(`${this.apiUrl}/api/hoa-don-thanh-toan`, {params});
   }
 
   getHoaDonThanhToanById(id: string) {
@@ -25,7 +25,7 @@ export class HoaDonThanhToanService {
   }
 
   updateHoaDonThanhToan(id: string, data: any) {
-    return this.http.put(`${this.apiUrl}/api/hoa-don-thanh-toan/update-status/${id}`, data);
+    return this.http.put(`${this.apiUrl}/api/hoa-don-thanh-toan/${id}`, data);
   }
 
   deleteHoaDonThanhToan(id: string) {

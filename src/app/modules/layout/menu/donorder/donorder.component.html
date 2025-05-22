@@ -146,13 +146,22 @@
               {{ item.giaTien | number : "1.0-0" }}
             </td> -->
             <td class="px-6 py-4">
-              {{ item.trangThai ? "Đã thanh toán" : "Chưa thanh toán" }}
+              <span
+                class="border border-2 rounded-lg px-1 text-white"
+                [ngClass]="{
+                  'bg-green-500 border-green-500': item.trangThai,
+                  'bg-red-500 border-red-500': !item.trangThai
+                }"
+              >
+                {{ item.trangThai ? "Đã thanh toán" : "Chưa thanh toán" }}
+              </span>
             </td>
             <td
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
             >
               <button
                 (click)="openAddHoaDonPopup(item)"
+                *ngIf="isThanhToan(item) && item.trangThai == false"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
               >
                 <p
@@ -283,3 +292,9 @@
   [formData]="formData"
   (close)="closeChiTiet()"
 ></app-popupChiTietDonOrder>
+
+<app-popupChiTietHoaDon
+  *ngIf="isChiTietHoaDonOpen"
+  [formData]="formHoaDon"
+  (close)="closeChiTietHoaDon()"
+></app-popupChiTietHoaDon>

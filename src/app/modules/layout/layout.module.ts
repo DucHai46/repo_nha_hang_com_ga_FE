@@ -140,7 +140,7 @@ import { PhuphiComponent } from './menu/phuphi/phuphi.component';
 import { PhuPhiStore } from './menu/phuphi/store/phu-phi.store';
 import { PhuPhiService } from './menu/phuphi/services/phuphi.service';
 import { PopupPhuPhiComponent } from './menu/phuphi/popupPhuPhi/popupPhuPhi.component';
-import { PhuongthucthanhtoanComponent } from './menu/phuongthucthanhtoan/phuongthucthanhtoan.component';
+import { PhuongThucThanhToanComponent } from './menu/phuongthucthanhtoan/phuongthucthanhtoan.component';
 import { PhuongThucThanhToanService } from './menu/phuongthucthanhtoan/services/phuongthucthanhtoan.service';
 import { PhuongThucThanhToanStore } from './menu/phuongthucthanhtoan/store/phuong-thuc-thanh-toan.store';
 import { HoaDonThanhToanService } from './menu/hoadonthanhtoan/services/hoadonthanhtoan.service';
@@ -163,6 +163,7 @@ import { PopupPhanQuyenComponent } from './menu/phanquyen/popupPhanQuyen/popupPh
 import { PhanQuyenStore } from './menu/phanquyen/store/phan-quyen.store';
 import { PhanQuyenService } from './menu/phanquyen/services/phanquyen.service';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { PopupPhuongThucThanhToanComponent } from './menu/phuongthucthanhtoan/popupPhuongThucThanhToan/popupPhuongThucThanhToan.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -234,7 +235,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     HoadonthanhtoanComponent,
     PhuphiComponent,
     PopupPhuPhiComponent,
-    PhuongthucthanhtoanComponent,
+    PhuongThucThanhToanComponent,
     PopupChiTietHoaDonComponent,
     PopupThanhToanComponent,
     PhieukiemkeComponent,
@@ -244,7 +245,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     PopupPhieuXuatComponent,
     PopupChiTietPhieuXuatComponent,
     PhanQuyenComponent,
-    PopupPhanQuyenComponent
+    PopupPhanQuyenComponent,
+    PopupPhuongThucThanhToanComponent,
   ], // Khai báo component
   imports: [
     CommonModule,

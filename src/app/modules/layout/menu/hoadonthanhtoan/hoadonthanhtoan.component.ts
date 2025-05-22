@@ -1,3 +1,4 @@
+import { DonOrder } from './../../../../models/DonOrder';
 import { NhaHangService } from './../nhahang/services/nhahang.service';
 import { khuyenmaiService } from './../khuyenmai/services/khuyenmai.service';
 import { PhuPhiService } from './../phuphi/services/phuphi.service';
@@ -31,7 +32,7 @@ export class HoadonthanhtoanComponent implements OnInit {
   ) { }
 
   hoaDonPaging: any [] = [];
-  nhanVienIds: any [] = [];
+
   paging: any = {
     page: 1,
     size: 10,
@@ -58,7 +59,6 @@ export class HoadonthanhtoanComponent implements OnInit {
   }
 
   search() {
-
     console.log('Search form:', this.searchForm);
     if (this.searchForm.nhanViens) {
       this.searchNV.isPaging = true; // Lấy tất cả dữ liệu
@@ -67,20 +67,18 @@ export class HoadonthanhtoanComponent implements OnInit {
       this.searchNV.tenNhanVien = this.searchForm.nhanViens;
       this.nhanVienService.getNhanVien(this.searchNV).subscribe({
         next: (res: any) => {
-          // this.khachHang = res.data.data;
-          this.nhanVienIds = res.data.data.map((kh: any) => kh.id);
-          this.searchForm.nhanVien = this.nhanVienIds;
+          const resData = res.data.data;
+           this.searchForm.nhanVien = resData[0].id;
+           console.log(this.searchForm.nhanVien);
           this.searchHoaDon();
-          // console.log(this.khachHang);
         }
       });
-    } else {
-      //   // Nếu không nhập tên khách hàng, xóa khachHangIds khỏi searchForm nếu có
-      if (this.nhanVienIds) {
-        this.nhanVienIds = [];
-      }
+    }
+    else{
+      this.searchForm.nhanVien = '';
       this.searchHoaDon();
     }
+    
   }
 
   searchHoaDon() {
@@ -122,8 +120,7 @@ export class HoadonthanhtoanComponent implements OnInit {
   reset() {
     this.searchForm.tenHoaDon = '';
     this.searchForm.nhanVien = '';
-    this.nhanVienIds = [];
-    this.searchForm.nhanVien = [];
+    this.searchForm.nhanViens = '';
     this.search();
   }
 
@@ -131,23 +128,17 @@ export class HoadonthanhtoanComponent implements OnInit {
   isEditMode = false;
   formData: any = {}
   isChiTietOpen = false;
-
-  openAddPopup(): void {
-    // console.log(this.loaiDonOrder);
-    this.isPopupOpen = true;
-    this.isEditMode = false;
-    this.formData = {};
+  Status = {
+    trangThai: 1,
   }
+  Id: string = '';
+
 
   openChiTietPopup(item: any): void {
     this.isChiTietOpen = true;
+    this.isEditMode = true;
     this.formData = item;
     console.log(this.formData);
-  }
-
-  closePopup(): void {
-    this.isPopupOpen = false;
-    this.isEditMode = false;
   }
 
   closeChiTiet(): void {
@@ -155,13 +146,68 @@ export class HoadonthanhtoanComponent implements OnInit {
     this.search(); // load lại dữ liệu sau khi đóng chi tiết
   }
 
+  // change status don order
+  updateDonOrderStatus(donOrderId: string): void {
+    this.donOrderAdminService.getDonOrderById(donOrderId).subscribe({
+      next: (res: any) => {
+        const item = res.data;
+        console.log(item);
+        this.Id = item.id;
+        console.log(this.Id);  
+      }
+    });
+    
+    console.log(donOrderId);
+    this.donOrderAdminService.updateStatusDonOrder(donOrderId, this.Status).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        if (res.data) {
+          this.notification.create(
+            'success',
+            'Thông báo!',
+            `Cập nhật trạng thái thành công`,
+            {
+              nzClass: 'notification-success',
+              nzDuration: 2000
+            }
+          );
+        }else {
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Cập nhật thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            );
+          }
+      },
+       error: () => {
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Cập nhật thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
+        }
+    });
+  }
+
   onSaveCongThuc(body: any): void {
     console.log(body);
     if (!body) return;
     console.log(body);
+    console.log(body.id)
+    console.log(this.isEditMode);
+    const data = body.donOrder;
+    console.log(data);
 
     if (this.isEditMode) {
-      // Sửa Đơn Order
+      // Cập nhật trạng thái hóa đơn thanh toán
       this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
         next: (res: any) => {
           console.log(res);
@@ -169,7 +215,10 @@ export class HoadonthanhtoanComponent implements OnInit {
             this.searchForm.tenHoaDon = '';
             this.searchForm.nhanViens = '';
             this.search();
-            this.closePopup();
+            console.log(data);
+            this.updateDonOrderStatus(data);
+            
+            this.closeChiTiet();
             this.notification.create(
               'success',
               'Thông báo!',
@@ -264,6 +313,5 @@ export class HoadonthanhtoanComponent implements OnInit {
         );
       }
     });
-  } //
-
+  } 
 }

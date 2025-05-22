@@ -1,6 +1,6 @@
 /* Tăng chiều rộng hóa đơn */
 .receipt {
-    width: 600px;
+    width: 660px;
     /* hoặc 100% nếu bạn muốn nó linh hoạt */
     font-family: "Courier New", monospace;
     margin: 20px auto;
@@ -12,6 +12,8 @@
     overflow-y: auto;
     /* Bật cuộn dọc khi nội dung dài */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    position: relative;
 }
 
 .header {
@@ -47,10 +49,14 @@ th,
 td {
     border-bottom: 1px dashed #ccc;
     padding: 6px 4px;
-    text-align: left;
+    // text-align: left;
+    text-align: center; 
+    vertical-align: middle; /* Căn giữa chữ dọc nếu cần */
+        
 }
 
 .category td {
+    text-align: left !important; /* Căn lề trái */
     font-weight: bold;
     border-bottom: none;
     padding-top: 8px;
@@ -83,4 +89,47 @@ td {
     align-items: center;
     justify-content: center;
     z-index: 1000;
+}
+
+/* đóng popup */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    color: red;
+    // background-color: white;
+    border: 1px solid red;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    line-height: 28px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn-pay {
+    background-color: #28a745;
+    /* xanh lá */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-pay:hover {
+    background-color: #218838;
+    /* màu đậm hơn khi hover */
 }

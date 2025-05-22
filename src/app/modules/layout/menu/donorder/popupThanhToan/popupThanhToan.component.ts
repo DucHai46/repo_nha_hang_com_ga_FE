@@ -21,6 +21,7 @@ export class PopupThanhToanComponent implements OnInit {
   @Output() close = new EventEmitter<void>(); // Khi bấm nút đóng
   @Output() save = new EventEmitter<any>(); // Emit sự kiện khi cập nhật trạng thái
   @Input() isAddMode: boolean = false;
+  @Output() openChiTietHoaDon = new EventEmitter<void>();
 
   nhaHangs: any;
 
@@ -40,16 +41,24 @@ export class PopupThanhToanComponent implements OnInit {
     PageNumber: 1,
     PageSize: 10,
     isActive: true,
-    tenNhaHang: 'Cơm gà Singapor',
+    // tenNhaHang: 'Cơm gà Singapor',
+  }
+  isChiTietHoaDonOpen: boolean = false;
+  isPopupOpen = false;
+closeChiTiet() {
+  this.isChiTietHoaDonOpen = false;
+}
+openChiTietHoaDonPopup(item: any): void {
+    this.isChiTietHoaDonOpen = true;
+    this.openChiTietHoaDon.emit(item);
   }
 
-  
- 
 
-  //Hàm xử lý khi nhấn nút lưu
   onSave(): void {
-
+    console.log(this.form);
     this.save.emit(this.form);
+
+
   }
 
   onCancel(): void {
@@ -73,17 +82,12 @@ export class PopupThanhToanComponent implements OnInit {
     //   }, 
     // });
 
-    this.nhaHangService.getNhaHangById('681e3228ea1dd60c87e771e7').subscribe({
+    this.nhaHangService.getNhaHang(this.searchNH).subscribe({
       next: (res: any) => {
-        this.nhaHangs = res.data;
-        // this.nhaHangItem = this.nhaHangs.find((nh: any) => nh.id === this.formData.nhaHang.id);
+        this.nhaHangs = res.data.data;
         console.log(this.nhaHangs);
-        console.log(this.nhaHangs.id);
-        this.form = {
-          nhaHang: this.nhaHangs.id,
-          donOrder: this.formData.id,
-          gioVao: this.formData.createdDate,
-        };
+        console.log(this.nhaHangs[0].id);
+        this.form.nhaHang = this.nhaHangs[0].id;
         // console.log(this.form);
       },
     });
@@ -131,11 +135,12 @@ export class PopupThanhToanComponent implements OnInit {
       },
     });
 
-  //   this.form = {
-  //   // nhaHang: this.nhaHangs.id,
-  //   donOrder: this.formData.id,
-  //   gioVao: this.formData.createdDate,
-  // };
+    this.form = {
+    // nhaHang: this.nhaHangs.id,
+    donOrder: this.formData.id,
+    gioVao: this.formData.createdDate,
+    trangthai: 0,
+  };
   console.log(this.form);
 
   }
@@ -144,7 +149,6 @@ export class PopupThanhToanComponent implements OnInit {
     console.log(this.formData);
     this.close.emit();
   }
-
   constructor(
     private fileService: FileService,
     private notification: NzNotificationService,

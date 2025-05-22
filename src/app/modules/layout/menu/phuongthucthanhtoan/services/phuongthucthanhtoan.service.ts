@@ -13,7 +13,7 @@ export class PhuongThucThanhToanService {
   constructor(private http: HttpClient) { }
 
   getPhuongThucThanhToan(params: any) {
-    return this.http.get(`${this.apiUrl}/api/phuong-thuc-thanh-toan`, params);
+    return this.http.get(`${this.apiUrl}/api/phuong-thuc-thanh-toan`, {params});
   }
 
   getPhuongThucThanhToanById(id: string) {
@@ -25,7 +25,7 @@ export class PhuongThucThanhToanService {
   }
 
   updatePhuongThucThanhToan(id: string, data: any) {
-    return this.http.put(`${this.apiUrl}/api/phuong-thuc-thanh-toan/update-status/${id}`, data);
+    return this.http.put(`${this.apiUrl}/api/phuong-thuc-thanh-toan/${id}`, data);
   }
 
   deletePhuongThucThanhToan(id: string) {

@@ -1,3 +1,4 @@
+import { forkJoin } from 'rxjs';
 import { HoaDonThanhToanService } from './../hoadonthanhtoan/services/hoadonthanhtoan.service';
 import { KhachHangService } from './../khachhang/services/khachhang.service';
 import { LoaiDonOrder } from './../../../../models/LoaiDonOrder';
@@ -10,6 +11,7 @@ import { DonOrderAdminService } from './services/donorderadmin.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 import { OrderSignalRServiceService } from '../../../../core/services/OrderSignalRService.service';
+import { FileService } from '../../../../core/services/file.service';
 
 
 @Component({
@@ -28,6 +30,7 @@ export class DonorderComponent implements OnInit {
     private khachHangService: KhachHangService,
     private orderSignalRService: OrderSignalRServiceService,
     private hoaDonThanhToanService: HoaDonThanhToanService,
+    private fileService: FileService
 
   ) { }
   donOrderPaging: any[] = [];
@@ -78,6 +81,27 @@ export class DonorderComponent implements OnInit {
     tenKhachHang: '',
   }
 
+  isThanhToan(item: any){
+    let isThanhToan = true;
+    item.chiTietDonOrder.forEach((ct: any) => {
+        if(ct.monAns.length > 0){
+          ct.monAns.forEach((ma: any) => {
+            if(ma.monAn_trangThai == 0){
+             isThanhToan = false;
+            }
+          })
+        }
+        if(ct.comBos.length > 0){
+          ct.comBos.forEach((cb: any) => {
+            if(cb.comBo_trangThai == 0){
+              isThanhToan = false;
+            }
+          })
+        }
+      })
+    return isThanhToan;
+  }
+
   search() {
 
     console.log('Search form:', this.searchForm);
@@ -125,6 +149,7 @@ export class DonorderComponent implements OnInit {
       }
     )
     // this.searchForm.khachHang = this.searchKH.tenKhachHang;
+    // this.checkThanhToan();
 
   }
 
@@ -152,7 +177,9 @@ export class DonorderComponent implements OnInit {
   isPopupOpen = false;
   isAddMode = false; // Tạo hóa đơn
   formData: any = {}
+  formHoaDon: any = {};
   isChiTietOpen = false;
+  isChiTietHoaDonOpen = false;
 
   // openAddPopup(): void {
   //   // console.log(this.loaiDonOrder);
@@ -165,6 +192,16 @@ export class DonorderComponent implements OnInit {
     this.isChiTietOpen = true;
     this.formData = item;
     console.log(this.formData);
+  }
+
+  openChiTietHoaDonPopup(): void {
+    this.isChiTietHoaDonOpen = true;
+    this.formData = this.formHoaDon; // Gán formData bằng formHoaDon
+    console.log(this.formData);
+  }
+  closeChiTietHoaDon(): void {
+    this.isChiTietHoaDonOpen = false;
+    this.search(); // load lại dữ liệu sau khi đóng chi tiết
   }
 
   closePopup(): void {
@@ -188,8 +225,9 @@ export class DonorderComponent implements OnInit {
         {
           next: (res: any) => {
             if(res.data) {
-              // this.searchForm.tenLoaiDon = '';
-              // this.search();
+              this.formHoaDon = res.data; // Lưu thông tin hóa đơn vào formHoaDon
+              this.formData.hoaDonThanhToans = [res.data]; // Gán danh sách hóa đơn vào formData
+              this.formData.hoaDonThanhToanId = res.data.id; // Gán ID hóa đơn vào formData
               this.closePopup();
               this.notification.create(
                 'success',
@@ -200,6 +238,7 @@ export class DonorderComponent implements OnInit {
                   nzDuration: 2000
                 }
               );
+              this.openChiTietHoaDonPopup();
             }
           },
           error: () => this.notification.create(
@@ -273,8 +312,31 @@ export class DonorderComponent implements OnInit {
         );
       }
     });
-  } //
-  // Trong donorder.component.ts thay thế phương thức updateFoodStatus
+  } 
+  
+  // up ảnh
+  parseJSON(jsonString: string): any {
+    try {
+      return JSON.parse(jsonString);
+    } catch (error) {
+      return null;
+    }
+  }
+   
+  download(fileId: string): void {
+    this.fileService.downloadFile(fileId).subscribe(
+      (response: Blob) => {
+        // Create object URL from blob
+        const url = window.URL.createObjectURL(response);
+
+        // Open preview in new tab
+        window.open(url, '_blank');
+
+        // Cleanup object URL after preview opens
+        window.URL.revokeObjectURL(url);
+      }
+    );
+  }
 
 }
 
