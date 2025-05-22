@@ -40,11 +40,10 @@ import { PhieukiemkeComponent } from '../modules/layout/menu/phieukiemke/phieuki
 import { PhieuxuatComponent } from '../modules/layout/menu/phieuxuat/phieuxuat.component';
 import { PhanQuyenComponent } from '../modules/layout/menu/phanquyen/phanquyen.component';
 
-
 import { PhuongThucThanhToanComponent } from '../modules/layout/menu/phuongthucthanhtoan/phuongthucthanhtoan.component';
 
 import { PhieuthanhlyComponent } from '../modules/layout/menu/phieuthanhly/phieuthanhly.component';
-
+import { UserComponent } from '../modules/layout/menu/user/user.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -103,8 +102,7 @@ export const remoteRoutes: Route[] = [
 
           // Quản lý hóa đơn
           { path: 'phuongthuc', component: PhuongThucThanhToanComponent },
-          
-
+          { path: 'user', component: UserComponent },
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]
       },

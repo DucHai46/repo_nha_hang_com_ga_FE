@@ -1,0 +1,31 @@
+<div class="popup-backdrop">
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">Phân quyền</h2>
+      <form>
+        <div class="form-group">
+          <select
+            id="phanQuyen"
+            [(ngModel)]="formData.phanQuyen"
+            name="phanQuyen"
+            placeholder="Chọn quyền"
+            class="w-full border-2 border-gray-300 rounded-md p-2"
+          >
+            <option *ngFor="let phanQuyen of phanQuyens" [value]="phanQuyen.id">
+              {{ phanQuyen.tenPhanQuyen }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="button" class="btn cancel-btn" (click)="onCancel()">
+            Hủy
+          </button>
+          <button type="button" class="btn save-btn" (click)="onSave()">
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

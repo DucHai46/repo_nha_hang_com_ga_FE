@@ -11,7 +11,7 @@ import { MenuDynamic } from '../../../../models/MenuDynamic';
   styleUrl: './menudynamic.component.scss'
 })
 export class MenuDynamicComponent implements OnInit {
-  constructor(private store: MenuDynamicStore, private dialog: MatDialog, private notification: NzNotificationService, private menuDynamicService: MenuDynamicService) {}
+  constructor(private store: MenuDynamicStore, private dialog: MatDialog, private notification: NzNotificationService, private menuDynamicService: MenuDynamicService) { }
   menuDynamicPaging: MenuDynamic[] = [];
   itemsSearch: any[] = [];
   paging: any = {
@@ -20,21 +20,22 @@ export class MenuDynamicComponent implements OnInit {
     total: 0
   };
 
+
   totalPages = 0;
   ngOnInit(): void {
     this.search();
-    this.store.setItems$(this.menuDynamicPaging);  
+    this.store.setItems$(this.menuDynamicPaging);
   }
 
   searchForm: any = {
     label: '',
-  }; 
+  };
 
-  search(){
+  search() {
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    this.menuDynamicService.getMenuDynamic(this.searchForm).subscribe(
+    this.menuDynamicService.getMenuDynamicByRole(this.searchForm).subscribe(
       {
         next: (res: any) => {
           this.menuDynamicPaging = res.data.data;
@@ -62,7 +63,7 @@ export class MenuDynamicComponent implements OnInit {
   }
 
 
-  reset(){
+  reset() {
     this.searchForm.label = '';
     this.search()
   }
@@ -83,9 +84,9 @@ export class MenuDynamicComponent implements OnInit {
   }
   onSaveMenuDynamic(body: any): void {
     console.log(body);
-  
+
     if (!body) return;
-  
+
     if (this.isEditMode) {
       // Sửa bàn
       this.menuDynamicService.updateMenuDynamic(body.id, body).subscribe({
@@ -107,7 +108,7 @@ export class MenuDynamicComponent implements OnInit {
             this.notification.create(
               'error',
               'Thông báo!',
-              `Cập nhật thất bại`,    
+              `Cập nhật thất bại`,
               {
                 nzClass: 'notification-error',
                 nzDuration: 2000
@@ -173,79 +174,79 @@ export class MenuDynamicComponent implements OnInit {
     this.isEditMode = true;
     this.formData = item;
   }
-  
-   openDeletePopup(item: any): void {
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        width: '400px',
-        data: { message: `Bạn có chắc chắn muốn xóa "${item.label}" không?` },
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.menuDynamicService.deleteMenuDynamic(item.id).subscribe(
-            {
-              next: (res: any) => {
-                this.search();
-                this.notification.create(
-                  'success',
-                  'Thông báo!',
-                  `Xóa thành công`,
-                  {
-                    nzClass: 'notification-success',  
-                    nzDuration: 2000
-                  }
-                );
-              },
-              error: () => this.notification.create(
-                'error',
+
+  openDeletePopup(item: any): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: { message: `Bạn có chắc chắn muốn xóa "${item.label}" không?` },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.menuDynamicService.deleteMenuDynamic(item.id).subscribe(
+          {
+            next: (res: any) => {
+              this.search();
+              this.notification.create(
+                'success',
                 'Thông báo!',
-                `Xóa thất bại`,
+                `Xóa thành công`,
                 {
-                  nzClass: 'notification-error',
+                  nzClass: 'notification-success',
                   nzDuration: 2000
                 }
-              )
-            }
-          )
-        } else {
-          this.notification.create(
-            'error',
-            'Thông báo!',
-            `Xóa thất bại`,
-            {
-              nzClass: 'notification-error',
-              nzDuration: 2000  
-            }
-          );
-        }
-      });
-    }
+              );
+            },
+            error: () => this.notification.create(
+              'error',
+              'Thông báo!',
+              `Xóa thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            )
+          }
+        )
+      } else {
+        this.notification.create(
+          'error',
+          'Thông báo!',
+          `Xóa thất bại`,
+          {
+            nzClass: 'notification-error',
+            nzDuration: 2000
+          }
+        );
+      }
+    });
+  }
   toggleActive(item: any): void {
     const newStatus = !item.isActive;
     item.isActive = newStatus;
     item.parent = item.parent.id;
     this.menuDynamicService.updateMenuDynamic(item.id, item).subscribe({
       next: (res: any) => {
-      if (res.data) {
-        this.search();
-      } else {}
-    },
-    error: () => this.notification.create(
-      'error',
-      'Thông báo!',
-      `Cập nhật thất bại`, {
-      nzClass: 'notification-error',
-      nzDuration: 2000
-    })
-  });
+        if (res.data) {
+          this.search();
+        } else { }
+      },
+      error: () => this.notification.create(
+        'error',
+        'Thông báo!',
+        `Cập nhật thất bại`, {
+        nzClass: 'notification-error',
+        nzDuration: 2000
+      })
+    });
   }
 
   openChiTietPopup(item: any): void {
     this.isPopupOpen = true;
-    this.isDetailMode = true; 
+    this.isDetailMode = true;
     this.menuDynamicService.getMenuDynamicById(item.id).subscribe((response: any) => {
-    this.formData = response.data;  
-    console.log(this.formData);
-    });      
+      this.formData = response.data;
+      console.log(this.formData);
+    });
   }
 }
