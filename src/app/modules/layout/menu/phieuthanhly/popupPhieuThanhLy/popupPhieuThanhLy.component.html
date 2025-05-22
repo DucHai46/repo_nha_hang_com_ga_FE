@@ -2,7 +2,7 @@
   <div class="popup-box">
     <div class="p-5">
       <h2 class="text-2xl font-bold mb-5">
-        {{ isEditMode ? "Sửa phiếu kiểm kê" : "Thêm phiếu kiểm kê" }}
+        {{ isEditMode ? "Sửa phiếu xuất" : "Thêm phiếu xuất" }}
       </h2>
       <form>
         <div class="form-group">
@@ -30,7 +30,6 @@
         </div>
 
         <!-- ------------------------------------------------- --------------------------------------------------->
-
         <div>
           <label class="materialName">Nguyên liệu theo loại</label>
 
@@ -49,7 +48,7 @@
             <label class="text-sm font-medium text-gray-700"
               >Loại nguyên liệu {{ i + 1 }}</label
             >
-            <div class="flex flex-cols">
+            <div class="flex flex-col gap-2">
               <select
                 [(ngModel)]="loai.selectedLoaiId"
                 (change)="onLoaiNguyenLieuChange(i)"
@@ -65,6 +64,9 @@
                   {{ l.name }}
                 </option>
               </select>
+              <!-- <button (click)="removeLoaiSelection(i)" class="ml-2 bg-red-600 text-white px-4 rounded-lg hover:bg-red-700 transition w-full sm:w-auto">
+                Xóa
+              </button> -->
             </div>
 
             <!-- Lặp qua các nguyên liệu đã chọn và hiển thị dropdown, số lượng, ghi chú -->
@@ -83,11 +85,15 @@
                   class="border border-gray-300 rounded-lg p-4 bg-white shadow-sm space-y-3"
                 >
                   <div class="flex items-baseline gap-1 text-base">
-                    <label [for]="'loaiNguyenLieu_' + j"
-                      >Nguyên liệu:</label
-                    >
+                    <label [for]="'loaiNguyenLieu_' + j">Nguyên liệu:</label>
                     <div class="font-semibold">
                       {{ item.name }}
+                    </div>
+                  </div>
+                  <div class="flex items-baseline gap-1 text-base">
+                    <label [for]="'ngayHetHan_' + j">Ngày hết hạn:</label>
+                    <div class="font-semibold">
+                      {{ item.hanSuDung | date : "dd/MM/yyyy" }}
                     </div>
                   </div>
 
@@ -98,12 +104,14 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label [for]="'soLuong_' + j">Số lượng thực tế:</label>
+                    <label [for]="'soLuongThanhLy_' + j"
+                      >Số lượng thanh lý:</label
+                    >
                     <input
                       type="number"
-                      [id]="'soLuong_' + j"
-                      [(ngModel)]="item.soLuongThucTe"
-                      [name]="'soLuong_' + j"
+                      [id]="'soLuongThanhLy_' + j"
+                      [(ngModel)]="item.soLuongThanhLy"
+                      [name]="'soLuongThanhLy_' + j"
                       (ngModelChange)="updateChenhLech(item)"
                       placeholder="Nhập số lượng nguyên liệu..."
                     />
@@ -120,11 +128,11 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label [for]="'ghiChu_' + j">Ghi chú:</label>
+                    <label [for]="'ghiChu_' + j">Lý do thanh lý:</label>
                     <input
                       type="text"
                       [id]="'ghiChu_' + j"
-                      [(ngModel)]="item.ghiChu"
+                      [(ngModel)]="item.lyDoThanhLy"
                       [name]="'ghiChu_' + j"
                       placeholder="Nhập ghi chú..."
                     />
@@ -142,11 +150,15 @@
                 </div>
               </div>
             </div>
+            <div class="flex justify-end">
+              <button
+                (click)="thanhLyToanBo(i)"
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto"
+              >
+                Thanh lý toàn bộ
+              </button>
+            </div>
             <!-- Chỉ hiển thị nút Thêm nguyên liệu khi loại nguyên liệu được chọn -->
-            <!-- <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto" 
-              (click)="removeLoaiSelection(i)">
-                Xóa
-              </button> -->
           </div>
 
           <!-- Nút thêm loại nguyên liệu -->
@@ -154,20 +166,14 @@
             (click)="addLoaiSelection()"
             class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto"
           >
-            Thêm loại nguyên liệu
+            <!-- <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                  </svg> -->
+            Thêm
           </button>
         </div>
-        <!-- ------------------------------------------------------------------------------------------------------------ -->
 
         <!-- ------------------------------------------------------------------------------------------------------------ -->
-
-        <!-- <div class="form-group">
-            <label>Trạng thái:</label>
-            <select [(ngModel)]="formData.trangThai" name="trangThai" class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none" required>
-              <option [ngValue]="0">Không hoạt động</option>
-              <option [ngValue]="1">Hoạt động</option>
-            </select>
-          </div> -->
         <div class="form-group">
           <label for="diaDiem">Địa điểm:</label>
           <textarea
