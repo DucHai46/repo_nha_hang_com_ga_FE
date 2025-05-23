@@ -175,6 +175,14 @@ import { UserStore } from './menu/user/store/user.store';
 import { UserService } from './menu/user/services/user.service';
 import { PopupChangePasswordComponent } from './menu/user/popupChangePass/popupChangePass.component';
 import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPhanQuyenUser.component';
+import { CalamviecComponent } from './menu/calamviec/calamviec.component';
+import { PopupCaLamViecComponent } from './menu/calamviec/popupCaLamViec/popupCaLamViec.component';
+import { CaLamViecService } from './menu/calamviec/services/calamviec.service';
+import { CaLamViecStore } from './menu/calamviec/store/ca-lam-viec.store';
+import { LichlamviecComponent } from './menu/lichlamviec/lichlamviec.component';
+import { LichLamViecService } from './menu/lichlamviec/services/lichlamviec.service';
+import { LichLamViecStore } from './menu/lichlamviec/store/lich-lam-viec.store';
+import { PopupLichLamViecComponent } from './menu/lichlamviec/popupLichLamViec/popupLichLamViec.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -266,7 +274,11 @@ import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPha
     UserComponent,
     PopupUserComponent,
     PopupChangePasswordComponent,
-    PopupPhanQuyenUserComponent
+    PopupPhanQuyenUserComponent,
+    CalamviecComponent,
+    PopupCaLamViecComponent,
+    LichlamviecComponent,
+    PopupLichLamViecComponent,
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -335,6 +347,10 @@ import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPha
     NhaCungCapStore,
     NhaCungCapService,
     DonOrderAdminService,
+    CaLamViecService,
+    CaLamViecStore,
+    LichLamViecService,
+    LichLamViecStore,
 
     PhuPhiStore,
     PhuPhiService,

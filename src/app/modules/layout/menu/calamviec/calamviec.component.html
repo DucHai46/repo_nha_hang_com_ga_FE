@@ -1,7 +1,7 @@
 <div class="mt-10 mr-10">
   <!-- nhãn -->
   <div class="flex flex-row gap-4 mb-5">
-    <p class="text-2xl font-bold">Hóa đơn thanh toán</p>
+    <p class="text-2xl font-bold">Ca làm việc</p>
   </div>
   <!-- form search -->
   <div
@@ -10,37 +10,18 @@
     <!-- form -->
     <div class="flex flex-row gap-4">
       <div class="flex flex-col gap-2">
-        <label for="searchTenDonOrder">Tên hóa đơn</label>
+        <label for="searchTen">Tên </label>
         <input
           class="border border-gray-300 rounded-md p-2"
-          id="searchTenDonOrder"
-          [(ngModel)]="searchForm.tenHoaDon"
+          id="searchTen"
+          [(ngModel)]="searchForm.tenCaLamViec"
           type="text"
-          placeholder="Tìm kiếm"
+          placeholder="Tên ca làm việc"
         />
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="giaTri">Nhân viên</label>
-        <input
-          class="border border-gray-300 rounded-md p-2"
-          id="khachHang"
-          [(ngModel)]="searchForm.nhanViens"
-          type="text"
-          placeholder="Tìm kiếm"
-        />
-        <!-- <select
-          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-          id="khachHang"
-          [(ngModel)]="searchForm.khachHang"
-        >
-          <option *ngFor="let kh of khachHang" [value]="kh.id">
-            {{ kh.tenKhachHang }}
-          </option>
-        </select> -->
       </div>
     </div>
     <!-- button -->
-    <div class="flex flex-row gap-4 justify-center items-center">
+    <div class="flex flex-row gap-2 justify-center items-center">
       <button
         class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
         (click)="reset()"
@@ -90,74 +71,46 @@
   </div>
   <!-- table -->
   <div class="flex flex-col gap-4 p-5 bg-white rounded-lg w-full mt-5">
-    <!-- <div class="flex justify-end">
+    <div class="flex justify-end">
       <button
         (click)="openAddPopup()"
         class="bg-blue-500 text-white px-4 py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-blue-600 active:scale-95 focus:outline-none shadow-md hover:shadow-lg"
       >
         Thêm
       </button>
-    </div> -->
+    </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right">
-        <thead class="text-xs text-gray-700 uppercase text-center">
+        <thead class="text-xs uppercase text-center">
           <tr>
             <th scope="col" class="px-6 py-3">STT</th>
-            <th scope="col" class="px-6 py-3">Tên hóa đơn</th>
-            <th scope="col" class="px-6 py-3">Tên đơn order</th>
-            <th scope="col" class="px-6 py-3">Nhân viên</th>
-            <th scope="col" class="px-6 py-3">Trạng Thái</th>
+            <th scope="col" class="px-6 py-3">TÊN</th>
+            <th scope="col" class="px-6 py-3">KHUNG THỜI GIAN</th>
+            <th scope="col" class="px-6 py-3">MÔ TẢ</th>
             <th scope="col" class="px-6 py-3">Thao tác</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="border-b dark:border-gray-700 border-gray-200"
-            *ngFor="let item of hoaDonPaging; let i = index"
+            *ngFor="let item of caLamViecPaging; let i = index"
           >
-            <td
-              scope="row"
-              class="px-6 py-4 font-medium whitespace-nowrap text-center"
-            >
-              {{ i + 1 + (paging.page - 1) * paging.size }}
+            <td class="px-6 py-4 font-medium whitespace-nowrap text-center">
+              {{ i + 1 }}
             </td>
             <td class="px-6 py-4">
-              {{ item.tenHoaDon }}
+              {{ item.tenCaLamViec }}
             </td>
             <td class="px-6 py-4">
-              {{ item.donOrder.name }}
+              {{ item.khungThoiGian }}
             </td>
             <td class="px-6 py-4">
-              {{ item.nhanVien.name }}
+              {{ item.moTa }}
             </td>
-
-            <td class="px-6 py-4">
-              <span
-                class="border border-2 rounded-lg px-1 text-white"
-                [ngClass]="{
-                  'bg-green-500 border-green-500': item.trangthai,
-                  'bg-red-500 border-red-500': !item.trangthai
-                }"
-                >{{
-                  item.trangthai ? "Đã thanh toán" : "Chưa thanh toán"
-                }}</span
-              >
-            </td>
-
-            <!-- <td class="px-6 py-4" style="min-width: 300px; max-width: 400px; white-space: normal;">
-                <ul>
-                  <li *ngFor="let item of item.nguyenLieus">
-                    - {{item.nguyenLieu.name}} ({{item.soLuong}} {{item.ghiChu ? '- ' + item.ghiChu : ''}})
-                  </li>
-                </ul>
-              </td> -->
-            <!-- <td class="px-6 py-4">
-              {{ item.giaTien | number : "1.0-0" }}
-            </td> -->
             <td
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
             >
-              <!--  
+              <button
                 (click)="openEditPopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
               >
@@ -182,7 +135,7 @@
                     />
                   </svg>
                 </p>
-              </button> -->
+              </button>
 
               <button
                 (click)="openDeletePopup(item)"
@@ -209,25 +162,6 @@
                     />
                   </svg>
                 </p>
-              </button>
-              <button
-                (click)="openChiTietPopup(item)"
-                class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
-              >
-                <svg
-                  class="w-6 h-6 text-blue-600 dark:text-blue-400"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-3 8c-4.418 0-8-5.373-8-8s3.582-8 8-8 8 5.373 8 8-3.582 8-8 8z"
-                  />
-                </svg>
               </button>
             </td>
           </tr>
@@ -275,10 +209,10 @@
     </div>
   </div>
 </div>
-
-<app-popupChiTietHoaDon
-  *ngIf="isChiTietOpen"
+<app-popupCaLamViec
+  *ngIf="isPopupOpen"
+  [isEditMode]="isEditMode"
   [formData]="formData"
-  (close)="closeChiTiet()"
+  (close)="closePopup()"
   (save)="onSaveCongThuc($event)"
-></app-popupChiTietHoaDon>
+></app-popupCaLamViec>

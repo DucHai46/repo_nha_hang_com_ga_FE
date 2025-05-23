@@ -44,6 +44,8 @@ import { PhuongThucThanhToanComponent } from '../modules/layout/menu/phuongthuct
 
 import { PhieuthanhlyComponent } from '../modules/layout/menu/phieuthanhly/phieuthanhly.component';
 import { UserComponent } from '../modules/layout/menu/user/user.component';
+import { CalamviecComponent } from '../modules/layout/menu/calamviec/calamviec.component';
+import { LichlamviecComponent } from '../modules/layout/menu/lichlamviec/lichlamviec.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -103,6 +105,12 @@ export const remoteRoutes: Route[] = [
           // Quản lý hóa đơn
           { path: 'phuongthuc', component: PhuongThucThanhToanComponent },
           { path: 'user', component: UserComponent },
+
+          // Quản lý ca làm việc
+          { path: 'calamviec', component: CalamviecComponent },
+          { path: 'lichlamviec', component: LichlamviecComponent },
+
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full'}
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]
       },

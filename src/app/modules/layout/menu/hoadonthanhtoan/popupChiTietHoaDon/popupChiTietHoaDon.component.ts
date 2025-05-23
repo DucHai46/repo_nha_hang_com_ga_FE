@@ -43,6 +43,7 @@ export class PopupChiTietHoaDonComponent implements OnInit {
 
   dsMonAns: any; // Lưu danh sách món ăn có thêm trường giảm giá
 
+
   isClosePopup = false;
 
   ngOnInit(): void {
@@ -112,7 +113,7 @@ export class PopupChiTietHoaDonComponent implements OnInit {
       nhaHang: this.formData.nhaHang.id,
       tenHoaDon: this.formData.tenHoaDon,
       // qrCode: this.formData.qrCode,
-      qrCode: "tạm thời",
+      qrCode: "Qr Code bên phương thức thanh toán",
       gioVao: this.formData.gioVao,
       gioRa: this.formData.gioRa,
       soNguoi: this.formData.soNguoi,
@@ -125,7 +126,7 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     this.save.emit(this.form);
 
   }
-  onChagng(){
+  onChange(){
     const status = true;
     this.change.emit(status);
   }

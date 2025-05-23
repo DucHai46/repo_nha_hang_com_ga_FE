@@ -39,7 +39,8 @@
         Bàn: <span>{{ donOrder.ban.name }}</span>
       </p>
       <p>
-        Khách hàng: <span>{{ donOrder?.khachHang?.name || "Chiến" }}</span>
+        Khách hàng:
+        <span>{{ donOrder?.khachHang?.name || "Đơn tại chỗ" }}</span>
       </p>
     </div>
 
@@ -117,19 +118,6 @@
       <p>Cảm ơn quý khách và hẹn gặp lại!!!</p>
     </div>
 
-    <!-- <div class="qr" *ngIf="thanhToan">
-      <p>Quý khách vui lòng quét mã QR để thanh toán</p>
-      <img src="assets/qr-code.png" alt="QR Code" />
-    </div>  -->
-
-    <!-- <div class="qr" *ngIf="thanhToan">
-      <p>Quý khách vui lòng quét mã QR để thanh toán</p>
-      <img
-        *ngIf="imageUrls[phuongThucThanhToan?.id]"
-        [src]="imageUrls[phuongThucThanhToan?.id]"
-        alt="QR Code"
-      />
-    </div> -->
     <div
       class="qr text-center mt-4"
       *ngIf="thanhToan && imageUrls[phuongThucThanhToan?.id]"
