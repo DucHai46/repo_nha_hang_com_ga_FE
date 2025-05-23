@@ -5,18 +5,12 @@ import { environment } from '../../../../../enviroments/enviroment';
 export interface RegisterUser {
   fullName: string;
   username: string;
-  email: string;
-  password: string;
+  nhanVienId: string;
 }
 
 export interface UserUpdateInfo {
   fullName: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-  avatar: string;
-  gender: boolean;
-  dateOfBirth: string;
+  nhanVienId: string;
 }
 
 @Injectable({

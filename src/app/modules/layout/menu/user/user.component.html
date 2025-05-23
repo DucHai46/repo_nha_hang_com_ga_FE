@@ -96,11 +96,7 @@
             <th scope="col" class="px-6 py-3">STT</th>
             <!-- <th scope="col" class="px-6 py-3">Mã danh mục</th> -->
             <th scope="col" class="px-6 py-3">Tên người dùng</th>
-            <th scope="col" class="px-6 py-3">Email</th>
-            <th scope="col" class="px-6 py-3">Số điện thoại</th>
-            <th scope="col" class="px-6 py-3">Địa chỉ</th>
-            <th scope="col" class="px-6 py-3">Giới tính</th>
-            <th scope="col" class="px-6 py-3">Ngày sinh</th>
+            <th scope="col" class="px-6 py-3">Nhân viên</th>
             <th scope="col" class="px-6 py-3">Phân quyền</th>
             <th scope="col" class="px-6 py-3">Trạng thái</th>
             <th scope="col" class="px-6 py-3">Thao tác</th>
@@ -124,19 +120,7 @@
               {{ item.fullName }}
             </td>
             <td class="px-6 py-4">
-              {{ item.email }}
-            </td>
-            <td class="px-6 py-4">
-              {{ item.phoneNumber }}
-            </td>
-            <td class="px-6 py-4">
-              {{ item.address }}
-            </td>
-            <td class="px-6 py-4">
-              {{ item.gender ? "Nam" : "Nữ" }}
-            </td>
-            <td class="px-6 py-4">
-              {{ item.dateOfBirth | date : "dd/MM/yyyy" }}
+              {{ getNhanVien(item.nhanVienId) }}
             </td>
             <td class="px-6 py-4">
               {{ getPhanQuyen(item.phanQuyen) }}
