@@ -1,0 +1,41 @@
+<div class="parent">
+  <div class="div1 p-5 bg-white rounded-lg">
+    <apx-chart
+      [series]="chartBar.series"
+      [chart]="chartBar.chart"
+      [xaxis]="chartBar.xaxis"
+      [dataLabels]="chartBar.dataLabels"
+      [title]="chartBar.title"
+    ></apx-chart>
+  </div>
+
+  <div class="div2 p-5 bg-white rounded-lg">
+    <apx-chart
+      [series]="chartLine.series"
+      [chart]="chartLine.chart"
+      [xaxis]="chartLine.xaxis"
+      [dataLabels]="chartLine.dataLabels"
+      [title]="chartLine.title"
+    ></apx-chart>
+  </div>
+
+  <div class="div3 p-5 bg-white rounded-lg">
+    <apx-chart
+      [series]="chartDonut.series"
+      [chart]="chartDonut.chart"
+      [labels]="chartDonut.labels"
+      [dataLabels]="chartDonut.dataLabels"
+      [title]="chartDonut.title"
+    ></apx-chart>
+  </div>
+
+  <div class="div4 p-5 bg-white rounded-lg">
+    <apx-chart
+      [series]="chartArea.series"
+      [chart]="chartArea.chart"
+      [xaxis]="chartArea.xaxis"
+      [dataLabels]="chartArea.dataLabels"
+      [title]="chartArea.title"
+    ></apx-chart>
+  </div>
+</div>

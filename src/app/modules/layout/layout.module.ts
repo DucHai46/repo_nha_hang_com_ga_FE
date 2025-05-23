@@ -170,11 +170,12 @@ import { PhieuThanhLyService } from './menu/phieuthanhly/services/phieuthanhly.s
 import { PhieuThanhLyStore } from './menu/phieuthanhly/store/phieu-thanh-ly.store';
 import { PopupPhieuThanhLyComponent } from './menu/phieuthanhly/popupPhieuThanhLy/popupPhieuThanhLy.component';
 import { PopupChiTietPhieuThanhLyComponent } from './menu/phieuthanhly/popupChiTiet/popupChiTietPhieuThanhLy.component';
-
+import { DashboardBaoCaoThongKeComponent } from './menu/dashboardBaoCaoThongKe/dashboardBaoCaoThongKe/dashboardBaoCaoThongKe.component';
 import { UserStore } from './menu/user/store/user.store';
 import { UserService } from './menu/user/services/user.service';
 import { PopupChangePasswordComponent } from './menu/user/popupChangePass/popupChangePass.component';
 import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPhanQuyenUser.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -266,7 +267,8 @@ import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPha
     UserComponent,
     PopupUserComponent,
     PopupChangePasswordComponent,
-    PopupPhanQuyenUserComponent
+    PopupPhanQuyenUserComponent,
+    DashboardBaoCaoThongKeComponent
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -278,7 +280,8 @@ import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPha
     MatPaginatorModule,
     NzNotificationModule,
     QRCodeModule,
-    NzSelectModule
+    NzSelectModule,
+    NgApexchartsModule
   ],
   exports: [MenuComponent, MainComponent, SidenavComponent, LoginComponent, MenugoimonComponent],
   providers: [
