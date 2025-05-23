@@ -53,56 +53,56 @@ export const remoteRoutes: Route[] = [
       {
         path: 'main',
         component: MainComponent,
-        canActivate: [AuthGuard],
         children: [
           // { path: 'dashboard', component: MonanComponent },
           //Quản trị hệ thống
-          { path: 'menudynamic', component: MenuDynamicComponent },
-          { path: 'nhahang', component: NhaHangComponent },
-          { path: 'nhanvien', component: NhanVienComponent },
-          { path: 'phanquyen', component: PhanQuyenComponent },
-          { path: 'khachhang', component: KhachhangComponent },
-          { path: 'donvitinh', component: DonvitinhComponent },
-          { path: 'khuyenmai', component: KhuyenmaiComponent },
-          { path: 'congthuc', component: CongthucComponent },
-          { path: 'giamgia', component: GiamgiaComponent },
-          { path: 'chucvu', component: ChucVuComponent },
-          { path: 'phuphi', component: PhuphiComponent },
-          { path: 'banggia', component: BanggiaComponent },
-          { path: 'nhacungcap', component: NhacungcapComponent },
+          { path: 'menudynamic', component: MenuDynamicComponent, canActivate: [AuthGuard] },
+          { path: 'nhahang', component: NhaHangComponent, canActivate: [AuthGuard] },
+          { path: 'nhanvien', component: NhanVienComponent, canActivate: [AuthGuard] },
+          { path: 'phanquyen', component: PhanQuyenComponent, canActivate: [AuthGuard] },
+          { path: 'khachhang', component: KhachhangComponent, canActivate: [AuthGuard] },
+          { path: 'donvitinh', component: DonvitinhComponent, canActivate: [AuthGuard] },
+          { path: 'khuyenmai', component: KhuyenmaiComponent, canActivate: [AuthGuard] },
+          { path: 'congthuc', component: CongthucComponent, canActivate: [AuthGuard] },
+          { path: 'giamgia', component: GiamgiaComponent, canActivate: [AuthGuard] },
+          { path: 'chucvu', component: ChucVuComponent, canActivate: [AuthGuard] },
+          { path: 'phuphi', component: PhuphiComponent, canActivate: [AuthGuard] },
+          { path: 'banggia', component: BanggiaComponent, canActivate: [AuthGuard] },
+          { path: 'nhacungcap', component: NhacungcapComponent, canActivate: [AuthGuard] },
 
           //Quản lý nguyên liệu
-          { path: 'danhmucnguyenlieu', component: DanhmucnguyenlieuComponent },
-          { path: 'loainguyenlieu', component: LoainguyenlieuComponent },
-          { path: 'nguyenlieu', component: NguyenlieuComponent },
+          { path: 'danhmucnguyenlieu', component: DanhmucnguyenlieuComponent, canActivate: [AuthGuard] },
+          { path: 'loainguyenlieu', component: LoainguyenlieuComponent, canActivate: [AuthGuard] },
+          { path: 'nguyenlieu', component: NguyenlieuComponent, canActivate: [AuthGuard] },
 
           //Quản lý món ăn - thực đơn
-          { path: 'danhmucmonan', component: DanhmucmonanComponent },
-          { path: 'loaimonan', component: LoaimonanComponent },
-          { path: 'monan', component: MonanComponent },
-          { path: 'combo', component: ComboComponent },
-          { path: 'thucdon', component: ThucdonComponent },
+          { path: 'danhmucmonan', component: DanhmucmonanComponent, canActivate: [AuthGuard] },
+          { path: 'loaimonan', component: LoaimonanComponent, canActivate: [AuthGuard] },
+          { path: 'monan', component: MonanComponent, canActivate: [AuthGuard] },
+          { path: 'combo', component: ComboComponent, canActivate: [AuthGuard] },
+          { path: 'thucdon', component: ThucdonComponent, canActivate: [AuthGuard] },
 
           //Quản lý bàn ăn
-          { path: 'loaibanan', component: LoaibananComponent },
-          { path: 'banan', component: BananComponent },
+          { path: 'loaibanan', component: LoaibananComponent, canActivate: [AuthGuard] },
+          { path: 'banan', component: BananComponent, canActivate: [AuthGuard] },
 
           //Quản lý tủ đồ
-          { path: 'loaitudo', component: LoaitudoComponent },
-          { path: 'tudo', component: TudoComponent },
+          { path: 'loaitudo', component: LoaitudoComponent, canActivate: [AuthGuard] },
+          { path: 'tudo', component: TudoComponent, canActivate: [AuthGuard] },
 
           //Quản lý đơn hàng
-          { path: 'loaidonorder', component: LoaidonorderComponent },
-          { path: 'donorder', component: DonorderComponent },
+          { path: 'loaidonorder', component: LoaidonorderComponent, canActivate: [AuthGuard] },
+          { path: 'donorder', component: DonorderComponent, canActivate: [AuthGuard] },
 
           //Quản lý hóa đơn - phiếu
-          { path: 'hoadon', component: HoadonthanhtoanComponent },
-          { path: 'phieukiemke', component: PhieukiemkeComponent },
-          { path: 'phieuxuat', component: PhieuxuatComponent },
-          { path: 'phieunhap', component: PhieunhapComponent },
-          { path: 'phieuthanhly', component: PhieuthanhlyComponent },
+          { path: 'hoadon', component: HoadonthanhtoanComponent, canActivate: [AuthGuard] },
+          { path: 'phieukiemke', component: PhieukiemkeComponent, canActivate: [AuthGuard] },
+          { path: 'phieuxuat', component: PhieuxuatComponent, canActivate: [AuthGuard] },
+          { path: 'phieunhap', component: PhieunhapComponent, canActivate: [AuthGuard] },
+          { path: 'phieuthanhly', component: PhieuthanhlyComponent, canActivate: [AuthGuard] },
 
           // Quản lý hóa đơn
+
           { path: 'phuongthuc', component: PhuongThucThanhToanComponent },
           { path: 'user', component: UserComponent },
 
@@ -110,7 +110,11 @@ export const remoteRoutes: Route[] = [
           { path: 'calamviec', component: CalamviecComponent },
           { path: 'lichlamviec', component: LichlamviecComponent },
 
-          { path: '', redirectTo: 'dashboard', pathMatch: 'full'}
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+
+          { path: 'phuongthuc', component: PhuongThucThanhToanComponent, canActivate: [AuthGuard] },
+          { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
+
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]
       },

@@ -1,6 +1,7 @@
 import { AuthService } from './../../../core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
     'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg'
   ];
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private notification: NzNotificationService) { }
 
   currentIndex: number = 0;
 
@@ -32,16 +33,20 @@ export class LoginComponent implements OnInit {
     };
   }
   login() {
-      this.authService.login(this.formData).subscribe({
-        next: (res: any) => {
-          if(res.token){
-            localStorage.setItem('token', res.token);
-          }
+    this.authService.login(this.formData).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        if (res.token) {
+          localStorage.setItem('token', res.token);
           this.router.navigate(['/main']);
-        },
-        error: (err: any) => {
-          alert('Đăng nhập thất bại');
+          this.notification.success('Thông báo', 'Đăng nhập thành công');
+        } else {
+          this.notification.error('Lỗi', res.message);
         }
-      });
+      },
+      error: (err: any) => {
+        this.notification.error('Lỗi', 'Đăng nhập thất bại');
+      }
+    });
   }
 }

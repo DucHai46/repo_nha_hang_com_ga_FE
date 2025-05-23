@@ -33,12 +33,18 @@ export class SidenavComponent implements OnInit {
     if (this.token) {
       const decodedToken = JSON.parse(atob(this.token.split('.')[1]));
       const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      const userInfor = {
+        id: decodedToken['sub'],
+        name: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+      }
+      localStorage.setItem('userInfor', JSON.stringify(userInfor));
       this.menuService.getListMenuDynamic(role).subscribe((res: any) => {
         this.listMenuDynamic = res.data.danhSachMenu;
         this.menuService.getMenuDynamicByRole(this.listMenuDynamic).subscribe({
           next: (res: any) => {
             if (res.result == 1) {
               this.menuItems = res.data.data;
+              localStorage.setItem('menuItems', JSON.stringify(this.menuItems));
               this.convertToMenuItem(this.menuItems);
             }
           },
