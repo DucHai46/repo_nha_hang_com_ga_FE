@@ -161,12 +161,12 @@ export class PopupPhieuNhapComponent implements OnInit {
       id: this.formData.id,
       tenPhieu: this.formData.tenPhieu,
       tenNguoiGiao: this.formData.tenNguoiGiao,
-      nhaCungCap: this.formData.nhaCungCap,
+      nhaCungCap: this.formData.nhaCungCap||null,
       dienGiai: this.formData.dienGiai,
       diaDiem: this.formData.diaDiem,
       tongTien: this.formData.tongTien,
       ghiChu: this.formData.ghiChu,
-      nhanVien: this.formData.nhanVien,
+      nhanVien: this.formData.nhanVien||null,
       
       nguyenLieus: allNguyenLieus
     };
