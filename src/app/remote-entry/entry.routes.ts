@@ -107,10 +107,10 @@ export const remoteRoutes: Route[] = [
           { path: 'user', component: UserComponent },
 
           // Quản lý ca làm việc
-          { path: 'calamviec', component: CalamviecComponent },
-          { path: 'lichlamviec', component: LichlamviecComponent },
+          { path: 'calamviec', component: CalamviecComponent, canActivate: [AuthGuard] },
+          { path: 'lichlamviec', component: LichlamviecComponent, canActivate: [AuthGuard]  },
 
-          { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+          // { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
 
           { path: 'phuongthuc', component: PhuongThucThanhToanComponent, canActivate: [AuthGuard] },
           { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
