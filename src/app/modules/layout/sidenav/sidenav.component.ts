@@ -39,6 +39,7 @@ export class SidenavComponent implements OnInit {
           next: (res: any) => {
             if (res.result == 1) {
               this.menuItems = res.data.data;
+              localStorage.setItem('menuItems', JSON.stringify(this.menuItems));
               this.convertToMenuItem(this.menuItems);
             }
           },
