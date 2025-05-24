@@ -1,4 +1,7 @@
+import { HoaDonThanhToanService } from './../../hoadonthanhtoan/services/hoadonthanhtoan.service';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import {
   ApexChart,
   ApexAxisChartSeries,
@@ -22,7 +25,7 @@ export type ChartOptions = {
   styleUrls: ['./dashboardBaoCaoThongKe.component.scss']
 })
 export class DashboardBaoCaoThongKeComponent implements OnInit {
-  chartBar = {
+  chartBarDoanhThu = {
     series: [{ name: 'Doanh số', data: [44, 55, 41, 67, 22, 43] }],
     chart: { type: 'bar' as ChartType, height: 500 },
     title: { text: 'Biểu đồ Cột' },
@@ -55,8 +58,53 @@ export class DashboardBaoCaoThongKeComponent implements OnInit {
   };
 
 
-  constructor() { }
+  constructor(private hoaDonThanhToanService: HoaDonThanhToanService) { }
 
   ngOnInit(): void {
+    this.onThongKeDoanhThu();
+  }
+
+  doanhThuType = [
+    {
+      id: 0,
+      name: 'Theo ngày'
+    },
+    {
+      id: 1,
+      name: 'Theo tuần'
+    },
+    {
+      id: 2,
+      name: 'Theo tháng'
+    }
+  ]
+  doanhThuTypeSelected: any;
+  onChangeDoanhThuType(event: any) {
+    console.log(event.target.value);
+    this.doanhThuTypeSelected = event.target.value;
+  }
+
+  formThongKeDoanhthu = {
+    doanhThuType: 0,
+    tuNgay: new Date(),
+    denNgay: new Date(),
+    soTuan: 0
+  }
+
+  onThongKeDoanhThu() {
+    this.hoaDonThanhToanService.getDoanhThu(this.formThongKeDoanhthu).subscribe((res: any) => {
+      if (res != null) {
+        const categories = res.map((item: any) => item.thoiGian);
+        const doanhThu = res.map((item: any) => item.doanhThu);
+
+        this.chartBarDoanhThu = {
+          series: [{ name: 'Doanh thu', data: doanhThu }],
+          chart: { type: 'bar' as ChartType, height: 300 },
+          xaxis: { categories: categories },
+          title: { text: 'Biểu đồ doanh thu' },
+          dataLabels: { enabled: true }
+        };
+      }
+    });
   }
 }

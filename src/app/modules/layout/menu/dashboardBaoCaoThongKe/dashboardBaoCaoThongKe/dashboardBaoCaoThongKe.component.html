@@ -1,12 +1,65 @@
 <div class="parent">
   <div class="div1 p-5 bg-white rounded-lg">
-    <apx-chart
-      [series]="chartBar.series"
-      [chart]="chartBar.chart"
-      [xaxis]="chartBar.xaxis"
-      [dataLabels]="chartBar.dataLabels"
-      [title]="chartBar.title"
-    ></apx-chart>
+    <div class="flex justify-between">
+      <div>
+        <div class="flex flex-col mr-2">
+          <label for="tuNgay" class="mr-2">Thống kê</label>
+          <select
+            class="border rounded-lg p-1"
+            [(ngModel)]="formThongKeDoanhthu.doanhThuType"
+            name="doanhThuType"
+            (change)="onChangeDoanhThuType($event)"
+          >
+            <option *ngFor="let item of doanhThuType" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="flex flex-col mr-2">
+          <label for="tuNgay" class="mr-2">Từ ngày</label>
+          <input
+            [(ngModel)]="formThongKeDoanhthu.tuNgay"
+            class="border rounded-lg p-1"
+            type="date"
+          />
+        </div>
+        <div class="flex flex-col ml-2" *ngIf="doanhThuTypeSelected != 1">
+          <label for="denNgay" class="mr-2">Đến ngày</label>
+          <input
+            [(ngModel)]="formThongKeDoanhthu.denNgay"
+            class="border rounded-lg p-1"
+            type="date"
+          />
+        </div>
+        <div class="flex flex-col ml-2" *ngIf="doanhThuTypeSelected == 1">
+          <label for="soTuan" class="mr-2">Số tuần</label>
+          <input
+            [(ngModel)]="formThongKeDoanhthu.soTuan"
+            class="border rounded-lg p-1"
+            type="number"
+          />
+        </div>
+        <div class="flex flex-col ml-2 justify-end items-end">
+          <button
+            class="!ml-2 bg-blue-500 text-white p-2 rounded-lg h-fit"
+            (click)="onThongKeDoanhThu()"
+          >
+            Thống kê
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <apx-chart
+        [series]="chartBarDoanhThu.series"
+        [chart]="chartBarDoanhThu.chart"
+        [xaxis]="chartBarDoanhThu.xaxis"
+        [dataLabels]="chartBarDoanhThu.dataLabels"
+        [title]="chartBarDoanhThu.title"
+      ></apx-chart>
+    </div>
   </div>
 
   <div class="div2 p-5 bg-white rounded-lg">
