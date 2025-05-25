@@ -19,8 +19,7 @@ export class MenugoimonComponent implements OnInit {
   itemsDanhMuc = [];
 
   // selectedItem: any = this.itemsDanhMuc[0]; // Mặc định chọn danh mục đầu tiên
-  itemsMonAnRoot = [];
-
+  itemsMonAnRoot: any[] = [];
   itemsMonAn: any[] = [];
   selectedItemsMA: any[] = [];
   loaiMonAn: any[] = [];
@@ -179,7 +178,7 @@ export class MenugoimonComponent implements OnInit {
     if (item) {
       item.soLuong += 1;  // Tăng số lượng
       this.updateSelectedItemsMA(item);  // Cập nhật danh sách món đã chọn
-      console.log('Tăng số lượng:', item.soLuong);
+      console.log('Tăng số lượng:', item);
     }
   }
 
@@ -284,10 +283,29 @@ export class MenugoimonComponent implements OnInit {
   }
 
 
-  searchMonAn(event: any) {
-    const keyword = event.target.value.toLowerCase();
-    this.itemsMonAn = this.itemsMonAnRoot.filter((mon: any) => mon.ten.toLowerCase().includes(keyword));
+searchMonAn(event: any) {
+  const keyword = event.target.value.toLowerCase().trim();
+
+  if (!this.itemsMonAnRoot || this.itemsMonAnRoot.length === 0) {
+    this.itemsMonAnRoot = [...this.itemsMonAn]; // copy danh sách gốc
   }
+
+  if (keyword === '') {
+    this.itemsMonAn = [...this.itemsMonAnRoot];
+    return;
+  }
+
+  const filtered = this.itemsMonAnRoot.filter((mon: any) =>
+    mon.ten.toLowerCase().includes(keyword)
+  );
+
+  if (filtered.length > 0) {
+    this.itemsMonAn = filtered;
+  } else {
+    this.itemsMonAn = [...this.itemsMonAnRoot];
+  }
+}
+
   getImageUrl(hinhAnh: string): string {
     if (!hinhAnh) return '';
 
