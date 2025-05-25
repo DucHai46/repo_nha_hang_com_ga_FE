@@ -14,7 +14,8 @@
     }
   </div>
   <div class="sidenav-nav">
-    @for (item of items; track $index) { @if (item.children) {
+    @for (item of items; track $index) { @if (item.children &&
+    item.children.length > 0) {
     <li class="sidenav-nav-item">
       <div
         class="sidenav-nav-link flex justify-between"
