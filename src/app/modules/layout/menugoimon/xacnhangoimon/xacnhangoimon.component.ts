@@ -75,7 +75,7 @@ export class XacnhangoimonComponent implements OnInit  {
     });
   }
 
-  loaiDon="681c59dcfb5b076f5440df92"
+  loaiDon="682c90d72046cb04ec849880"
   xacNhanDonOrder(){
     if(this.id == '' || this.id == null){
       return;
@@ -149,7 +149,7 @@ export class XacnhangoimonComponent implements OnInit  {
     }else{
       const newDonOrder = {
         tenDon: 'Đơn mới bàn số ' + this.id,
-        loaiDon: '',                    
+        loaiDon: this.loaiDon,                    
         ban:  this.id ,
         khachHang: '',                 
         trangThai: 0,                          
