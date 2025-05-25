@@ -53,42 +53,192 @@
     </div>
     <div>
       <apx-chart
-        [series]="chartBarDoanhThu.series"
-        [chart]="chartBarDoanhThu.chart"
-        [xaxis]="chartBarDoanhThu.xaxis"
-        [dataLabels]="chartBarDoanhThu.dataLabels"
-        [title]="chartBarDoanhThu.title"
+        [series]="chartLineDoanhThu.series"
+        [chart]="chartLineDoanhThu.chart"
+        [xaxis]="chartLineDoanhThu.xaxis"
+        [dataLabels]="chartLineDoanhThu.dataLabels"
+        [title]="chartLineDoanhThu.title"
       ></apx-chart>
     </div>
   </div>
 
   <div class="div2 p-5 bg-white rounded-lg">
+    <div class="flex justify-between">
+      <div class="flex flex-col mr-2">
+        <label for="bestSellingMonAnType" class="mr-2">Thống kê</label>
+        <select
+          class="border rounded-lg p-1"
+          [(ngModel)]="formBestSellingMonAn.doanhThuType"
+          (change)="onChangeBestSellingMonAnType($event)"
+        >
+          <option *ngFor="let item of doanhThuType" [value]="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="flex">
+        <div class="flex flex-col mr-2">
+          <label for="tuNgay" class="mr-2">Từ ngày</label>
+          <input
+            [(ngModel)]="formBestSellingMonAn.tuNgay"
+            class="border rounded-lg p-1"
+            type="date"
+          />
+        </div>
+        <div
+          class="flex flex-col ml-2"
+          *ngIf="bestSellingMonAnTypeSelected != 1"
+        >
+          <label for="denNgay" class="mr-2">Đến ngày</label>
+          <input
+            [(ngModel)]="formBestSellingMonAn.denNgay"
+            class="border rounded-lg p-1"
+            type="date"
+          />
+        </div>
+        <div
+          class="flex flex-col ml-2"
+          *ngIf="bestSellingMonAnTypeSelected == 1"
+        >
+          <label for="soTuan" class="mr-2">Số tuần</label>
+          <input
+            [(ngModel)]="formBestSellingMonAn.soTuan"
+            class="border rounded-lg p-1"
+            type="number"
+          />
+        </div>
+        <div class="flex flex-col ml-2 justify-end items-end">
+          <button
+            class="!ml-2 bg-blue-500 text-white p-2 rounded-lg h-fit"
+            (click)="onThongKeBestSellingMonAn()"
+          >
+            Thống kê
+          </button>
+        </div>
+      </div>
+    </div>
     <apx-chart
-      [series]="chartLine.series"
-      [chart]="chartLine.chart"
-      [xaxis]="chartLine.xaxis"
-      [dataLabels]="chartLine.dataLabels"
-      [title]="chartLine.title"
+      [series]="chartBarBestSellingMonAn.series"
+      [chart]="chartBarBestSellingMonAn.chart"
+      [xaxis]="chartBarBestSellingMonAn.xaxis"
+      [dataLabels]="chartBarBestSellingMonAn.dataLabels"
+      [title]="chartBarBestSellingMonAn.title"
     ></apx-chart>
   </div>
 
   <div class="div3 p-5 bg-white rounded-lg">
+    <div class="flex justify-between">
+      <div class="flex flex-col mr-2">
+        <label for="khoanChiType" class="mr-2">Thống kê</label>
+        <select
+          class="border rounded-lg p-1"
+          [(ngModel)]="formThongKeKhoanChi.doanhThuType"
+          (change)="onChangeKhoanChiType($event)"
+        >
+          <option *ngFor="let item of doanhThuType" [value]="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="flex">
+        <div class="flex flex-col mr-2">
+          <label for="tuNgay" class="mr-2">Từ ngày</label>
+          <input
+            [(ngModel)]="formThongKeKhoanChi.tuNgay"
+            class="border rounded-lg p-1"
+            type="date"
+          />
+        </div>
+        <div class="flex flex-col ml-2" *ngIf="khoanChiTypeSelected != 1">
+          <label for="denNgay" class="mr-2">Đến ngày</label>
+          <input
+            [(ngModel)]="formThongKeKhoanChi.denNgay"
+            class="border rounded-lg p-1"
+            type="date"
+          />
+        </div>
+        <div class="flex flex-col ml-2" *ngIf="khoanChiTypeSelected == 1">
+          <label for="soTuan" class="mr-2">Số tuần</label>
+          <input
+            [(ngModel)]="formThongKeKhoanChi.soTuan"
+            class="border rounded-lg p-1"
+            type="number"
+          />
+        </div>
+        <div class="flex flex-col ml-2 justify-end items-end">
+          <button
+            class="!ml-2 bg-blue-500 text-white p-2 rounded-lg h-fit"
+            (click)="onThongKeKhoanChi()"
+          >
+            Thống kê
+          </button>
+        </div>
+      </div>
+    </div>
     <apx-chart
-      [series]="chartDonut.series"
-      [chart]="chartDonut.chart"
-      [labels]="chartDonut.labels"
-      [dataLabels]="chartDonut.dataLabels"
-      [title]="chartDonut.title"
+      [series]="chartLineKhoanChi.series"
+      [chart]="chartLineKhoanChi.chart"
+      [xaxis]="chartLineKhoanChi.xaxis"
+      [dataLabels]="chartLineKhoanChi.dataLabels"
+      [title]="chartLineKhoanChi.title"
     ></apx-chart>
   </div>
 
   <div class="div4 p-5 bg-white rounded-lg">
+    <div class="flex justify-between">
+      <div class="flex flex-col mr-2">
+        <label for="matDoKhachHangType" class="mr-2">Thống kê</label>
+        <select
+          class="border rounded-lg p-1"
+          [(ngModel)]="formMatDoKhachHang.doanhThuType"
+          (change)="onChangeMatDoKhachHangType($event)"
+        >
+          <option *ngFor="let item of doanhThuType" [value]="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="flex">
+        <div class="flex flex-col mr-2">
+          <label for="tuNgay" class="mr-2">Từ ngày</label>
+          <input
+            [(ngModel)]="formMatDoKhachHang.tuNgay"
+            class="border rounded-lg p-1"
+            type="date"
+          />
+        </div>
+        <div class="flex flex-col ml-2" *ngIf="matDoKhachHangTypeSelected != 1">
+          <label for="denNgay" class="mr-2">Đến ngày</label>
+          <input
+            [(ngModel)]="formMatDoKhachHang.denNgay"
+            class="border rounded-lg p-1"
+            type="date"
+          />
+        </div>
+        <div class="flex flex-col ml-2" *ngIf="matDoKhachHangTypeSelected == 1">
+          <label for="soTuan" class="mr-2">Số tuần</label>
+          <input
+            [(ngModel)]="formMatDoKhachHang.soTuan"
+            class="border rounded-lg p-1"
+            type="number"
+          />
+        </div>
+        <div class="flex flex-col ml-2 justify-end items-end">
+          <button
+            class="!ml-2 bg-blue-500 text-white p-2 rounded-lg h-fit"
+            (click)="onThongKeMatDoKhachHang()"
+          >
+            Thống kê
+          </button>
+        </div>
+      </div>
+    </div>
     <apx-chart
-      [series]="chartArea.series"
-      [chart]="chartArea.chart"
-      [xaxis]="chartArea.xaxis"
-      [dataLabels]="chartArea.dataLabels"
-      [title]="chartArea.title"
+      [series]="chartAreaMatDoKhachHang.series"
+      [chart]="chartAreaMatDoKhachHang.chart"
+      [xaxis]="chartAreaMatDoKhachHang.xaxis"
+      [dataLabels]="chartAreaMatDoKhachHang.dataLabels"
+      [title]="chartAreaMatDoKhachHang.title"
     ></apx-chart>
   </div>
 </div>

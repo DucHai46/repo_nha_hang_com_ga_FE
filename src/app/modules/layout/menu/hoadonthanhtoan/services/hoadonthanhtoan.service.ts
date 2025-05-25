@@ -55,4 +55,34 @@ export class HoaDonThanhToanService {
 
     return this.http.get(`${this.apiUrl}/api/hoa-don-thanh-toan/doanh-thu`, { params: queryParams });
   }
+
+  getBestSellingMonAn(params: DoanhThuRequest) {
+    const queryParams = new HttpParams()
+      .set('doanhThuEnum', params.doanhThuType)
+      .set('tuNgay', new Date(params.tuNgay).toISOString())
+      .set('denNgay', new Date(params.denNgay).toISOString())
+      .set('soTuan', params.soTuan);
+
+    return this.http.get(`${this.apiUrl}/api/hoa-don-thanh-toan/best-selling-mon-an`, { params: queryParams });
+  }
+
+  getMatDoKhachHang(params: DoanhThuRequest) {
+    const queryParams = new HttpParams()
+      .set('doanhThuEnum', params.doanhThuType)
+      .set('tuNgay', new Date(params.tuNgay).toISOString())
+      .set('denNgay', new Date(params.denNgay).toISOString())
+      .set('soTuan', params.soTuan);
+
+    return this.http.get(`${this.apiUrl}/api/hoa-don-thanh-toan/mat-do-khach-hang`, { params: queryParams });
+  }
+
+  getKhoanChi(params: DoanhThuRequest) {
+    const queryParams = new HttpParams()
+      .set('doanhThuEnum', params.doanhThuType)
+      .set('tuNgay', new Date(params.tuNgay).toISOString())
+      .set('denNgay', new Date(params.denNgay).toISOString())
+      .set('soTuan', params.soTuan);
+
+    return this.http.get(`${this.apiUrl}/api/phieu-nhap/khoan-chi`, { params: queryParams });
+  }
 }
