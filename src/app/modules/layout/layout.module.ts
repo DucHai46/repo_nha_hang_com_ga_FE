@@ -176,6 +176,7 @@ import { UserService } from './menu/user/services/user.service';
 import { PopupChangePasswordComponent } from './menu/user/popupChangePass/popupChangePass.component';
 import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPhanQuyenUser.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { UserInforComponent } from './menu/userInfor/userInfor.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -268,7 +269,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     PopupUserComponent,
     PopupChangePasswordComponent,
     PopupPhanQuyenUserComponent,
-    DashboardBaoCaoThongKeComponent
+    DashboardBaoCaoThongKeComponent,
+    UserInforComponent
   ], // Khai báo component
   imports: [
     CommonModule,

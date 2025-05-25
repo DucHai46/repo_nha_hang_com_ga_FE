@@ -45,6 +45,7 @@ import { PhuongThucThanhToanComponent } from '../modules/layout/menu/phuongthuct
 import { PhieuthanhlyComponent } from '../modules/layout/menu/phieuthanhly/phieuthanhly.component';
 import { UserComponent } from '../modules/layout/menu/user/user.component';
 import { DashboardBaoCaoThongKeComponent } from '../modules/layout/menu/dashboardBaoCaoThongKe/dashboardBaoCaoThongKe/dashboardBaoCaoThongKe.component';
+import { UserInforComponent } from '../modules/layout/menu/userInfor/userInfor.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -104,6 +105,7 @@ export const remoteRoutes: Route[] = [
           { path: 'phuongthuc', component: PhuongThucThanhToanComponent, canActivate: [AuthGuard] },
           { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
           { path: 'dashboard', component: DashboardBaoCaoThongKeComponent, canActivate: [AuthGuard] },
+          { path: 'userinfor', component: UserInforComponent, canActivate: [AuthGuard] },
           // { path: 'thongtinchung', component: ThongtinchungComponent },
         ]
       },

@@ -58,4 +58,8 @@ export class UserService {
   registerUser(data: RegisterUser) {
     return this.http.post(`${this.authUrl}/api/auth/register`, data);
   }
+
+  updateUser(id: string, data: any) {
+    return this.http.put(`${this.authUrl}/api/auth/update-user?id=${id}`, data);
+  }
 }
