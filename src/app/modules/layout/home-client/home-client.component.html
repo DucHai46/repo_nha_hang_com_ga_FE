@@ -1,0 +1,254 @@
+<header class="flex justify-between items-center p-4 bg-blue-500">
+  <div>
+    <img
+      src="https://theme.hstatic.net/200000385717/1000767290/14/logo.png?v=475"
+      alt="logo"
+      class="w-20 h-20"
+    />
+  </div>
+  <!-- Desktop Menu -->
+  <div class="hidden md:flex justify-between items-center gap-10">
+    <a
+      routerLink="/home-client/home"
+      routerLinkActive="!text-gray-200 font-bold"
+      class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
+    >
+      Trang chủ
+    </a>
+    <a
+      routerLink="/home-client/about"
+      routerLinkActive="!text-gray-200 font-bold"
+      class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
+    >
+      Giới thiệu
+    </a>
+    <a
+      routerLink="/home-client/menu"
+      routerLinkActive="!text-gray-200 font-bold"
+      class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
+    >
+      Thực đơn
+    </a>
+    <a
+      routerLink="/home-client/blog"
+      routerLinkActive="!text-gray-200 font-bold"
+      class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
+    >
+      Blog
+    </a>
+  </div>
+  <div class="flex justify-between items-center gap-6">
+    <svg
+      class="w-6 h-6 text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
+      />
+    </svg>
+    <svg
+      class="w-6 h-6 text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-width="2"
+        d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+      />
+    </svg>
+    <svg
+      class="w-6 h-6 text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+      />
+    </svg>
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden" (click)="toggleMenu()">
+      <svg
+        class="w-6 h-6 text-white transition-transform duration-300"
+        [class.rotate-90]="isMenuOpen"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M18 6H6m12 4H6m12 4H6m12 4H6"
+        />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div
+  class="md:hidden fixed top-[88px] left-0 right-0 bg-blue-500 transform transition-all duration-500 ease-in-out z-50"
+  [class.hidden]="!isMenuOpen"
+  [class.opacity-0]="!isMenuOpen"
+  [class.-translate-y-full]="!isMenuOpen"
+  [class.opacity-100]="isMenuOpen"
+  [class.translate-y-0]="isMenuOpen"
+>
+  <div class="p-4 space-y-4 text-center">
+    <a
+      routerLink="/home-client/home"
+      routerLinkActive="!text-gray-200 font-bold"
+      (click)="toggleMenu()"
+      class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
+    >
+      Trang chủ
+    </a>
+    <a
+      routerLink="/home-client/about"
+      routerLinkActive="!text-gray-200 font-bold"
+      (click)="toggleMenu()"
+      class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
+    >
+      Giới thiệu
+    </a>
+    <a
+      routerLink="/home-client/menu"
+      routerLinkActive="!text-gray-200 font-bold"
+      (click)="toggleMenu()"
+      class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
+    >
+      Thực đơn
+    </a>
+    <a
+      routerLink="/home-client/blog"
+      routerLinkActive="!text-gray-200 font-bold"
+      (click)="toggleMenu()"
+      class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
+    >
+      Blog
+    </a>
+  </div>
+</div>
+
+<div class="relative w-full">
+  <!-- Carousel wrapper -->
+  <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+    <!-- Slides -->
+    <div
+      *ngFor="let slide of slides; let i = index"
+      [attr.data-carousel-item]="true"
+      class="absolute block w-full h-full transition-all duration-700 ease-in-out transform"
+      [class.hidden]="i !== currentSlide"
+    >
+      <img
+        [src]="slide.image"
+        [alt]="slide.alt"
+        class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+      />
+    </div>
+  </div>
+
+  <!-- Slider indicators -->
+  <div
+    class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse"
+  >
+    <button
+      *ngFor="let slide of slides; let i = index"
+      type="button"
+      class="w-3 h-3 rounded-full"
+      [attr.aria-current]="i === currentSlide"
+      [attr.aria-label]="'Slide ' + (i + 1)"
+      [attr.data-carousel-slide-to]="i"
+      [class.bg-white]="i === currentSlide"
+      [class.bg-white]="i !== currentSlide"
+      [class.opacity-50]="i !== currentSlide"
+      (click)="goToSlide(i)"
+    ></button>
+  </div>
+
+  <!-- Slider controls -->
+  <button
+    type="button"
+    class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+    (click)="prevSlide()"
+  >
+    <span
+      class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+    >
+      <svg
+        class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 6 10"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 1 1 5l4 4"
+        />
+      </svg>
+      <span class="sr-only">Previous</span>
+    </span>
+  </button>
+  <button
+    type="button"
+    class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+    (click)="nextSlide()"
+  >
+    <span
+      class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+    >
+      <svg
+        class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 6 10"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m1 9 4-4-4-4"
+        />
+      </svg>
+      <span class="sr-only">Next</span>
+    </span>
+  </button>
+</div>
+
+<!-- Main Content -->
+<main>
+  <router-outlet></router-outlet>
+</main>

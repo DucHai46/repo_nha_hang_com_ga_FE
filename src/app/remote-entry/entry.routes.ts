@@ -46,6 +46,11 @@ import { PhieuthanhlyComponent } from '../modules/layout/menu/phieuthanhly/phieu
 import { UserComponent } from '../modules/layout/menu/user/user.component';
 import { DashboardBaoCaoThongKeComponent } from '../modules/layout/menu/dashboardBaoCaoThongKe/dashboardBaoCaoThongKe/dashboardBaoCaoThongKe.component';
 import { UserInforComponent } from '../modules/layout/menu/userInfor/userInfor.component';
+import { HomeClientComponent } from '../modules/layout/home-client/home-client.component';
+import { HomeComponent } from '../modules/layout/home-client/pages/home/home.component';
+import { AboutComponent } from '../modules/layout/home-client/pages/about/about.component';
+import { MenuComponent } from '../modules/layout/home-client/pages/menu/menu.component';
+import { BlogComponent } from '../modules/layout/home-client/pages/blog/blog.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -126,5 +131,15 @@ export const remoteRoutes: Route[] = [
   {
     path: 'chitietdon',
     component: ChitietdonComponent,
+  },
+  {
+    path: 'home-client',
+    component: HomeClientComponent,
+    children: [
+      { path: 'home', component: HomeComponent },
+      { path: 'about', component: AboutComponent },
+      { path: 'menu', component: MenuComponent },
+      { path: 'blog', component: BlogComponent },
+    ]
   },
 ];

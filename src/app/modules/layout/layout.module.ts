@@ -177,6 +177,10 @@ import { PopupChangePasswordComponent } from './menu/user/popupChangePass/popupC
 import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPhanQuyenUser.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { UserInforComponent } from './menu/userInfor/userInfor.component';
+import { HomeClientComponent } from './home-client/home-client.component';
+import { HomeComponent } from './home-client/pages/home/home.component';
+import { AboutComponent } from './home-client/pages/about/about.component';
+import { BlogComponent } from './home-client/pages/blog/blog.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -270,7 +274,11 @@ import { UserInforComponent } from './menu/userInfor/userInfor.component';
     PopupChangePasswordComponent,
     PopupPhanQuyenUserComponent,
     DashboardBaoCaoThongKeComponent,
-    UserInforComponent
+    UserInforComponent,
+    HomeClientComponent,
+    HomeComponent,
+    AboutComponent,
+    BlogComponent
   ], // Khai báo component
   imports: [
     CommonModule,
