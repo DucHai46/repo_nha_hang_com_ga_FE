@@ -80,6 +80,7 @@ export class NhaHangComponent implements OnInit {
   closePopup(): void {
     this.isPopupOpen = false;
     this.isEditMode = false;
+    this.isPopupGiaoDienOpen = false;
   }
   onSaveNhaHang(body: any): void {
     console.log(body);
@@ -296,6 +297,71 @@ export class NhaHangComponent implements OnInit {
           'error',
           'Thông báo!',
           `Cập nhật thất bại`, {
+          nzClass: 'notification-error',
+          nzDuration: 2000
+        })
+      });
+    }
+  }
+
+  isPopupGiaoDienOpen = false;
+  openGiaoDienPopup(item: any): void {
+    this.isPopupGiaoDienOpen = true;
+    if (item.giaoDien) {
+      this.isEditMode = true;
+    } else {
+      this.isEditMode = false;
+    }
+    this.isChiTietOpen = false;
+    this.formData = {
+      id: item.id,
+      header: item.giaoDien.header,
+      footer: item.giaoDien.footer,
+      home: item.giaoDien.home,
+      about: item.giaoDien.about
+    }
+  }
+
+  onSaveGiaoDien(body: any): void {
+    console.log(body);
+    if (this.isEditMode) {
+      this.nhaHangService.updateGiaoDien(this.formData.id, body).subscribe({
+        next: (res: any) => {
+          this.isPopupGiaoDienOpen = false;
+          this.search();
+          this.notification.create(
+            'success',
+            'Thông báo!',
+            `Cập nhật thành công`, {
+            nzClass: 'notification-success',
+            nzDuration: 2000
+          });
+        },
+        error: () => this.notification.create(
+          'error',
+          'Thông báo!',
+          `Cập nhật thất bại`, {
+          nzClass: 'notification-error',
+          nzDuration: 2000
+        })
+      });
+    } else {
+      this.nhaHangService.addGiaoDien(this.formData.id, body).subscribe({
+        next: (res: any) => {
+          this.isPopupGiaoDienOpen = false;
+          this.search();
+          this.notification.create(
+            'success',
+            'Thông báo!',
+            `Thêm mới thành công`, {
+            nzClass: 'notification-success',
+            nzDuration: 2000
+          });
+        },
+        error: () => this.notification.create(
+          'error',
+          'Thông báo!',
+          `Thêm mới thất bại`, {
           nzClass: 'notification-error',
           nzDuration: 2000
         })

@@ -202,7 +202,7 @@ import { DondatbanComponent } from './menu/dondatban/dondatban.component';
 import { dondatbanService } from './menu/dondatban/services/dondatban.service';
 import { DonDatBanStore } from './menu/dondatban/store/don-dat-ban.store';
 import { PopupDonDatBanComponent } from './menu/dondatban/popupDonDatBan/popupDonDatBan.component';
-
+import { PopupGiaoDienComponent } from './menu/nhahang/popupGiaoDien/popupGiaoDien.component';
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -312,7 +312,8 @@ import { PopupDonDatBanComponent } from './menu/dondatban/popupDonDatBan/popupDo
     AboutComponent,
     BlogComponent,
     DondatbanComponent,
-    PopupDonDatBanComponent
+    PopupDonDatBanComponent,
+    PopupGiaoDienComponent
 
   ], // Khai báo component
   imports: [

@@ -136,6 +136,33 @@
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
             >
               <button
+                (click)="openGiaoDienPopup(item)"
+                class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
+              >
+                <p
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-800"
+                >
+                  <svg
+                    class="w-6 h-6 text-dark dark:text-dark"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
+                    />
+                  </svg>
+                </p>
+              </button>
+
+              <button
                 (click)="openEditPopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
               >
@@ -222,7 +249,7 @@
           <button
             (click)="changePage(paging.page - 1)"
             [disabled]="paging.page === 1"
-            class="!text-black  px-3 py-1 border rounded disabled:opacity-50"
+            class="!text-black px-3 py-1 border rounded disabled:opacity-50"
           >
             Previous
           </button>
@@ -232,7 +259,7 @@
           <button
             (click)="changePage(paging.page + 1)"
             [disabled]="paging.page === totalPages"
-            class="!text-black  px-3 py-1 border rounded disabled:opacity-50"
+            class="!text-black px-3 py-1 border rounded disabled:opacity-50"
           >
             Next
           </button>
@@ -262,3 +289,11 @@
   (close)="closePopup()"
   (save)="onSaveNhaHang($event)"
 ></app-popupNhaHang>
+<app-popupGiaoDien
+  *ngIf="isPopupGiaoDienOpen"
+  [isEditMode]="isEditMode"
+  [isChiTietOpen]="isChiTietOpen"
+  [formData]="formData"
+  (close)="closePopup()"
+  (save)="onSaveGiaoDien($event)"
+></app-popupGiaoDien>

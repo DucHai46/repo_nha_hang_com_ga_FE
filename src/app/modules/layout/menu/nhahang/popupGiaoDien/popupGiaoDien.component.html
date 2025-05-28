@@ -1,0 +1,557 @@
+<div class="popup-backdrop">
+  <div class="popup-box max-w-6xl">
+    <div class="p-6">
+      <h2 class="text-2xl font-bold mb-6">
+        {{
+          isEditMode
+            ? "Sửa giao diện"
+            : isChiTietOpen
+            ? "Chi tiết giao diện"
+            : "Thêm giao diện"
+        }}
+      </h2>
+
+      <!-- Tab Navigation -->
+      <div class="border-b border-gray-200 mb-6">
+        <nav class="-mb-px flex space-x-8">
+          <button
+            type="button"
+            [class]="
+              activeTab === 'header'
+                ? 'border-blue-500 !text-blue-600'
+                : 'border-transparent !text-gray-500 hover:!text-gray-700'
+            "
+            class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
+            (click)="setActiveTab('header')"
+          >
+            Header
+          </button>
+          <button
+            type="button"
+            [class]="
+              activeTab === 'home'
+                ? 'border-blue-500 !text-blue-600'
+                : 'border-transparent !text-gray-500 hover:!text-gray-700'
+            "
+            class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
+            (click)="setActiveTab('home')"
+          >
+            Trang chủ
+          </button>
+          <button
+            type="button"
+            [class]="
+              activeTab === 'about'
+                ? 'border-blue-500 !text-blue-600'
+                : 'border-transparent !text-gray-500 hover:!text-gray-700'
+            "
+            class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
+            (click)="setActiveTab('about')"
+          >
+            Giới thiệu
+          </button>
+          <button
+            type="button"
+            [class]="
+              activeTab === 'footer'
+                ? 'border-blue-500 !text-blue-600'
+                : 'border-transparent !text-gray-500 hover:!text-gray-700'
+            "
+            class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
+            (click)="setActiveTab('footer')"
+          >
+            Footer
+          </button>
+        </nav>
+      </div>
+
+      <form>
+        <!-- Header Tab -->
+        <div *ngIf="activeTab === 'header'" class="space-y-6">
+          <h3 class="text-lg font-semibold">Cấu hình Header</h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="form-group">
+              <label>Logo Header:</label>
+              <input
+                type="file"
+                (change)="onHeaderLogoSelected($event)"
+                accept="image/*"
+                class="border border-gray-300 p-2 rounded w-full"
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Màu nền Header:</label>
+              <input
+                type="color"
+                [(ngModel)]="formData.header.backgroundColor"
+                name="headerBackgroundColor"
+                class="border border-gray-300 p-2 rounded w-full h-10"
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Slider Hình ảnh:</label>
+            <div class="space-y-3">
+              <div
+                *ngFor="
+                  let slider of formData.header?.imageSlider;
+                  let i = index
+                "
+                class="flex items-center gap-3"
+              >
+                <input
+                  type="file"
+                  (change)="onSliderImageSelected($event, i)"
+                  accept="image/*"
+                  class="border border-gray-300 p-2 rounded flex-1"
+                  [disabled]="isChiTietOpen"
+                />
+                <button
+                  type="button"
+                  class="btn-danger"
+                  (click)="removeSliderImage(i)"
+                  *ngIf="!isChiTietOpen"
+                >
+                  Xóa
+                </button>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary !bg-blue-500"
+                (click)="addSliderImage()"
+                *ngIf="!isChiTietOpen"
+              >
+                + Thêm hình ảnh slider
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home Tab -->
+        <div *ngIf="activeTab === 'home'" class="space-y-6">
+          <h3 class="text-lg font-semibold">Cấu hình Trang chủ</h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="form-group">
+              <label>Tiêu đề chính:</label>
+              <input
+                type="text"
+                [(ngModel)]="formData.home.title"
+                name="homeTitle"
+                placeholder="Nhập tiêu đề..."
+                class="border border-gray-300 p-2 rounded w-full"
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Hình ảnh chính:</label>
+              <input
+                type="file"
+                (change)="onHomeImageSelected($event)"
+                accept="image/*"
+                class="border border-gray-300 p-2 rounded w-full"
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Nội dung chính:</label>
+            <textarea
+              [(ngModel)]="formData.home.content"
+              name="homeContent"
+              placeholder="Nhập nội dung..."
+              rows="4"
+              class="border border-gray-300 p-2 rounded w-full"
+              [disabled]="isChiTietOpen"
+            ></textarea>
+          </div>
+
+          <!-- Content 1 Section -->
+          <div class="form-group">
+            <label>Nội dung bổ sung 1:</label>
+            <div class="space-y-4">
+              <div
+                *ngFor="let content of formData.home?.content1; let i = index"
+                class="border p-4 rounded bg-gray-50"
+              >
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                  <input
+                    type="text"
+                    [(ngModel)]="content.title"
+                    [name]="'homeContent1Title' + i"
+                    placeholder="Tiêu đề..."
+                    class="border border-gray-300 p-2 rounded"
+                    [disabled]="isChiTietOpen"
+                  />
+                  <input
+                    type="file"
+                    (change)="onHomeContent1ImageSelected($event, i)"
+                    accept="image/*"
+                    class="border border-gray-300 p-2 rounded"
+                    [disabled]="isChiTietOpen"
+                  />
+                </div>
+                <textarea
+                  [(ngModel)]="content.content"
+                  [name]="'homeContent1Content' + i"
+                  placeholder="Nội dung..."
+                  rows="3"
+                  class="border border-gray-300 p-2 rounded w-full mb-3"
+                  [disabled]="isChiTietOpen"
+                ></textarea>
+                <button
+                  type="button"
+                  class="btn-danger"
+                  (click)="removeHomeContent1(i)"
+                  *ngIf="!isChiTietOpen"
+                >
+                  Xóa
+                </button>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary !bg-blue-500"
+                (click)="addHomeContent1()"
+                *ngIf="!isChiTietOpen"
+              >
+                + Thêm nội dung 1
+              </button>
+            </div>
+          </div>
+
+          <!-- Content 2 Section -->
+          <div class="form-group">
+            <label>Nội dung bổ sung 2:</label>
+            <div class="space-y-4">
+              <div
+                *ngFor="let content of formData.home?.content2; let i = index"
+                class="border p-4 rounded bg-gray-50"
+              >
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                  <input
+                    type="text"
+                    [(ngModel)]="content.title"
+                    [name]="'homeContent2Title' + i"
+                    placeholder="Tiêu đề..."
+                    class="border border-gray-300 p-2 rounded"
+                    [disabled]="isChiTietOpen"
+                  />
+                  <input
+                    type="file"
+                    (change)="onHomeContent2ImageSelected($event, i)"
+                    accept="image/*"
+                    class="border border-gray-300 p-2 rounded"
+                    [disabled]="isChiTietOpen"
+                  />
+                </div>
+                <textarea
+                  [(ngModel)]="content.content"
+                  [name]="'homeContent2Content' + i"
+                  placeholder="Nội dung..."
+                  rows="3"
+                  class="border border-gray-300 p-2 rounded w-full mb-3"
+                  [disabled]="isChiTietOpen"
+                ></textarea>
+                <button
+                  type="button"
+                  class="btn-danger"
+                  (click)="removeHomeContent2(i)"
+                  *ngIf="!isChiTietOpen"
+                >
+                  Xóa
+                </button>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary !bg-blue-500"
+                (click)="addHomeContent2()"
+                *ngIf="!isChiTietOpen"
+              >
+                + Thêm nội dung 2
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Tab -->
+        <div *ngIf="activeTab === 'about'" class="space-y-6">
+          <h3 class="text-lg font-semibold">Cấu hình Giới thiệu</h3>
+
+          <div class="form-group">
+            <label>Nội dung Giới thiệu:</label>
+            <div class="space-y-4">
+              <div
+                *ngFor="let content of formData.about?.content; let i = index"
+                class="border p-4 rounded bg-gray-50"
+              >
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                  <input
+                    type="text"
+                    [(ngModel)]="content.title"
+                    [name]="'aboutContentTitle' + i"
+                    placeholder="Tiêu đề..."
+                    class="border border-gray-300 p-2 rounded"
+                    [disabled]="isChiTietOpen"
+                  />
+                  <input
+                    type="file"
+                    (change)="onAboutContentImageSelected($event, i)"
+                    accept="image/*"
+                    class="border border-gray-300 p-2 rounded"
+                    [disabled]="isChiTietOpen"
+                  />
+                </div>
+                <textarea
+                  [(ngModel)]="content.content"
+                  [name]="'aboutContentContent' + i"
+                  placeholder="Nội dung..."
+                  rows="4"
+                  class="border border-gray-300 p-2 rounded w-full mb-3"
+                  [disabled]="isChiTietOpen"
+                ></textarea>
+                <button
+                  type="button"
+                  class="btn-danger"
+                  (click)="removeAboutContent(i)"
+                  *ngIf="!isChiTietOpen"
+                >
+                  Xóa
+                </button>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary !bg-blue-500"
+                (click)="addAboutContent()"
+                *ngIf="!isChiTietOpen"
+              >
+                + Thêm nội dung giới thiệu
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Tab -->
+        <div *ngIf="activeTab === 'footer'" class="space-y-6">
+          <h3 class="text-lg font-semibold">Cấu hình Footer</h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="form-group">
+              <label>Tiêu đề Footer:</label>
+              <input
+                type="text"
+                [(ngModel)]="formData.footer.title"
+                name="footerTitle"
+                placeholder="Nhập tiêu đề footer..."
+                class="border border-gray-300 p-2 rounded w-full"
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Logo Footer:</label>
+              <input
+                type="file"
+                (change)="onFooterLogoSelected($event)"
+                accept="image/*"
+                class="border border-gray-300 p-2 rounded w-full"
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Màu nền Footer:</label>
+              <input
+                type="color"
+                [(ngModel)]="formData.footer.backgroundColor"
+                name="footerBackgroundColor"
+                class="border border-gray-300 p-2 rounded w-full h-10"
+                [disabled]="isChiTietOpen"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Nội dung Footer:</label>
+            <textarea
+              [(ngModel)]="formData.footer.content"
+              name="footerContent"
+              placeholder="Nhập nội dung footer..."
+              rows="3"
+              class="border border-gray-300 p-2 rounded w-full"
+              [disabled]="isChiTietOpen"
+            ></textarea>
+          </div>
+
+          <!-- Address -->
+          <div class="form-group">
+            <label>Địa chỉ:</label>
+            <div class="space-y-2">
+              <div
+                *ngFor="let address of formData.footer?.address; let i = index"
+                class="flex items-center gap-3"
+              >
+                <input
+                  type="text"
+                  [(ngModel)]="formData.footer.address[i]"
+                  [name]="'footerAddress' + i"
+                  placeholder="Nhập địa chỉ..."
+                  class="border border-gray-300 p-2 rounded flex-1"
+                  [disabled]="isChiTietOpen"
+                />
+                <button
+                  type="button"
+                  class="btn-danger"
+                  (click)="removeFooterAddress(i)"
+                  *ngIf="!isChiTietOpen"
+                >
+                  Xóa
+                </button>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary !bg-blue-500"
+                (click)="addFooterAddress()"
+                *ngIf="!isChiTietOpen"
+              >
+                + Thêm địa chỉ
+              </button>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label>Số điện thoại:</label>
+            <div class="space-y-2">
+              <div
+                *ngFor="let phone of formData.footer?.phone; let i = index"
+                class="flex items-center gap-3"
+              >
+                <input
+                  type="text"
+                  [(ngModel)]="formData.footer.phone[i]"
+                  [name]="'footerPhone' + i"
+                  placeholder="Nhập số điện thoại..."
+                  class="border border-gray-300 p-2 rounded flex-1"
+                  [disabled]="isChiTietOpen"
+                />
+                <button
+                  type="button"
+                  class="btn-danger"
+                  (click)="removeFooterPhone(i)"
+                  *ngIf="!isChiTietOpen"
+                >
+                  Xóa
+                </button>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary !bg-blue-500"
+                (click)="addFooterPhone()"
+                *ngIf="!isChiTietOpen"
+              >
+                + Thêm số điện thoại
+              </button>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label>Email:</label>
+            <div class="space-y-2">
+              <div
+                *ngFor="let email of formData.footer?.email; let i = index"
+                class="flex items-center gap-3"
+              >
+                <input
+                  type="email"
+                  [(ngModel)]="formData.footer.email[i]"
+                  [name]="'footerEmail' + i"
+                  placeholder="Nhập email..."
+                  class="border border-gray-300 p-2 rounded flex-1"
+                  [disabled]="isChiTietOpen"
+                />
+                <button
+                  type="button"
+                  class="btn-danger"
+                  (click)="removeFooterEmail(i)"
+                  *ngIf="!isChiTietOpen"
+                >
+                  Xóa
+                </button>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary !bg-blue-500"
+                (click)="addFooterEmail()"
+                *ngIf="!isChiTietOpen"
+              >
+                + Thêm email
+              </button>
+            </div>
+          </div>
+
+          <!-- Social -->
+          <div class="form-group">
+            <label>Mạng xã hội:</label>
+            <div class="space-y-2">
+              <div
+                *ngFor="let social of formData.footer?.social; let i = index"
+                class="flex items-center gap-3"
+              >
+                <input
+                  type="url"
+                  [(ngModel)]="formData.footer.social[i]"
+                  [name]="'footerSocial' + i"
+                  placeholder="Nhập link mạng xã hội..."
+                  class="border border-gray-300 p-2 rounded flex-1"
+                  [disabled]="isChiTietOpen"
+                />
+                <button
+                  type="button"
+                  class="btn-danger"
+                  (click)="removeFooterSocial(i)"
+                  *ngIf="!isChiTietOpen"
+                >
+                  Xóa
+                </button>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary !bg-blue-500"
+                (click)="addFooterSocial()"
+                *ngIf="!isChiTietOpen"
+              >
+                + Thêm mạng xã hội
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-8 pt-6 border-t">
+          <button
+            type="button"
+            class="btn cancel-btn !bg-red-500"
+            (click)="onCancel()"
+          >
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="btn save-btn"
+            (click)="onSave()"
+            *ngIf="!isChiTietOpen"
+          >
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -30,4 +30,12 @@ export class NhaHangService {
   deleteNhaHang(id: string) {
     return this.http.delete(`${this.apiUrl}/api/nha-hang/${id}`);
   }
+
+  addGiaoDien(id: string, data: any) {
+    return this.http.post(`${this.apiUrl}/api/nha-hang/${id}/giao-dien`, data);
+  }
+
+  updateGiaoDien(id: string, data: any) {
+    return this.http.put(`${this.apiUrl}/api/nha-hang/${id}/giao-dien`, data);
+  }
 }
