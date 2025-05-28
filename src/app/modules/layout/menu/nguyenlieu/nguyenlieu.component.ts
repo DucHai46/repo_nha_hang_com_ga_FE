@@ -92,8 +92,14 @@ export class NguyenlieuComponent implements OnInit {
     switch(trangThai) {
       case TrangThaiNguyenLieu.HangMoi: return 'Hàng mới';
       case TrangThaiNguyenLieu.DaQuaSuDung: return 'Đã qua sử dụng';
-      case TrangThaiNguyenLieu.DangSuDung: return 'Đang sử dụng';
       default: return 'Không xác định';
+    }
+  }
+  getTrangThaiClass(trangThai: number): string {
+    switch (trangThai) {
+      case TrangThaiNguyenLieu.HangMoi: return 'text-green-600';
+      case TrangThaiNguyenLieu.DaQuaSuDung: return 'text-red-500';
+      default: return 'text-gray-500';
     }
   }
   changePage(newPage: number) {

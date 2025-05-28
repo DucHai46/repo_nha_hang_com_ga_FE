@@ -73,7 +73,6 @@
           >
             <option [value]="''">Tất cả</option>
             <option [value]="0">Hàng mới</option>
-            <option [value]="1">Đang sử dụng</option>
             <option [value]="2">Đã qua sử dụng</option>
           </select>
         </div>
@@ -189,7 +188,7 @@
               <td class="px-6 py-4">
                 {{ item.tuDo.name }}
               </td>
-              <td class="px-6 py-4">
+              <td class="px-6 py-4" [ngClass]="getTrangThaiClass(item.trangThai)">
                 {{ getTrangThaiName(item.trangThai) }}
               </td>
               <td
