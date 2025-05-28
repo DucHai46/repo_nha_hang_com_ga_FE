@@ -171,6 +171,13 @@ export class MenugoimonComponent implements OnInit {
     }
     this.selectedItemsMA = this.selectedItemsMA.filter((mon) => mon.soLuong > 0);
   }
+  check(ma: string) {
+    const item = this.itemsMonAn.filter((mon) => mon.danhMuc === ma);
+    if (item.length>0) {
+      return true;
+    }
+    return false;
+  }
 
   // Hàm hiển thị nút tăng/giảm khi người dùng nhấn "+
 
