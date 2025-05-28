@@ -137,7 +137,7 @@ export class PopupPhieuKiemKeComponent implements OnInit {
       tenPhieu: this.formData.tenPhieu,
       ghiChu: this.formData.ghiChu,
       diaDiem: this.formData.diaDiem,
-      nhanVien: this.formData.nhanVien,
+      nhanVien: this.formData.nhanVien||null,
       
       loaiNguyenLieus: allLoaiNguyenLieus
     };

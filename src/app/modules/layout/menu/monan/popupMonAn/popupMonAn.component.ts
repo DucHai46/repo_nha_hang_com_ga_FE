@@ -59,18 +59,26 @@ export class PopupMonAnComponent implements OnInit {
 
     this.giamgiaService.getGiamGia({}).subscribe({
       next: (res: any) => {
-        this.giamGia = res.data.data.map((item: any) => ({
-          id: item.id,
-          name: item.tenGiamGia,
-          giaTri: item.giaTri
-        }));
-
-        if (this.isEditMode) {
-          const selected = this.giamGia.find(x => x.id === this.formData.giamGia.id);
-          if (selected) {
-            this.formData.giamGia = selected;
-          }
-        }
+            this.giamGia = [
+              {
+                id: '',
+                name: 'Không giảm giá',
+                giaTri: 0
+              },
+              ...res.data.data.map((item: any) => ({
+                id: item.id,
+                name: item.tenGiamGia,
+                giaTri: item.giaTri
+              }))
+            ];  
+            if (this.isEditMode) {
+              const selected = this.giamGia.find(x => x.id === this.formData.giamGia.id);
+              if (selected) {
+                this.formData.giamGia = selected;
+              }
+            }else {
+              this.formData.giamGia = this.giamGia[0];
+            }
       },
       error: (err: any) => console.log(err)
     });
@@ -103,7 +111,7 @@ export class PopupMonAnComponent implements OnInit {
     const dataToSend = {
       ...this.formData,
       loaiMonAn: this.formData.loaiMonAn.id,
-      giamGia: this.formData.giamGia.id,
+      giamGia: this.formData.giamGia?.id ? this.formData.giamGia.id : null,
       congThuc: this.formData.congThuc.id,
       hinhAnh: this.formData.hinhAnh
         ? JSON.stringify({

@@ -5,18 +5,12 @@ import { environment } from '../../../../../enviroments/enviroment';
 export interface RegisterUser {
   fullName: string;
   username: string;
-  email: string;
-  password: string;
+  nhanVienId: string;
 }
 
 export interface UserUpdateInfo {
   fullName: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-  avatar: string;
-  gender: boolean;
-  dateOfBirth: string;
+  nhanVienId: string;
 }
 
 @Injectable({
@@ -63,5 +57,9 @@ export class UserService {
 
   registerUser(data: RegisterUser) {
     return this.http.post(`${this.authUrl}/api/auth/register`, data);
+  }
+
+  updateUser(id: string, data: any) {
+    return this.http.put(`${this.authUrl}/api/auth/update-user?id=${id}`, data);
   }
 }

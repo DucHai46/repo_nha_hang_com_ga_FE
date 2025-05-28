@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         console.log(res);
         if (res.token) {
           localStorage.setItem('token', res.token);
-          this.router.navigate(['/main']);
+          this.router.navigate(['/main/dashboard']);
           this.notification.success('Thông báo', 'Đăng nhập thành công');
         } else {
           this.notification.error('Lỗi', res.message);

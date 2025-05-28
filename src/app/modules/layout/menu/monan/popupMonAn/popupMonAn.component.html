@@ -1,115 +1,103 @@
 <div class="popup-backdrop">
-    <div class="popup-box"> 
-        <div class="p-5">
-            <h2 class="text-2xl font-bold mb-5">
-              {{ isEditMode ? "Sửa món ăn" : "Thêm món ăn" }}
-            </h2>
-            <form>
-              <div class="form-group">
-                <label for="materialName">Tên món ăn:</label>
-                <input
-                  type="text"
-                  id="materialName"
-                  [(ngModel)]="formData.tenMonAn"
-                  name="ten"
-                  placeholder="Nhập tên món ăn..."
-                />
-              </div>
-              <div class="mb-4">
-                <label class="materialName">Hình ảnh</label>
-                <input
-                  type="file"
-                  (change)="onFileSelected($event)"
-                  accept="image/*"
-                  class="border border-gray-300 p-2 rounded w-full"
-                />
-              </div>
-        
-              <div class="form-group">
-                <label for="dvt">Loại món ăn:</label>
-                <select
-                  id="dvt"
-                  [(ngModel)]="formData.loaiMonAn"
-                  name="donvitinh"
-                  class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-                >
-                  <option 
-                  *ngFor="let danhMuc of loaiMonAn" 
-                  [ngValue]="danhMuc" 
-                  >
-                    {{ danhMuc.name }}
-                  </option>
-                </select>
-              </div>
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        {{ isEditMode ? "Sửa món ăn" : "Thêm món ăn" }}
+      </h2>
+      <form>
+        <div class="form-group">
+          <label for="materialName">Tên món ăn:</label>
+          <input
+            type="text"
+            id="materialName"
+            [(ngModel)]="formData.tenMonAn"
+            name="ten"
+            placeholder="Nhập tên món ăn..."
+          />
+        </div>
+        <div class="mb-4">
+          <label class="materialName">Hình ảnh</label>
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            class="border border-gray-300 p-2 rounded w-full"
+          />
+        </div>
 
-              <div class="form-group">
-                <label for="moTa">Mô tả:</label>
-                <input
-                  type="text"
-                  id="moTa"
-                  [(ngModel)]="formData.moTa"
-                  name="mota"
-                  placeholder="Nhập mô tả..."
-                />
-              </div>
-        
-              <div class="form-group">
-                <label for="giaTri">Giá tiền:</label>
-                <input
-                  type="number"
-                  id="giaTri"
-                  [(ngModel)]="formData.giaTien"
-                  name="giaTri"
+        <div class="form-group">
+          <label for="dvt">Loại món ăn:</label>
+          <select
+            id="dvt"
+            [(ngModel)]="formData.loaiMonAn"
+            name="donvitinh"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let danhMuc of loaiMonAn" [ngValue]="danhMuc">
+              {{ danhMuc.name }}
+            </option>
+          </select>
+        </div>
 
-                  placeholder="Nhập giá tiền..."
-                />
-              </div>
-        
-              <div class="form-group">
-                <label for="sale">Giảm giá:</label>
-                <select
-                  id="sale"
-                  [(ngModel)]="formData.giamGia"
-                  name="giamgia"
-                  class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-                >
-                  <option 
-                  *ngFor="let danhMuc of giamGia" 
-                  [ngValue]="danhMuc" 
-                  >
-                    {{ danhMuc.name }}
-                  </option>
-                </select>
-              </div>
-        
-              <div class="form-group">
-                <label for="ct">Công thức:</label>
-                <select
-                  id="ct"
-                  [(ngModel)]="formData.congThuc"
-                  name="congThuc"
-                  class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-                >
-                  <option 
-                  *ngFor="let danhMuc of congThuc" 
-                  [ngValue]="danhMuc" 
-                  >
-                    {{ danhMuc.name }}
-                  </option>
-                </select>
-              </div>
-          
+        <div class="form-group">
+          <label for="moTa">Mô tả:</label>
+          <input
+            type="text"
+            id="moTa"
+            [(ngModel)]="formData.moTa"
+            name="mota"
+            placeholder="Nhập mô tả..."
+          />
+        </div>
 
-          
-              <div class="flex justify-end gap-2">
-                <button type="button" class="btn cancel-btn" (click)="onCancel()">
-                  Hủy
-                </button>
-                <button type="button" class="btn save-btn" (click)="onSave()">Lưu</button>
-              </div>
-            </form>
-          </div>
-            
+        <div class="form-group">
+          <label for="giaTri">Giá tiền:</label>
+          <input
+            type="number"
+            id="giaTri"
+            [(ngModel)]="formData.giaTien"
+            name="giaTri"
+            placeholder="Nhập giá tiền..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="sale">Giảm giá:</label>
+          <select
+            id="sale"
+            [(ngModel)]="formData.giamGia"
+            name="giamgia"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let danhMuc of giamGia" [ngValue]="danhMuc">
+              {{ danhMuc.name }} - {{ danhMuc.giaTri }}%
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="ct">Công thức:</label>
+          <select
+            id="ct"
+            [(ngModel)]="formData.congThuc"
+            name="congThuc"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let danhMuc of congThuc" [ngValue]="danhMuc">
+              {{ danhMuc.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="button" class="btn cancel-btn" (click)="onCancel()">
+            Hủy
+          </button>
+          <button type="button" class="btn save-btn" (click)="onSave()">
+            Lưu
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
- 

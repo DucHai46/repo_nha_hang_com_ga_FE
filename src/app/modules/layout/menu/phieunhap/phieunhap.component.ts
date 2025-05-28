@@ -31,6 +31,8 @@ export class PhieunhapComponent implements OnInit {
   }
   searchForm: any={
     tenPhieu:'',
+    tuNgay: '',
+    denNgay: '',
   }
   search() {
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
@@ -64,6 +66,8 @@ export class PhieunhapComponent implements OnInit {
   }
   reset(){
     this.searchForm.tenPhieu='';
+    this.searchForm.tuNgay = '';
+    this.searchForm.denNgay = '';
     this.search();
   }
   isPopupOpen = false;
@@ -96,6 +100,8 @@ export class PhieunhapComponent implements OnInit {
       next: (res: any) => {
         if (res.data) {
           this.searchForm.tenPhieu = '';
+          this.searchForm.tuNgay = '';
+          this.searchForm.denNgay = '';
           this.search();
           this.closePopup();
           this.notification.create(

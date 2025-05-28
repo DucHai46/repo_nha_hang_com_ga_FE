@@ -14,7 +14,8 @@
     }
   </div>
   <div class="sidenav-nav">
-    @for (item of items; track $index) { @if (item.children) {
+    @for (item of items; track $index) { @if (item.children &&
+    item.children.length > 0) {
     <li class="sidenav-nav-item">
       <div
         class="sidenav-nav-link flex justify-between"
@@ -65,9 +66,15 @@
     </li>
     } }
   </div>
-  <div class="sidenav-footer" [routerLink]="['']">
+  <div class="sidenav-footer flex justify-between">
     <button class="logout-button" (click)="logout()">
       <i class="fal fa-sign-out"></i>
+    </button>
+    <button
+      class="rounded-full border px-2 border-white hover:bg-gray-500"
+      (click)="infoUser()"
+    >
+      <i class="fal fa-user"></i>
     </button>
   </div>
 </div>

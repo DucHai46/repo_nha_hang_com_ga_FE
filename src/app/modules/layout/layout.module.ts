@@ -170,11 +170,12 @@ import { PhieuThanhLyService } from './menu/phieuthanhly/services/phieuthanhly.s
 import { PhieuThanhLyStore } from './menu/phieuthanhly/store/phieu-thanh-ly.store';
 import { PopupPhieuThanhLyComponent } from './menu/phieuthanhly/popupPhieuThanhLy/popupPhieuThanhLy.component';
 import { PopupChiTietPhieuThanhLyComponent } from './menu/phieuthanhly/popupChiTiet/popupChiTietPhieuThanhLy.component';
-
+import { DashboardBaoCaoThongKeComponent } from './menu/dashboardBaoCaoThongKe/dashboardBaoCaoThongKe/dashboardBaoCaoThongKe.component';
 import { UserStore } from './menu/user/store/user.store';
 import { UserService } from './menu/user/services/user.service';
 import { PopupChangePasswordComponent } from './menu/user/popupChangePass/popupChangePass.component';
 import { PopupPhanQuyenUserComponent } from './menu/user/popupPhanQuyen/popupPhanQuyenUser.component';
+
 import { CalamviecComponent } from './menu/calamviec/calamviec.component';
 import { PopupCaLamViecComponent } from './menu/calamviec/popupCaLamViec/popupCaLamViec.component';
 import { CaLamViecService } from './menu/calamviec/services/calamviec.service';
@@ -188,6 +189,16 @@ import { LichlamviecnhanvienComponent } from './menu/lichlamviecnhanvien/lichlam
 import { PopupChiTietLichLamViecNhanVienComponent } from './menu/lichlamviecnhanvien/popupChiTietLich/popupChiTietLichLamViecNhanVien.component';
 import { LichLamViecNhanVienStore } from './menu/lichlamviecnhanvien/store/lich-lam-viec-nhan-vien.store';
 import { LichLamViecNhanVienService } from './menu/lichlamviecnhanvien/services/lichlamviecnhanvien.service';
+
+// First install the package:
+// npm install apexcharts ng-apexcharts --save
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { UserInforComponent } from './menu/userInfor/userInfor.component';
+import { HomeClientComponent } from './home-client/home-client.component';
+import { HomeComponent } from './home-client/pages/home/home.component';
+import { AboutComponent } from './home-client/pages/about/about.component';
+import { BlogComponent } from './home-client/pages/blog/blog.component';
+
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -280,6 +291,7 @@ import { LichLamViecNhanVienService } from './menu/lichlamviecnhanvien/services/
     PopupUserComponent,
     PopupChangePasswordComponent,
     PopupPhanQuyenUserComponent,
+
     CalamviecComponent,
     PopupCaLamViecComponent,
     LichlamviecComponent,
@@ -287,6 +299,14 @@ import { LichLamViecNhanVienService } from './menu/lichlamviecnhanvien/services/
     PopupChiTietLichLamViecComponent,
     LichlamviecnhanvienComponent,
     PopupChiTietLichLamViecNhanVienComponent,
+
+    DashboardBaoCaoThongKeComponent,
+    UserInforComponent,
+    HomeClientComponent,
+    HomeComponent,
+    AboutComponent,
+    BlogComponent
+
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -298,7 +318,8 @@ import { LichLamViecNhanVienService } from './menu/lichlamviecnhanvien/services/
     MatPaginatorModule,
     NzNotificationModule,
     QRCodeModule,
-    NzSelectModule
+    NzSelectModule,
+    NgApexchartsModule
   ],
   exports: [MenuComponent, MainComponent, SidenavComponent, LoginComponent, MenugoimonComponent],
   providers: [

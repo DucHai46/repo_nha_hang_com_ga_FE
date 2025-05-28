@@ -1,0 +1,222 @@
+<div class="min-h-screen flex items-center justify-center">
+  <div class="border-gray-300 rounded-lg p-4 bg-white w-2/5">
+    <div>
+      <div class="flex flex-row justify-start items-center gap-4">
+        <button
+          class="text-lg hover:cursor-pointer !text-gray-200 hover:!text-gray-700 hover:border-b-2 hover:border-gray-700"
+          [ngClass]="{
+            '!text-gray-700': isActive === 'personal',
+            '!border-b-2 !border-gray-700': isActive === 'personal'
+          }"
+          (click)="isActive = 'personal'"
+        >
+          Thông tin cá nhân
+        </button>
+        <button
+          class="text-lg hover:cursor-pointer !text-gray-200 hover:!text-gray-700 hover:border-b-2 hover:border-gray-700"
+          [ngClass]="{
+            '!text-gray-700': isActive === 'account',
+            '!border-b-2 !border-gray-700': isActive === 'account'
+          }"
+          (click)="isActive = 'account'"
+        >
+          Thông tin tài khoản
+        </button>
+      </div>
+
+      <form
+        [formGroup]="personalForm"
+        (ngSubmit)="savePersonalInfo()"
+        *ngIf="isActive === 'personal'"
+      >
+        <div class="flex flex-col justify-center items-start">
+          <div class="flex flex-col justify-start items-start my-4 w-full">
+            <label>Họ và tên <span class="text-red-500">*</span></label>
+            <input
+              formControlName="tenNhanVien"
+              type="text"
+              class="border border-gray-300 rounded-lg p-2 w-full"
+            />
+            <span
+              *ngIf="personalForm.get('tenNhanVien')?.touched && personalForm.get('tenNhanVien')?.errors?.['required']"
+              class="text-red-500 text-sm"
+              >Vui lòng nhập họ và tên</span
+            >
+          </div>
+          <div class="flex flex-col justify-start items-start my-4 w-full">
+            <label>Địa chỉ <span class="text-red-500">*</span></label>
+            <input
+              formControlName="diaChi"
+              type="text"
+              class="border border-gray-300 rounded-lg p-2 w-full"
+            />
+            <span
+              *ngIf="personalForm.get('diaChi')?.touched && personalForm.get('diaChi')?.errors?.['required']"
+              class="text-red-500 text-sm"
+              >Vui lòng nhập địa chỉ</span
+            >
+          </div>
+          <div class="flex flex-col justify-start items-start my-4 w-full">
+            <label>Email <span class="text-red-500">*</span></label>
+            <input
+              formControlName="email"
+              type="email"
+              class="border border-gray-300 rounded-lg p-2 w-full"
+            />
+            <span
+              *ngIf="personalForm.get('email')?.touched && personalForm.get('email')?.errors?.['required']"
+              class="text-red-500 text-sm"
+              >Vui lòng nhập email</span
+            >
+            <span
+              *ngIf="personalForm.get('email')?.touched && personalForm.get('email')?.errors?.['email']"
+              class="text-red-500 text-sm"
+              >Email không hợp lệ</span
+            >
+          </div>
+          <div class="flex flex-col justify-start items-start my-4 w-full">
+            <label>Số điện thoại <span class="text-red-500">*</span></label>
+            <input
+              formControlName="soDienThoai"
+              type="tel"
+              class="border border-gray-300 rounded-lg p-2 w-full"
+            />
+            <span
+              *ngIf="personalForm.get('soDienThoai')?.touched && personalForm.get('soDienThoai')?.errors?.['required']"
+              class="text-red-500 text-sm"
+              >Vui lòng nhập số điện thoại</span
+            >
+          </div>
+          <div class="flex flex-col justify-start items-start my-4 w-full">
+            <label>Ngày sinh <span class="text-red-500">*</span></label>
+            <input
+              formControlName="ngaySinh"
+              type="date"
+              class="border border-gray-300 rounded-lg p-2 w-full"
+            />
+            <span
+              *ngIf="personalForm.get('ngaySinh')?.touched && personalForm.get('ngaySinh')?.errors?.['required']"
+              class="text-red-500 text-sm"
+              >Vui lòng chọn ngày sinh</span
+            >
+          </div>
+        </div>
+        <div class="flex flex-row justify-end items-center gap-4">
+          <button
+            type="submit"
+            class="bg-blue-500 text-white rounded-lg px-4 py-2"
+            [disabled]="!personalForm.valid"
+          >
+            Lưu
+          </button>
+        </div>
+      </form>
+      <form
+        [formGroup]="accountForm"
+        (ngSubmit)="saveAccountInfo()"
+        *ngIf="isActive === 'account'"
+      >
+        <div class="flex flex-col justify-center items-start">
+          <div class="flex flex-col justify-start items-start my-4 w-full">
+            <label>Tên tài khoản <span class="text-red-500">*</span></label>
+            <input
+              formControlName="userName"
+              type="text"
+              class="border border-gray-300 rounded-lg p-2 w-full"
+            />
+            <span
+              *ngIf="accountForm.get('userName')?.touched && accountForm.get('userName')?.errors?.['required']"
+              class="text-red-500 text-sm"
+              >Vui lòng nhập tên tài khoản</span
+            >
+          </div>
+
+          <div class="flex flex-row justify-between items-center w-full mb-4">
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                [checked]="isChangingPassword"
+                (change)="togglePasswordChange()"
+                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label class="text-gray-700">Đổi mật khẩu</label>
+            </div>
+          </div>
+
+          <div *ngIf="isChangingPassword">
+            <div class="flex flex-col justify-start items-start my-4 w-full">
+              <label>Mật khẩu cũ <span class="text-red-500">*</span></label>
+              <input
+                formControlName="oldPassword"
+                type="password"
+                class="border border-gray-300 rounded-lg p-2 w-full"
+              />
+              <span
+                *ngIf="accountForm.get('oldPassword')?.touched && accountForm.get('oldPassword')?.errors?.['required']"
+                class="text-red-500 text-sm"
+                >Vui lòng nhập mật khẩu cũ</span
+              >
+            </div>
+            <div class="flex flex-col justify-start items-start my-4 w-full">
+              <label>Mật khẩu mới <span class="text-red-500">*</span></label>
+              <input
+                formControlName="newPassword"
+                type="password"
+                class="border border-gray-300 rounded-lg p-2 w-full"
+              />
+              <span
+                *ngIf="accountForm.get('newPassword')?.touched && accountForm.get('newPassword')?.errors?.['required']"
+                class="text-red-500 text-sm"
+                >Vui lòng nhập mật khẩu mới</span
+              >
+              <span
+                *ngIf="accountForm.get('newPassword')?.touched && accountForm.get('newPassword')?.errors?.['minlength']"
+                class="text-red-500 text-sm"
+                >Mật khẩu phải có ít nhất 6 ký tự</span
+              >
+              <span
+                *ngIf="
+                  accountForm.hasError('passwordSame') &&
+                  accountForm.get('newPassword')?.touched
+                "
+                class="text-red-500 text-sm"
+                >Mật khẩu mới không được trùng với mật khẩu cũ</span
+              >
+            </div>
+            <div class="flex flex-col justify-start items-start my-4 w-full">
+              <label
+                >Xác nhận mật khẩu <span class="text-red-500">*</span></label
+              >
+              <input
+                formControlName="confirmPassword"
+                type="password"
+                class="border border-gray-300 rounded-lg p-2 w-full"
+              />
+              <span
+                *ngIf="accountForm.get('confirmPassword')?.touched && accountForm.get('confirmPassword')?.errors?.['required']"
+                class="text-red-500 text-sm"
+                >Vui lòng xác nhận mật khẩu</span
+              >
+              <span
+                *ngIf="
+                  accountForm.hasError('passwordMismatch') &&
+                  accountForm.get('confirmPassword')?.touched
+                "
+                class="text-red-500 text-sm"
+                >Mật khẩu không khớp</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-row justify-end items-center gap-4">
+          <button
+            type="submit"
+            class="bg-blue-500 text-white rounded-lg px-4 py-2"
+          >
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

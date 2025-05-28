@@ -15,73 +15,18 @@
             placeholder="Nhập tên người dùng..."
           />
         </div>
-
         <div class="form-group">
-          <label for="description">Email:</label>
-          <input
-            type="text"
-            id="description"
-            [(ngModel)]="formData.email"
-            name="email"
-            placeholder="Nhập email..."
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="description">Số Điện Thoại:</label>
-          <input
-            type="text"
-            id="description"
-            [(ngModel)]="formData.phoneNumber"
-            name="phoneNumber"
-            placeholder="Nhập số điện thoại..."
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="description">Địa Chỉ:</label>
-          <input
-            type="text"
-            id="description"
-            [(ngModel)]="formData.address"
-            name="address"
-            placeholder="Nhập địa chỉ..."
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="description">Giới Tính:</label>
-          <div class="flex gap-4">
-            <label class="flex items-center gap-2">
-              <input
-                type="radio"
-                name="gender"
-                [(ngModel)]="formData.gender"
-                [value]="true"
-              />
-              <span>Nam</span>
-            </label>
-            <label class="flex items-center gap-2">
-              <input
-                type="radio"
-                name="gender"
-                [(ngModel)]="formData.gender"
-                [value]="false"
-              />
-              <span>Nữ</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="description">Ngày Sinh:</label>
-          <input
-            type="date"
-            id="description"
-            [(ngModel)]="formData.dateOfBirth"
-            name="dateOfBirth"
-            placeholder="Nhập ngày sinh..."
-          />
+          <label for="materialName">Nhân viên:</label>
+          <select
+            id="materialName"
+            [(ngModel)]="formData.nhanVienId"
+            name="nhanVienId"
+            class="w-full border border-gray-300 rounded-md p-2"
+          >
+            <option *ngFor="let nhanVien of nhanVien" [value]="nhanVien.id">
+              {{ nhanVien.tenNhanVien }}
+            </option>
+          </select>
         </div>
 
         <div class="flex justify-end gap-2">
@@ -125,67 +70,17 @@
           />
         </div>
         <div class="form-group">
-          <label for="materialName">Email:</label>
-          <input
-            type="text"
+          <label for="materialName">Nhân viên:</label>
+          <select
             id="materialName"
-            [(ngModel)]="createUser.email"
-            name="email"
-            placeholder="Nhập email..."
-          />
-        </div>
-        <div class="form-group">
-          <label for="materialName">Số Điện Thoại:</label>
-          <input
-            type="text"
-            id="materialName"
-            [(ngModel)]="createUser.phoneNumber"
-            name="phoneNumber"
-            placeholder="Nhập số điện thoại..."
-          />
-        </div>
-        <div class="form-group">
-          <label for="materialName">Địa Chỉ:</label>
-          <input
-            type="text"
-            id="materialName"
-            [(ngModel)]="createUser.address"
-            name="address"
-            placeholder="Nhập địa chỉ..."
-          />
-        </div>
-        <div class="form-group">
-          <label for="materialName">Giới Tính:</label>
-          <div class="flex gap-4">
-            <label class="flex items-center gap-2">
-              <input
-                type="radio"
-                name="gender"
-                [(ngModel)]="createUser.gender"
-                [value]="true"
-              />
-              <span>Nam</span>
-            </label>
-            <label class="flex items-center gap-2">
-              <input
-                type="radio"
-                name="gender"
-                [(ngModel)]="createUser.gender"
-                [value]="false"
-              />
-              <span>Nữ</span>
-            </label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="materialName">Ngày Sinh:</label>
-          <input
-            type="date"
-            id="materialName"
-            [(ngModel)]="createUser.dateOfBirth"
-            name="dateOfBirth"
-            placeholder="Nhập ngày sinh..."
-          />
+            [(ngModel)]="createUser.nhanVienId"
+            name="nhanVienId"
+            class="w-full border border-gray-300 rounded-md p-2"
+          >
+            <option *ngFor="let nhanVien of nhanVien" [value]="nhanVien.id">
+              {{ nhanVien.tenNhanVien }}
+            </option>
+          </select>
         </div>
         <div class="flex justify-end gap-2">
           <button type="button" class="btn cancel-btn" (click)="onCancel()">

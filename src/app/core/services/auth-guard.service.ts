@@ -17,14 +17,13 @@ export class AuthGuardService implements CanActivate {
     }
 
     const menuItems = JSON.parse(localStorage.getItem('menuItems') || '[]') as MenuDynamic[];
-    // console.log(menuItems);
 
     const currentPath = route.routeConfig?.path || '';
-    // console.log(currentPath);
 
     const hasAccess = menuItems.some(item => item.routeLink === "main/" + currentPath);
-    // console.log(hasAccess);
-
+    if (currentPath === 'userinfor') {
+      return true;
+    }
     if (!hasAccess) {
       this.router.navigate(['main']);
       return false;

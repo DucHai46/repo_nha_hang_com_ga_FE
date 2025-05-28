@@ -196,7 +196,7 @@ export class PopupPhieuXuatComponent implements OnInit {
       lyDoXuat: this.formData.lyDoXuat,
       diaDiem: this.formData.diaDiem,
       ghiChu: this.formData.ghiChu,
-      nhanVien: this.formData.nhanVien||'',
+      nhanVien: this.formData.nhanVien||null,
       
       loaiNguyenLieus: allLoaiNguyenLieus
     };

@@ -1,5 +1,5 @@
 import { Component, input, OnInit, output } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TuDoService } from '../menu/tudo/services/tudo.service';
 import { MenuDynamicService } from '../menu/menudynamic/services/menudynamic.service';
 import { MenuDynamic } from '../../../models/MenuDynamic';
@@ -23,7 +23,7 @@ interface MenuItem {
 
 export class SidenavComponent implements OnInit {
 
-  constructor(private menuService: MenuDynamicService) { }
+  constructor(private menuService: MenuDynamicService, private router: Router) { }
 
   menuItems: MenuDynamic[] = [];
   listMenuDynamic: any[] = [];
@@ -37,6 +37,7 @@ export class SidenavComponent implements OnInit {
       const userInfor = {
         id: decodedToken['sub'],
         name: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+        nhanVienId: decodedToken['nhanVienId']
       }
       localStorage.setItem('userInfor', JSON.stringify(userInfor));
       this.menuService.getListMenuDynamic(role).subscribe((res: any) => {
@@ -118,5 +119,13 @@ export class SidenavComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userInfor');
+    localStorage.removeItem('menuItems');
+    this.router.navigate(['']);
+  }
+
+  infoUser() {
+
+    this.router.navigate(['/main/userinfor']);
   }
 }

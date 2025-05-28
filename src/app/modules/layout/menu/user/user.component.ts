@@ -6,7 +6,7 @@ import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialo
 import { UserService } from './services/user.service';
 import { User } from '../../../../models/User';
 import { PhanQuyenService } from '../phanquyen/services/phanquyen.service';
-
+import { NhanVienService } from '../nhanvien/services/nhanvien.service';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -16,7 +16,9 @@ export class UserComponent implements OnInit {
   constructor(private store: UserStore,
     private dialog: MatDialog, private notification: NzNotificationService,
     private phanQuyenService: PhanQuyenService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private nhanVienService: NhanVienService
+  ) { }
   userPaging: User[] = [];
   itemsSearch: any[] = [];
   paging: any = {
@@ -27,11 +29,19 @@ export class UserComponent implements OnInit {
 
   totalPages = 0;
   phanQuyen: any[] = [];
+  nhanVien: any[] = [];
   ngOnInit(): void {
     this.phanQuyenService.getPhanQuyen({ isPaging: true, page: 1, size: 1000 }).subscribe(
       {
         next: (res: any) => {
           this.phanQuyen = res.data.data;
+        }
+      }
+    )
+    this.nhanVienService.getNhanVien({ isPaging: true, page: 1, size: 1000 }).subscribe(
+      {
+        next: (res: any) => {
+          this.nhanVien = res.data.data;
         }
       }
     )
@@ -41,6 +51,9 @@ export class UserComponent implements OnInit {
 
   getPhanQuyen(id: string) {
     return this.phanQuyen.find(item => item.id === id)?.tenPhanQuyen;
+  }
+  getNhanVien(id: string) {
+    return this.nhanVien.find(item => item.id === id)?.tenNhanVien;
   }
 
   searchForm: any = {
@@ -169,14 +182,9 @@ export class UserComponent implements OnInit {
     this.formData = {
       id: item.id,
       fullName: item.fullName,
-      email: item.email,
-      phoneNumber: item.phoneNumber,
-      address: item.address,
-      avatar: item.avatar,
-      gender: item.gender,
-      dateOfBirth: item.dateOfBirth,
       isActive: item.isActive,
       phanQuyen: item.phanQuyen,
+      nhanVienId: item.nhanVienId,
     };
   }
   openDeletePopup(item: any): void {
