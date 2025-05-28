@@ -143,7 +143,7 @@
               <th scope="col" class="px-6 py-3">STT</th>
               <!-- <th scope="col" class="px-6 py-3">Mã loại</th> -->
               <th scope="col" class="px-6 py-3">Tên nguyên liệu</th>
-              <th scope="col" class="px-6 py-3">Mô tả</th>
+              <!-- <th scope="col" class="px-6 py-3">Mô tả</th> -->
               <th scope="col" class="px-6 py-3">Đơn vị tính</th>
               <th scope="col" class="px-6 py-3">Số lượng</th>
               <th scope="col" class="px-6 py-3">Hạn sử dụng</th>
@@ -170,9 +170,9 @@
               <td class="px-6 py-4">
                 {{ item.tenNguyenLieu }}
               </td>
-              <td class="px-6 py-4">
+              <!-- <td class="px-6 py-4">
                 {{ item.moTa }}
-              </td>
+              </td> -->
               <td class="px-6 py-4">
                 {{ item.donViTinh.name }}
               </td>
@@ -188,8 +188,13 @@
               <td class="px-6 py-4">
                 {{ item.tuDo.name }}
               </td>
-              <td class="px-6 py-4" [ngClass]="getTrangThaiClass(item.trangThai)">
-                {{ getTrangThaiName(item.trangThai) }}
+              <td class="px-6 py-4">
+                <span
+                  class="border border-2 rounded-lg px-1 py-1 text-white whitespace-nowrap"
+                  [ngClass]="getTrangThaiClass(item.trangThai)"
+                >
+                  {{ getTrangThaiName(item.trangThai) }}
+                </span>
               </td>
               <td
                 class="px-6 py-4 flex flex-row gap-2 justify-center items-center"

@@ -132,8 +132,13 @@
             <td class="px-6 py-4">
               {{ item.tenBan }}
             </td>
-            <td class="px-6 py-4" [ngClass]="getTrangThaiClass(item.trangThai)">
-              {{ getTrangThaiName(item.trangThai) }}
+            <td class="px-6 py-4">
+              <span
+                class="border border-2 rounded-lg px-1 text-white"
+                [ngClass]="getTrangThaiClass(item.trangThai)"
+              >
+                {{ getTrangThaiName(item.trangThai) }}
+              </span>
             </td>
             <td class="px-6 py-4">
               {{ item.loaiBan.name }}

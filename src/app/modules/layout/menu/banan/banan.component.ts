@@ -53,12 +53,17 @@ export class BananComponent implements OnInit   {
   }
   getTrangThaiClass(trangThai: number): string {
     switch (trangThai) {
-      case TrangThaiBan.ConTrong: return 'text-green-600';
-      case TrangThaiBan.DatTruoc: return 'text-yellow-500';
-      case TrangThaiBan.DangSuDung: return 'text-red-500';
-      default: return 'text-gray-500';
+      case TrangThaiBan.ConTrong:
+        return 'bg-green-500 border-green-500';
+      case TrangThaiBan.DatTruoc:
+        return 'bg-yellow-500 border-yellow-500';
+      case TrangThaiBan.DangSuDung:
+        return 'bg-red-500 border-red-500';
+      default:
+        return 'text-gray-500 border-gray-500';
     }
-}
+  }
+
   search() {
     this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
     this.searchForm.PageNumber = this.paging.page;

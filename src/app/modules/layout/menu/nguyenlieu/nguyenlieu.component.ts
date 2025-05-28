@@ -97,8 +97,8 @@ export class NguyenlieuComponent implements OnInit {
   }
   getTrangThaiClass(trangThai: number): string {
     switch (trangThai) {
-      case TrangThaiNguyenLieu.HangMoi: return 'text-green-600';
-      case TrangThaiNguyenLieu.DaQuaSuDung: return 'text-red-500';
+      case TrangThaiNguyenLieu.HangMoi: return 'bg-green-500 border-green-500';
+      case TrangThaiNguyenLieu.DaQuaSuDung: return 'bg-red-500 border-red-500';
       default: return 'text-gray-500';
     }
   }
