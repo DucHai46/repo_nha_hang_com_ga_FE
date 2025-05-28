@@ -198,6 +198,11 @@ import { HomeClientComponent } from './home-client/home-client.component';
 import { HomeComponent } from './home-client/pages/home/home.component';
 import { AboutComponent } from './home-client/pages/about/about.component';
 import { BlogComponent } from './home-client/pages/blog/blog.component';
+import { DondatbanComponent } from './menu/dondatban/dondatban.component';
+import { dondatbanService } from './menu/dondatban/services/dondatban.service';
+import { DonDatBanStore } from './menu/dondatban/store/don-dat-ban.store';
+import { PopupDonDatBanComponent } from './menu/dondatban/popupDonDatBan/popupDonDatBan.component';
+
 
 @NgModule({
   declarations: [ThongtinchungComponent,
@@ -305,7 +310,9 @@ import { BlogComponent } from './home-client/pages/blog/blog.component';
     HomeClientComponent,
     HomeComponent,
     AboutComponent,
-    BlogComponent
+    BlogComponent,
+    DondatbanComponent,
+    PopupDonDatBanComponent
 
   ], // Khai báo component
   imports: [
@@ -389,7 +396,6 @@ import { BlogComponent } from './home-client/pages/blog/blog.component';
     PhuongThucThanhToanStore,
     HoaDonThanhToanService,
     HoaDonThanhToanStore,
-
     PhieuKiemKeStore,
     PhieuKiemKeService,
     PhieuXuatService,
@@ -400,7 +406,9 @@ import { BlogComponent } from './home-client/pages/blog/blog.component';
     PhieuThanhLyStore,
     PhanQuyenService,
     UserStore,
-    UserService
+    UserService,
+    dondatbanService,
+    DonDatBanStore
   ]
 })
 export class LayoutModule { }

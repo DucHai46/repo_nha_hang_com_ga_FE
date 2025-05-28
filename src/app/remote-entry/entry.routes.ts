@@ -56,6 +56,7 @@ import { HomeComponent } from '../modules/layout/home-client/pages/home/home.com
 import { AboutComponent } from '../modules/layout/home-client/pages/about/about.component';
 import { MenuComponent } from '../modules/layout/home-client/pages/menu/menu.component';
 import { BlogComponent } from '../modules/layout/home-client/pages/blog/blog.component';
+import { DondatbanComponent } from '../modules/layout/menu/dondatban/dondatban.component';
 
 export const remoteRoutes: Route[] = [
   {
@@ -104,6 +105,7 @@ export const remoteRoutes: Route[] = [
           //Quản lý đơn hàng
           { path: 'loaidonorder', component: LoaidonorderComponent, canActivate: [AuthGuard] },
           { path: 'donorder', component: DonorderComponent, canActivate: [AuthGuard] },
+          { path: 'dondatban', component: DondatbanComponent, canActivate: [AuthGuard] },
 
           //Quản lý hóa đơn - phiếu
           { path: 'hoadon', component: HoadonthanhtoanComponent, canActivate: [AuthGuard] },

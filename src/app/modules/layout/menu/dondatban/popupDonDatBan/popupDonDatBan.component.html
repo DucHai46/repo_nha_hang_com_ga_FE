@@ -1,0 +1,57 @@
+<div class="popup-backdrop">
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        {{ isEditMode ? "Sửa đơn" : "Thêm đơn" }}
+      </h2>
+      <form>
+        <div class="form-group">
+          <label for="materialName">Khung giờ:</label>
+          <input
+            type="text"
+            id="materialName"
+            [(ngModel)]="formData.khungGio"
+            name="ten"
+            placeholder="Nhập tên khung giờ..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="dvt">Bàn:</label>
+          <select
+            id="dvt"
+            [(ngModel)]="formData.ban"
+            name="donvitinh"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let danhMuc of banAn" [ngValue]="danhMuc">
+              {{ danhMuc.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="kh">Khách hàng:</label>
+          <select
+            id="kh"
+            [(ngModel)]="formData.khachHang"
+            name="khachHang"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option *ngFor="let danhMuc of khachHang" [ngValue]="danhMuc">
+              {{ danhMuc.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="button" class="btn cancel-btn" (click)="onCancel()">
+            Hủy
+          </button>
+          <button type="button" class="btn save-btn" (click)="onSave()">
+            Lưu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
