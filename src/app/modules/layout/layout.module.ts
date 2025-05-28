@@ -183,6 +183,11 @@ import { LichlamviecComponent } from './menu/lichlamviec/lichlamviec.component';
 import { LichLamViecService } from './menu/lichlamviec/services/lichlamviec.service';
 import { LichLamViecStore } from './menu/lichlamviec/store/lich-lam-viec.store';
 import { PopupLichLamViecComponent } from './menu/lichlamviec/popupLichLamViec/popupLichLamViec.component';
+import { PopupChiTietLichLamViecComponent } from './menu/lichlamviec/popupChiTietLichLamViec/popupChiTietLichLamViec.component';
+import { LichlamviecnhanvienComponent } from './menu/lichlamviecnhanvien/lichlamviecnhanvien.component';
+import { PopupChiTietLichLamViecNhanVienComponent } from './menu/lichlamviecnhanvien/popupChiTietLich/popupChiTietLichLamViecNhanVien.component';
+import { LichLamViecNhanVienStore } from './menu/lichlamviecnhanvien/store/lich-lam-viec-nhan-vien.store';
+import { LichLamViecNhanVienService } from './menu/lichlamviecnhanvien/services/lichlamviecnhanvien.service';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -279,6 +284,9 @@ import { PopupLichLamViecComponent } from './menu/lichlamviec/popupLichLamViec/p
     PopupCaLamViecComponent,
     LichlamviecComponent,
     PopupLichLamViecComponent,
+    PopupChiTietLichLamViecComponent,
+    LichlamviecnhanvienComponent,
+    PopupChiTietLichLamViecNhanVienComponent,
   ], // Khai báo component
   imports: [
     CommonModule,
@@ -351,6 +359,8 @@ import { PopupLichLamViecComponent } from './menu/lichlamviec/popupLichLamViec/p
     CaLamViecStore,
     LichLamViecService,
     LichLamViecStore,
+    LichLamViecNhanVienStore,
+    LichLamViecNhanVienService,
 
     PhuPhiStore,
     PhuPhiService,

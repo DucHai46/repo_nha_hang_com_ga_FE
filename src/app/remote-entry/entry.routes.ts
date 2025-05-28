@@ -46,6 +46,7 @@ import { PhieuthanhlyComponent } from '../modules/layout/menu/phieuthanhly/phieu
 import { UserComponent } from '../modules/layout/menu/user/user.component';
 import { CalamviecComponent } from '../modules/layout/menu/calamviec/calamviec.component';
 import { LichlamviecComponent } from '../modules/layout/menu/lichlamviec/lichlamviec.component';
+import { LichlamviecnhanvienComponent } from '../modules/layout/menu/lichlamviecnhanvien/lichlamviecnhanvien.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -109,6 +110,7 @@ export const remoteRoutes: Route[] = [
           // Quản lý ca làm việc
           { path: 'calamviec', component: CalamviecComponent, canActivate: [AuthGuard] },
           { path: 'lichlamviec', component: LichlamviecComponent, canActivate: [AuthGuard]  },
+          { path: 'lichlamviecnhanvien', component: LichlamviecnhanvienComponent, canActivate: [AuthGuard]  },
 
           // { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
 

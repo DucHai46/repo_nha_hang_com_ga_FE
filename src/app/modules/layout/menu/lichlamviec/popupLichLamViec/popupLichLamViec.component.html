@@ -1,51 +1,157 @@
 <div class="popup-backdrop">
-  <div class="popup-box">
-    <div class="p-5">
-      <h2 class="text-2xl font-bold mb-5">
-        {{ isEditMode ? "Sửa Ca Làm Việc" : "Thêm Ca Làm Việc" }}
-      </h2>
-      <form>
-        <div class="form-group">
-          <label for="materialName">Tên Ca Làm Việc:</label>
+  <div class="popup-box max-w-3xl mx-auto bg-white rounded shadow p-6">
+    <h2 class="text-2xl font-bold mb-5">
+      {{ isEditMode ? "Sửa lịch làm việc" : "Tạo lịch làm việc" }}
+    </h2>
+
+    <form>
+      <!-- Ngày và mô tả lịch làm việc -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label for="ngay" class="block text-sm font-medium text-gray-700"
+            >Ngày làm việc</label
+          >
           <input
-            type="text"
-            id="materialName"
-            [(ngModel)]="formData.tenCaLamViec"
-            name="tenLoai"
-            placeholder="Nhập tên ca làm việc..."
+            type="date"
+            id="ngay"
+            [(ngModel)]="formData.ngay"
+            name="ngay"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
           />
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="materialName">Khung Thời Gian:</label>
-          <input
-            type="text"
-            id="materialName"
-            [(ngModel)]="formData.khungThoiGian"
-            name="giaTri"
-            placeholder="Nhập khung thời gian..."
-          />
+      <!-- Danh sách ca làm việc -->
+      <div
+        *ngFor="let ca of formData.chiTietLichLamViec; let i = index"
+        class="border border-gray-200 rounded-xl p-4 mb-4 bg-gray-50 relative space-y-4"
+      >
+        <!-- Nút xóa ca làm việc - thay đổi từ dòng 24-30 -->
+        <button
+          type="button"
+          class="absolute top-2 right-2 p-1"
+          (click)="removeCa(i)"
+          title="Xóa ca làm việc"
+        >
+          <span class="text-red-600 text-xl font-bold leading-none">×</span>
+        </button>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Ca làm việc</label
+          >
+          <select
+            [(ngModel)]="ca.caLamViec.id"
+            name="caLamViec_{{ i }}"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          >
+            <option *ngFor="let caItem of caLamViec" [ngValue]="caItem.id">
+              {{ caItem.name }}
+            </option>
+          </select>
         </div>
 
-        <div class="form-group">
-          <label for="description">Mô Tả:</label>
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Mô tả ca</label
+          >
           <textarea
-            id="description"
-            [(ngModel)]="formData.moTa"
-            name="moTa"
-            placeholder="Nhập mô tả..."
+            [(ngModel)]="ca.moTa"
+            name="moTaCa_{{ i }}"
+            rows="2"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
           ></textarea>
         </div>
 
-        <div class="flex justify-end gap-2">
-          <button type="button" class="btn cancel-btn" (click)="onCancel()">
-            Hủy
-          </button>
-          <button type="button" class="btn save-btn" (click)="onSave()">
-            Lưu
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Nhân viên trong ca
+            <span class="text-xs text-blue-600"
+              >({{ ca.nhanVienCa.length }} nhân viên)</span
+            ></label
+          >
+          <div
+            *ngFor="let nv of ca.nhanVienCa; let j = index"
+            class="flex items-center space-x-4 mt-2 p-2 border border-gray-100 rounded-md hover:bg-gray-50"
+          >
+            <div class="text-gray-500 text-sm">{{ j + 1 }}.</div>
+            <select
+              [(ngModel)]="nv.nhanVien.id"
+              name="nhanVien_{{ i }}_{{ j }}"
+              class="flex-1 rounded-md border-gray-300 shadow-sm"
+            >
+              <option value="" disabled selected>-- Chọn nhân viên --</option>
+              <option *ngFor="let nvItem of nhanVien" [ngValue]="nvItem.id">
+                {{ nvItem.name }}
+              </option>
+            </select>
+            <input
+              type="text"
+              [(ngModel)]="nv.moTa"
+              name="moTaNhanVien_{{ i }}_{{ j }}"
+              placeholder="Mô tả công việc"
+              class="flex-1 rounded-md border-gray-300 shadow-sm"
+            />
+            <!-- Nút xóa nhân viên - thay đổi từ dòng 87-93 -->
+            <button
+              type="button"
+              (click)="removeNhanVien(i, j)"
+              class="p-1"
+              title="Xóa nhân viên"
+            >
+              <span class="text-red-600 text-xl font-bold leading-none">×</span>
+            </button>
+          </div>
+
+          <button
+            type="button"
+            class="mt-3 text-sm bg-blue-400 text-blue-600 hover:bg-blue-500 px-3 py-1 rounded-md flex items-center"
+            (click)="addNhanVien(i)"
+          >
+            <span class="mr-1">+</span> Thêm nhân viên
           </button>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <button
+        type="button"
+        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition mb-6"
+        (click)="addCa()"
+      >
+        + Thêm ca làm việc
+      </button>
+
+      <!-- Ghi chú -->
+      <div class="mb-4">
+        <label for="ghiChu" class="block text-sm font-medium text-gray-700"
+          >Mô tả</label
+        >
+        <textarea
+          id="ghiChu"
+          [(ngModel)]="formData.moTa"
+          name="moTa"
+          rows="3"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+        ></textarea>
+      </div>
+
+      <!-- Hành động -->
+      <div class="flex justify-end space-x-4">
+        <button
+          type="button"
+          class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+          (click)="onCancel()"
+        >
+          Hủy
+        </button>
+        <button
+          type="button"
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          (click)="onSave()"
+        >
+          Lưu
+        </button>
+      </div>
+    </form>
   </div>
 </div>

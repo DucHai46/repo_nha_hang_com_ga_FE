@@ -71,14 +71,6 @@
   </div>
   <!-- table -->
   <div class="flex flex-col gap-4 p-5 bg-white rounded-lg w-full mt-5">
-    <div class="flex justify-end">
-      <button
-        (click)="openAddPopup()"
-        class="bg-blue-500 text-white px-4 py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-blue-600 active:scale-95 focus:outline-none shadow-md hover:shadow-lg"
-      >
-        Thêm
-      </button>
-    </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right">
         <thead class="text-xs uppercase text-center">
@@ -108,33 +100,6 @@
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
             >
               <button
-                (click)="openEditPopup(item)"
-                class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
-              >
-                <p
-                  class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-800"
-                >
-                  <svg
-                    class="w-6 h-6 text-blue-600 dark:text-blue-500"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                    />
-                  </svg>
-                </p>
-              </button>
-
-              <button
                 (click)="openChiTietPopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
               >
@@ -152,33 +117,6 @@
                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-3 8c-4.418 0-8-5.373-8-8s3.582-8 8-8 8 5.373 8 8-3.582 8-8 8z"
                   />
                 </svg>
-              </button>
-
-              <button
-                (click)="openDeletePopup(item)"
-                class="transition-transform transform hover:scale-105 hover:bg-red-100 focus:outline-none rounded-lg px-2 py-1"
-              >
-                <p
-                  class="font-medium text-red-600 dark:text-red-500 hover:text-red-800"
-                >
-                  <svg
-                    class="w-6 h-6 text-red-600 dark:text-red-500"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                    />
-                  </svg>
-                </p>
               </button>
             </td>
           </tr>
@@ -226,16 +164,9 @@
     </div>
   </div>
 </div>
-<app-popupLichLamViec
-  *ngIf="isPopupOpen"
-  [isEditMode]="isEditMode"
-  [formData]="formData"
-  (close)="closePopup()"
-  (save)="onSaveCongThuc($event)"
-></app-popupLichLamViec>
 
-<app-popupChiTietLichLamViec
+<app-popupChiTietLichLamViecNhanVien
   *ngIf="isOpenChiTietPopup"
   [formData]="formData"
   (close)="closePopup()"
-></app-popupChiTietLichLamViec>
+></app-popupChiTietLichLamViecNhanVien>

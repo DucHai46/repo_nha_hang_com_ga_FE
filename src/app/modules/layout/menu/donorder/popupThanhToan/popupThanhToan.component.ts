@@ -29,8 +29,7 @@ export class PopupThanhToanComponent implements OnInit {
 
   khuyenMai: any [] = [] ;
 
-  nhanVien: any [] = [] ;
-
+  nhanVien: any;
   phuongThucThanhToan: any [] = [] ;
 
   donOrder: any;
@@ -55,6 +54,10 @@ openChiTietHoaDonPopup(item: any): void {
 
 
   onSave(): void {
+    // this.form = {
+    //   ...this.form,
+    //   nhanVien: this.nhanVien.id,
+    // }
     console.log(this.form);
     this.save.emit(this.form);
 
@@ -91,15 +94,28 @@ openChiTietHoaDonPopup(item: any): void {
         // console.log(this.form);
       },
     });
-
+    // const userInfo = JSON.parse(localStorage.getItem('userInfor') || '{}');
+    // this.nhanVien = {
+    //   id: userInfo.id,
+    //   name: userInfo.name,
+    // }
+    console.log(this.nhanVien);
     this.nhanVienService.getNhanVien({}).subscribe({
       next: (res: any) => {
-        this.nhanVien = res.data.data.map((item: any) => ({
+        // Lấy tất cả nhân viên từ API
+        const allNhanVien = res.data.data.map((item: any) => ({
           id: item.id,
           name: item.tenNhanVien,
-        }))
-        console.log(this.nhanVien);
-        console.log(this.nhanVien[0].id);
+          chucVu: item.chucVu.name,
+        }));
+        
+        // Lọc ra chỉ những nhân viên có chức vụ là Thu Ngân
+        this.nhanVien = allNhanVien.filter((nv: any) => nv.chucVu === 'Thu ngân');
+        
+        console.log('Danh sách nhân viên Thu Ngân:', this.nhanVien);
+        if (this.nhanVien.length > 0) {
+          console.log('ID nhân viên Thu Ngân đầu tiên:', this.nhanVien[0].id);
+        }
       },
     });
 

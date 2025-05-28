@@ -1,0 +1,79 @@
+<div class="popup-backdrop">
+  <div
+    class="popup-box bg-white rounded-lg p-6 shadow-lg max-w-5xl mx-auto relative"
+  >
+    <button
+      (click)="onCancel()"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl"
+    >
+      &times;
+    </button>
+
+    <h2 class="text-2xl font-bold mb-6 text-center text-2xl">
+      Ngày
+      {{ formData.ngay | date : "dd/MM/yyyy" }}
+    </h2>
+
+    <div *ngFor="let ct of formData.chiTietLichLamViec; let ctIndex = index">
+      <div class="space-y-6">
+        <!-- Tên đơn order -->
+        <div class="mt-4">
+          <div class="flex justify-between">
+            <h3 class="font-semibold text-gray-700 mb-1 text-xl">
+              {{ ct.caLamViec.name }}
+            </h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table
+              class="min-w-full table-auto border-collapse border border-gray-300"
+            >
+              <thead>
+                <tr class="bg-gray-100">
+                  <th class="border border-gray-300 px-4 py-2 text-left">
+                    STT
+                  </th>
+                  <th class="border border-gray-300 px-4 py-2 text-left">
+                    Tên nhân viên
+                  </th>
+
+                  <th class="border border-gray-300 px-4 py-2 text-left">
+                    Mô tả
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container>
+                  <tr
+                    *ngFor="let nv of ct.nhanVienCa; let nvIndex = index"
+                    class="hover:bg-gray-50"
+                  >
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{ nvIndex + 1 }}
+                    </td>
+
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{ nv.nhanVien.name }}
+                    </td>
+
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{ nv.moTa }}
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex items-end justify-end">
+      <button
+        (click)="onCancel()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition ml-auto"
+      >
+        Đóng
+      </button>
+    </div>
+  </div>
+</div>

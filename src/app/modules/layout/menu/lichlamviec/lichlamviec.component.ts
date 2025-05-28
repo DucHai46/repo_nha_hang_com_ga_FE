@@ -76,6 +76,7 @@ export class LichlamviecComponent {
    this.search(); 
   }
 
+  isOpenChiTietPopup = false;
   isPopupOpen = false;
   isEditMode = false;
   formData: any = {}
@@ -90,7 +91,20 @@ export class LichlamviecComponent {
   // Hàm đóng popup
   closePopup(): void {
     this.isPopupOpen = false;
+    this.isOpenChiTietPopup = false;
     this.isEditMode = false;
+  }
+
+  //Hàm mở popup chi tiết lịch làm việc
+  openChiTietPopup(item: any): void {
+    this.isOpenChiTietPopup = true;
+    this.isEditMode = true;
+    this.formData = {
+      ngay: item.ngay,
+      chiTietLichLamViec: item.chiTietLichLamViec,
+      id: item.id,
+      moTa: item.moTa,
+    };
   }
 
   onSaveCongThuc(body: any): void {
@@ -98,9 +112,9 @@ export class LichlamviecComponent {
     
     if(!body) return;
 
-    // Nếu true thì sửa loại đơn order 
+    // Nếu true thì sửa lịch làm việc
     if(this.isEditMode){
-      // Sửa loại đơn order 
+      // Sửa lịch làm việc
       this.lichLamViecService.updateLichLamViec(body.id, body).subscribe(
         {
           next: (res: any) => {
@@ -132,12 +146,12 @@ export class LichlamviecComponent {
         }
       );
     } else {
-      // Thêm mới loại đơn order
+      // Thêm mới lịch làm việc
       this.lichLamViecService.addLichLamViec(body).subscribe(
         {
           next: (res: any) => {
             if(res.data) {
-              this.searchForm.tenCaLamViec = '';
+              this.searchForm.ngay = '';
               this.search();
               this.closePopup();
               this.notification.create(
@@ -170,7 +184,7 @@ export class LichlamviecComponent {
     this.isEditMode = true;
     this.formData = {
       ngay: item.ngay,
-      khungThoiGian: item.khungThoiGian,
+      chiTietLichLamViec: item.chiTietLichLamViec,
       id: item.id,
       moTa: item.moTa,
     };
@@ -180,12 +194,12 @@ export class LichlamviecComponent {
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
       width: '400px',
-     data: { message: `Bạn có chắc chắn muốn xóa "${item.tenCaLamViec}" không?` },
+     data: { message: `Bạn có chắc chắn muốn xóa lịch làm việc ngày "${item.ngay}" không?` },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if(result) {
-       this.caLamViecService.deleteCaLamViec(item.id).subscribe(
+       this.lichLamViecService.deleteLichLamViec(item.id).subscribe(
         {
          next: (res: any) => {
           this.search();
