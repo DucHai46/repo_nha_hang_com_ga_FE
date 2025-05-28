@@ -94,19 +94,21 @@ export class MenugoimonComponent implements OnInit {
 
           thucDonData.forEach((item: any) => {
             item.loaiMonAns.forEach((loaiMon: any) => {
-              loaiMon.monAns.forEach((monAn: any) => {
+              loaiMon.monAns.forEach((monAn: any) => {     
                 const monAnInfo = monAnList.find((ma: any) => ma.id === monAn.id);
                 console.log(monAnInfo);
-                danhSach.push({
-                  ma: monAn.id,
-                  ten: monAn.tenMonAn,
-                  hinhAnh: monAn.hinhAnh,
-                  gia: monAn.giaTien,
-                  soLuong: 0,
-                  ghiChu: "",
-                  danhMuc: loaiMon.id,
-                  giamGia: monAnInfo.giamGia.giaTri
-                });
+                if(monAnInfo!=null){
+                  danhSach.push({
+                    ma: monAn.id,
+                    ten: monAn.tenMonAn,
+                    hinhAnh: monAn.hinhAnh,
+                    gia: monAn.giaTien,
+                    soLuong: 0,
+                    ghiChu: "",
+                    danhMuc: loaiMon.id,
+                    giamGia: monAnInfo.giamGia?.giaTri || 0
+                  });
+                }
               });
             });
           });
