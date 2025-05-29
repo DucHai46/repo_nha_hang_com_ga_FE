@@ -22,7 +22,6 @@ export class PopupGiaoDienComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.initializeFormData();
   }
 

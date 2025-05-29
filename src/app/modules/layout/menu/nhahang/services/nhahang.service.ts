@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../../enviroments/enviroment';
 
@@ -29,6 +29,17 @@ export class NhaHangService {
 
   deleteNhaHang(id: string) {
     return this.http.delete(`${this.apiUrl}/api/nha-hang/${id}`);
+  }
+
+  getGiaoDien(id: any, isActive: boolean) {
+    const params = new HttpParams();
+    if (id) {
+      params.set('id', id);
+    }
+    if (isActive) {
+      params.set('isActive', isActive);
+    }
+    return this.http.get(`${this.apiUrl}/api/nha-hang/giao-dien`, { params });
   }
 
   addGiaoDien(id: string, data: any) {

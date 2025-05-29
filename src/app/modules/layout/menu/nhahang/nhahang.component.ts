@@ -305,7 +305,9 @@ export class NhaHangComponent implements OnInit {
   }
 
   isPopupGiaoDienOpen = false;
+  selectedItem: any;
   openGiaoDienPopup(item: any): void {
+    console.log(item);
     this.isPopupGiaoDienOpen = true;
     if (item.giaoDien) {
       this.isEditMode = true;
@@ -313,6 +315,7 @@ export class NhaHangComponent implements OnInit {
       this.isEditMode = false;
     }
     this.isChiTietOpen = false;
+    this.selectedItem = item;
     this.formData = {
       id: item.id,
       header: item.giaoDien.header,
@@ -324,10 +327,12 @@ export class NhaHangComponent implements OnInit {
 
   onSaveGiaoDien(body: any): void {
     console.log(body);
+    console.log(this.selectedItem);
     if (this.isEditMode) {
-      this.nhaHangService.updateGiaoDien(this.formData.id, body).subscribe({
+      this.nhaHangService.updateGiaoDien(this.selectedItem.id, body).subscribe({
         next: (res: any) => {
           this.isPopupGiaoDienOpen = false;
+          this.selectedItem = null;
           this.search();
           this.notification.create(
             'success',
@@ -346,9 +351,10 @@ export class NhaHangComponent implements OnInit {
         })
       });
     } else {
-      this.nhaHangService.addGiaoDien(this.formData.id, body).subscribe({
+      this.nhaHangService.addGiaoDien(this.selectedItem.id, body).subscribe({
         next: (res: any) => {
           this.isPopupGiaoDienOpen = false;
+          this.selectedItem = null;
           this.search();
           this.notification.create(
             'success',
