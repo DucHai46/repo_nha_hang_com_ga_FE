@@ -85,9 +85,11 @@
           <tr>
             <th scope="col" class="px-6 py-3">STT</th>
             <th scope="col" class="px-6 py-3">TÊN</th>
-            <th scope="col" class="px-6 py-3">KHUNG THỜI GIAN</th>
+            <!-- <th scope="col" class="px-6 py-3">KHUNG THỜI GIAN</th> -->
+            <th scope="col" class="px-6 py-3">GIỜ VÀO</th>
+            <th scope="col" class="px-6 py-3">GIỜ RA</th>
             <th scope="col" class="px-6 py-3">MÔ TẢ</th>
-            <th scope="col" class="px-6 py-3">Thao tác</th>
+            <th scope="col" class="px-6 py-3">THAO TÁC</th>
           </tr>
         </thead>
         <tbody>
@@ -102,8 +104,12 @@
               {{ item.tenCaLamViec }}
             </td>
             <td class="px-6 py-4">
-              {{ item.khungThoiGian }}
+              {{ item.gioVao }}
             </td>
+            <td class="px-6 py-4">
+              {{ item.gioRa }}
+            </td>
+
             <td class="px-6 py-4">
               {{ item.moTa }}
             </td>

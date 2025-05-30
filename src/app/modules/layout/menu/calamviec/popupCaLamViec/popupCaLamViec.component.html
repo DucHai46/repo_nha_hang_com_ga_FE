@@ -17,13 +17,23 @@
         </div>
 
         <div class="form-group">
-          <label for="materialName">Khung Thời Gian:</label>
+          <label for="materialName">Giờ vào:</label>
           <input
-            type="text"
+            type="time"
             id="materialName"
-            [(ngModel)]="formData.khungThoiGian"
+            [(ngModel)]="formData.gioVao"
             name="giaTri"
-            placeholder="Nhập khung thời gian..."
+            placeholder="Nhập giờ vào..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="materialName">Giờ ra:</label>
+          <input
+            type="time"
+            id="materialName"
+            [(ngModel)]="formData.gioRa"
+            name="giaTri"
+            placeholder="Nhập giờ ra..."
           />
         </div>
 

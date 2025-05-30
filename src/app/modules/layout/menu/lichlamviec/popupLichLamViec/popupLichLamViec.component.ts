@@ -1,154 +1,198 @@
+// Các import giữ nguyên
+import { ChucVuService } from './../../chucvu/services/chucvu.service';
 import { NhanVienService } from './../../nhanvien/services/nhanvien.service';
 import { CaLamViecService } from './../../calamviec/services/calamviec.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-popupLichLamViec',
   templateUrl: './popupLichLamViec.component.html',
-  styleUrl: './popupLichLamViec.component.scss'
+  styleUrls: ['./popupLichLamViec.component.scss']
 })
 export class PopupLichLamViecComponent implements OnInit {
+  @Input() formData: any;
+  @Input() isEditMode: boolean = false;
+  @Output() close = new EventEmitter<void>();
+  @Output() save = new EventEmitter<any>();
+
+  nhanVien: any[] = [];
+  caLamViec: any[] = [];
+  chucVu: any[] = [];
+
+  selectedChucVu: { [key: string]: string } = {};
+  nhanVienTheoChucVu: { [key: string]: any[] } = {};
+
+  constructor(
+    private caLamViecService: CaLamViecService,
+    private notification: NzNotificationService,
+    private nhanVienService: NhanVienService,
+    private chucVuService: ChucVuService,
+  ) {}
+
   ngOnInit(): void {
-    console.log(this.formData);
-    
-    // Khởi tạo formData nếu đang tạo mới
+
+    console.log(this.formData.ngay);
+    this.nhanVienService.getNhanVien({}).subscribe({
+      next: (res: any) => {
+        this.nhanVien = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenNhanVien
+        }));
+      }
+    });
+
+    this.chucVuService.getChucVu({}).subscribe({
+      next: (res: any) => {
+        this.chucVu = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenChucVu
+        }));
+      }
+    });
+
+    this.caLamViecService.getCaLamViec({}).subscribe({
+      next: (res: any) => {
+        this.caLamViec = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenCaLamViec
+        }));
+      }
+    });
+
     if (!this.isEditMode) {
       this.formData = {
         ngay: new Date(),
         chiTietLichLamViec: [
           {
-            caLamViec: {
-              id: '',
-              name: ''
-            },
+            caLamViec: { id: '', name: '' },
             moTa: '',
             nhanVienCa: [
               {
-                nhanVien: {
-                  id: '',
-                  name: ''
-                },
-                moTa: ''
+                nhanVien: { id: '', name: '' },
+                chucVuId: { id: '', name: '' }
               }
             ]
           }
         ],
         moTa: ''
       };
-    }
-    
-    // Lấy danh sách nhân viên
-    this.nhanVienService.getNhanVien({}).subscribe({
-      next: (res: any) => {
-        this.nhanVien = res.data.data.map((item: any) => ({
-          id: item.id,
-          name: item.tenNhanVien,    
-        }))
-        console.log(this.nhanVien);
-      },
-    });
-  
-    // Lấy danh sách ca làm việc
-    this.caLamViecService.getCaLamViec({}).subscribe({
-      next: (res: any) => {
-        this.caLamViec = res.data.data.map((item: any) => ({
-          id: item.id,
-          name: item.tenCaLamViec,
-        }))
-        console.log(this.caLamViec);
-      },
-    });
+      this.formData.chiTietLichLamViec.forEach((ca: any, caIndex: number) => {
+        ca.nhanVienCa.forEach((nv: any, nvIndex: number) => {
+          const key = `${caIndex}_${nvIndex}`;
+          this.selectedChucVu[key] = '';
+        });
+      });
+    } else {
+      console.log(this.isEditMode);
+      console.log(this.formData);
+      if (this.formData && this.formData.chiTietLichLamViec) {
+        this.formData.chiTietLichLamViec.forEach((ca: any, caIndex: number) => {
+          if (ca.nhanVienCa) {
+            ca.nhanVienCa.forEach((nv: any, nvIndex: number) => {
+              const key = `${caIndex}_${nvIndex}`;
+              if (nv.chucVuId && nv.chucVuId.id) {
+                this.selectedChucVu[key] = nv.chucVuId.id;
+                this.nhanVienService.getNhanVien({ chucVuId: nv.chucVuId.id }).subscribe({
+                  next: (res: any) => {
+                    this.nhanVienTheoChucVu[key] = res.data.data.map((item: any) => ({
+                      id: item.id,
+                      name: item.tenNhanVien
+                    }));
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+      console.log(this.formData);
+    }  
   }
-  @Input() formData: any;
 
-  @Input() isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
-  @Output() close = new EventEmitter<void>();
-  @Output() save = new EventEmitter<any>();
-  // Khai báo các biến
-  nhanVien: any[] = [];
-  caLamViec: any[] = [];
-
-  constructor(
-    private caLamViecService: CaLamViecService,
-    private notification: NzNotificationService,
-    private nhanVienService: NhanVienService,
-
-  ) {}
-
-  //Hàm xử lý khi nhấn nút lưu
   onSave(): void {
-    console.log(this.formData);
     const dataToSend = {
-      id: this.formData.id, // Giữ lại ID nếu đang ở chế độ sửa
+      id: this.formData.id,
       ngay: this.formData.ngay,
       moTa: this.formData.moTa,
-      chiTietLichLamViec: this.formData.chiTietLichLamViec.map((item: any) => ({
-        caLamViec:  item.caLamViec.id,
+      chiTietLichLamViec: this.formData.chiTietLichLamViec.map((item: any, caIndex: number) => ({
+        caLamViec: item.caLamViec.id,
         moTa: item.moTa,
-        nhanVienCa: item.nhanVienCa.map((nv: any) => ({
+        nhanVienCa: item.nhanVienCa.map((nv: any, nvIndex: number) => ({
           nhanVien: nv.nhanVien.id,
-          moTa: nv.moTa
+          chucVuId: this.selectedChucVu[`${caIndex}_${nvIndex}`] || ''
         }))
       }))
-    }
+    };
     this.save.emit(dataToSend);
   }
 
-  //Hàm xử lý khi nhấn nút "Hủy" - Cancel
+  searchNhanVienCa(caIndex: number, nvIndex: number) {
+    const key = `${caIndex}_${nvIndex}`;
+    const chucVuId = this.selectedChucVu[key] || '';
+
+    if (!chucVuId) return;
+
+    this.nhanVienService.getNhanVien({ chucVuId }).subscribe({
+      next: (res: any) => {
+        this.nhanVienTheoChucVu[key] = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenNhanVien
+        }));
+      },
+      error: (err) => {
+        this.notification.error('Lỗi', 'Không thể lấy danh sách nhân viên theo chức vụ');
+      }
+    });
+  }
+
   onCancel(): void {
     this.close.emit();
   }
 
-/** Thêm ca làm việc mới */
-addCa() {
-  this.formData.chiTietLichLamViec = this.formData.chiTietLichLamViec || [];
-  this.formData.chiTietLichLamViec.push({
-    caLamViec: {
-      id: '',
-      name: ''
-    },
-    moTa: '',
-    nhanVienCa: [
-      { 
-        nhanVien: {
-          id: '',
-          name: ''
-        }, 
-        moTa: '' 
-      }
-    ]
-  });
-}
-
-/** Xóa một ca làm việc tại vị trí index */
-removeCa(index: number) {
-  if (this.formData.chiTietLichLamViec.length > 1) {
-    this.formData.chiTietLichLamViec.splice(index, 1);
-  } else {
-    alert('Cần ít nhất một ca làm việc.');
+  addCa() {
+    this.formData.chiTietLichLamViec = this.formData.chiTietLichLamViec || [];
+    this.formData.chiTietLichLamViec.push({
+      caLamViec: { id: '', name: '' },
+      moTa: '',
+      nhanVienCa: [
+        {
+          nhanVien: { id: '', name: '' },
+          chucVuId: { id: '', name: '' }
+        }
+      ]
+    });
+    const caIndex = this.formData.chiTietLichLamViec.length - 1; // Chỉ số ca mới
+    const nvIndex = 0; // Nhân viên đầu tiên trong ca mới
+    const key = `${caIndex}_${nvIndex}`;
+    this.selectedChucVu[key] = '';
   }
-}
 
-/** Thêm nhân viên vào ca làm việc thứ i */
-addNhanVien(caIndex: number) {
-  this.formData.chiTietLichLamViec[caIndex].nhanVienCa.push({
-    nhanVien: {
-      id: '',
-      name: ''
-    },
-    moTa: ''
-  });
-}
-
-/** Xóa nhân viên tại vị trí j trong ca làm việc thứ i */
-removeNhanVien(caIndex: number, nvIndex: number) {
-  const nhanVienList = this.formData.chiTietLichLamViec[caIndex].nhanVienCa;
-  if (nhanVienList.length > 1) {
-    nhanVienList.splice(nvIndex, 1);
-  } else {
-    alert('Mỗi ca cần có ít nhất một nhân viên.');
+  removeCa(index: number) {
+    if (this.formData.chiTietLichLamViec.length > 1) {
+      this.formData.chiTietLichLamViec.splice(index, 1);
+    } else {
+      alert('Cần ít nhất một ca làm việc.');
+    }
   }
-}
+
+  addNhanVien(caIndex: number) {
+    const nvIndex = this.formData.chiTietLichLamViec[caIndex].nhanVienCa.length;
+    const key = `${caIndex}_${nvIndex}`;
+    this.selectedChucVu[key] = '';
+
+    this.formData.chiTietLichLamViec[caIndex].nhanVienCa.push({
+      nhanVien: { id: '', name: '' },
+      chucVuId: { id: '', name: '' }
+    });
+  }
+
+  removeNhanVien(caIndex: number, nvIndex: number) {
+    const list = this.formData.chiTietLichLamViec[caIndex].nhanVienCa;
+    if (list.length > 1) {
+      list.splice(nvIndex, 1);
+    } else {
+      alert('Mỗi ca cần có ít nhất một nhân viên.');
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import { NhanVien } from './../../../../../models/NhanVien';
 import { DonOrderAdminService } from './../services/donorderadmin.service';
 import { PhuongThucThanhToanService } from './../../phuongthucthanhtoan/services/phuongthucthanhtoan.service';
 import { khuyenmaiService } from './../../khuyenmai/services/khuyenmai.service';
@@ -30,6 +31,7 @@ export class PopupThanhToanComponent implements OnInit {
   khuyenMai: any [] = [] ;
 
   nhanVien: any;
+  nhanViens: any;
   phuongThucThanhToan: any [] = [] ;
 
   donOrder: any;
@@ -94,28 +96,26 @@ openChiTietHoaDonPopup(item: any): void {
         // console.log(this.form);
       },
     });
-    // const userInfo = JSON.parse(localStorage.getItem('userInfor') || '{}');
-    // this.nhanVien = {
-    //   id: userInfo.id,
-    //   name: userInfo.name,
-    // }
+    const userInfo = JSON.parse(localStorage.getItem('userInfor') || '{}');
+    this.nhanVien = {
+      id: userInfo.id,
+      name: userInfo.name,
+    }
     console.log(this.nhanVien);
-    this.nhanVienService.getNhanVien({}).subscribe({
+    console.log(this.nhanVien);
+    this.nhanVienService.getNhanVienById(userInfo.nhanVienId).subscribe({
       next: (res: any) => {
-        // Lấy tất cả nhân viên từ API
-        const allNhanVien = res.data.data.map((item: any) => ({
-          id: item.id,
-          name: item.tenNhanVien,
-          chucVu: item.chucVu.name,
-        }));
+        this.nhanViens = res.data;
+        this.form.NhanVien = this.nhanViens.id;
+
+        console.log(this.form.NhanVien);
+        // // Lọc ra chỉ những nhân viên có chức vụ là Thu Ngân
+        // this.nhanVien = allNhanVien.filter((nv: any) => nv.chucVu === 'Thu ngân');
         
-        // Lọc ra chỉ những nhân viên có chức vụ là Thu Ngân
-        this.nhanVien = allNhanVien.filter((nv: any) => nv.chucVu === 'Thu ngân');
-        
-        console.log('Danh sách nhân viên Thu Ngân:', this.nhanVien);
-        if (this.nhanVien.length > 0) {
-          console.log('ID nhân viên Thu Ngân đầu tiên:', this.nhanVien[0].id);
-        }
+        // console.log('Danh sách nhân viên Thu Ngân:', this.nhanVien);
+        // if (this.nhanVien.length > 0) {
+        //   console.log('ID nhân viên Thu Ngân đầu tiên:', this.nhanVien[0].id);
+        // 
       },
     });
 

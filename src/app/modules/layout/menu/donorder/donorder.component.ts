@@ -38,6 +38,7 @@ export class DonorderComponent implements OnInit {
   banAn: any[] = [];
   khachHang: any[] = [];
   khachHangIds: any[] = [];
+  hoaDons: any[] = [];
 
   paging: any = {
     page: 1,
@@ -52,6 +53,13 @@ export class DonorderComponent implements OnInit {
       next: (res: any) => {
         this.khachHang = res.data.data;
         console.log(this.khachHang);
+      }
+    });
+
+    this.hoaDonThanhToanService.getHoaDonThanhToan({}).subscribe({
+      next: (res: any) => {
+        console.log(res.data.data);
+        this.hoaDons = res.data.data;
       }
     });
 
@@ -100,6 +108,15 @@ export class DonorderComponent implements OnInit {
         }
       })
     return isThanhToan; 
+  }
+  
+  isHoaDon(item: any){
+    // Kiểm tra xem đơn order này đã có hóa đơn chưa
+    // Tìm trong mảng hoaDons xem có hóa đơn nào có donOrder.id trùng với item.id không
+    const hoaDonExists = this.hoaDons.some((hd: any) => hd.donOrder.id === item.id);
+    
+    // Trả về ngược lại kết quả (true nếu chưa có hóa đơn, false nếu đã có)
+    return !hoaDonExists;
   }
 
   search() {

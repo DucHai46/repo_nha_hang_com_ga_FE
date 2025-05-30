@@ -39,12 +39,12 @@
           <label for="materialName">Nhân viên:</label>
           <select
             id="dvt"
-            [(ngModel)]="form.nhanVien"
+            [(ngModel)]="nhanViens.id"
             name="nhanvien"
             class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
           >
-            <option *ngFor="let nv of nhanVien" [ngValue]="nv.id">
-              {{ nv.name }}
+            <option [ngValue]="nhanViens.id">
+              {{ nhanViens.tenNhanVien }}
             </option>
           </select>
         </div>

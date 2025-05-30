@@ -166,7 +166,9 @@ export class CalamviecComponent {
     this.isEditMode = true;
     this.formData = {
       tenCaLamViec: item.tenCaLamViec,
-      khungThoiGian: item.khungThoiGian,
+      // khungThoiGian: item.khungThoiGian,
+      gioVao: item.gioVao,
+      gioRa: item.gioRa,
       id: item.id,
       moTa: item.moTa,
     };

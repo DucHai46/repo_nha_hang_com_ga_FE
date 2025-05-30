@@ -9,7 +9,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class PopupCaLamViecComponent {
   @Input() formData = {
     tenCaLamViec: '',
-    khungThoiGian: '',
+    // khungThoiGian: '',
+    gioVao: '',
+    gioRa: '',
     moTa: '',
   };
 
