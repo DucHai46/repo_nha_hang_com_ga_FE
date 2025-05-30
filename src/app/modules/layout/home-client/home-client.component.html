@@ -1,97 +1,38 @@
-<header
-  class="flex justify-between items-center p-4"
-  [style.background-color]="giaoDien?.header?.backgroundColor"
->
-  <div>
-    <img [src]="giaoDien?.header?.logo" alt="logo" class="w-20 h-20" />
-  </div>
-  <!-- Desktop Menu -->
-  <div class="hidden md:flex justify-between items-center gap-10">
-    <a
-      routerLink="/home-client/home"
-      routerLinkActive="!text-gray-200 font-bold"
-      class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
-    >
-      Trang chủ
-    </a>
-    <a
-      routerLink="/home-client/about"
-      routerLinkActive="!text-gray-200 font-bold"
-      class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
-    >
-      Giới thiệu
-    </a>
-    <a
-      routerLink="/home-client/menu"
-      routerLinkActive="!text-gray-200 font-bold"
-      class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
-    >
-      Thực đơn
-    </a>
-    <a
-      routerLink="/home-client/blog"
-      routerLinkActive="!text-gray-200 font-bold"
-      class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
-    >
-      Blog
-    </a>
-  </div>
-  <div class="flex justify-between items-center gap-6">
-    <svg
-      class="w-6 h-6 text-white"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
-      />
-    </svg>
-    <svg
-      class="w-6 h-6 text-white"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-width="2"
-        d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-      />
-    </svg>
-    <svg
-      class="w-6 h-6 text-white"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-      />
-    </svg>
-    <!-- Mobile Menu Button -->
-    <button class="md:hidden" (click)="toggleMenu()">
+<div class="min-h-screen flex flex-col">
+  <header
+    class="flex justify-between items-center p-4"
+    [style.background-color]="giaoDien?.header?.backgroundColor"
+  >
+    <div>
+      <img [src]="giaoDien?.header?.logo" alt="logo" class="w-20 h-20" />
+    </div>
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex justify-between items-center gap-10">
+      <a
+        routerLink="/home-client/home"
+        routerLinkActive="!text-gray-200 font-bold"
+        class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
+      >
+        Trang chủ
+      </a>
+      <a
+        routerLink="/home-client/about"
+        routerLinkActive="!text-gray-200 font-bold"
+        class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
+      >
+        Giới thiệu
+      </a>
+      <a
+        routerLink="/home-client/menu"
+        routerLinkActive="!text-gray-200 font-bold"
+        class="hover:!text-gray-300 cursor-pointer text-2xl !text-white transition-colors duration-300"
+      >
+        Thực đơn
+      </a>
+    </div>
+    <div class="flex justify-between items-center gap-6">
       <svg
-        class="w-6 h-6 text-white transition-transform duration-300"
-        [class.rotate-90]="isMenuOpen"
+        class="w-6 h-6 text-white"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -104,149 +45,319 @@
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
-          d="M18 6H6m12 4H6m12 4H6m12 4H6"
+          d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
         />
       </svg>
-    </button>
-  </div>
-</header>
+      <svg
+        class="w-6 h-6 text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-width="2"
+          d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+        />
+      </svg>
+      <svg
+        class="w-6 h-6 text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+        />
+      </svg>
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden" (click)="toggleMenu()">
+        <svg
+          class="w-6 h-6 text-white transition-transform duration-300"
+          [class.rotate-90]="isMenuOpen"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M18 6H6m12 4H6m12 4H6m12 4H6"
+          />
+        </svg>
+      </button>
+    </div>
+  </header>
 
-<!-- Mobile Menu -->
-<div
-  class="md:hidden fixed top-[88px] left-0 right-0 bg-blue-500 transform transition-all duration-500 ease-in-out z-50"
-  [class.hidden]="!isMenuOpen"
-  [class.opacity-0]="!isMenuOpen"
-  [class.-translate-y-full]="!isMenuOpen"
-  [class.opacity-100]="isMenuOpen"
-  [class.translate-y-0]="isMenuOpen"
->
-  <div class="p-4 space-y-4 text-center">
-    <a
-      routerLink="/home-client/home"
-      routerLinkActive="!text-gray-200 font-bold"
-      (click)="toggleMenu()"
-      class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
-    >
-      Trang chủ
-    </a>
-    <a
-      routerLink="/home-client/about"
-      routerLinkActive="!text-gray-200 font-bold"
-      (click)="toggleMenu()"
-      class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
-    >
-      Giới thiệu
-    </a>
-    <a
-      routerLink="/home-client/menu"
-      routerLinkActive="!text-gray-200 font-bold"
-      (click)="toggleMenu()"
-      class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
-    >
-      Thực đơn
-    </a>
-    <a
-      routerLink="/home-client/blog"
-      routerLinkActive="!text-gray-200 font-bold"
-      (click)="toggleMenu()"
-      class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
-    >
-      Blog
-    </a>
-  </div>
-</div>
-
-<div class="relative w-full">
-  <!-- Carousel wrapper -->
-  <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-    <!-- Slides -->
-    <div
-      *ngFor="let slide of giaoDien?.header?.imageSlider; let i = index"
-      [attr.data-carousel-item]="true"
-      class="absolute block w-full h-full transition-all duration-700 ease-in-out transform"
-      [class.hidden]="i !== currentSlide"
-    >
-      <img
-        [src]="slide"
-        class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-      />
+  <!-- Mobile Menu -->
+  <div
+    class="md:hidden fixed top-[88px] left-0 right-0 bg-blue-500 transform transition-all duration-500 ease-in-out z-50"
+    [class.hidden]="!isMenuOpen"
+    [class.opacity-0]="!isMenuOpen"
+    [class.-translate-y-full]="!isMenuOpen"
+    [class.opacity-100]="isMenuOpen"
+    [class.translate-y-0]="isMenuOpen"
+  >
+    <div class="p-4 space-y-4 text-center">
+      <a
+        routerLink="/home-client/home"
+        routerLinkActive="!text-gray-200 font-bold"
+        (click)="toggleMenu()"
+        class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
+      >
+        Trang chủ
+      </a>
+      <a
+        routerLink="/home-client/about"
+        routerLinkActive="!text-gray-200 font-bold"
+        (click)="toggleMenu()"
+        class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
+      >
+        Giới thiệu
+      </a>
+      <a
+        routerLink="/home-client/menu"
+        routerLinkActive="!text-gray-200 font-bold"
+        (click)="toggleMenu()"
+        class="!text-white hover:!text-gray-300 cursor-pointer text-2xl transform transition-all duration-300 hover:translate-x-2 block"
+      >
+        Thực đơn
+      </a>
     </div>
   </div>
 
-  <!-- Slider indicators -->
-  <div
-    class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse"
-  >
-    <button
-      *ngFor="let slide of giaoDien?.header?.imageSlider; let i = index"
-      type="button"
-      class="w-3 h-3 rounded-full"
-      [attr.aria-current]="i === currentSlide"
-      [attr.aria-label]="'Slide ' + (i + 1)"
-      [attr.data-carousel-slide-to]="i"
-      [class.bg-white]="i === currentSlide"
-      [class.bg-white]="i !== currentSlide"
-      [class.opacity-50]="i !== currentSlide"
-      (click)="goToSlide(i)"
-    ></button>
+  <div class="flex-1 flex flex-col">
+    <div class="relative w-full">
+      <!-- Carousel wrapper -->
+      <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+        <!-- Slides -->
+        <div
+          *ngFor="let slide of giaoDien?.header?.imageSlider; let i = index"
+          [attr.data-carousel-item]="true"
+          class="absolute block w-full h-full transition-all duration-700 ease-in-out transform"
+          [class.hidden]="i !== currentSlide"
+        >
+          <img
+            [src]="slide"
+            class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+          />
+        </div>
+      </div>
+
+      <!-- Slider indicators -->
+      <div
+        class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse"
+      >
+        <button
+          *ngFor="let slide of giaoDien?.header?.imageSlider; let i = index"
+          type="button"
+          class="w-3 h-3 rounded-full"
+          [attr.aria-current]="i === currentSlide"
+          [attr.aria-label]="'Slide ' + (i + 1)"
+          [attr.data-carousel-slide-to]="i"
+          [class.bg-white]="i === currentSlide"
+          [class.bg-white]="i !== currentSlide"
+          [class.opacity-50]="i !== currentSlide"
+          (click)="goToSlide(i)"
+        ></button>
+      </div>
+
+      <!-- Slider controls -->
+      <button
+        type="button"
+        class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+        (click)="prevSlide()"
+      >
+        <span
+          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+        >
+          <svg
+            class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 6 10"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 1 1 5l4 4"
+            />
+          </svg>
+          <span class="sr-only">Previous</span>
+        </span>
+      </button>
+      <button
+        type="button"
+        class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+        (click)="nextSlide()"
+      >
+        <span
+          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+        >
+          <svg
+            class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 6 10"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 9 4-4-4-4"
+            />
+          </svg>
+          <span class="sr-only">Next</span>
+        </span>
+      </button>
+    </div>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
   </div>
 
-  <!-- Slider controls -->
-  <button
-    type="button"
-    class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-    (click)="prevSlide()"
+  <footer
+    class="grid grid-cols-1 md:grid-cols-6 p-5 gap-5"
+    [style.background-color]="giaoDien?.footer?.backgroundColor"
+    [style.color]="getContrastColor(giaoDien?.footer?.backgroundColor || '')"
   >
-    <span
-      class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+    <div class="hidden md:block col-span-1"></div>
+    <div
+      class="col-span-1 flex flex-col items-center md:items-start justify-start text-center md:text-left"
     >
-      <svg
-        class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 6 10"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M5 1 1 5l4 4"
-        />
-      </svg>
-      <span class="sr-only">Previous</span>
-    </span>
-  </button>
-  <button
-    type="button"
-    class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-    (click)="nextSlide()"
-  >
-    <span
-      class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+      <p class="text-xl font-bold">
+        <i>{{ giaoDien?.footer?.title }}</i>
+      </p>
+      <p>{{ giaoDien?.footer?.content }}</p>
+      <img
+        [src]="giaoDien?.footer?.logo"
+        alt="logo"
+        class="w-20 h-20 mx-auto md:mx-0"
+      />
+    </div>
+    <div
+      class="col-span-1 flex flex-col items-center md:items-start justify-start text-center md:text-left"
     >
-      <svg
-        class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 6 10"
+      <p class="text-xl font-bold">
+        <i>Liên kết</i>
+      </p>
+      <p>Thực đơn</p>
+      <p>Giới thiệu</p>
+      <p>Chính sách bảo mật</p>
+      <p>Điều khoản dịch vụ</p>
+    </div>
+    <div
+      class="col-span-1 flex flex-col items-center md:items-start justify-start text-center md:text-left"
+    >
+      <p class="text-xl font-bold">
+        <i>Thông tin liên hệ</i>
+      </p>
+      <p
+        *ngFor="let address of giaoDien?.footer?.address"
+        class="flex gap-2 items-center justify-center md:justify-start"
       >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="m1 9 4-4-4-4"
-        />
-      </svg>
-      <span class="sr-only">Next</span>
-    </span>
-  </button>
+        <svg
+          class="w-[14px] h-[14px] text-current"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+          />
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"
+          />
+        </svg>
+        {{ address }}
+      </p>
+      <p
+        *ngFor="let phone of giaoDien?.footer?.phone"
+        class="flex gap-2 items-center justify-center md:justify-start"
+      >
+        <svg
+          class="w-[14px] h-[14px] text-current"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19.0225 4 14 8.98132m0 0 3.03.00002M14 8.98132V5.99998m4.2327 8.51492-1.1431-1.1439c-1.143-1.1439-1.9758-.3696-2.8382.4565-.3159.3161-.7443.4936-1.1911.4936-.4467 0-.8751-.1775-1.191-.4936L9.998 11.9549c-.65643-.6564-.92477-1.4591 0-2.38383.8488-.86837 1.6837-1.61177.4926-2.8037L9.2995 5.57544c-.90492-.90556-1.99137-.383-2.61843.23625-3.13257 3.1118-1.72021 6.77001 1.41066 9.90141s6.78747 4.5465 9.90477 1.4254c.1744-.1461.551-.565.6473-.7712.0962-.2062.1461-.4311.1461-.6587 0-.2277-.0499-.4525-.1461-.6588-.0963-.2062-.2366-.3888-.4111-.5349Z"
+          />
+        </svg>
+        {{ phone }}
+      </p>
+      <p
+        *ngFor="let email of giaoDien?.footer?.email"
+        class="flex gap-2 items-center justify-center md:justify-start"
+      >
+        <svg
+          class="w-[14px] h-[14px] text-current"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M11 16v-5.5A3.5 3.5 0 0 0 7.5 7m3.5 9H4v-5.5A3.5 3.5 0 0 1 7.5 7m3.5 9v4M7.5 7H14m0 0V4h2.5M14 7v3m-3.5 6H20v-6a3 3 0 0 0-3-3m-2 9v4m-8-6.5h1"
+          />
+        </svg>
+        {{ email }}
+      </p>
+    </div>
+    <div
+      class="col-span-1 flex flex-col items-center md:items-start justify-start text-center md:text-left"
+    >
+      <p class="text-xl font-bold">
+        <i>Fanpage</i>
+      </p>
+      <p *ngFor="let social of giaoDien?.footer?.social">{{ social }}</p>
+    </div>
+    <div class="hidden md:block col-span-1"></div>
+  </footer>
 </div>
-
-<!-- Main Content -->
-<main>
-  <router-outlet></router-outlet>
-</main>

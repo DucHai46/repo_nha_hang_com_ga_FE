@@ -121,8 +121,8 @@ export const remoteRoutes: Route[] = [
 
           // Quản lý ca làm việc
           { path: 'calamviec', component: CalamviecComponent, canActivate: [AuthGuard] },
-          { path: 'lichlamviec', component: LichlamviecComponent, canActivate: [AuthGuard]  },
-          { path: 'lichlamviecnhanvien', component: LichlamviecnhanvienComponent, canActivate: [AuthGuard]  },
+          { path: 'lichlamviec', component: LichlamviecComponent, canActivate: [AuthGuard] },
+          { path: 'lichlamviecnhanvien', component: LichlamviecnhanvienComponent, canActivate: [AuthGuard] },
 
           // { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
 
@@ -159,10 +159,10 @@ export const remoteRoutes: Route[] = [
     path: 'home-client',
     component: HomeClientComponent,
     children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'menu', component: MenuComponent },
-      { path: 'blog', component: BlogComponent },
     ]
   },
 ];

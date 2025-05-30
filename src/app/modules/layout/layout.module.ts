@@ -203,7 +203,7 @@ import { dondatbanService } from './menu/dondatban/services/dondatban.service';
 import { DonDatBanStore } from './menu/dondatban/store/don-dat-ban.store';
 import { PopupDonDatBanComponent } from './menu/dondatban/popupDonDatBan/popupDonDatBan.component';
 import { PopupGiaoDienComponent } from './menu/nhahang/popupGiaoDien/popupGiaoDien.component';
-
+import { HomeClientStore } from './home-client/store/home-client.store';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -409,7 +409,8 @@ import { PopupGiaoDienComponent } from './menu/nhahang/popupGiaoDien/popupGiaoDi
     UserStore,
     UserService,
     dondatbanService,
-    DonDatBanStore
+    DonDatBanStore,
+    HomeClientStore
   ]
 })
 export class LayoutModule { }

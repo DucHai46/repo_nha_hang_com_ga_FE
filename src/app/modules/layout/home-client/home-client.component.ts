@@ -1,60 +1,9 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NhaHangService } from '../menu/nhahang/services/nhahang.service';
 import { FileService } from '../../../core/services/file.service';
+import { HomeClientStore } from './store/home-client.store';
+import { GiaoDien } from '../../../models/GiaoDien';
 
-interface GiaoDien {
-  header?: HeaderNhaHang;
-  home?: HomeNhaHang;
-  about?: AboutNhaHang;
-  footer?: FooterNhaHang;
-}
-
-interface HeaderNhaHang {
-  logo?: string;
-  backgroundColor?: string;
-  imageSlider?: string[];
-}
-
-interface HomeNhaHang {
-  title?: string;
-  content?: string;
-  image?: string;
-  content1?: Content1[];
-  content2?: Content2[];
-}
-
-interface Content1 {
-  title?: string;
-  content?: string;
-  image?: string;
-}
-
-interface Content2 {
-  title?: string;
-  content?: string;
-  image?: string;
-}
-
-interface AboutNhaHang {
-  content?: ContentAbout[];
-}
-
-interface ContentAbout {
-  title?: string;
-  content?: string;
-  image?: string;
-}
-
-interface FooterNhaHang {
-  title?: string;
-  content?: string;
-  logo?: string;
-  backgroundColor?: string;
-  address?: string[];
-  phone?: string[];
-  email?: string[];
-  social?: string[];
-}
 
 @Component({
   selector: 'app-home-client',
@@ -79,7 +28,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
     }
   ];
 
-  constructor(private nhaHangService: NhaHangService, private fileService: FileService) { }
+  constructor(private nhaHangService: NhaHangService, private fileService: FileService, private homeClientStore: HomeClientStore) { }
 
   ngOnInit() {
 
@@ -121,6 +70,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
                 if (this.giaoDien?.header) {
                   this.giaoDien.header.logo = url;
                 }
+                this.homeClientStore.setGiaoDien(this.giaoDien || {});
               },
               (error) => console.error('Lỗi tải ảnh:', this.giaoDien?.header?.logo, error)
             );
@@ -137,6 +87,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
                   if (this.giaoDien?.header?.imageSlider) {
                     this.giaoDien.header.imageSlider[idx] = url;
                   }
+                  this.homeClientStore.setGiaoDien(this.giaoDien || {});
                 },
                 (error) => console.error('Lỗi tải ảnh:', slider, error)
               );
@@ -156,6 +107,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
                 if (this.giaoDien?.home) {
                   this.giaoDien.home.image = url;
                 }
+                this.homeClientStore.setGiaoDien(this.giaoDien || {});
               },
               (error) => console.error('Lỗi tải ảnh:', this.giaoDien?.home?.image, error)
             );
@@ -171,6 +123,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
                   (blob: Blob) => {
                     const url = URL.createObjectURL(blob);
                     content.image = url;
+                    this.homeClientStore.setGiaoDien(this.giaoDien || {});
                   },
                   (error) => console.error('Lỗi tải ảnh:', content.image, error)
                 );
@@ -188,6 +141,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
                   (blob: Blob) => {
                     const url = URL.createObjectURL(blob);
                     content.image = url;
+                    this.homeClientStore.setGiaoDien(this.giaoDien || {});
                   },
                   (error) => console.error('Lỗi tải ảnh:', content.image, error)
                 );
@@ -207,6 +161,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
                 (blob: Blob) => {
                   const url = URL.createObjectURL(blob);
                   content.image = url;
+                  this.homeClientStore.setGiaoDien(this.giaoDien || {});
                 },
                 (error) => console.error('Lỗi tải ảnh:', content.image, error)
               );
@@ -225,11 +180,13 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
               if (this.giaoDien?.footer) {
                 this.giaoDien.footer.logo = url;
               }
+              this.homeClientStore.setGiaoDien(this.giaoDien || {});
             },
             (error) => console.error('Lỗi tải ảnh:', this.giaoDien?.footer?.logo, error)
           );
         }
       }
+      this.homeClientStore.setGiaoDien(this.giaoDien || {});
     }
   }
 
@@ -305,5 +262,13 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
     setInterval(() => {
       this.nextSlide();
     }, 5000); // Change slide every 5 seconds
+  }
+
+  getContrastColor(backgroundColor: string): string {
+    const r = parseInt(backgroundColor.slice(1, 3), 16);
+    const g = parseInt(backgroundColor.slice(3, 5), 16);
+    const b = parseInt(backgroundColor.slice(5, 7), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 128 ? 'black' : 'white';
   }
 }
