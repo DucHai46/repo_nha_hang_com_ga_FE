@@ -38,6 +38,9 @@ export class LichlamviecComponent {
 
   searchForm: any = {
     ngay: '',
+    tuNgay: '',
+    denNgay: '',
+
   };
   search() {
    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
@@ -73,6 +76,8 @@ export class LichlamviecComponent {
 
   reset(){
    this.searchForm.ngay = '';
+   this.searchForm.tuNgay = '';
+   this.searchForm.denNgay = '';
    this.search(); 
   }
 
@@ -121,6 +126,8 @@ export class LichlamviecComponent {
             console.log(res);
             if(res.data) {
               this.searchForm.ngay = '';
+              this.searchForm.tuNgay = '';
+              this.searchForm.denNgay = '';
               this.search();
               this.closePopup();
               this.notification.create(
@@ -152,6 +159,8 @@ export class LichlamviecComponent {
           next: (res: any) => {
             if(res.data) {
               this.searchForm.ngay = '';
+              this.searchForm.tuNgay = '';
+              this.searchForm.denNgay = '';
               this.search();
               this.closePopup();
               this.notification.create(

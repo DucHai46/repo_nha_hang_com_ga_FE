@@ -86,6 +86,7 @@ export class PopupLichLamViecComponent implements OnInit {
     } else {
       console.log(this.isEditMode);
       console.log(this.formData);
+      this.formData.ngay = this.formatDate(this.formData.ngay); // Format date
       if (this.formData && this.formData.chiTietLichLamViec) {
         this.formData.chiTietLichLamViec.forEach((ca: any, caIndex: number) => {
           if (ca.nhanVienCa) {
@@ -149,6 +150,36 @@ export class PopupLichLamViecComponent implements OnInit {
   onCancel(): void {
     this.close.emit();
   }
+
+  // Hàm chuyển đổi ngày thành định dạng YYYY-MM-DD
+private formatDate(date: any): string {
+  // Nếu date là null, undefined hoặc falsy, trả về ngày hiện tại (ví dụ: "2025-05-30")
+  if (!date) return new Date().toISOString().split('T')[0];
+
+  // Nếu date là chuỗi (ví dụ: "2025-05-30", "2025/05/30")
+  if (typeof date === 'string') {
+    // Thử chuyển chuỗi thành đối tượng Date
+    const parsedDate = new Date(date);
+    // Kiểm tra xem Date có hợp lệ không (không phải NaN)
+    if (!isNaN(parsedDate.getTime())) {
+      // Trả về ngày ở định dạng YYYY-MM-DD
+      return parsedDate.toISOString().split('T')[0];
+    }
+  }
+
+  // Nếu date là object có thuộc tính ticks (định dạng từ .NET, ví dụ: { ticks: 638522208000000000 })
+  if (date.ticks) {
+    // Chuyển ticks thành mili-giây (1 tick = 100 nanosecond, nên chia cho 10,000 để ra mili-giây)
+    const parsedDate = new Date(date.ticks / 10000);
+    // Kiểm tra xem Date có hợp lệ không
+    if (!isNaN(parsedDate.getTime())) {
+      // Trả về ngày ở định dạng YYYY-MM-DD
+      return parsedDate.toISOString().split('T')[0];
+    }
+  }
+  // Nếu không xử lý được định dạng nào, trả về ngày hiện tại làm giá trị dự phòng
+  return new Date().toISOString().split('T')[0];
+}
 
   addCa() {
     this.formData.chiTietLichLamViec = this.formData.chiTietLichLamViec || [];

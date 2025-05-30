@@ -49,6 +49,8 @@ export class HoadonthanhtoanComponent implements OnInit {
     tenHoaDon: '',
     nhanViens: '',
     donOrder: '',
+    gioVao: '',
+    gioRa: '',
   }
   searchNV: any = {
     tenNhanVien: '',
@@ -121,6 +123,8 @@ export class HoadonthanhtoanComponent implements OnInit {
     this.searchForm.tenHoaDon = '';
     this.searchForm.nhanVien = '';
     this.searchForm.nhanViens = '';
+    this.searchForm.gioVao= '';
+    this.searchForm.gioRa= '';
     this.search();
   }
 
@@ -214,6 +218,8 @@ export class HoadonthanhtoanComponent implements OnInit {
           if (res.data) {
             this.searchForm.tenHoaDon = '';
             this.searchForm.nhanViens = '';
+            this.searchForm.gioVao= '';
+            this.searchForm.gioRa= '';
             this.search();
             console.log(data);
             this.updateDonOrderStatus(data);
@@ -256,6 +262,8 @@ export class HoadonthanhtoanComponent implements OnInit {
       // Trả về danh sách đơn order
       this.searchForm.tenHoaDon = '';
       this.searchForm.nhanViens = '';
+      this.searchForm.gioVao= '';
+      this.searchForm.gioRa= '';
       this.search();
     }
   }
@@ -278,6 +286,10 @@ export class HoadonthanhtoanComponent implements OnInit {
         this.hoaDonThanhToanService.deleteHoaDonThanhToan(item.id).subscribe(
           {
             next: (res: any) => {
+              this.searchForm.tenHoaDon = '';
+              this.searchForm.nhanViens = '';
+              this.searchForm.gioVao= '';
+              this.searchForm.gioRa= '';
               this.search();
               this.notification.create(
                 'success',

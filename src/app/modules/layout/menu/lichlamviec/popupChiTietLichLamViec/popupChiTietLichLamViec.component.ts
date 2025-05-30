@@ -10,6 +10,16 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 })
 export class PopupChiTietLichLamViecComponent implements OnInit {
   ngOnInit(): void {
+    this.caLamViecService.getCaLamViec({}).subscribe({
+      next: (res: any) => {
+        this.caLamViec = res.data.data.map((item: any) => ({
+          id: item.id,
+          name: item.tenCaLamViec,
+          gioVao: item.gioVao,
+          gioRa: item.gioRa
+        }));
+      }
+    });
    
   }
   @Input() formData: any;
@@ -17,6 +27,7 @@ export class PopupChiTietLichLamViecComponent implements OnInit {
   @Input() isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
+  caLamViec: any[] = [];
 
   constructor(
     private caLamViecService: CaLamViecService,
@@ -32,6 +43,20 @@ export class PopupChiTietLichLamViecComponent implements OnInit {
   //Hàm xử lý khi nhấn nút "Hủy" - Cancel
   onCancel(): void {
     this.close.emit();
+  }
+
+  // Get gioVao by caIndex
+  getCaGioVao(caIndex: number): string {
+    const caId = this.formData.chiTietLichLamViec[caIndex].caLamViec.id;
+    const ca = this.caLamViec.find(caItem => caItem.id === caId);
+    return ca ? ca.gioVao : '';
+  }
+
+  // Get gioRa by caIndex
+  getCaGioRa(caIndex: number): string {
+    const caId = this.formData.chiTietLichLamViec[caIndex].caLamViec.id;
+    const ca = this.caLamViec.find(caItem => caItem.id === caId);
+    return ca ? ca.gioRa : '';
   }
 
 
