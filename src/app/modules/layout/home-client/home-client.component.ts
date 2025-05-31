@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { NhaHangService } from '../menu/nhahang/services/nhahang.service';
 import { FileService } from '../../../core/services/file.service';
 import { HomeClientStore } from './store/home-client.store';
@@ -10,9 +10,10 @@ import { GiaoDien } from '../../../models/GiaoDien';
   templateUrl: './home-client.component.html',
   styleUrls: ['./home-client.component.scss']
 })
-export class HomeClientComponent implements OnInit, AfterViewInit {
+export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
   isMenuOpen = false;
   currentSlide = 0;
+  isScrolled = false;
   slides = [
     {
       image: 'https://theme.hstatic.net/200000385717/1000767290/14/slideshow_1.jpg?v=475',
@@ -31,7 +32,21 @@ export class HomeClientComponent implements OnInit, AfterViewInit {
   constructor(private nhaHangService: NhaHangService, private fileService: FileService, private homeClientStore: HomeClientStore) { }
 
   ngOnInit() {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', this.onScroll.bind(this));
+    }
+  }
 
+  ngOnDestroy() {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', this.onScroll.bind(this));
+    }
+  }
+
+  onScroll() {
+    if (typeof window !== 'undefined') {
+      this.isScrolled = window.scrollY > 0;
+    }
   }
 
   parseJSON(jsonString: string): any {

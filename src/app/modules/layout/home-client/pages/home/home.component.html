@@ -1,1 +1,178 @@
-<p>home works!</p>
+<!-- Main Content Section -->
+<div class="min-h-screen">
+  <!-- Title and Content Section -->
+  <section
+    class="relative min-h-screen flex items-center justify-center overflow-hidden"
+  >
+    <!-- Background Image with Blur -->
+    <!-- <div class="absolute inset-0 z-0">
+      <img
+        [src]="giaoDien?.home?.image"
+        alt="background"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    </div> -->
+
+    <!-- Content Container -->
+    <div class="container mx-auto px-4 z-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <div class="!text-black">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6 !text-black">
+            {{ giaoDien?.home?.title }}
+          </h1>
+        </div>
+        <div class="flex flex-col items-center gap-4">
+          <div
+            class="border-2 border-black rounded-full p-3 hover:bg-yellow-500 transition-all duration-300"
+          >
+            <svg
+              class="w-[48px] h-[48px] text-black"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1"
+                d="M17 9.99999h.01m-5.01 0h.01m-5.01 0h.01m6.99-2h.01m-4.01 0h.01M6.5 13C5.11929 13 4 11.5609 4 9.78571c0-1.51294.45014-3.74021 2.96705-3.45229 0-2.59313 4.39355-3.02689 5.16885-1.10126.5-.64286 1.5465-1.20611 2.5405-1.09637 1.2588.13899 2.0504 1.03413 2.2104 2.19763 1.7674 0 3.3338 1.31661 3.1132 3.45229C20 11.5609 18.8807 13 17.5 13m-8.52339 5.6162V20h6.04679v-1.3838C17.68 17.6825 19.633 15.5551 20 13H4c.36697 2.5551 2.31996 4.6825 4.97661 5.6162Z"
+              />
+            </svg>
+          </div>
+          <div class="flex flex-row gap-2">
+            <div
+              class="border-2 border-black rounded-full p-3 hover:bg-yellow-500 transition-all duration-300"
+            >
+              <svg
+                class="w-[48px] h-[48px] text-black"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1"
+                  d="M12.4427 9.88469 9.93591 7.50961c.81449-.81448.80559-2.06903-.02046-2.89511-.82608-.82607-2.08062-.83494-2.89511-.02046-.4791.47911-.71525 1.20118-.56606 1.82948-.6283-.14919-1.35037.08695-1.82948.56606-.81448.81448-.80561 2.06903.02047 2.89511.82607.82611 2.08062.83491 2.8951.02046l2.50233 2.29305m.8063-1.38c1.83-1.8299 5.1241-1.22213 7.1925.8462 2.0684 2.0684 2.3191 4.6228.2978 6.6441-1.0322 1.0321-2.1287 1.6094-3.2302 1.6518.5878-1.3405.2254-2.5874-.8127-3.2811-.918-.6135-2.1806-.7802-3.5479.179-1.10401-2.0578-1.30393-4.6355.1005-6.04Z"
+                />
+              </svg>
+            </div>
+            <div
+              class="border-2 border-black rounded-full p-3 hover:bg-yellow-500 transition-all duration-300"
+            >
+              <svg
+                class="w-[48px] h-[48px] text-black"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1"
+                  d="M6.31531 7c1.41852 0 1.41852 1.5 2.83703 1.5C10.5709 8.5 10.5709 7 11.9894 7s1.4185 1.5 2.837 1.5S17.6635 7 17.6635 7M6 3l1.07554 16.133C7.14558 20.1836 8.01818 21 9.07111 21h5.85779c1.0529 0 1.9255-.8164 1.9956-1.867L18 3H6Z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <p class="text-lg md:text-xl !text-black">
+          {{ giaoDien?.home?.content }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content1 Sections -->
+  <section
+    *ngFor="let content of giaoDien?.home?.content1; let i = index"
+    class="section relative min-h-screen flex items-center justify-center overflow-hidden"
+  >
+    <!-- Background Image with Blur -->
+    <div class="absolute inset-0 z-0">
+      <img
+        [src]="content.image"
+        alt="background"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    </div>
+
+    <!-- Content Container -->
+    <div class="container mx-auto px-4 z-10">
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center"
+        [ngClass]="{ 'md:flex-row-reverse': i % 2 !== 0 }"
+      >
+        <div class="!text-white" [ngClass]="{ 'md:order-3': i % 2 !== 0 }">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6 !text-white">
+            {{ content.title }}
+          </h2>
+        </div>
+        <div
+          class="hidden md:block w-[2px] h-32 bg-white mx-auto"
+          [ngClass]="{ 'md:order-2': i % 2 !== 0 }"
+        ></div>
+        <p
+          class="text-lg !text-white"
+          [ngClass]="{ 'md:order-1': i % 2 !== 0 }"
+        >
+          {{ content.content }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content2 Sections -->
+  <section
+    *ngFor="let content of giaoDien?.home?.content2; let i = index"
+    class="section relative min-h-screen flex items-center justify-center overflow-hidden"
+  >
+    <!-- Background Image with Blur -->
+    <div class="absolute inset-0 z-0">
+      <img
+        [src]="content.image"
+        alt="background"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    </div>
+
+    <!-- Content Container -->
+    <div class="container mx-auto px-4 z-10">
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center"
+        [ngClass]="{ 'md:flex-row-reverse': i % 2 === 0 }"
+      >
+        <div class="!text-white" [ngClass]="{ 'md:order-3': i % 2 === 0 }">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6 !text-white">
+            {{ content.title }}
+          </h2>
+        </div>
+        <div
+          class="hidden md:block w-[2px] h-32 bg-white mx-auto"
+          [ngClass]="{ 'md:order-2': i % 2 === 0 }"
+        ></div>
+        <p
+          class="text-lg !text-white"
+          [ngClass]="{ 'md:order-1': i % 2 === 0 }"
+        >
+          {{ content.content }}
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
