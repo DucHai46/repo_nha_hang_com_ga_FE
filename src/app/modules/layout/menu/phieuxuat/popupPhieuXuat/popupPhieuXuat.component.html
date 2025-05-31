@@ -26,17 +26,23 @@
           />
         </div>
         <div class="form-group">
-          <label for="nhân viên">Nhân viên:</label>
-          <select
-            id="nhanVien"
-            [(ngModel)]="formData.nhanVien"
-            name="NhanVien"
-            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-          >
-            <option *ngFor="let danhMuc of nhanVien" [ngValue]="danhMuc.id">
-              {{ danhMuc.name }}
-            </option>
-          </select>
+          <label for="nhân viên">Nhân viên: <span *ngIf="isNhanVienUnValid" class="text-red-500">*</span></label>
+          <div class="flex items-center gap-2">
+            <select
+              id="nhanVien"
+              [(ngModel)]="formData.nhanVien"
+              name="NhanVien"
+              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+            >
+              <option *ngFor="let danhMuc of nhanVien" [ngValue]="danhMuc.id">
+                {{ danhMuc.name }}
+              </option>
+            </select>
+          </div>
+          <p *ngIf="isNhanVienUnValid" class="text-red-500 text-sm mt-1">
+            Vui lòng chọn nhân viên.
+          </p>
+
         </div>
 
         <!-- ------------------------------------------------- --------------------------------------------------->
@@ -209,13 +215,19 @@
 
         <!-- ------------------------------------------------------------------------------------------------------------ -->
         <div class="form-group">
-          <label for="diaDiem">Lý do xuất:</label>
-          <textarea
-            id="lyDo"
-            [(ngModel)]="formData.lyDoXuat"
-            name="lyDo"
-            placeholder="Nhập lý do..."
-          ></textarea>
+          <label for="diaDiem">Lý do xuất: <span *ngIf="isLyDoUnValid" class="text-red-500">*</span></label>
+          <div class="flex item-centers gap-2">
+            <textarea
+              id="lyDo"
+              [(ngModel)]="formData.lyDoXuat"
+              name="lyDo"
+              placeholder="Nhập lý do..."
+            ></textarea>
+          </div>
+          <p *ngIf="isLyDoUnValid" class="text-red-500 text-sm mt-1">
+            Vui lớng nhập lý do
+          </p>
+
         </div>
         <div class="form-group">
           <label for="diaDiem">Địa điểm:</label>

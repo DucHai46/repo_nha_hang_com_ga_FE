@@ -50,9 +50,14 @@ export class PopupLoaiNLComponent implements OnInit {
  constructor(
     private danhMucNguyenLieuService: DanhmucnguyenlieuService,
   ) {}
+  loaiDanhMucInValid= false;
 
   // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
+    this.loaiDanhMucInValid = !this.formData.danhMucNguyenLieu || !this.formData.danhMucNguyenLieu.id;
+    if (this.loaiDanhMucInValid) {
+      return; 
+    }
     const dataToSend = {
       ...this.formData,
       danhMucNguyenLieu: this.formData.danhMucNguyenLieu.id

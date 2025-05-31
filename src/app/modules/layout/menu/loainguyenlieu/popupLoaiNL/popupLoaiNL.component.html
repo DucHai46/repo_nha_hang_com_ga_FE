@@ -1,56 +1,61 @@
 <div class="popup-backdrop">
-    <div class="popup-box"> 
-        <div class="p-5">
-            <h2 class="text-2xl font-bold mb-5">
-              {{ isEditMode ? "Sửa Loại Nguyên Liệu" : "Thêm Loại Nguyên Liệu" }}
-            </h2>
-            <form>
-              <div class="form-group">
-                <label for="materialName">Tên Loại Nguyên Liệu:</label>
-                <input
-                  type="text"
-                  id="materialName"
-                  [(ngModel)]="formData.tenLoai"
-                  name="tenLoai"
-                  placeholder="Nhập tên loại nguyên liệu..."
-                />
-              </div>
-          
-              <div class="form-group">
-                <label for="description">Mô Tả:</label>
-                <textarea
-                  id="description"
-                  [(ngModel)]="formData.moTa"
-                  name="moTa"
-                  placeholder="Nhập mô tả..."
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label for="category">Danh mục nguyên liệu:</label>
-                <select
-                  id="category"
-                  [(ngModel)]="formData.danhMucNguyenLieu"
-                  name="danhmucnguyenlieu"
-                  class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-                >
-                  <option 
-                  *ngFor="let danhMuc of danhMucNguyenLieu" 
-                  [ngValue]="danhMuc" 
-                  >
-                    {{ danhMuc.name }}
-                  </option>
-                </select>
-              </div>
-          
-              <div class="flex justify-end gap-2">
-                <button type="button" class="btn cancel-btn" (click)="onCancel()">
-                  Hủy
-                </button>
-                <button type="button" class="btn save-btn" (click)="onSave()">Lưu</button>
-              </div>
-            </form>
+  <div class="popup-box">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">
+        {{ isEditMode ? "Sửa Loại Nguyên Liệu" : "Thêm Loại Nguyên Liệu" }}
+      </h2>
+      <form>
+        <div class="form-group">
+          <label for="materialName">Tên Loại Nguyên Liệu:</label>
+          <input
+            type="text"
+            id="materialName"
+            [(ngModel)]="formData.tenLoai"
+            name="tenLoai"
+            placeholder="Nhập tên loại nguyên liệu..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Mô Tả:</label>
+          <textarea
+            id="description"
+            [(ngModel)]="formData.moTa"
+            name="moTa"
+            placeholder="Nhập mô tả..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="category">Danh mục nguyên liệu: <span *ngIf="loaiDanhMucInValid" class="text-red-500">*</span></label>
+          <div class="flex items-center gap-2">
+            <select
+              id="category"
+              [(ngModel)]="formData.danhMucNguyenLieu"
+              name="danhmucnguyenlieu"
+              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+            >
+              <option
+                *ngFor="let danhMuc of danhMucNguyenLieu"
+                [ngValue]="danhMuc"
+              >
+                {{ danhMuc.name }}
+              </option>
+            </select>
           </div>
-          
+          <p class="text-red-500 text-sm mt-1" *ngIf="loaiDanhMucInValid">
+            Vui lòng chọn danh mục nguyên liệu.
+          </p>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="button" class="btn cancel-btn" (click)="onCancel()">
+            Hủy
+          </button>
+          <button type="button" class="btn save-btn" (click)="onSave()">
+            Lưu
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
- 

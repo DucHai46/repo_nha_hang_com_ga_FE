@@ -26,17 +26,22 @@
         </div>
 
         <div class="form-group">
-          <label for="dvt">Loại món ăn:</label>
-          <select
-            id="dvt"
-            [(ngModel)]="formData.loaiMonAn"
-            name="donvitinh"
-            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-          >
-            <option *ngFor="let danhMuc of loaiMonAn" [ngValue]="danhMuc">
-              {{ danhMuc.name }}
-            </option>
-          </select>
+          <label for="dvt">Loại món ăn: <span *ngIf="loaiMonAnInValid" class="text-red-500">*</span></label>
+          <div class="flex items-center gap-2">
+            <select
+              id="dvt"
+              [(ngModel)]="formData.loaiMonAn"
+              name="donvitinh"
+              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+            >
+              <option *ngFor="let danhMuc of loaiMonAn" [ngValue]="danhMuc">
+                {{ danhMuc.name }}
+              </option>
+            </select>
+          </div>
+          <p *ngIf="loaiMonAnInValid" class="text-red-500 text-sm mt-1">
+            Vui lòng chọn loại món ăn.
+          </p>
         </div>
 
         <div class="form-group">
@@ -76,17 +81,23 @@
         </div>
 
         <div class="form-group">
-          <label for="ct">Công thức:</label>
-          <select
-            id="ct"
-            [(ngModel)]="formData.congThuc"
-            name="congThuc"
-            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-          >
-            <option *ngFor="let danhMuc of congThuc" [ngValue]="danhMuc">
-              {{ danhMuc.name }}
-            </option>
-          </select>
+          <label for="ct">Công thức: <span *ngIf="congThucInValid" class="text-red-500">*</span></label>
+          <div class="flex items-center gap-2">
+            <select
+              id="ct"
+              [(ngModel)]="formData.congThuc"
+              name="congThuc"
+              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+            >
+              <option *ngFor="let danhMuc of congThuc" [ngValue]="danhMuc">
+                {{ danhMuc.name }}
+              </option>
+            </select>
+          </div>
+          <p *ngIf="congThucInValid" class="text-red-500 text-sm mt-1">
+            Vui lòng chọn công thức.
+          </p>
+
         </div>
 
         <div class="flex justify-end gap-2">

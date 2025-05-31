@@ -106,8 +106,12 @@ export class PopupMonAnComponent implements OnInit {
     private fileService: FileService,
     private notification: NzNotificationService
   ) {}
-
+  congThucInValid = false;
+  loaiMonAnInValid = false;
   onSave() {
+    this.congThucInValid = !this.formData.congThuc || !this.formData.congThuc.id;
+    this.loaiMonAnInValid = !this.formData.loaiMonAn || !this.formData.loaiMonAn.id;
+    if(this.congThucInValid || this.loaiMonAnInValid) return
     const dataToSend = {
       ...this.formData,
       loaiMonAn: this.formData.loaiMonAn.id,

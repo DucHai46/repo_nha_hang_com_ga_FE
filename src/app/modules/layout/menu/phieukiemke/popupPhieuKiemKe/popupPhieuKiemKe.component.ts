@@ -119,6 +119,7 @@ export class PopupPhieuKiemKeComponent implements OnInit {
   removeLoaiSelection(index: number): void {
     this.loaiSelections.splice(index, 1);
   }
+  isNhanVienUnValid=false;
   onSave(): void {
     console.log(this.loaiSelections);
     const allLoaiNguyenLieus = this.loaiSelections.map(loai => ({
@@ -131,6 +132,10 @@ export class PopupPhieuKiemKeComponent implements OnInit {
         
       }))
     }));
+    this.isNhanVienUnValid=!this.formData.nhanVien;
+    if(this.isNhanVienUnValid){
+      return;
+    }
 
     const dataToSend = {
       id: this.formData.id,

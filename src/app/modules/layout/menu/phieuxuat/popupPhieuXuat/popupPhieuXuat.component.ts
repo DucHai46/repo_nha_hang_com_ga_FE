@@ -177,6 +177,8 @@ export class PopupPhieuXuatComponent implements OnInit {
   removeLoaiSelection(index: number): void {
     this.loaiSelections.splice(index, 1);
   }
+  isNhanVienUnValid=false;
+  isLyDoUnValid=false;
   onSave(): void {
     console.log(this.loaiSelections);
     const allLoaiNguyenLieus = this.loaiSelections.map(loai => ({
@@ -189,6 +191,11 @@ export class PopupPhieuXuatComponent implements OnInit {
         chenhLech: item.nguyenLieu.chenhLech,        
       }))
     }));
+    this.isNhanVienUnValid=!this.formData.nhanVien;
+    this.isLyDoUnValid=!this.formData.lyDoXuat;
+    if(this.isNhanVienUnValid || this.isLyDoUnValid){
+      return;
+    }
 
     const dataToSend = {
       tenPhieu: this.formData.tenPhieu,

@@ -26,20 +26,26 @@
             </div>
             
             <div class="form-group">
-              <label for="category">Loại bàn:</label>
-              <select
-                id="category"
-                [(ngModel)]="formData.loaiBan"
-                name="loaiBanAn"
-                class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-              >
-                <option 
-                *ngFor="let danhMuc of loaiBanAn" 
-                [ngValue]="danhMuc" 
+              <label for="category">Loại bàn: <span *ngIf="isLoaiBanInValid" class="text-red-500">*</span></label>
+              <div class="flex items-center gap-2">
+                <select
+                  id="category"
+                  [(ngModel)]="formData.loaiBan"
+                  name="loaiBanAn"
+                  class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
                 >
-                  {{ danhMuc.name }}
-                </option>
-              </select>
+                  <option 
+                  *ngFor="let danhMuc of loaiBanAn" 
+                  [ngValue]="danhMuc" 
+                  >
+                    {{ danhMuc.name }}
+                  </option>
+                </select>
+              </div>
+              <p *ngIf="isLoaiBanInValid" class="text-red-500 text-sm mt-1">
+                Vui lòng chọn loại bàn.
+              </p>
+
             </div>
         
             <div class="flex justify-end gap-2">

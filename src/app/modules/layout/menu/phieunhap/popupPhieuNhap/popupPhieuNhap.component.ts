@@ -141,6 +141,8 @@ export class PopupPhieuNhapComponent implements OnInit {
   removeNguyenLieuSelection(index: number): void {
     this.nguyenLieuSelection.splice(index, 1);
   }
+  isNhanVienUnvalid=false;
+  isDienGiaiUnvalid=false;
   onSave(): void {
     console.log(this.nguyenLieuSelection);
     const allNguyenLieus = this.nguyenLieuSelection.map(loai => ({
@@ -156,6 +158,11 @@ export class PopupPhieuNhapComponent implements OnInit {
       donGia: loai.donGia,
       thanhTien: loai.thanhTien
     }));
+    this.isNhanVienUnvalid = !this.formData.nhanVien;
+    this.isDienGiaiUnvalid = !this.formData.dienGiai;
+    if(this.isNhanVienUnvalid || this.isDienGiaiUnvalid){
+      return;
+    }
 
     const dataToSend = {
       id: this.formData.id,
@@ -167,7 +174,6 @@ export class PopupPhieuNhapComponent implements OnInit {
       tongTien: this.formData.tongTien,
       ghiChu: this.formData.ghiChu,
       nhanVien: this.formData.nhanVien||null,
-      
       nguyenLieus: allNguyenLieus
     };
     console.log(dataToSend);
