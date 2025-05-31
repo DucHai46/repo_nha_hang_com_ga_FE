@@ -99,6 +99,8 @@
               <!-- <th scope="col" class="px-6 py-3">Nguyên liệu</th> -->
               <th scope="col" class="px-6 py-3">Giá tiền</th>
               <th scope="col" class="px-6 py-3">Mô tả</th>
+              <th scope="col" class="px-6 py-3">Giảm giá</th>
+
               <th scope="col" class="px-6 py-3">Thao tác</th>
             </tr>
           </thead>
@@ -134,6 +136,9 @@
               </td>
               <td class="px-6 py-4">
                 {{ item.moTa }}
+              </td>
+              <td class="px-6 py-4">
+                {{ item.giamGia.giaTri }}
               </td>
               <td
                 class="px-6 py-4 flex flex-row gap-2 justify-center items-center"

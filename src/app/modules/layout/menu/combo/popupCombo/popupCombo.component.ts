@@ -3,6 +3,7 @@ import { FileService } from '../../../../../core/services/file.service';
 import { LoaimonanService } from '../../loaimonan/services/loaimonan.service';
 import { MonAnService } from '../../monan/services/monan.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { giamgiaService } from '../../giamgia/services/giamgia.service';
 @Component({
   selector: 'app-popupCombo',
   templateUrl: './popupCombo.component.html',
@@ -15,12 +16,18 @@ export class PopupComboComponent implements OnInit {
     monAns: [],
     moTa: '',
     hinhAnh: '',
-    giaTien: 0
+    giaTien: 0.,
+    giamGia: {
+      id: '',
+      name: '',
+      giaTri: 0,
+    },
   };
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
   monAn: any[]=[];
   loaiMonAn: any[]=[];
+  giamGia: any[]=[];
   loaiSelections: any[] = [
     {
       selectedLoaiId: '',
@@ -36,7 +43,8 @@ export class PopupComboComponent implements OnInit {
     private monAnService: MonAnService,
     private fileService: FileService,
     private loaiMonAnService: LoaimonanService,
-    private notification: NzNotificationService
+    private notification: NzNotificationService,
+    private giamgiaService: giamgiaService
   ) {}
   ngOnInit(): void {
     this.loaiMonAnService.getLoaiMonAn({}).subscribe({
@@ -45,6 +53,31 @@ export class PopupComboComponent implements OnInit {
           id: item.id,
           name: item.tenLoai
         }));
+      },
+      error: (err: any) => console.log(err)
+    });
+        this.giamgiaService.getGiamGia({}).subscribe({
+      next: (res: any) => {
+            this.giamGia = [
+              {
+                id: '',
+                name: 'Không giảm giá',
+                giaTri: 0
+              },
+              ...res.data.data.map((item: any) => ({
+                id: item.id,
+                name: item.tenGiamGia,
+                giaTri: item.giaTri
+              }))
+            ];  
+            if (this.isEditMode) {
+              const selected = this.giamGia.find(x => x.id === this.formData.giamGia.id);
+              if (selected) {
+                this.formData.giamGia = selected;
+              }
+            }else {
+              this.formData.giamGia = this.giamGia[0];
+            }
       },
       error: (err: any) => console.log(err)
     });
@@ -109,7 +142,8 @@ export class PopupComboComponent implements OnInit {
         id: '',
         name: '',
         hinhAnh: '',
-        giaTien: 0
+        giaTien: 0,
+        soLuong: 1
       },  
     });
   }
@@ -149,6 +183,7 @@ export class PopupComboComponent implements OnInit {
       item.monAn.name = found.name;
       item.monAn.hinhAnh = found.hinhAnh;
       item.monAn.giaTien = found.giaTien;
+      item.monAn.soLuong = 1;
     } else {
       item.monAn.name = '';
       item.monAn.hinhAnh = '';
@@ -167,7 +202,10 @@ export class PopupComboComponent implements OnInit {
       id: loai.selectedLoaiId,
       monAns: loai.monAns.map((item: any) => ({
         id: item.monAn.id,
-
+        tenMonAn: item.monAn.name,
+        giaTien: item.monAn.giaTien,
+        soLuong: item.monAn.soLuong
+        
       }))
     }));
 
@@ -175,6 +213,7 @@ export class PopupComboComponent implements OnInit {
       id: this.formData.id,
       tenCombo:  this.formData.tenCombo,
       moTa: this.formData.moTa,
+      giamGia: this.formData.giamGia?.id ? this.formData.giamGia.id : null,
       giaTien: this.formData.giaTien,
       hinhAnh: this.formData.hinhAnh
         ? JSON.stringify({
@@ -184,7 +223,7 @@ export class PopupComboComponent implements OnInit {
         : '',
       loaiMonAns: allMonAns
     };
-    console.log(dataToSend);
+    console.log("Datatosend:",dataToSend);
 
     this.save.emit(dataToSend);
     // console.log(dataToSend);
