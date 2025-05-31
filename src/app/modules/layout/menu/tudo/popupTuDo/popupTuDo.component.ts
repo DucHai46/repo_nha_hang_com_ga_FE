@@ -48,9 +48,14 @@ export class PopupTuDoComponent implements OnInit {
   constructor(
     private loaiTuDoService: LoaiTuDoService,
   ) {}
+  isLoaiTuInValid= false;
 
   // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
+    this.isLoaiTuInValid = !this.formData.loaiTuDo || !this.formData.loaiTuDo.id;
+    if (this.isLoaiTuInValid) {
+      return; 
+    }
     const dataToSend = {
       ...this.formData,
       loaiTuDo: this.formData.loaiTuDo.id

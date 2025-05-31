@@ -32,8 +32,13 @@ export class PopupNhanVienComponent implements OnInit {
   @Input() isEditMode: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
+  isChucVuInValid = false
 
   onSave(): void {
+    this.isChucVuInValid = !this.formData.chucVu ;
+    if (this.isChucVuInValid) {
+      return;
+    }
     this.save.emit(this.formData);
   }
 
