@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ThucDonService } from '../menu/thucdon/services/thucdon.service';
 import { LoaimonanService } from '../menu/loaimonan/services/loaimonan.service';
 import { MonAnService } from '../menu/monan/services/monan.service';
+import { ComboService } from '../menu/combo/services/combo.service';
 import { LoaiMonAn } from '../../../models/LoaiMonAn';
 import { ThucDon } from '../../../models/ThucDon';
 import { MonAn } from '../../../models/MonAn';
@@ -34,7 +35,8 @@ export class MenugoimonComponent implements OnInit {
     private loaiMonAnService: LoaimonanService,
     private monAnService: MonAnService,
     private route: ActivatedRoute,
-    private fileService: FileService
+    private fileService: FileService,
+    private comboService: ComboService
   ) { }
   ngOnInit() {
     const updatedSelectedItems = history.state?.updatedSelectedItems;
@@ -65,7 +67,7 @@ export class MenugoimonComponent implements OnInit {
         ];
 
         this.itemsRoot2 = await this.taoDanhSachMonAn(this.thucDon);
-        this.combo = this.taoDanhSachCombo(this.thucDon);
+        this.combo = await this.taoDanhSachCombo(this.thucDon);
         this.itemsMonAn = [...this.itemsRoot2, ...this.combo];
         console.log(this.itemsMonAn);
         this.loadAllImages();
@@ -122,26 +124,41 @@ export class MenugoimonComponent implements OnInit {
       });
     });
   }
-  private taoDanhSachCombo(thucDonData: any[]): any[] {
-    const danhSach: any[] = [];
+private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
+  return new Promise((resolve, reject) => {
+    this.comboService.getCombo({}).subscribe({
+      next: (res: any) => {
+        const comboList = res.data.data;
+        const danhSach: any[] = [];
 
-    thucDonData.forEach((item: any) => {
-      item.combos.forEach((loaiMon: any) => {
-        danhSach.push({
-          ma: loaiMon.id,
-          ten: loaiMon.name,
-          hinhAnh: loaiMon.hinhAnh,
-          gia: loaiMon.giaTien,
-          soLuong: 0,
-          giamGia: 0,
-          ghiChu: "",
-          danhMuc: "comboMonAn"
+        thucDonData.forEach((item: any) => {
+          item.combos?.forEach((loaiMon: any) => {
+            const comboInfo = comboList.find((ma: any) => ma.id === loaiMon.id);
+            if (comboInfo) {
+              danhSach.push({
+                ma: loaiMon.id,
+                ten: String(loaiMon.name).trim(),
+                hinhAnh: loaiMon.hinhAnh,
+                gia: loaiMon.giaTien,
+                soLuong: 0,
+                giamGia: comboInfo.giamGia?.giaTri ?? 0,
+                ghiChu: "",
+                danhMuc: "comboMonAn"
+              });
+            }
+          });
         });
-      });
-    });
 
-    return danhSach;
-  }
+        console.log(danhSach);
+        resolve(danhSach);
+      },
+      error: (err: any) => {
+        console.log(err);
+        reject(err);
+      }
+    });
+  });
+}
   // Cập nhật số lượng món từ selectedItemsMA vào itemsMonAn chính
   capNhatSoLuongMonAn(updatedSelectedItems: any[]) {
     updatedSelectedItems.forEach((updatedItem) => {
