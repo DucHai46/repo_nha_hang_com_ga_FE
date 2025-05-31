@@ -100,7 +100,7 @@ export class PopupChiTietDonOrderComponent implements OnInit {
         monAn.monAn = monAn.monAn.id;
       });
     })
-    this.donOrderService.updateDonOrder(updatedOrder.id, updatedOrder).subscribe({
+    this.donOrderService.updateDonOrders(updatedOrder.id, updatedOrder).subscribe({
       next: (res: any) => {
         console.log('Cập nhật trạng thái thành công', res);
 
@@ -244,7 +244,7 @@ export class PopupChiTietDonOrderComponent implements OnInit {
         monAn.monAn = monAn.monAn.id;
       });
     })
-    this.donOrderService.updateDonOrder(updatedOrder.id, updatedOrder).subscribe({
+    this.donOrderService.updateDonOrders(updatedOrder.id, updatedOrder).subscribe({
       next: (res: any) => {
         console.log('Cập nhật trạng thái thành công', res);
 

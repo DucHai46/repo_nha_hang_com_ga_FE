@@ -27,6 +27,10 @@ export class DonOrderAdminService {
     return this.http.put(`${this.apiUrl}/api/don-order/${id}`, data);
   }
 
+  updateDonOrders(id: string, data: any) {
+    return this.http.put(`${this.apiUrl}/api/don-order/update/${id}`, data);
+  }
+
   updateStatusDonOrder(id: string, data: any) {
     return this.http.put(`${this.apiUrl}/api/don-order/update-status/${id}`, data);
   }
