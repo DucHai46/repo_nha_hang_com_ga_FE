@@ -175,6 +175,7 @@ export class PopupThucDonComponent implements OnInit {
       error: (err: any) => console.log(err)
     });
     this.loaiSelections[index].selectedMonAnId = '';
+    this.loaiSelections[index].filteredMonAn = [];
     this.loaiSelections[index].monAns = [];
   }
   onComboChange(index: number): void {

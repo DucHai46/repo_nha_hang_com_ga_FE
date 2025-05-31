@@ -131,6 +131,7 @@ export class PopupComboComponent implements OnInit {
       error: (err: any) => console.log(err)
     });
     this.loaiSelections[index].selectedMonAnId = '';
+    this.loaiSelections[index].filteredMonAn = [];
     this.loaiSelections[index].monAns = [];
   }
   isLoaiDuplicate(selectedLoaiId: string, index: number): boolean {

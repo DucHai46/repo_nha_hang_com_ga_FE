@@ -19,7 +19,7 @@ export class MenugoimonComponent implements OnInit {
   itemsDanhMuc = [];
 
   // selectedItem: any = this.itemsDanhMuc[0]; // Mặc định chọn danh mục đầu tiên
-  itemsMonAnRoot: any[] = [];
+
   itemsMonAn: any[] = [];
   selectedItemsMA: any[] = [];
   loaiMonAn: any[] = [];
@@ -96,7 +96,6 @@ export class MenugoimonComponent implements OnInit {
             item.loaiMonAns.forEach((loaiMon: any) => {
               loaiMon.monAns.forEach((monAn: any) => {     
                 const monAnInfo = monAnList.find((ma: any) => ma.id === monAn.id);
-                console.log(monAnInfo);
                 if(monAnInfo!=null){
                   danhSach.push({
                     ma: monAn.id,
@@ -160,7 +159,7 @@ export class MenugoimonComponent implements OnInit {
 
   // Lọc món ăn theo mã danh mục
   getMonAnTheoDanhMuc(maDanhMuc: string) {
-    return this.itemsMonAn.filter((mon) => mon.danhMuc === maDanhMuc);
+    return this.itemsMonAn.filter((mon) => mon.danhMuc === maDanhMuc && mon.gia !== null);
   }
   updateSelectedItemsMA(item: any) {
     const index = this.selectedItemsMA.findIndex((mon) => mon.ma === item.ma);
@@ -291,29 +290,33 @@ export class MenugoimonComponent implements OnInit {
     }
   }
 
+  itemsMonAnRoot: any[] = [];
+  searchMonAn(event: any) {
+    const keyword = event.target.value.toLowerCase().trim();
+    console.log(keyword);
 
-searchMonAn(event: any) {
-  const keyword = event.target.value.toLowerCase().trim();
+    if (!this.itemsMonAnRoot || this.itemsMonAnRoot.length === 0) {
+      this.itemsMonAnRoot = [...this.itemsMonAn]; // copy danh sách gốc
+    }
+    console.log(this.itemsMonAnRoot);
 
-  if (!this.itemsMonAnRoot || this.itemsMonAnRoot.length === 0) {
-    this.itemsMonAnRoot = [...this.itemsMonAn]; // copy danh sách gốc
+    if (keyword === '') {
+      this.itemsMonAn = [...this.itemsMonAnRoot];
+      return;
+    }
+
+    const filtered = this.itemsMonAnRoot.filter((mon: any) =>
+      String(mon.ten).toLowerCase().includes(keyword)
+    );
+    console.log(filtered);
+
+
+    if (filtered.length > 0) {
+      this.itemsMonAn = filtered;
+    } else {
+      this.itemsMonAn = [...this.itemsMonAnRoot];
+    }
   }
-
-  if (keyword === '') {
-    this.itemsMonAn = [...this.itemsMonAnRoot];
-    return;
-  }
-
-  const filtered = this.itemsMonAnRoot.filter((mon: any) =>
-    mon.ten.toLowerCase().includes(keyword)
-  );
-
-  if (filtered.length > 0) {
-    this.itemsMonAn = filtered;
-  } else {
-    this.itemsMonAn = [...this.itemsMonAnRoot];
-  }
-}
 
   getImageUrl(hinhAnh: string): string {
     if (!hinhAnh) return '';

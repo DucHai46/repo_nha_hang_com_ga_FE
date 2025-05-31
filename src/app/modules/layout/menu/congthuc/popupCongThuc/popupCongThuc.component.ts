@@ -125,6 +125,7 @@ export class PopupCongThucComponent implements OnInit {
       error: (err: any) => console.log(err)
     });
     this.loaiSelections[index].selectedNguyenLieuId = '';
+    this.loaiSelections[index].filteredNguyenLieu = [];
     this.loaiSelections[index].nguyenLieus = [];
   }
 
