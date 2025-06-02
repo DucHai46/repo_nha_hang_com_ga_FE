@@ -89,32 +89,32 @@ export class DonorderComponent implements OnInit {
     tenKhachHang: '',
   }
 
-  isThanhToan(item: any){
+  isThanhToan(item: any) {
     let isThanhToan = true;
     item.chiTietDonOrder.forEach((ct: any) => {
-        if(ct.monAns.length > 0){
-          ct.monAns.forEach((ma: any) => {
-            if(ma.monAn_trangThai == 0){
-             isThanhToan = false;
-            }
-          })
-        }
-        if(ct.comBos.length > 0){
-          ct.comBos.forEach((cb: any) => {
-            if(cb.comBo_trangThai == 0){
-              isThanhToan = false;
-            }
-          })
-        }
-      })
-    return isThanhToan; 
+      if (ct.monAns.length > 0) {
+        ct.monAns.forEach((ma: any) => {
+          if (ma.monAn_trangThai == 0) {
+            isThanhToan = false;
+          }
+        })
+      }
+      if (ct.comBos.length > 0) {
+        ct.comBos.forEach((cb: any) => {
+          if (cb.comBo_trangThai == 0) {
+            isThanhToan = false;
+          }
+        })
+      }
+    })
+    return isThanhToan;
   }
-  
-  isHoaDon(item: any){
+
+  isHoaDon(item: any) {
     // Kiểm tra xem đơn order này đã có hóa đơn chưa
     // Tìm trong mảng hoaDons xem có hóa đơn nào có donOrder.id trùng với item.id không
     const hoaDonExists = this.hoaDons.some((hd: any) => hd.donOrder.id === item.id);
-    
+
     // Trả về ngược lại kết quả (true nếu chưa có hóa đơn, false nếu đã có)
     return !hoaDonExists;
   }
@@ -241,7 +241,7 @@ export class DonorderComponent implements OnInit {
       this.hoaDonThanhToanService.addHoaDonThanhToan(body).subscribe(
         {
           next: (res: any) => {
-            if(res.data) {
+            if (res.data) {
               this.formHoaDon = res.data; // Lưu thông tin hóa đơn vào formHoaDon
               this.formData.hoaDonThanhToans = [res.data]; // Gán danh sách hóa đơn vào formData
               this.formData.hoaDonThanhToanId = res.data.id; // Gán ID hóa đơn vào formData
@@ -329,8 +329,8 @@ export class DonorderComponent implements OnInit {
         );
       }
     });
-  } 
-  
+  }
+
   // up ảnh
   parseJSON(jsonString: string): any {
     try {
@@ -339,7 +339,7 @@ export class DonorderComponent implements OnInit {
       return null;
     }
   }
-   
+
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
