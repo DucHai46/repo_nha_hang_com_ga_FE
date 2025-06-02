@@ -30,4 +30,7 @@ export class DonOrderService {
   deleteDonOrder(id: string) {
     return this.http.delete(`${this.apiUrl}/api/don-order/${id}`);
   }
+  nhacDonOrder(id:string){
+    return this.http.get(`${this.apiUrl}/api/nhac-don-order/${id}`);
+  }
 }

@@ -30,6 +30,11 @@ export class OrderSignalRServiceService {
       this.hubConnection.on('ReceiveOrder', callback);
     }
   }
+  public addOrderListener2(callback: (message: string) => void): void {
+    if (this.hubConnection) {
+      this.hubConnection.on('ReceiveNhacDon', callback);
+    }
+  }
 
   public ChangeStatusOrderListener(callback: (message: string) => void): void {
     if (this.hubConnection) {

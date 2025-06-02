@@ -13,6 +13,7 @@ export class ChitietdonComponent implements OnInit {
   chiTietDonOrder: any[] = [];
   tongTien: number = 0;
   id: string = '';
+  banAn:string='';
 
 
   troVeMenugoimon() {
@@ -46,8 +47,15 @@ export class ChitietdonComponent implements OnInit {
           this.tongTien = don.tongTien;
           this.chiTietDonOrder = don.chiTietDonOrder;
           console.log(this.chiTietDonOrder);
+          this.banAn=don.ban.name;
         }
       }
     )
+  }
+  nhacBep(){
+    const thongDiep=this.banAn;
+    console.log(thongDiep);
+    this.orderSignalRService.startConnection();
+    this.donOrderService.nhacDonOrder(thongDiep);
   }
 }

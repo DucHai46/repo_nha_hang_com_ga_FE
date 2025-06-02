@@ -75,6 +75,18 @@ export class DonorderComponent implements OnInit {
           nzDuration: 2000
         }
       );
+      // this.search();
+    });
+      this.orderSignalRService.addOrderListener2((message) => {
+      this.notification.create(
+        'success',
+        'Thông báo!',
+        `Nhắc bếp từ bàn số : ${message}`,
+        {
+          nzClass: 'notification-success',
+          nzDuration: 2000
+        }
+      );
       this.search();
     });
   }

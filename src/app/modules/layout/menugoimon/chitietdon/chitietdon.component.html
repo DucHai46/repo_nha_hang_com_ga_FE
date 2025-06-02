@@ -1,11 +1,19 @@
 <!-- Thanh cố định chứa nút trở về -->
 <div class="fixed top-0 left-0 w-full z-50 bg-white shadow px-4 py-2">
-  <button
-    (click)="troVeMenugoimon()"
-    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-  >
-    ← Trở về
-  </button>
+  <div class="flex justify-between items-center">
+    <button
+      (click)="troVeMenugoimon()"
+      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+    >
+      ← Trở về
+    </button>
+    <button
+      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-green-700"
+      (click)="nhacBep()"
+    >
+      Nhắc bếp
+    </button>
+  </div>
 </div>
 <div class="pt-20 px-4 pb-20">
   <div
