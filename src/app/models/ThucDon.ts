@@ -25,4 +25,5 @@ interface MonAnTrongCombo {
   hinhAnh: string;
   giaTien: string;
   moTa: string;
+  giamGia: string;
 }
