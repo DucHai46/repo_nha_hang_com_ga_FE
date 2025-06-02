@@ -55,7 +55,6 @@ export class ChitietdonComponent implements OnInit {
   nhacBep(){
     const thongDiep=this.banAn;
     console.log(thongDiep);
-    this.orderSignalRService.startConnection();
-    this.donOrderService.nhacDonOrder(thongDiep);
+    this.donOrderService.nhacDonOrder(thongDiep?? '').subscribe();
   }
 }
