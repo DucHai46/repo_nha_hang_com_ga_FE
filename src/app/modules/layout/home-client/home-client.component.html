@@ -34,23 +34,27 @@
       </a>
     </div>
     <div class="flex justify-between items-center gap-6">
-      <svg
-        class="w-6 h-6 text-black"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
-        />
-      </svg>
+      <div class="relative" (click)="toggleCart()">
+        <svg  class="w-6 h-6 text-black cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
+        </svg>
+        <span *ngIf="cartCount > 0"
+              class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+          {{cartCount}}
+        </span>
+        <div *ngIf="showCart" class="absolute right-0 top-full mt-2 w-80 bg-white shadow-lg rounded-lg z-50 p-4">
+          <h3 class="font-bold mb-2">Giỏ hàng</h3>
+          <div *ngIf="cartItems.length === 0" class="text-gray-400">Chưa có món nào</div>
+          <div *ngFor="let cart of cartItems" class="flex items-center justify-between mb-2">
+            <div>
+              <div class="font-medium">{{cart.item.ten}}</div>
+              <div class="text-xs text-gray-500">x{{cart.quantity}}</div>
+            </div>
+            <div class="text-yellow-500 font-bold">{{cart.item.gia | number}}₫</div>
+          </div>
+          <button class="mt-2 bg-red-500 text-white px-4 py-1 rounded" (click)="homeClientStore.clearCart()">Xóa giỏ hàng</button>
+        </div>
+      </div>
       <svg
         class="w-6 h-6 text-black"
         aria-hidden="true"

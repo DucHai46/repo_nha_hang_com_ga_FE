@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ThucDonService } from '../../../menu/thucdon/services/thucdon.service';
 import { ThucDon } from '../../../../../models/ThucDon';
 import { FileService } from '../../../../../core/services/file.service';
+import { HomeClientStore } from '../../store/home-client.store';
 
 @Component({
   selector: 'app-menu-client',
@@ -10,7 +11,11 @@ import { FileService } from '../../../../../core/services/file.service';
 })
 export class MenuClientComponent implements OnInit {
 
-  constructor(private thucDonService: ThucDonService, private fileService: FileService) { }
+  constructor(
+    private thucDonService: ThucDonService,
+    private fileService: FileService,
+    private homeClientStore: HomeClientStore
+  ) { }
 
   allItems: any[] = [];
   params = {
@@ -127,5 +132,9 @@ export class MenuClientComponent implements OnInit {
       }
     }
     return pages;
+  }
+
+  addToCart(item: any) {
+    this.homeClientStore.addToCart(item);
   }
 }

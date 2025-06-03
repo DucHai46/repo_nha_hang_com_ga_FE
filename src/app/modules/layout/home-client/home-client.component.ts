@@ -29,7 +29,16 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   ];
 
-  constructor(private nhaHangService: NhaHangService, private fileService: FileService, private homeClientStore: HomeClientStore) { }
+  cartCount = 0;
+  cartItems: { item: any, quantity: number }[] = [];
+  showCart = false;
+
+  constructor(private nhaHangService: NhaHangService, private fileService: FileService, public homeClientStore: HomeClientStore) {
+    this.homeClientStore.cart$.subscribe(cart => {
+      this.cartItems = cart;
+      this.cartCount = cart.reduce((sum, c) => sum + c.quantity, 0);
+    });
+  }
 
   ngOnInit() {
     if (typeof window !== 'undefined') {
@@ -285,5 +294,9 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
     const b = parseInt(backgroundColor.slice(5, 7), 16);
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
     return brightness > 128 ? 'black' : 'white';
+  }
+
+  toggleCart() {
+    this.showCart = !this.showCart;
   }
 }
