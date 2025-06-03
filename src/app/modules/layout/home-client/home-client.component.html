@@ -48,7 +48,19 @@
           <div *ngFor="let cart of cartItems" class="flex items-center justify-between mb-2">
             <div>
               <div class="font-medium">{{cart.item.ten}}</div>
-              <div class="text-xs text-gray-500">x{{cart.quantity}}</div>
+              <div class="flex items-center gap-2 mt-1">
+                <button class="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300" (click)="homeClientStore.decreaseQuantity(cart.item); $event.stopPropagation()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                  </svg>
+                </button>
+                <span class="text-sm">{{cart.quantity}}</span>
+                <button class="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300" (click)="homeClientStore.increaseQuantity(cart.item); $event.stopPropagation()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                  </svg>
+                </button>
+              </div>
             </div>
             <div class="text-yellow-500 font-bold">{{cart.item.gia | number}}₫</div>
           </div>

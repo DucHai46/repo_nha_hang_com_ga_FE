@@ -51,4 +51,26 @@ export class HomeClientStore extends ComponentStore<HomeClientState> {
         ...state,
         cart: [],
     }));
+
+    readonly increaseQuantity = this.updater((state, item: any) => {
+        const cart = [...state.cart];
+        const idx = cart.findIndex(c => c.item.ten === item.ten);
+        if (idx > -1) {
+            cart[idx] = { ...cart[idx], quantity: cart[idx].quantity + 1 };
+        }
+        return { ...state, cart };
+    });
+
+    readonly decreaseQuantity = this.updater((state, item: any) => {
+        const cart = [...state.cart];
+        const idx = cart.findIndex(c => c.item.ten === item.ten);
+        if (idx > -1) {
+            if (cart[idx].quantity > 1) {
+                cart[idx] = { ...cart[idx], quantity: cart[idx].quantity - 1 };
+            } else {
+                cart.splice(idx, 1);
+            }
+        }
+        return { ...state, cart };
+    });
 }
