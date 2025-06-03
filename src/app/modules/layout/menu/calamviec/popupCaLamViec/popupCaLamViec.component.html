@@ -6,7 +6,12 @@
       </h2>
       <form>
         <div class="form-group">
-          <label for="materialName">Tên Ca Làm Việc:</label>
+          <label for="materialName"
+            >Tên Ca Làm Việc:
+            <span *ngIf="isTenCaLamViecUnvalid" class="text-red-500"
+              >*</span
+            ></label
+          >
           <input
             type="text"
             id="materialName"
@@ -14,27 +19,42 @@
             name="tenLoai"
             placeholder="Nhập tên ca làm việc..."
           />
+          <p *ngIf="isTenCaLamViecUnvalid" class="text-red-500 text-sm mt-1">
+            Vui lòng nhập tên ca.
+          </p>
         </div>
 
         <div class="form-group">
-          <label for="materialName">Giờ vào:</label>
+          <label for="materialName"
+            >Giờ vào:
+            <span *ngIf="isGioVaoUnvalid" class="text-red-500">*</span></label
+          >
           <input
             type="time"
             id="materialName"
             [(ngModel)]="formData.gioVao"
-            name="giaTri"
+            name="gioVao"
             placeholder="Nhập giờ vào..."
           />
+          <p *ngIf="isGioVaoUnvalid" class="text-red-500 text-sm mt-1">
+            Vui lòng chọn giờ ra ca.
+          </p>
         </div>
         <div class="form-group">
-          <label for="materialName">Giờ ra:</label>
+          <label for="materialName"
+            >Giờ ra:
+            <span *ngIf="isGioRaUnvalid" class="text-red-500">*</span></label
+          >
           <input
             type="time"
             id="materialName"
             [(ngModel)]="formData.gioRa"
-            name="giaTri"
+            name="gioRa"
             placeholder="Nhập giờ ra..."
           />
+          <p *ngIf="isGioRaUnvalid" class="text-red-500 text-sm mt-1">
+            Vui lòng chọn giờ vào ca.
+          </p>
         </div>
 
         <div class="form-group">

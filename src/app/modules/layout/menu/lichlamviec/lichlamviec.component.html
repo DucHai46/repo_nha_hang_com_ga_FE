@@ -112,7 +112,7 @@
         </thead>
         <tbody>
           <tr
-            class="border-b dark:border-gray-700 border-gray-200"
+            class="border-b dark:border-gray-700 border-gray-200 text-center"
             *ngFor="let item of lichLamViecPaging; let i = index"
           >
             <td class="px-6 py-4 font-medium whitespace-nowrap text-center">
@@ -129,7 +129,8 @@
             >
               <button
                 (click)="openEditPopup(item)"
-                class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
+                [disabled]="!isEdit(item)"
+                class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <p
                   class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-800"

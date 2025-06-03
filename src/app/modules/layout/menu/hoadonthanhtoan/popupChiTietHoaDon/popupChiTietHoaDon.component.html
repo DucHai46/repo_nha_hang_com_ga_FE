@@ -1,140 +1,148 @@
 <div class="popup-backdrop">
   <div class="receipt">
     <button class="close-btn" (click)="closeChiTiet()">x</button>
-
-    <div class="header">
-      <div class="inline-block border border-gray-300 rounded-lg p-2 shadow-lg">
-        <img
-          [src]="imageUrl[nhaHang.id]"
-          alt="Logo"
-          class="w-full max-w-[200px] h-auto object-contain"
-        />
-      </div>
-      <h2>{{ nhaHang.tenNhaHang }}</h2>
-      <p>{{ nhaHang.diaChi }}</p>
-      <p>Hotline: {{ nhaHang.soDienThoai }}</p>
-    </div>
-
-    <h3 class="text-center">PHIẾU TẠM TÍNH</h3>
-
-    <div class="info">
-      <p>
-        Số HĐ Ticket: <span>{{ formData.id }}</span>
-      </p>
-      <p>
-        Ngày/giờ vào:
-        <span
-          >{{ formData.gioVao | date : "yyyy-MM-dd HH:mm:ss" : "UTC" }}
-        </span>
-      </p>
-      <p>
-        Ngày/giờ ra:
-        <span>{{ formData.gioRa | date : "yyyy-MM-dd HH:mm:ss" : "UTC" }}</span>
-      </p>
-      <p>
-        Thu ngân: <span>{{ nhanVien.tenNhanVien }}</span>
-      </p>
-      <p>Số khách: <span>3</span></p>
-      <p>
-        Bàn: <span>{{ donOrder.ban.name }}</span>
-      </p>
-      <p>
-        Khách hàng:
-        <span>{{ donOrder?.khachHang?.name || "Đơn tại chỗ" }}</span>
-      </p>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Tên món</th>
-          <th>SL</th>
-          <th>Giá gốc</th>
-          <th>Giảm giá</th>
-          <th>Đơn giá</th>
-          <th>Thành tiền</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Hiển thị danh sách món ăn -->
-        <tr class="category" *ngIf="listMonAns.length > 0">
-          <td colspan="7">1 - MÓN ĂN</td>
-        </tr>
-        <tr *ngFor="let item of listMonAns; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.count }}</td>
-          <td>{{ item.price }} VND</td>
-          <td>{{ item.giamGias }}%</td>
-          <td>{{ item.giaSauGiam }} VND</td>
-          <td>{{ item.count * item.giaSauGiam }} VND</td>
-        </tr>
-
-        <!-- Hiển thị danh sách combo -->
-        <tr class="category" *ngIf="listCombos.length > 0">
-          <td colspan="7">2 - COMBO</td>
-        </tr>
-        <tr *ngFor="let item of listCombos; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.count }}</td>
-          <td>{{ item.price }} VND</td>
-          <td></td>
-          <td></td>
-          <td>{{ item.count * item.price }} VND</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="total">
-      <p>
-        Tổng tiền: <strong>{{ donOrder?.tongTien | number }} VND</strong>
-      </p>
-      <p>
-        Khuyến mãi:
-        <strong>{{ khuyenMai.giaTri }}%</strong>
-      </p>
-      <p>
-        Phụ phí:
-        <strong>({{ phuPhi.tenPhuPhi }}) {{ phuPhi.giaTri }}%</strong>
-      </p>
-      <p>
-        Thanh toán Total:
-        <strong
-          >{{
-            donOrder?.tongTien *
-              (1 - khuyenMai.giaTri * 0.01) *
-              (1 + phuPhi.giaTri * 0.01) | number
-          }}
-          VND</strong
+    <div id="hoadon">
+      <div class="header">
+        <div
+          class="inline-block border border-gray-300 rounded-lg p-2 shadow-lg"
         >
-      </p>
-    </div>
+          <img
+            [src]="imageUrl[nhaHang.id]"
+            alt="Logo"
+            class="w-full max-w-[150px] h-auto object-contain"
+          />
+        </div>
+        <h2>{{ nhaHang.tenNhaHang }}</h2>
+        <p>{{ nhaHang.diaChi }}</p>
+        <p>Hotline: {{ nhaHang.soDienThoai }}</p>
+      </div>
 
-    <div class="note">
-      <p>Giá trên đã bao gồm VAT 8% nếu khách yêu cầu xuất hóa đơn VAT.</p>
-      <p>Giá trên đã áp dụng các mã giảm giá trên từng món ăn.</p>
-      <p>Cảm ơn quý khách và hẹn gặp lại!!!</p>
-    </div>
+      <h3 class="text-center">PHIẾU TẠM TÍNH</h3>
 
-    <div
-      class="qr text-center mt-4"
-      *ngIf="thanhToan && imageUrls[phuongThucThanhToan?.id]"
-    >
-      <p class="font-semibold text-gray-700 mb-2">
-        Quý khách vui lòng quét mã QR để thanh toán
-      </p>
-      <div class="inline-block border border-gray-300 rounded-lg p-2 shadow-lg">
-        <img
-          [src]="imageUrls[phuongThucThanhToan.id]"
-          alt="QR Code"
-          class="w-full max-w-[600px] h-auto object-contain"
-        />
+      <div class="info">
+        <p>
+          Số HĐ Ticket: <span>{{ formData.id }}</span>
+        </p>
+        <p>
+          Ngày/giờ vào:
+          <span
+            >{{ formData.gioVao | date : "yyyy-MM-dd HH:mm:ss" : "UTC" }}
+          </span>
+        </p>
+        <p>
+          Ngày/giờ ra:
+          <span>{{ formData.gioRa | date : "yyyy-MM-dd HH:mm:ss" }}</span>
+        </p>
+        <p>
+          Thu ngân: <span>{{ nhanVien.tenNhanVien }}</span>
+        </p>
+        <p>Số khách: <span>3</span></p>
+        <p>
+          Bàn: <span>{{ donOrder.ban.name }}</span>
+        </p>
+        <p>
+          Khách hàng:
+          <span>{{ donOrder?.khachHang?.name || "Đơn tại chỗ" }}</span>
+        </p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tên món</th>
+            <th>SL</th>
+            <th>Giá gốc</th>
+            <th>Giảm giá</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Hiển thị danh sách món ăn -->
+          <tr class="category" *ngIf="listMonAns.length > 0">
+            <td colspan="7">1 - MÓN ĂN</td>
+          </tr>
+          <tr *ngFor="let item of listMonAns; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.count }}</td>
+            <td>{{ item.price }} VND</td>
+            <td>{{ item.giamGias }}%</td>
+            <td>{{ item.giaSauGiam }} VND</td>
+            <td>{{ item.count * item.giaSauGiam }} VND</td>
+          </tr>
+
+          <!-- Hiển thị danh sách combo -->
+          <tr class="category" *ngIf="listCombos.length > 0">
+            <td colspan="7">2 - COMBO</td>
+          </tr>
+          <tr *ngFor="let item of listCombos; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.count }}</td>
+            <td>{{ item.price }} VND</td>
+            <td></td>
+            <td></td>
+            <td>{{ item.count * item.price }} VND</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="total">
+        <p>
+          Tổng tiền: <strong>{{ donOrder?.tongTien | number }} VND</strong>
+        </p>
+        <p>
+          Khuyến mãi:
+          <strong>{{ khuyenMai.giaTri }}%</strong>
+        </p>
+        <p>
+          Phụ phí:
+          <strong>({{ phuPhi.tenPhuPhi }}) {{ phuPhi.giaTri }}%</strong>
+        </p>
+        <p>
+          Thanh toán Total:
+          <strong
+            >{{
+              donOrder?.tongTien *
+                (1 - khuyenMai.giaTri * 0.01) *
+                (1 + phuPhi.giaTri * 0.01) | number
+            }}
+            VND</strong
+          >
+        </p>
+      </div>
+
+      <div class="note text-center">
+        <p>Giá trên đã bao gồm VAT 8% nếu khách yêu cầu xuất hóa đơn VAT.</p>
+        <p>Giá trên đã áp dụng các mã giảm giá trên từng món ăn.</p>
+        <p>Cảm ơn quý khách và hẹn gặp lại!!!</p>
+      </div>
+
+      <div
+        class="qr text-center mt-4 qr-container"
+        *ngIf="imageUrls[phuongThucThanhToan?.id]"
+      >
+        <p class="font-semibold text-gray-700 mb-2">
+          Quý khách vui lòng quét mã QR để thanh toán
+        </p>
+        <div
+          class="inline-block border border-gray-300 rounded-lg p-2 shadow-lg"
+        >
+          <img
+            [src]="imageUrls[phuongThucThanhToan.id]"
+            alt="QR Code"
+            class="w-full max-w-[600px] h-auto object-contain"
+          />
+        </div>
       </div>
     </div>
     <div class="action-buttons" *ngIf="!formData.trangthai">
       <button class="btn-pay" (click)="onSave()">Thanh toán</button>
+    </div>
+    <div class="action-buttons">
+      <button class="btn-pay" (click)="pdf()">Xuất PDF</button>
     </div>
   </div>
 </div>

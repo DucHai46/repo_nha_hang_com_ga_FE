@@ -37,15 +37,28 @@ export class PopupThanhToanComponent implements OnInit {
   donOrder: any;
   nhaHangId: any;
 
+  searchPP: any = {
+    isPaging: true,
+    PageNumber: 1,
+    PageSize: 10,
+    trangThai: 1, 
+  }
+
   searchNH: any = {
     isPaging: true,
     PageNumber: 1,
     PageSize: 10,
-    isActive: true,
-    // tenNhaHang: 'Cơm gà Singapor',
+    isActive: true, 
   }
   isChiTietHoaDonOpen: boolean = false;
   isPopupOpen = false;
+
+  isTenHoaDonUnValid = false;
+  isSoNguoiUnValid = false;
+  isPhuPhiUnValid = false;
+  isKhuyenMaiUnValid = false;
+  isPhuongThucThanhToanUnValid = false;
+  
 closeChiTiet() {
   this.isChiTietHoaDonOpen = false;
 }
@@ -56,15 +69,22 @@ openChiTietHoaDonPopup(item: any): void {
 
 
   onSave(): void {
-    // this.form = {
-    //   ...this.form,
-    //   nhanVien: this.nhanVien.id,
-    // }
+    
+    
+    this.isTenHoaDonUnValid = !this.form.tenHoaDon;
+    this.isSoNguoiUnValid = !this.form.soNguoi;
+    this.isPhuPhiUnValid = !this.form.phuPhi;
+    this.isKhuyenMaiUnValid = !this.form.khuyenMai;
+    this.isPhuongThucThanhToanUnValid =!this.form.phuongThucThanhToan;
+
+    if(this.isTenHoaDonUnValid || this.isSoNguoiUnValid || this.isPhuPhiUnValid || this.isKhuyenMaiUnValid || this.isPhuongThucThanhToanUnValid){
+      return;
+    }
     console.log(this.form);
     this.save.emit(this.form);
-
-
   }
+
+  
 
   onCancel(): void {
     this.close.emit(); // Đóng popup mà không trả về dữ liệu
@@ -119,7 +139,7 @@ openChiTietHoaDonPopup(item: any): void {
       },
     });
 
-    this.phuPhiService.getPhuPhi({}).subscribe({
+    this.phuPhiService.getPhuPhi(this.searchPP).subscribe({
       next: (res: any) => {
         this.phuPhi = res.data.data.map((item: any) => ({
           id: item.id,
@@ -155,6 +175,7 @@ openChiTietHoaDonPopup(item: any): void {
     // nhaHang: this.nhaHangs.id,
     donOrder: this.formData.id,
     gioVao: this.formData.createdDate,
+    gioRa: new Date(),
     trangthai: 0,
   };
   console.log(this.form);

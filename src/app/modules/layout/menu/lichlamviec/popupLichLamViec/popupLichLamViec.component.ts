@@ -112,6 +112,42 @@ export class PopupLichLamViecComponent implements OnInit {
   }
 
   onSave(): void {
+    // Kiểm tra ngày làm việc
+    if (!this.formData.ngay) {
+      this.notification.error('Lỗi', 'Vui lòng chọn ngày làm việc');
+      return;
+    }
+
+    // Kiểm tra thông tin ca làm việc
+    for (let i = 0; i < this.formData.chiTietLichLamViec.length; i++) {
+      const ca = this.formData.chiTietLichLamViec[i];
+      
+      // Kiểm tra ca làm việc đã chọn chưa
+      if (!ca.caLamViec || !ca.caLamViec.id) {
+        this.notification.error('Lỗi', `Vui lòng chọn ca làm việc ở ca thứ ${i + 1}`);
+        return;
+      }
+      
+      // Kiểm tra nhân viên trong ca
+      for (let j = 0; j < ca.nhanVienCa.length; j++) {
+        const nv = ca.nhanVienCa[j];
+        const key = `${i}_${j}`;
+        
+        // Kiểm tra chức vụ đã chọn chưa
+        if (!this.selectedChucVu[key]) {
+          this.notification.error('Lỗi', `Vui lòng chọn chức vụ cho nhân viên ${j + 1} ở ca thứ ${i + 1}`);
+          return;
+        }
+        
+        // Kiểm tra nhân viên đã chọn chưa
+        if (!nv.nhanVien || !nv.nhanVien.id) {
+          this.notification.error('Lỗi', `Vui lòng chọn nhân viên ${j + 1} ở ca thứ ${i + 1}`);
+          return;
+        }
+      }
+    }
+
+    // Nếu tất cả validation đều pass, tiếp tục lưu dữ liệu
     const dataToSend = {
       id: this.formData.id,
       ngay: this.formData.ngay,

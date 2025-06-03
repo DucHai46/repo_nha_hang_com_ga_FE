@@ -30,7 +30,8 @@ export class DonorderComponent implements OnInit {
     private khachHangService: KhachHangService,
     private orderSignalRService: OrderSignalRServiceService,
     private hoaDonThanhToanService: HoaDonThanhToanService,
-    private fileService: FileService
+    private fileService: FileService,
+    // private banAnService: BanAnService,
 
   ) { }
   donOrderPaging: any[] = [];
@@ -210,6 +211,11 @@ export class DonorderComponent implements OnInit {
   isChiTietOpen = false;
   isChiTietHoaDonOpen = false;
 
+  Status = {
+    trangThai: 1,
+  }
+  Id: string = '';  
+
   // openAddPopup(): void {
   //   // console.log(this.loaiDonOrder);
   //   this.isPopupOpen = true;
@@ -255,8 +261,8 @@ export class DonorderComponent implements OnInit {
           next: (res: any) => {
             if (res.data) {
               this.formHoaDon = res.data; // Lưu thông tin hóa đơn vào formHoaDon
-              this.formData.hoaDonThanhToans = [res.data]; // Gán danh sách hóa đơn vào formData
-              this.formData.hoaDonThanhToanId = res.data.id; // Gán ID hóa đơn vào formData
+              // this.formData.hoaDonThanhToans = [res.data]; // Gán danh sách hóa đơn vào formData
+              // this.formData.hoaDonThanhToanId = res.data.id; // Gán ID hóa đơn vào formData
               this.closePopup();
               this.notification.create(
                 'success',
@@ -281,11 +287,170 @@ export class DonorderComponent implements OnInit {
           )
         });
     } else {
-      // Trả về danh sách đơn order
-      this.searchForm.tenDon = '';
-      this.searchForm.khachHang = '';
-      this.search();
+
+      // console.log(this.isEditMode);
+      const data = body.donOrder;
+      console.log(data);
+
+     // Cập nhật trạng thái hóa đơn thanh toán
+      this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
+        next: (res: any) => {
+          console.log(res);
+          if (res.data) {
+            this.searchForm.tenHoaDon = '';
+            this.searchForm.nhanViens = '';
+            this.searchForm.gioVao= '';
+            this.searchForm.gioRa= '';
+            // this.search();
+            console.log(data);
+            this.updateDonOrderStatus(data);
+
+            
+            // this.closeChiTiet();
+            this.isChiTietHoaDonOpen = false;
+            this.search();
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Cập nhật thành công`,
+              {
+                nzClass: 'notification-success',
+                nzDuration: 2000
+              }
+            );
+          } else {
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Cập nhật thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            );
+          }
+        },
+        error: () => {
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Cập nhật thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
+        }
+      });
     }
+  }
+
+  updateDonOrderStatus(donOrderId: string): void {
+    this.donOrderService.getDonOrderById(donOrderId).subscribe({
+      next: (res: any) => {
+        const item = res.data;
+        console.log(item);
+        this.Id = item.id;
+        console.log(this.Id);  
+      }
+    });
+    
+    console.log(donOrderId);
+    this.donOrderService.updateStatusDonOrder(donOrderId, this.Status).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        
+        if (res.data) {
+          //Cập nhật trạng thái bàn về trống
+          if(res.data.ban.id){
+            const banId = res.data.ban.id;
+            console.log(res.data.ban.id);
+            this.updateBanStatus(banId);
+          }
+          this.notification.create(
+            'success',
+            'Thông báo!',
+            `Cập nhật trạng thái thành công`,
+            {
+              nzClass: 'notification-success',
+              nzDuration: 2000
+            }
+          );
+        }else {
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Cập nhật thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            );
+          }
+      },
+       error: () => {
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Cập nhật thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
+        }
+    });
+  }
+
+  updateBanStatus(banAnId: string): void {
+    this.banAnService.getBanAnById(banAnId).subscribe({
+       next: (res: any) => {
+        const item = res.data;
+        console.log(item);
+        this.Id = item.id;
+        console.log(this.Id);
+        item.trangThai = 0;
+        item.loaiBan = item.loaiBan.id;
+        console.log(item);
+        this.banAnService.updateBanAn(this.Id, item).subscribe({
+          next: (res: any) => {
+            console.log(res);
+            if (res.data) {
+              this.notification.create(
+               'success',
+                'Thông báo!',
+                `Cập nhật trạng thái thành công`,
+                {
+                  nzClass: 'notification-success',
+                }
+              )
+            }
+            else {
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Cập nhật thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            );
+          }
+          },
+          error: () => {
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Cập nhật thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
+        }
+        }); 
+      }
+    });
   }
 
   openAddHoaDonPopup(item: any): void {

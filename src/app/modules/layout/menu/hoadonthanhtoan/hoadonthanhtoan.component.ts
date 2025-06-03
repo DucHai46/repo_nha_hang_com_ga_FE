@@ -11,6 +11,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { PhuongThucThanhToanService } from '../phuongthucthanhtoan/services/phuongthucthanhtoan.service';
 import { HoaDonThanhToanService } from './services/hoadonthanhtoan.service';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
+import { BanAnService } from '../banan/services/banan.service';
 
 @Component({
   selector: 'app-hoadonthanhtoan',
@@ -29,6 +30,7 @@ export class HoadonthanhtoanComponent implements OnInit {
     private khuyenmaiService: khuyenmaiService,
     private phuongThucThanhToanService: PhuongThucThanhToanService,
     private nhaHangService: NhaHangService,
+    private banAnService: BanAnService,
   ) { }
 
   hoaDonPaging: any [] = [];
@@ -166,6 +168,12 @@ export class HoadonthanhtoanComponent implements OnInit {
       next: (res: any) => {
         console.log(res);
         if (res.data) {
+          //Cập nhật trạng thái bàn về trống
+          if(res.data.ban.id){
+            const banId = res.data.ban.id;
+            console.log(res.data.ban.id);
+            this.updateBanStatus(banId);
+          }
           this.notification.create(
             'success',
             'Thông báo!',
@@ -198,6 +206,58 @@ export class HoadonthanhtoanComponent implements OnInit {
             }
           );
         }
+    });
+  }
+
+  // cập nhật trạng thái bàn về trống
+  updateBanStatus(banAnId: string): void {
+    this.banAnService.getBanAnById(banAnId).subscribe({
+       next: (res: any) => {
+        const item = res.data;
+        console.log(item);
+        this.Id = item.id;
+        console.log(this.Id);
+        item.trangThai = 0;
+        item.loaiBan = item.loaiBan.id;
+        console.log(item);
+        this.banAnService.updateBanAn(this.Id, item).subscribe({
+          next: (res: any) => {
+            console.log(res);
+            if (res.data) {
+              this.notification.create(
+               'success',
+                'Thông báo!',
+                `Cập nhật trạng thái thành công`,
+                {
+                  nzClass: 'notification-success',
+                }
+              )
+            }
+            else {
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Cập nhật thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            );
+          }
+          },
+          error: () => {
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Cập nhật thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
+        }
+        }); 
+      }
     });
   }
 

@@ -42,6 +42,7 @@ export class LichlamviecComponent {
     denNgay: '',
 
   };
+  
   search() {
    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
    this.searchForm.pageNumber = this.paging.page;
@@ -84,7 +85,8 @@ export class LichlamviecComponent {
   isOpenChiTietPopup = false;
   isPopupOpen = false;
   isEditMode = false;
-  formData: any = {}
+  formData: any = {};
+  isEditLichLamViec = false;
 
   // Hàm mở popup thêm mới
   openAddPopup(){
@@ -245,5 +247,17 @@ export class LichlamviecComponent {
         )
       }  
     });
+  }
+
+  //Hàm kiểm tra sửa lịch làm việc
+  isEdit(item: any){
+    const currentDate = new Date();
+    const ngayLamViec = new Date(item.ngay);
+    // Reset giờ phút giây về 0 cho cả hai ngày
+    currentDate.setHours(0, 0, 0, 0);
+    ngayLamViec.setHours(0, 0, 0, 0);
+   
+    return ngayLamViec.getTime() >= currentDate.getTime();
+
   }
 }

@@ -10,6 +10,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileService } from '../../../../../core/services/file.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { HoaDonThanhToanService } from '../services/hoadonthanhtoan.service';
+import { jsPDF } from 'jspdf';
+// Thay dòng này
+import html2pdf from 'html2pdf.js';
+
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-popupChiTietHoaDon',
@@ -89,9 +94,9 @@ export class PopupChiTietHoaDonComponent implements OnInit {
         this.phuongThucThanhToan = res.data;
         console.log(this.phuongThucThanhToan);
         this.loadAllImages();
-        if(this.phuongThucThanhToan.tenPhuongThuc == 'Chuyển khoản'){
-          this.thanhToan = true;
-        }
+        // if(this.phuongThucThanhToan.tenPhuongThuc == 'Chuyển khoản'){
+        //   this.thanhToan = true;
+        // }
       },
     });
 
@@ -123,7 +128,10 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     };
     console.log(this.form);
 
+    
+
     this.save.emit(this.form);
+    // this.pdf();
 
   }
   onChange(){
@@ -322,6 +330,25 @@ export class PopupChiTietHoaDonComponent implements OnInit {
       );
     }
   }
-  
+
+  //Hàm xuất pdf
+  pdf(){
+    const options = {
+      filename: `HoaDon_${this.formData.id}_${new Date().getTime()}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { 
+        unit: 'mm', 
+        format: 'a4', 
+        orientation: 'portrait',
+        margins: { top: 10, right: 10, bottom: 10, left: 10 },
+        pagebreak: { mode: ['css', 'legacy'] }
+      },
+      margin: [10, 10, 10, 10]  
+    }
+
+    const element: Element = document.getElementById('hoadon')!;
+    html2pdf().from(element).set(options).save();
+  }
 }
 

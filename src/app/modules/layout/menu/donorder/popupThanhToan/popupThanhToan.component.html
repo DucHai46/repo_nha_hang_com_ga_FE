@@ -7,7 +7,12 @@
       </h2>
       <form>
         <div class="form-group">
-          <label for="materialName">Tên hóa đơn:</label>
+          <label for="materialName"
+            >Tên hóa đơn:
+            <span *ngIf="isTenHoaDonUnValid" class="text-red-500"
+              >*</span
+            ></label
+          >
           <input
             type="text"
             id="materialName"
@@ -15,6 +20,9 @@
             [(ngModel)]="form.tenHoaDon"
             placeholder="Nhập tên hóa đơn..."
           />
+          <p *ngIf="isTenHoaDonUnValid" class="text-red-500 text-sm mt-1">
+            Vui lòng nhập tên hóa đơn (HD-ngày-stt).
+          </p>
         </div>
         <div class="form-group">
           <label for="materialName">Nhà hàng:</label>
@@ -49,7 +57,7 @@
           </select>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="materialName">Giờ vào:</label>
           <input
             type="datetime-local"
@@ -58,8 +66,8 @@
             [value]="formData.createdDate"
             name="gioVao"
           />
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
           <label for="materialName">Giờ ra:</label>
           <input
             type="datetime-local"
@@ -67,9 +75,12 @@
             [(ngModel)]="form.gioRa"
             name="giora"
           />
-        </div>
+        </div> -->
         <div class="form-group">
-          <label for="materialName">Số người:</label>
+          <label for="materialName"
+            >Số người:
+            <span *ngIf="isSoNguoiUnValid" class="text-red-500">*</span></label
+          >
           <input
             type="text"
             id="materialName"
@@ -77,9 +88,15 @@
             [(ngModel)]="form.soNguoi"
             placeholder="Nhập số người..."
           />
+          <p *ngIf="isSoNguoiUnValid" class="text-red-500 text-sm mt-1">
+            Vui lòng nhập số người.
+          </p>
         </div>
         <div class="form-group">
-          <label for="materialName">Phụ phí:</label>
+          <label for="materialName"
+            >Phụ phí:
+            <span *ngIf="isPhuPhiUnValid" class="text-red-500">*</span></label
+          >
           <select
             id="dvt"
             [(ngModel)]="form.phuPhi"
@@ -90,9 +107,17 @@
               {{ x.name }}
             </option>
           </select>
+          <p *ngIf="isPhuPhiUnValid" class="text-red-500 text-sm mt-1">
+            Vui lòng chọn phụ phí.
+          </p>
         </div>
         <div class="form-group">
-          <label for="materialName">Khuyến mại:</label>
+          <label for="materialName"
+            >Khuyến mại:
+            <span *ngIf="isKhuyenMaiUnValid" class="text-red-500"
+              >*</span
+            ></label
+          >
           <select
             id="dvt"
             [(ngModel)]="form.khuyenMai"
@@ -103,9 +128,17 @@
               {{ x.name }}
             </option>
           </select>
+          <p *ngIf="isKhuyenMaiUnValid" class="text-red-500 text-sm mt-1">
+            Vui lòng chọn khuyến mại.
+          </p>
         </div>
         <div class="form-group">
-          <label for="materialName">Phương thức thanh toán:</label>
+          <label for="materialName"
+            >Phương thức thanh toán:
+            <span *ngIf="isPhuongThucThanhToanUnValid" class="text-red-500"
+              >*</span
+            ></label
+          >
           <select
             id="pttt"
             [(ngModel)]="form.phuongThucThanhToan"
@@ -116,6 +149,12 @@
               {{ x.name }}
             </option>
           </select>
+          <p
+            *ngIf="isPhuongThucThanhToanUnValid"
+            class="text-red-500 text-sm mt-1"
+          >
+            Vui lòng chọn phương thức thanh toán.
+          </p>
         </div>
 
         <div class="form-group">

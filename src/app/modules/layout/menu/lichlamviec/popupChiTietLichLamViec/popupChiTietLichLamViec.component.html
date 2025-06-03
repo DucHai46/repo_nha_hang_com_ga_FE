@@ -20,8 +20,8 @@
         <div class="mt-4">
           <div class="flex justify-start">
             <h3 class="font-semibold text-gray-700 mb-1 text-xl">
-              {{ ct.caLamViec.name }} : {{ getCaGioVao(ctIndex) }} -
-              {{ getCaGioRa(ctIndex) }}
+              {{ ct.caLamViec.name }} ({{ getCaGioVao(ctIndex) }} -
+              {{ getCaGioRa(ctIndex) }})
             </h3>
             <!-- <h3 class="font-semibold text-gray-700 mb-1 text-xl" type="text">
               {{ getCaGioVao(ctIndex) }} - {{ getCaGioRa(ctIndex) }}
@@ -30,20 +30,23 @@
 
           <div class="overflow-x-auto">
             <table
-              class="min-w-full table-auto border-collapse border border-gray-300"
+              class="min-w-full table-auto border-collapse border border-gray-300 text-center"
             >
               <thead>
                 <tr class="bg-gray-100">
-                  <th class="border border-gray-300 px-4 py-2 text-left">
+                  <th class="border border-gray-300 px-4 py-2 text-center">
                     STT
                   </th>
-                  <th class="border border-gray-300 px-4 py-2 text-left">
+                  <th class="border border-gray-300 px-4 py-2">
                     Tên nhân viên
                   </th>
 
-                  <th class="border border-gray-300 px-4 py-2 text-left">
+                  <th class="border border-gray-300 px-4 py-2 text-center">
                     Chức vụ
                   </th>
+                  <!-- <th class="border border-gray-300 px-4 py-2 text-center">
+                    Mô tả ca làm việc
+                  </th> -->
                 </tr>
               </thead>
               <tbody>
@@ -63,6 +66,12 @@
                     <td class="border border-gray-300 px-4 py-2">
                       {{ nv.chucVuId.name }}
                     </td>
+                    <!-- <td
+                      rowspan="ct.nhanVienCa.length"
+                      class="border border-gray-300 px-4 py-2"
+                    >
+                      {{ ct.moTa }}
+                    </td> -->
                   </tr>
                 </ng-container>
               </tbody>

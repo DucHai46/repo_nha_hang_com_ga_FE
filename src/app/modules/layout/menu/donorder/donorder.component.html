@@ -298,4 +298,5 @@
   *ngIf="isChiTietHoaDonOpen"
   [formData]="formHoaDon"
   (close)="closeChiTietHoaDon()"
+  (save)="onSaveCongThuc($event)"
 ></app-popupChiTietHoaDon>

@@ -133,3 +133,10 @@ td {
     background-color: #218838;
     /* màu đậm hơn khi hover */
 }
+
+.qr-container {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    text-align: center;
+    margin-top: 30px;
+}
