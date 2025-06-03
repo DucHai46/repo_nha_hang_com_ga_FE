@@ -1,3 +1,4 @@
+import { NzNotificationModule, NzNotificationService } from 'ng-zorro-antd/notification';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { NhaHangService } from '../menu/nhahang/services/nhahang.service';
 import { FileService } from '../../../core/services/file.service';
@@ -33,7 +34,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
   cartItems: { item: any, quantity: number }[] = [];
   showCart = false;
 
-  constructor(private nhaHangService: NhaHangService, private fileService: FileService, public homeClientStore: HomeClientStore) {
+  constructor(private nhaHangService: NhaHangService, private fileService: FileService, public homeClientStore: HomeClientStore, private notifyService: NzNotificationService) {
     this.homeClientStore.cart$.subscribe(cart => {
       this.cartItems = cart;
       this.cartCount = cart.reduce((sum, c) => sum + c.quantity, 0);
@@ -298,5 +299,11 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
   toggleCart() {
     this.showCart = !this.showCart;
+  }
+
+  thanhToan() {
+    this.notifyService.create('success', 'Thanh toán thành công', 'Thanh toán thành công').onClose.subscribe(() => {
+      this.homeClientStore.clearCart();
+    });
   }
 }

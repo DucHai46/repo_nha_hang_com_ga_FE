@@ -10,12 +10,12 @@ import {LayoutModule} from "../modules/layout/layout.module";
 import { AuthService } from '../core/services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthGuardService } from '../core/services/auth-guard.service';
-
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 @NgModule({
   declarations: [RemoteEntryComponent,
     NxWelcomeComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(remoteRoutes), LayoutModule],
+  imports: [CommonModule, RouterModule.forChild(remoteRoutes), LayoutModule, NzNotificationModule],
   providers: [
     DatePipe
   ],
