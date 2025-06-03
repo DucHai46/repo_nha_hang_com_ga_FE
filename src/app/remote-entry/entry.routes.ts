@@ -54,9 +54,9 @@ import { UserInforComponent } from '../modules/layout/menu/userInfor/userInfor.c
 import { HomeClientComponent } from '../modules/layout/home-client/home-client.component';
 import { HomeComponent } from '../modules/layout/home-client/pages/home/home.component';
 import { AboutComponent } from '../modules/layout/home-client/pages/about/about.component';
-import { MenuComponent } from '../modules/layout/home-client/pages/menu/menu.component';
 import { BlogComponent } from '../modules/layout/home-client/pages/blog/blog.component';
 import { DondatbanComponent } from '../modules/layout/menu/dondatban/dondatban.component';
+import { MenuClientComponent } from '../modules/layout/home-client/pages/menu/menu-client.component';
 
 export const remoteRoutes: Route[] = [
   {
@@ -162,7 +162,7 @@ export const remoteRoutes: Route[] = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'about', component: AboutComponent },
-      { path: 'menu', component: MenuComponent },
+      { path: 'menu', component: MenuClientComponent },
     ]
   },
 ];

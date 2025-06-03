@@ -5,7 +5,7 @@ import { XacnhangoimonComponent } from './modules/layout/menugoimon/xacnhangoimo
 import { HomeClientComponent } from './modules/layout/home-client/home-client.component';
 import { HomeComponent } from './modules/layout/home-client/pages/home/home.component';
 import { AboutComponent } from './modules/layout/home-client/pages/about/about.component';
-import { MenuComponent } from './modules/layout/home-client/pages/menu/menu.component';
+import { MenuClientComponent } from './modules/layout/home-client/pages/menu/menu-client.component';
 import { BlogComponent } from './modules/layout/home-client/pages/blog/blog.component';
 export const appRoutes: Route[] = [
   {
@@ -27,7 +27,7 @@ export const appRoutes: Route[] = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'about', component: AboutComponent },
-      { path: 'menu', component: MenuComponent },
+      { path: 'menu', component: MenuClientComponent },
       { path: 'blog', component: BlogComponent },
     ]
 
