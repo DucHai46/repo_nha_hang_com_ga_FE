@@ -205,7 +205,9 @@ import { PopupDonDatBanComponent } from './menu/dondatban/popupDonDatBan/popupDo
 import { PopupGiaoDienComponent } from './menu/nhahang/popupGiaoDien/popupGiaoDien.component';
 import { HomeClientStore } from './home-client/store/home-client.store';
 import { MenuClientComponent } from './home-client/pages/menu/menu-client.component';
-
+import { ThanhToanComponent } from './home-client/thanh-toan/thanh-toan.component';
+import { EmailService } from '../../core/services/email.service';
+import { ThongTinDonHangComponent } from './home-client/thong-tin-don-hang/thong-tin-don-hang.component';
 @NgModule({
   declarations: [ThongtinchungComponent,
     MenuComponent,
@@ -316,7 +318,9 @@ import { MenuClientComponent } from './home-client/pages/menu/menu-client.compon
     DondatbanComponent,
     PopupDonDatBanComponent,
     PopupGiaoDienComponent,
-    MenuClientComponent
+    MenuClientComponent,
+    ThanhToanComponent,
+    ThongTinDonHangComponent
 
   ], // Khai báo component
   imports: [
@@ -413,7 +417,8 @@ import { MenuClientComponent } from './home-client/pages/menu/menu-client.compon
     UserService,
     dondatbanService,
     DonDatBanStore,
-    HomeClientStore
+    HomeClientStore,
+    EmailService
   ]
 })
 export class LayoutModule { }

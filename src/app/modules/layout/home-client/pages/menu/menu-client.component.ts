@@ -32,13 +32,15 @@ export class MenuClientComponent implements OnInit {
   ngOnInit(): void {
     this.thucDonService.getThucDon(this.params).subscribe({
       next: (res: any) => {
-        if(res.result && res.data.data) {
+        if (res.result && res.data.data) {
           const thucDon: ThucDon = res.data.data[0];
           // Lấy combo
           const combos = (thucDon.combos || []).map(c => ({
+            id: c.id,
             ten: c.name,
             gia: c.giaTien,
-            hinhAnh: c.hinhAnh
+            hinhAnh: c.hinhAnh,
+            loai: 'combo'
           }));
           // Lấy từng món lẻ
           const monLe = (thucDon.loaiMonAns || []).flatMap(loai =>
@@ -52,12 +54,14 @@ export class MenuClientComponent implements OnInit {
                 giaDaGiam = giaGoc - soTienGiam;
               }
               return {
+                id: m.id,
                 ten: m.tenMonAn,
                 gia: giaDaGiam,
                 giaGoc: giaGoc,
                 giamGia: giamGiaPercent,
                 soTienGiam: soTienGiam,
-                hinhAnh: m.hinhAnh
+                hinhAnh: m.hinhAnh,
+                loai: 'monan'
               };
             })
           );

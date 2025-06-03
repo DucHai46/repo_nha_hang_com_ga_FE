@@ -57,7 +57,8 @@ import { AboutComponent } from '../modules/layout/home-client/pages/about/about.
 import { BlogComponent } from '../modules/layout/home-client/pages/blog/blog.component';
 import { DondatbanComponent } from '../modules/layout/menu/dondatban/dondatban.component';
 import { MenuClientComponent } from '../modules/layout/home-client/pages/menu/menu-client.component';
-
+import { ThanhToanComponent } from '../modules/layout/home-client/thanh-toan/thanh-toan.component';
+import { ThongTinDonHangComponent } from '../modules/layout/home-client/thong-tin-don-hang/thong-tin-don-hang.component';
 export const remoteRoutes: Route[] = [
   {
     path: '', component: RemoteEntryComponent,
@@ -163,6 +164,8 @@ export const remoteRoutes: Route[] = [
       { path: 'home', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'menu', component: MenuClientComponent },
+      { path: 'thanh-toan', component: ThanhToanComponent },
+      { path: 'thong-tin-don-hang/:id', component: ThongTinDonHangComponent },
     ]
   },
 ];

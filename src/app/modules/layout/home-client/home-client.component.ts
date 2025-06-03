@@ -4,7 +4,7 @@ import { NhaHangService } from '../menu/nhahang/services/nhahang.service';
 import { FileService } from '../../../core/services/file.service';
 import { HomeClientStore } from './store/home-client.store';
 import { GiaoDien } from '../../../models/GiaoDien';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-client',
@@ -34,7 +34,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
   cartItems: { item: any, quantity: number }[] = [];
   showCart = false;
 
-  constructor(private nhaHangService: NhaHangService, private fileService: FileService, public homeClientStore: HomeClientStore, private notifyService: NzNotificationService) {
+  constructor(private nhaHangService: NhaHangService, private fileService: FileService, public homeClientStore: HomeClientStore, private notifyService: NzNotificationService, private router: Router) {
     this.homeClientStore.cart$.subscribe(cart => {
       this.cartItems = cart;
       this.cartCount = cart.reduce((sum, c) => sum + c.quantity, 0);
@@ -302,8 +302,6 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   thanhToan() {
-    this.notifyService.create('success', 'Thanh toán thành công', 'Thanh toán thành công').onClose.subscribe(() => {
-      this.homeClientStore.clearCart();
-    });
+    this.router.navigate(['home-client/thanh-toan']);
   }
 }
