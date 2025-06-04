@@ -150,7 +150,7 @@ openChiTietHoaDonPopup(item: any): void {
       },
     });
 
-    this.khuyenmaiService.getKhuyenMai({}).subscribe({
+    this.khuyenmaiService.getKhuyenMai({trangThai:0}).subscribe({
       next: (res: any) => {
         this.khuyenMai = res.data.data.map((item: any) => ({
           id: item.id,

@@ -17,7 +17,7 @@ export class KhuyenmaiComponent implements OnInit {
   constructor(private store: KhuyenMaiStore, 
     private dialog: MatDialog, private notification: NzNotificationService, 
     private khuyenmaiService: khuyenmaiService) {}
-  khuyenMaiPaging: KhuyenMai[] = [];
+  khuyenMaiPaging: any[] = [];
   itemsSearch: any[] = [];
   paging: any = {
     page: 1,
