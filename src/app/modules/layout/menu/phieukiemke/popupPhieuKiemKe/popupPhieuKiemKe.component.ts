@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LoainguyenlieuService } from '../../loainguyenlieu/services/loainguyenlieu.service';
 import { NhanVienService } from '../../nhanvien/services/nhanvien.service';
 import { PhieuKiemKeService } from '../services/phieukiemke.service';
+import { PhieuXuatService } from '../../phieuxuat/services/phieuxuat.service';
+import { PhieuNhapService } from '../../phieunhap/services/phieunhap.service';
 import { NguyenlieuService } from '../../nguyenlieu/services/nguyenlieu.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 
@@ -38,6 +40,8 @@ export class PopupPhieuKiemKeComponent implements OnInit {
     }
   ];
   loaiNguyenLieu: any[] = [];
+  phieuNhap: any[] = [];
+  phieuXuat: any[] = [];
   nhanVien: any;
   nhanViens: any;
   @Output() close = new EventEmitter<void>();
@@ -47,7 +51,9 @@ export class PopupPhieuKiemKeComponent implements OnInit {
     private nhanVienService: NhanVienService,
     private notification: NzNotificationService,
     private phieuKiemKeService: PhieuKiemKeService,
-    private nguyenLieuService: NguyenlieuService
+    private nguyenLieuService: NguyenlieuService,
+    private phieuNhapService: PhieuNhapService,
+    private phieuXuatService: PhieuXuatService
   ){}
 
   ngOnInit(): void {
@@ -65,6 +71,20 @@ export class PopupPhieuKiemKeComponent implements OnInit {
       id: userInfo.id,
       name: userInfo.name,
     }
+    this.phieuNhapService.getPhieuNhap({}).subscribe({
+      next: (res: any) => {
+        this.phieuNhap=res.data.data;
+        console.log("Phieu nhap:",this.phieuNhap);
+      },
+      error: (err: any) => console.log(err)
+    });
+    this.phieuXuatService.getPhieuXuat({}).subscribe({
+      next: (res: any) => {
+        this.phieuXuat=res.data.data;
+        console.log("Phieu xuat:",this.phieuXuat);
+      },
+      error: (err: any) => console.log(err)
+    });
     console.log(this.nhanVien);
     console.log(this.nhanVien);
     this.nhanVienService.getNhanVienById(userInfo.nhanVienId).subscribe({
@@ -87,6 +107,8 @@ export class PopupPhieuKiemKeComponent implements OnInit {
           id: '',
           name: '',
           soLuong: 0,
+          soLuongNhap:0,
+          soLuongXuat:0,
           soLuongThucTe:0,
           chenhLech:0,
           ghiChu:""  
@@ -94,21 +116,55 @@ export class PopupPhieuKiemKeComponent implements OnInit {
       ]
     });
   }
-    onLoaiNguyenLieuChange(index: number): void {
+  onLoaiNguyenLieuChange(index: number): void {
     const selectedLoaiId = this.loaiSelections[index].selectedLoaiId;
     this.loaiSelections[index].selectedLoaiName = this.loaiNguyenLieu.find(l => l.id === selectedLoaiId)?.name || '';
-    this.nguyenLieuService.getNguyenLieu({loaiNguyenLieuId: this.loaiSelections[index].selectedLoaiId}).subscribe({
+
+    this.nguyenLieuService.getNguyenLieu({ loaiNguyenLieuId: selectedLoaiId }).subscribe({
       next: (res: any) => {
-        // console.log(res.data.data);
-        this.loaiSelections[index].filteredNguyenLieu = res.data.data.map((item: any) => ({
-          id: item.id,
-          name: item.tenNguyenLieu,
-          soLuong:item.soLuong,
-        }));
-        // console.log(this.loaiSelections[index].filteredMonAn);
+        const nguyenLieuList = res.data.data.map((item: any) => {
+          const nguyenLieuItem = {
+            id: item.id,
+            name: item.tenNguyenLieu,
+            soLuong: item.soLuong,
+            soLuongNhap: 0,
+            soLuongXuat: 0
+          };
+
+          // Tính số lượng nhập từ phieuNhap
+          if (this.phieuNhap) {
+            this.phieuNhap.forEach((phieu: any) => {
+              phieu.nguyenLieus.forEach((nl: any) => {
+                if (nl.id === item.id) {
+                  nguyenLieuItem.soLuongNhap += nl.soLuong;
+                  console.log("So luong nhap:",nguyenLieuItem.soLuongNhap);
+                }
+              });
+            });
+          }
+
+          // Tính số lượng xuất từ phieuXuat
+          if (this.phieuXuat) {
+            this.phieuXuat.forEach((phieu: any) => {
+              phieu.loaiNguyenLieus.forEach((loai: any) => {
+                loai.nguyenLieus.forEach((nl: any) => {
+                  if (nl.id === item.id) {
+                    nguyenLieuItem.soLuongXuat += nl.soLuongXuat;
+                    console.log("So luong xuat",nguyenLieuItem.soLuongXuat);
+                  }
+                });
+              });
+            });
+          }
+
+          return nguyenLieuItem;
+        });
+
+        this.loaiSelections[index].filteredNguyenLieu = nguyenLieuList;
       },
       error: (err: any) => console.log(err)
     });
+
 
   }
   isLoaiDuplicate(selectedLoaiId: string, index: number): boolean {
@@ -134,6 +190,8 @@ export class PopupPhieuKiemKeComponent implements OnInit {
       nguyenLieus: loai.filteredNguyenLieu.map((item: any) => ({
         id: item.id,
         soLuongThucTe: item.soLuongThucTe,
+        soLuongNhap: item.soLuongNhap,
+        soLuongXuat: item.soLuongXuat,
         chenhLech: item.chenhLech,
         ghiChu: item.ghiChu
         

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileService } from '../../../../../core/services/file.service';
 import { NhaHangService } from '../../nhahang/services/nhahang.service';
-
+import html2pdf from 'html2pdf.js';
 
 
 @Component({
@@ -38,5 +38,24 @@ export class PopupChiTietPhieuNhapComponent implements OnInit {
     default: return 'Không xác định';
   }
   }
+      pdf(){
+        const options = {
+          filename: `HoaDon_${this.formData.id}_${new Date().getTime()}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', 
+            orientation: 'landscape',
+            margins: { top: 10, right: 2, bottom: 10, left: 10 },
+            pagebreak: { mode: ['css', 'legacy'] }
+          },
+          margin: [10, 2, 10, 2]  
+        }
+    
+        const element: Element = document.getElementById('hoadon')!;
+        html2pdf().from(element).set(options).save();
+        this.closePopup();
+      }
 
 }

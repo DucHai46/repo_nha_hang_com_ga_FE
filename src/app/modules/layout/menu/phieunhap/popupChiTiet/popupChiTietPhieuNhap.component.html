@@ -9,119 +9,124 @@
     >
       X
     </button>
-
-    <!-- Tiêu đề công ty -->
-    <div class="text-center font-serif">
-      <h1 class="text-xl font-semibold uppercase">Cơm gà Singapore</h1>
-      <p
-        class="text-sm italic"
-        style="font-family: 'Segoe UI', 'Roboto', sans-serif"
-      >
-        {{ nhaHang.diaChi }}
-      </p>
-    </div>
-
-    <!-- Ngày nhập -->
-    <div class="text-right mt-2">
-      <span class="italic"
-        >Ngày nhập kho: {{ formData.ngayLap | date : "dd/MM/yyyy" }}</span
-      >
-    </div>
-
-    <!-- Tiêu đề phiếu -->
-    <h2 class="text-2xl font-bold my-4 text-center underline">
-      Phiếu nhập kho
-    </h2>
-
-    <!-- Thông tin chung: chia 2 cột -->
-    <div class="grid grid-cols-2 gap-x-16 mb-6 text-gray-800 text-sm">
-      <!-- Cột trái -->
-      <div class="space-y-2">
-        <div><strong>Tên người giao:</strong> {{ formData.tenNguoiGiao }}</div>
-        <div><strong>Nhà cung cấp:</strong> {{ formData.nhaCungCap.name }}</div>
-        <div><strong>Diễn giải:</strong> {{ formData.dienGiai }}</div>
+    <div id="hoadon">
+      <!-- Tiêu đề công ty -->
+      <div class="text-center font-serif">
+        <h1 class="text-xl font-semibold uppercase">Cơm gà Singapore</h1>
+        <p
+          class="text-sm italic"
+          style="font-family: 'Segoe UI', 'Roboto', sans-serif"
+        >
+          {{ nhaHang.diaChi }}
+        </p>
       </div>
 
-      <!-- Cột phải, thêm padding trái để đẩy nội dung sang phải -->
-      <div class="space-y-2 pl-20">
-        <div><strong>SDT:</strong> {{ formData.tenPhieu }}</div>
-        <div><strong>Địa điểm:</strong> {{ formData.diaDiem }}</div>
-        <div><strong>Ghi chú:</strong> {{ formData.ghiChu }}</div>
+      <!-- Ngày nhập -->
+      <div class="text-right mt-2">
+        <span class="italic"
+          >Ngày nhập kho: {{ formData.ngayLap | date : "dd/MM/yyyy" }}</span
+        >
       </div>
-    </div>
 
-    <!-- BẢNG NGUYÊN LIỆU -->
-    <div>
-      <h3 class="font-semibold text-gray-700 mb-3">Danh sách nguyên liệu:</h3>
-      <div class="overflow-x-auto">
-        <table class="min-w-full table-auto border border-gray-300 text-sm">
-          <thead class="bg-gray-100 sticky top-0 z-10">
-            <tr>
-              <th class="border px-3 py-2">Tên nguyên liệu</th>
-              <th class="border px-3 py-2">HSD</th>
-              <th class="border px-3 py-2">Loại</th>
-              <th class="border px-3 py-2">Đơn vị tính</th>
-              <th class="border px-3 py-2">Tủ đồ</th>
-              <th class="border px-3 py-2">Trạng thái</th>
-              <th class="border px-3 py-2">Số lượng</th>
-              <th class="border px-3 py-2">Đơn giá</th>
-              <th class="border px-3 py-2">Thành tiền</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="let item of formData.nguyenLieus"
-              class="hover:bg-gray-50"
-            >
-              <td class="border px-3 py-2">{{ item.tenNguyenLieu }}</td>
-              <td class="border px-3 py-2">
-                {{ item.hanSuDung | date : "dd/MM/yyyy" }}
-              </td>
-              <td class="border px-3 py-2">{{ item.loaiNguyenLieu.name }}</td>
-              <td class="border px-3 py-2">{{ item.donViTinh.name }}</td>
-              <td class="border px-3 py-2">{{ item.tuDo.name }}</td>
-              <td class="border px-3 py-2">
-                {{ getTrangThaiText(item.trangThai) }}
-              </td>
-              <td class="border px-3 py-2">{{ item.soLuong }}</td>
-              <td class="border px-3 py-2">
-                {{ item.donGia | number : "1.0-0" }}
-              </td>
-              <td class="border px-3 py-2">
-                {{ item.thanhTien | number : "1.0-0" }}
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr class="bg-gray-50 font-semibold">
-              <td colspan="9" class="text-right px-3 py-2">
-                Tổng tiền:
-                <span class="text-blue-700 font-bold ml-2">
-                  {{ formData.tongTien | number : "1.0-0" }} đ
-                </span>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+      <!-- Tiêu đề phiếu -->
+      <h2 class="text-2xl font-bold my-4 text-center underline">
+        Phiếu nhập kho
+      </h2>
+
+      <!-- Thông tin chung: chia 2 cột -->
+      <div class="grid grid-cols-2 gap-x-16 mb-6 text-gray-800 text-sm">
+        <!-- Cột trái -->
+        <div class="space-y-2">
+          <div>
+            <strong>Tên người giao:</strong> {{ formData.tenNguoiGiao }}
+          </div>
+          <div>
+            <strong>Nhà cung cấp:</strong> {{ formData.nhaCungCap.name }}
+          </div>
+          <div><strong>Diễn giải:</strong> {{ formData.dienGiai }}</div>
+        </div>
+
+        <!-- Cột phải, thêm padding trái để đẩy nội dung sang phải -->
+        <div class="space-y-2 pl-20">
+          <div><strong>SDT:</strong> {{ formData.tenPhieu }}</div>
+          <div><strong>Địa điểm:</strong> {{ formData.diaDiem }}</div>
+          <div><strong>Ghi chú:</strong> {{ formData.ghiChu }}</div>
+        </div>
       </div>
-    </div>
 
-    <!-- Ký tên -->
-    <div class="flex justify-end mt-12 text-sm px-10">
-      <div class="text-right">
-        <p class="font-semibold">Người lập phiếu</p>
-        <p class="italic">(Ký, họ tên)</p>
-        <p class="mt-12 font-semibold">{{ formData.nhanVien.name }}</p>
+      <!-- BẢNG NGUYÊN LIỆU -->
+      <div>
+        <h3 class="font-semibold text-gray-700 mb-3">Danh sách nguyên liệu:</h3>
+        <div class="overflow-x-auto">
+          <table class="min-w-full table-auto border border-gray-300 text-sm">
+            <thead class="bg-gray-100 sticky top-0 z-10">
+              <tr>
+                <th class="border px-3 py-2">Tên nguyên liệu</th>
+                <th class="border px-3 py-2">HSD</th>
+                <th class="border px-3 py-2">Loại</th>
+                <th class="border px-3 py-2">Đơn vị tính</th>
+                <th class="border px-3 py-2">Tủ đồ</th>
+                <th class="border px-3 py-2">Trạng thái</th>
+                <th class="border px-3 py-2">Số lượng</th>
+                <th class="border px-3 py-2">Đơn giá</th>
+                <th class="border px-3 py-2">Thành tiền</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let item of formData.nguyenLieus"
+                class="hover:bg-gray-50"
+              >
+                <td class="border px-3 py-2">{{ item.tenNguyenLieu }}</td>
+                <td class="border px-3 py-2">
+                  {{ item.hanSuDung | date : "dd/MM/yyyy" }}
+                </td>
+                <td class="border px-3 py-2">{{ item.loaiNguyenLieu.name }}</td>
+                <td class="border px-3 py-2">{{ item.donViTinh.name }}</td>
+                <td class="border px-3 py-2">{{ item.tuDo.name }}</td>
+                <td class="border px-3 py-2">
+                  {{ getTrangThaiText(item.trangThai) }}
+                </td>
+                <td class="border px-3 py-2">{{ item.soLuong }}</td>
+                <td class="border px-3 py-2">
+                  {{ item.donGia | number : "1.0-0" }}
+                </td>
+                <td class="border px-3 py-2">
+                  {{ item.thanhTien | number : "1.0-0" }}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="bg-gray-50 font-semibold">
+                <td colspan="9" class="text-right px-3 py-2">
+                  Tổng tiền:
+                  <span class="text-blue-700 font-bold ml-2">
+                    {{ formData.tongTien | number : "1.0-0" }} đ
+                  </span>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Ký tên -->
+      <div class="flex justify-end mt-12 text-sm px-10">
+        <div class="text-right">
+          <p class="font-semibold">Người lập phiếu</p>
+          <p class="italic">(Ký, họ tên)</p>
+          <p class="mt-12 font-semibold">{{ formData.nhanVien.name }}</p>
+        </div>
       </div>
     </div>
 
     <!-- Nút đóng -->
     <div class="mt-8 flex">
       <button
-        (click)="closePopup()"
+        (click)="pdf()"
         class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition !ml-auto"
       >
-        Đóng
+        Xuất PDF
       </button>
     </div>
   </div>
