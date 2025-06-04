@@ -6,17 +6,6 @@
       </h2>
       <form>
         <div class="form-group">
-          <label for="tenPhieuNhap">Tên phiếu nhập</label>
-          <input
-            type="text"
-            id="tenPhieuNhap"
-            [(ngModel)]="formData.tenPhieu"
-            name="TenPhieuNhap"
-            placeholder="Nhập tên phiếu nhập..."
-          />
-        </div>
-
-        <div class="form-group">
           <label for="tenNguoiGiao">Tên người giao</label>
           <input
             type="text"
@@ -24,6 +13,21 @@
             [(ngModel)]="formData.tenNguoiGiao"
             name="TenNguoiGiao"
             placeholder="Nhập tên người giao..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="soDienThoai">Số điện thoại</label>
+          <input
+            type="text"
+            id="soDienThoai"
+            name="soDienThoai"
+            [(ngModel)]="formData.tenPhieu"
+            #soDienThoai="ngModel"
+            placeholder="Nhập số điện thoại..."
+            maxlength="11"
+            required
+            pattern="^[0-9]{0,11}$"
+            (input)="onInputChange($event)"
           />
         </div>
         <div class="form-group">
@@ -40,7 +44,10 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="nhân viên">Nhân viên: <span *ngIf="isNhanVienUnvalid" class="text-red-500">*</span></label>
+          <label for="nhân viên"
+            >Nhân viên:
+            <span *ngIf="isNhanVienUnvalid" class="text-red-500">*</span></label
+          >
           <div class="flex items-center gap-2">
             <select
               id="nhanVien"
@@ -56,7 +63,6 @@
           <p *ngIf="isNhanVienUnvalid" class="text-red-500 text-sm mt-1">
             Vui lòng chọn nhân viên.
           </p>
-
         </div>
 
         <!-- ------------------------------------------------- -------------------------------------------------------------->
@@ -218,7 +224,10 @@
 
         <!------ ------------------------------------------------------------------------------------------------------------ -->
         <div class="form-group">
-          <label for="dienGiai">Diễn giải: <span *ngIf="isDienGiaiUnvalid" class="text-red-500">*</span></label>
+          <label for="dienGiai"
+            >Diễn giải:
+            <span *ngIf="isDienGiaiUnvalid" class="text-red-500">*</span></label
+          >
           <div class="flex items-center gap-2">
             <textarea
               id="dienGiai"
