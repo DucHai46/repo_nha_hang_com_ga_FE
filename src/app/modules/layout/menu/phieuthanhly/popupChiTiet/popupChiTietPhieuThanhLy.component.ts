@@ -39,10 +39,10 @@ export class PopupChiTietPhieuThanhLyComponent implements OnInit  {
             unit: 'mm', 
             format: 'a4', 
             orientation: 'landscape',
-            margins: { top: 10, right: 2, bottom: 10, left: 10 },
+            margins: { top: 10, right: 2, bottom: 25, left: 10 },
             pagebreak: { mode: ['css', 'legacy'] }
           },
-          margin: [10, 2, 10, 2]  
+          margin: [10, 2, 25, 2]  
         }
     
         const element: Element = document.getElementById('hoadon')!;
