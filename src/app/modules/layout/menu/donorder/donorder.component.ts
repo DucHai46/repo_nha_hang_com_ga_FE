@@ -90,6 +90,18 @@ export class DonorderComponent implements OnInit {
       );
       this.search();
     });
+    this.orderSignalRService.cancelOrderListener((message) => {
+      this.notification.create(
+        'success',
+        'Thông báo!',
+        `Đơn hàng ${message} đã bị hủy`,
+        {
+          nzClass: 'notification-success',
+          nzDuration: 2000
+        }
+      );
+      this.search();
+    });
   }
 
 

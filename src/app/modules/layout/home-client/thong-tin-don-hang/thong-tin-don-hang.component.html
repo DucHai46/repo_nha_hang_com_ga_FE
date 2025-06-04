@@ -27,7 +27,7 @@
       </div>
       <div class="info-item">
         <span class="label">Ngày tạo:</span>
-        <span class="value">{{ donOrder?.createdDate | date:'dd/MM/yyyy HH:mm' }}</span>
+        <span class="value">{{ donOrder?.ngayTao | date:'dd/MM/yyyy HH:mm' }}</span>
       </div>
     </div>
 
@@ -51,6 +51,11 @@
         <span class="label">Tổng tiền:</span>
         <span class="value">{{ donOrder?.tongTien | currency:'VND':'symbol-narrow':'1.0-0' }}</span>
       </div>
+      <button *ngIf="canCancelOrder()" 
+              class="cancel-button" 
+              (click)="cancelOrder()">
+        Hủy đơn hàng
+      </button>
     </div>
   </div>
 </div>

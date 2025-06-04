@@ -33,4 +33,8 @@ export class DonOrderService {
   nhacDonOrder(id:string){
     return this.http.get(`${this.apiUrl}/api/don-order/nhac-don-order`,{params:{id}});
   }
+
+  huyDonOrder(id: string, message: string) {
+    return this.http.put(`${this.apiUrl}/api/don-order/huy-don-order/${id}?message=${message}`,{});
+  }
 }
