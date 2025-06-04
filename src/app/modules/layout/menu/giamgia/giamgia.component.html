@@ -90,6 +90,8 @@
               <th scope="col" class="px-6 py-3">Ngày kết thúc</th>
               <th scope="col" class="px-6 py-3">Giá trị (%)</th>
               <th scope="col" class="px-6 py-3">Mô tả</th>
+              <th scope="col" class="px-6 py-3">Trạng thái</th>
+
               <th scope="col" class="px-6 py-3">Thao tác</th>
             </tr>
           </thead>
@@ -122,6 +124,9 @@
               <td class="px-6 py-4">
                 {{ item.moTa }}
               </td>
+              <td class="px-6 py-4">
+                {{ item.trangThai == 0 ? "Đang áp dụng" : "Hết hạn" }}
+              </td>        
               <td
                 class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
               >

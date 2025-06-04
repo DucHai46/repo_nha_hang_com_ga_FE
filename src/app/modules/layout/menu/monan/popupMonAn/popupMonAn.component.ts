@@ -57,7 +57,7 @@ export class PopupMonAnComponent implements OnInit {
       error: (err: any) => console.log(err)
     });
 
-    this.giamgiaService.getGiamGia({}).subscribe({
+    this.giamgiaService.getGiamGia({trangThai:0}).subscribe({
       next: (res: any) => {
             this.giamGia = [
               {

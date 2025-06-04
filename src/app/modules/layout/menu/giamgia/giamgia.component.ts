@@ -16,7 +16,7 @@ export class GiamgiaComponent implements OnInit {
   constructor(private store: GiamGiaStore, 
     private dialog: MatDialog, private notification: NzNotificationService, 
     private giamgiaService: giamgiaService) {}
-  giamGiaPaging: GiamGia[] = [];
+  giamGiaPaging: any[] = [];
   itemsSearch: any[] = [];
   paging: any = {
     page: 1,
