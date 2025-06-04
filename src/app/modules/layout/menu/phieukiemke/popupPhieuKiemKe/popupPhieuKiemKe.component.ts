@@ -38,7 +38,8 @@ export class PopupPhieuKiemKeComponent implements OnInit {
     }
   ];
   loaiNguyenLieu: any[] = [];
-  nhanVien: any[] = [];
+  nhanVien: any;
+  nhanViens: any;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
   constructor(
@@ -59,14 +60,20 @@ export class PopupPhieuKiemKeComponent implements OnInit {
       },
       error: (err: any) => console.log(err)
     });
-    this.nhanVienService.getNhanVien({}).subscribe({
+    const userInfo = JSON.parse(localStorage.getItem('userInfor') || '{}');
+    this.nhanVien = {
+      id: userInfo.id,
+      name: userInfo.name,
+    }
+    console.log(this.nhanVien);
+    console.log(this.nhanVien);
+    this.nhanVienService.getNhanVienById(userInfo.nhanVienId).subscribe({
       next: (res: any) => {
-        this.nhanVien = res.data.data.map((item: any) => ({
-          id: item.id,
-          name: item.tenNhanVien
-        }));
+        this.nhanViens = res.data;
+        this.formData.nhanVien = this.nhanViens.id;
+
+        console.log(this.formData.nhanVien);
       },
-      error: (err: any) => console.log(err)
     });
 
   }

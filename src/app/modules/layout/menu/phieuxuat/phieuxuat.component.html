@@ -107,12 +107,11 @@
           <tr>
             <th scope="col" class="px-6 py-3">STT</th>
             <th scope="col" class="px-6 py-3">Tên phiếu</th>
-            <th scope="col" class="px-6 py-3">Người nhận</th>
+            <th scope="col" class="px-6 py-3">Người lập phiếu</th>
             <th scope="col" class="px-6 py-3">Lý do xuất</th>
             <th scope="col" class="px-6 py-3">Ngày lập</th>
             <th scope="col" class="px-6 py-3">Địa điểm</th>
-            <th scope="col" class="px-6 py-3">Ghi chú</th>
-            <th scope="col" class="px-6 py-3">Nhân viên</th>
+            <!-- <th scope="col" class="px-6 py-3">Ghi chú</th> -->
             <th scope="col" class="px-6 py-3">Thao tác</th>
           </tr>
         </thead>
@@ -131,7 +130,7 @@
               {{ item.tenPhieu }}
             </td>
             <td class="px-6 py-4">
-              {{ item.nguoiNhan }}
+              {{ item.nhanVien.name }}
             </td>
             <td class="px-6 py-4">
               {{ item.lyDoXuat }}
@@ -142,12 +141,10 @@
             <td class="px-6 py-4">
               {{ item.diaDiem }}
             </td>
-            <td class="px-6 py-4">
+            <!-- <td class="px-6 py-4">
               {{ item.ghiChu }}
-            </td>
-            <td class="px-6 py-4">
-              {{ item.nhanVien.name }}
-            </td>
+            </td> -->
+
 
             <td
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
