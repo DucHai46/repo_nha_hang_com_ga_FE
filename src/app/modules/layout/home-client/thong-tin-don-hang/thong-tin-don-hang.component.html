@@ -1,1 +1,56 @@
-<p>blog works!</p>
+<div class="order-details-container">
+  <div class="order-header">
+    <h1>Thông tin đơn hàng</h1>
+    <div class="order-status" [ngClass]="{'status-pending': donOrder?.trangThai === 0}">
+      {{ donOrder?.trangThai === 0 ? 'Đang chờ xử lý' : 'Đã xử lý' }}
+    </div>
+  </div>
+
+  <div class="order-info">
+    <div class="info-section">
+      <h2>Thông tin cơ bản</h2>
+      <div class="info-item">
+        <span class="label">Mã đơn hàng:</span>
+        <span class="value">{{ donOrder?.id }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Tên đơn:</span>
+        <span class="value">{{ donOrder?.tenDon }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Loại đơn:</span>
+        <span class="value">{{ donOrder?.loaiDon?.name }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Khách hàng:</span>
+        <span class="value">{{ donOrder?.khachHang?.name }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Ngày tạo:</span>
+        <span class="value">{{ donOrder?.createdDate | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+    </div>
+
+    <div class="order-items">
+      <h2>Chi tiết đơn hàng</h2>
+      <div class="items-list" *ngFor="let chiTiet of donOrder?.chiTietDonOrder">
+        <div class="menu-item" *ngFor="let monAn of chiTiet.monAns">
+          <div class="item-details">
+            <span class="item-name">{{ monAn.monAn.name }}</span>
+            <span class="item-quantity">x{{ monAn.soLuong }}</span>
+          </div>
+          <div class="item-price">
+            {{ monAn.giaTien | currency:'VND':'symbol-narrow':'1.0-0' }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-summary">
+      <div class="total-amount">
+        <span class="label">Tổng tiền:</span>
+        <span class="value">{{ donOrder?.tongTien | currency:'VND':'symbol-narrow':'1.0-0' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import { PhuPhiService } from '../../menu/phuphi/services/phuphi.service';
 import { LoaidonorderService } from '../../menu/loaidonorder/services/loaidonorder.service';
 import { EmailService } from '../../../../core/services/email.service';
 import { environment } from '../../../../enviroments/enviroment';
+import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-thanh-toan',
   templateUrl: './thanh-toan.component.html',
@@ -51,7 +52,9 @@ export class ThanhToanComponent implements OnInit {
       this.khachHangService.addKhachHang(data).subscribe({
         next: (khachHangRes: any) => {
           const khachHangId = khachHangRes?.data.id;
-          this.cart$.subscribe(cart => {
+          this.cart$.pipe(
+            take(1)
+          ).subscribe(cart => {
             const chiTietDonOrder = [{
               monAns: cart.filter(c => c.item.loai === 'monan').map(c => ({
                 monAn: c.item.id,
@@ -69,7 +72,9 @@ export class ThanhToanComponent implements OnInit {
               })),
               trangThai: 0
             }];
-            this.loaiDonOrderService.getLoaidonorder({ page: 1, size: 1 }).subscribe((loaiDonRes: any) => {
+            this.loaiDonOrderService.getLoaidonorder({ page: 1, size: 1 }).pipe(
+              take(1)
+            ).subscribe((loaiDonRes: any) => {
               const loaiDon = loaiDonRes?.data?.data.find((l: any) => l.ten === 'Đơn online')
               const donOrder = {
                 tenDon: `Đơn của ${data.tenKhachHang}`,
@@ -80,16 +85,20 @@ export class ThanhToanComponent implements OnInit {
                 chiTietDonOrder,
                 tongTien: this.getTotal(cart)
               };
-              this.donOrderService.addDonOrder(donOrder).subscribe({
+              this.donOrderService.addDonOrder(donOrder).pipe(
+                take(1)
+              ).subscribe({
                 next: (donOrderRes: any) => {
                   this.notifyService.success('Thành công', 'Đặt hàng thành công!');
                   this.emailService.sendEmail({
                     to: data.email,
                     subject: 'Đơn hàng của bạn đã được đặt thành công',
                     body: `Đơn hàng của bạn đã được đặt thành công. Mã đơn hàng là ${donOrderRes?.data?.id}, cảm ơn bạn đã đặt hàng!
-                    Truy cập vào link để xem chi tiết đơn hàng: ${environment.apiUrl}/home-client/thong-tin-don-hang/${donOrderRes?.data?.id}`,
+                    Truy cập vào link để xem chi tiết đơn hàng: ${environment.webUrl}/home-client/thong-tin-don-hang/${donOrderRes?.data?.id}`,
                     isHtml: true
-                  }).subscribe();
+                  }).pipe(
+                    take(1)
+                  ).subscribe();
                   this.homeClientStore.clearCart();
                   this.router.navigate(['/home-client']);
                 },
