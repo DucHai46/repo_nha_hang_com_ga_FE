@@ -26,6 +26,10 @@ export class UserService {
     return this.http.get(`${this.authUrl}/api/auth/get-user-info?id=${id}`);
   }
 
+  checkUsername(username: string) {
+    return this.http.get(`${this.authUrl}/api/auth/check-username?username=${username}`);
+  }
+
   updateUserInfo(id: string, data: UserUpdateInfo) {
     return this.http.put(`${this.authUrl}/api/auth/update-user-info?id=${id}`, data);
   }

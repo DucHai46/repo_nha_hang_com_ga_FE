@@ -51,13 +51,20 @@
         </div>
         <div class="form-group">
           <label for="materialName">Tên Đăng Nhập:</label>
-          <input
-            type="text"
-            id="materialName"
-            [(ngModel)]="createUser.username"
-            name="username"
-            placeholder="Nhập tên đăng nhập..."
-          />
+          <div class="input-container">
+            <input
+              type="text"
+              id="materialName"
+              [(ngModel)]="createUser.username"
+              name="username"
+              placeholder="Nhập tên đăng nhập..."
+              (ngModelChange)="onUsernameChange($event)"
+            />
+            <div class="spinner" *ngIf="isCheckingUsername">
+              <div class="spinner-inner"></div>
+            </div>
+          </div>
+          <div class="error-message" *ngIf="usernameError">{{ usernameError }}</div>
         </div>
         <div class="form-group">
           <label for="materialName">Mật Khẩu:</label>
@@ -66,8 +73,17 @@
             id="materialName"
             [(ngModel)]="createUser.password"
             name="password"
-            placeholder="Nhập mật khẩu..."
+            placeholder="Nhập mật khẩu (ít nhất 8 ký tự, có ít nhất 1 chữ hoa)..."
+            minlength="8"
+            pattern="(?=.*[A-Z]).*"
+            required
           />
+          <div class="text-red-500 text-sm mt-1" *ngIf="createUser.password && createUser.password.length < 8">
+            Mật khẩu phải có ít nhất 8 ký tự
+          </div>
+          <div class="text-red-500 text-sm mt-1" *ngIf="createUser.password && !hasUpperCase(createUser.password)">
+            Mật khẩu phải có ít nhất 1 chữ hoa
+          </div>
         </div>
         <div class="form-group">
           <label for="materialName">Nhân viên:</label>
