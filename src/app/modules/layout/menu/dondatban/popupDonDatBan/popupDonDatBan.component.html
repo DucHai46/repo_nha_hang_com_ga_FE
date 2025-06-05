@@ -6,13 +6,71 @@
       </h2>
       <form>
         <div class="form-group">
-          <label for="materialName">Khung giờ:</label>
+          <label for="tenKhachHang"
+            >Tên khách hàng:
+            <span *ngIf="isKhachHangUnvalid" class="text-red-500">*</span></label
+          >
+          <div class="flex items-center gap-2">
+            <textarea
+              id="tenKhachHang"
+              [(ngModel)]="khachHangTT.tenKhachHang"
+              name="tenKhachHang"
+              placeholder="Nhập tên khách hàng..."
+            ></textarea>
+          </div>
+          <p *ngIf="isKhachHangUnvalid" class="text-red-500 text-sm mt-1">
+            Vui lòng nhập tên khách hàng
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="diaChi">Địa chỉ:</label>
+          <textarea
+            id="diaChi"
+            [(ngModel)]="khachHangTT.diaChi"
+            name="diaChi"
+            placeholder="Nhập địa chỉ..."
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="em">Email:</label>
+          <textarea
+            id="em"
+            [(ngModel)]="khachHangTT.email"
+            name="em"
+            placeholder="Nhập email..."
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="soDienThoai"
+            >Số điện thoại:
+            <span *ngIf="isSoDienThoaiUnvalid" class="text-red-500">*</span></label
+          >
+          <div class="flex items-center gap-2">
+            <textarea
+              id="soDienThoai"
+              [(ngModel)]="khachHangTT.soDienThoai"
+              name="soDienThoai"
+              placeholder="Nhập số điện thoại..."
+            ></textarea>
+          </div>
+          <p *ngIf="isSoDienThoaiUnvalid" class="text-red-500 text-sm mt-1">
+            Vui lòng nhập số điện thoại
+          </p>
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="khungGio" class="block text-sm font-medium text-gray-700 mb-1">
+            Khung giờ:
+          </label>
           <input
-            type="text"
-            id="materialName"
+            type="datetime-local"
+            id="khungGio"
             [(ngModel)]="formData.khungGio"
-            name="ten"
-            placeholder="Nhập tên khung giờ..."
+            name="khungGio"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>
 
@@ -29,20 +87,6 @@
             </option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="kh">Khách hàng:</label>
-          <select
-            id="kh"
-            [(ngModel)]="formData.khachHang"
-            name="khachHang"
-            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-          >
-            <option *ngFor="let danhMuc of khachHang" [ngValue]="danhMuc">
-              {{ danhMuc.name }}
-            </option>
-          </select>
-        </div>
-
         <div class="flex justify-end gap-2">
           <button type="button" class="btn cancel-btn" (click)="onCancel()">
             Hủy

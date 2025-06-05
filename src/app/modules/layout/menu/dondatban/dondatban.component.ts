@@ -100,7 +100,7 @@ export class DondatbanComponent implements OnInit {
     this.isPopupOpen = false;
     this.isEditMode = false;
   }
-   onSaveCongThuc(body: any): void {
+  onSaveCongThuc(body: any): void {
     console.log(body);
 
     if (!body) return;
@@ -192,6 +192,7 @@ export class DondatbanComponent implements OnInit {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = item;
+    console.log(this.formData);
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

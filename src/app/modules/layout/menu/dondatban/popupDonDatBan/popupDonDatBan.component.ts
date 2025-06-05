@@ -38,14 +38,24 @@ export class PopupDonDatBanComponent implements OnInit {
         }));
 
         if (this.isEditMode) {
-          const selected = this.khachHang.find(x => x.id === this.formData.khachHang.id);
+          const selected = res.data.data.find((x: any) => x.id === this.formData.khachHang.id);
           if (selected) {
-            this.formData.khachHang = selected;
+            this.formData.khachHang = {
+              id: selected.id,
+              name: selected.tenKhachHang,
+            };
+            this.khachHangTT = {
+              tenKhachHang: selected.tenKhachHang || '',
+              diaChi: selected.diaChi || '',
+              email: selected.email || '',
+              soDienThoai: selected.soDienThoai || '',
+            };
           }
         }
       },
       error: (err: any) => console.log(err)
     });
+
   }
   @Input() formData = {
     khungGio: '',
@@ -57,9 +67,16 @@ export class PopupDonDatBanComponent implements OnInit {
       id: '',
       name: ''
     },
-
-
   };
+
+  khachHangTT= {
+    tenKhachHang: '',
+    diaChi: '',
+    email: '',
+    soDienThoai: '',
+  };
+
+
 
   @Input() isEditMode = false;
   @Output() close = new EventEmitter<void>();
@@ -70,14 +87,66 @@ export class PopupDonDatBanComponent implements OnInit {
   private khachHangService: KhachHangService,
 
   ) {}
+  isKhachHangUnvalid=false;
+  isSoDienThoaiUnvalid=false;
+
 
   onSave(): void {
-    const dataToSend = {
-      ...this.formData,
-      ban: this.formData.ban.id,
-      khachHang: this.formData.khachHang.id,
-    };
-    this.save.emit(dataToSend);
+    this.isKhachHangUnvalid= !this.khachHangTT.tenKhachHang
+    this.isSoDienThoaiUnvalid=!this.khachHangTT.soDienThoai
+    if(this.isKhachHangUnvalid || this.isSoDienThoaiUnvalid){
+      return;
+    }
+    if(this.isEditMode){
+      this.khachHangService.updateKhachHang(this.formData.khachHang.id,this.khachHangTT).subscribe({
+        next: (res: any) => {
+          console.log(res.data);
+          const date = new Date(this.formData.khungGio);
+          const formattedKhungGio = date.toLocaleString('vi-VN', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+
+          const dataToSend = {
+            ...this.formData,
+            khungGio: formattedKhungGio,
+            ban: this.formData.ban.id,
+            khachHang: res.data.id,
+          };
+          console.log(dataToSend);
+          this.save.emit(dataToSend);
+        },
+        error: (err: any) => console.log(err)
+      }); 
+    }else{
+      this.khachHangService.addKhachHang(this.khachHangTT).subscribe({
+        next: (res: any) => {
+          console.log(res.data);
+          const date = new Date(this.formData.khungGio);
+          const formattedKhungGio = date.toLocaleString('vi-VN', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+
+          const dataToSend = {
+            ...this.formData,
+            khungGio: formattedKhungGio,
+            ban: this.formData.ban.id,
+            khachHang: res.data.id,
+          };
+          console.log(dataToSend);
+          this.save.emit(dataToSend);
+        },
+        error: (err: any) => console.log(err)
+      });
+  }
+
   }
   onCancel(): void {
     this.close.emit(); 
