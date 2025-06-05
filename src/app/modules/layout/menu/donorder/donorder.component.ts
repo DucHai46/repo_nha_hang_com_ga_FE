@@ -102,6 +102,19 @@ export class DonorderComponent implements OnInit {
       );
       this.search();
     });
+
+    this.orderSignalRService.confirmOrderListener((message) => {
+      this.notification.create(
+        'success',
+        'Thông báo!',
+        `Đơn hàng ${message} đã được giao tới khách hàng`,
+        {
+          nzClass: 'notification-success',
+          nzDuration: 2000
+        }
+      );
+      this.search();
+    }); 
   }
 
 

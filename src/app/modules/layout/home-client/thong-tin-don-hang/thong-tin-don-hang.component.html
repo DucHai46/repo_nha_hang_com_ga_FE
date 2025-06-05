@@ -1,8 +1,16 @@
 <div class="order-details-container">
   <div class="order-header">
     <h1>Thông tin đơn hàng</h1>
-    <div class="order-status" [ngClass]="{'status-pending': donOrder?.trangThai === 0}">
-      {{ donOrder?.trangThai === 0 ? 'Đang chờ xử lý' : 'Đã xử lý' }}
+    <div class="order-status" [ngClass]="{
+      'status-pending': donOrder?.trangThai === 0,
+      'status-confirmed': donOrder?.trangThai === 1,
+      'status-delivering': donOrder?.trangThai === 4,
+      'status-cancelled': donOrder?.trangThai === 5
+    }">
+      {{ donOrder?.trangThai === 0 ? 'Chờ xác nhận' :
+         donOrder?.trangThai === 1 ? 'Đã xác nhận' :
+         donOrder?.trangThai === 4 ? 'Hoàn thành' :
+         donOrder?.trangThai === 5 ? 'Đã hủy' : 'Đang giao hàng' }}
     </div>
   </div>
 
@@ -55,6 +63,11 @@
               class="cancel-button" 
               (click)="cancelOrder()">
         Hủy đơn hàng
+      </button>
+      <button *ngIf="canConfirmOrder()" 
+      class="confirm-button" 
+      (click)="confirmOrder()">
+      Xác nhận đơn hàng
       </button>
     </div>
   </div>
