@@ -41,7 +41,6 @@ export class ChitietdonComponent implements OnInit {
       {
         next: (res: any) => {
           this.donOrder = res.data.data;
-          // console.log(this.donOrder);
           const don = this.donOrder.find((td: any) => td.trangThai === 0 && td.ban.id === this.id);
           console.log(don);
           this.tongTien = don.tongTien;

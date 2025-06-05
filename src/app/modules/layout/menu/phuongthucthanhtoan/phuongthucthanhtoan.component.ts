@@ -20,7 +20,6 @@ export class PhuongThucThanhToanComponent {
     private fileService: FileService,
   ) {}
   phuongThucThanhToanPaging: any[] = [];
-  // itemsSearch: any [] = [];
   paging: any = {
     page: 1,
     size: 10,
@@ -28,7 +27,6 @@ export class PhuongThucThanhToanComponent {
   };
   totalPages = 0;
   ngOnInit(): void {
-    // Khởi tạo component
     this.search();
     this.store.setItems$(this.phuongThucThanhToanPaging);
     

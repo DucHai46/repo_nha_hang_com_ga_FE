@@ -9,18 +9,13 @@ import { ThucDon } from '../../../models/ThucDon';
 import { MonAn } from '../../../models/MonAn';
 import { FileService } from '../../../core/services/file.service';
 
-
 @Component({
   selector: 'app-menugoimon',
   templateUrl: './menugoimon.component.html',
   styleUrls: ['./menugoimon.component.scss'],
 })
 export class MenugoimonComponent implements OnInit {
-
   itemsDanhMuc = [];
-
-  // selectedItem: any = this.itemsDanhMuc[0]; // Mặc định chọn danh mục đầu tiên
-
   itemsMonAn: any[] = [];
   selectedItemsMA: any[] = [];
   loaiMonAn: any[] = [];
@@ -28,6 +23,10 @@ export class MenugoimonComponent implements OnInit {
   itemsRoot2: any[] = [];
   combo: any[] = [];
   id: string = '';
+  isSticky = false;
+  selectedItem: any;
+  itemsMonAnRoot: any[] = [];
+  imageUrls: { [key: string]: string } = {};
 
   constructor(
     public router: Router,
@@ -38,26 +37,13 @@ export class MenugoimonComponent implements OnInit {
     private fileService: FileService,
     private comboService: ComboService
   ) { }
+
   ngOnInit() {
     const updatedSelectedItems = history.state?.updatedSelectedItems;
-
-    // this.loaiMonAnService.getLoaiMonAn({}).subscribe({
-    //   next: (res: any) => {
-    //     this.loaiMonAn = [
-    //       { ma: "comboMonAn", ten: "combo" },
-    //       ...res.data.data.map((item: any) => ({
-    //         ma: item.id,
-    //         ten: item.tenLoai,
-    //       })),
-    //     ];
-    //   },
-    //   error: (err: any) => console.log(err),
-    // });
 
     this.thucDonService.getThucDon({ trangThai: 1 }).subscribe({
       next: async (res: any) => {
         this.thucDon = res.data.data;
-
         this.loaiMonAn = [
           { ma: "comboMonAn", ten: "combo" },
           ...this.thucDon[0].loaiMonAns.map((item: any) => ({
@@ -65,7 +51,6 @@ export class MenugoimonComponent implements OnInit {
             ten: item.name,
           })),
         ];
-
         this.itemsRoot2 = await this.taoDanhSachMonAn(this.thucDon);
         this.combo = await this.taoDanhSachCombo(this.thucDon);
         this.itemsMonAn = [...this.itemsRoot2, ...this.combo];
@@ -73,9 +58,7 @@ export class MenugoimonComponent implements OnInit {
         this.loadAllImages();
 
         if (updatedSelectedItems) {
-
           this.capNhatSoLuongMonAn(updatedSelectedItems);
-
           this.selectedItemsMA = updatedSelectedItems.filter(
             (item: { soLuong: number }) => item.soLuong > 0
           );
@@ -114,7 +97,6 @@ export class MenugoimonComponent implements OnInit {
             });
           });
           console.log(danhSach);
-          // Trả về danh sách món ăn sau khi xử lý
           resolve(danhSach);
         },
         error: (err: any) => {
@@ -124,60 +106,59 @@ export class MenugoimonComponent implements OnInit {
       });
     });
   }
-private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
-  return new Promise((resolve, reject) => {
-    this.comboService.getCombo({}).subscribe({
-      next: (res: any) => {
-        const comboList = res.data.data;
-        const danhSach: any[] = [];
 
-        thucDonData.forEach((item: any) => {
-          item.combos?.forEach((loaiMon: any) => {
-            const comboInfo = comboList.find((ma: any) => ma.id === loaiMon.id);
-            if (comboInfo) {
-              danhSach.push({
-                ma: loaiMon.id,
-                ten: String(loaiMon.name).trim(),
-                hinhAnh: loaiMon.hinhAnh,
-                gia: loaiMon.giaTien,
-                soLuong: 0,
-                giamGia: comboInfo.giamGia?.giaTri ?? 0,
-                ghiChu: "",
-                danhMuc: "comboMonAn"
-              });
-            }
+  private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      this.comboService.getCombo({}).subscribe({
+        next: (res: any) => {
+          const comboList = res.data.data;
+          const danhSach: any[] = [];
+
+          thucDonData.forEach((item: any) => {
+            item.combos?.forEach((loaiMon: any) => {
+              const comboInfo = comboList.find((ma: any) => ma.id === loaiMon.id);
+              if (comboInfo) {
+                danhSach.push({
+                  ma: loaiMon.id,
+                  ten: String(loaiMon.name).trim(),
+                  hinhAnh: loaiMon.hinhAnh,
+                  gia: loaiMon.giaTien,
+                  soLuong: 0,
+                  giamGia: comboInfo.giamGia?.giaTri ?? 0,
+                  ghiChu: "",
+                  danhMuc: "comboMonAn"
+                });
+              }
+            });
           });
-        });
-
-        console.log(danhSach);
-        resolve(danhSach);
-      },
-      error: (err: any) => {
-        console.log(err);
-        reject(err);
-      }
+          console.log(danhSach);
+          resolve(danhSach);
+        },
+        error: (err: any) => {
+          console.log(err);
+          reject(err);
+        }
+      });
     });
-  });
-}
-  // Cập nhật số lượng món từ selectedItemsMA vào itemsMonAn chính
+  }
+
   capNhatSoLuongMonAn(updatedSelectedItems: any[]) {
     updatedSelectedItems.forEach((updatedItem) => {
       const itemIndex = this.itemsMonAn.findIndex((mon) => mon.ma === updatedItem.ma);
       if (itemIndex >= 0) {
-        // Cập nhật lại đối tượng trong mảng
         this.itemsMonAn[itemIndex] = {
           ...this.itemsMonAn[itemIndex],
           soLuong: updatedItem.soLuong
         };
       }
     });
-    console.log("itemsMonAn sau khi cập nhật:", this.itemsMonAn);  // Kiểm tra lại sau khi cập nhật
+    console.log("itemsMonAn sau khi cập nhật:", this.itemsMonAn);  
   }
 
-  // Lọc món ăn theo mã danh mục
   getMonAnTheoDanhMuc(maDanhMuc: string) {
     return this.itemsMonAn.filter((mon) => mon.danhMuc === maDanhMuc && mon.gia !== null);
   }
+
   updateSelectedItemsMA(item: any) {
     const index = this.selectedItemsMA.findIndex((mon) => mon.ma === item.ma);
     if (index >= 0) {
@@ -187,6 +168,7 @@ private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
     }
     this.selectedItemsMA = this.selectedItemsMA.filter((mon) => mon.soLuong > 0);
   }
+
   check(ma: string) {
     const item = this.itemsMonAn.filter((mon) => mon.danhMuc === ma);
     if (item.length>0) {
@@ -195,14 +177,11 @@ private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
     return false;
   }
 
-  // Hàm hiển thị nút tăng/giảm khi người dùng nhấn "+
-
-  // Hàm tăng số lượng món ăn
   tangSoLuong(ma: string) {
     const item = this.itemsMonAn.find((mon: any) => mon.ma === ma);
     if (item) {
-      item.soLuong += 1;  // Tăng số lượng
-      this.updateSelectedItemsMA(item);  // Cập nhật danh sách món đã chọn
+      item.soLuong += 1;  
+      this.updateSelectedItemsMA(item);  
       console.log('Tăng số lượng:', item);
     }
   }
@@ -215,23 +194,20 @@ private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
       } else {
         item.soLuong = 0;
       }
-      this.updateSelectedItemsMA(item);  // Cập nhật danh sách món đã chọn
+      this.updateSelectedItemsMA(item);
       console.log('Giảm số lượng:', item.soLuong);
     }
   }
-  // Tính tổng tiền của các món đã được thêm
+
   tinhTongTien() {
     return this.itemsMonAn
-      .filter((mon) => mon.soLuong > 0) // Chỉ tính các món có số lượng > 0
-      .reduce((tong, mon) => tong + (mon.gia - (mon.giamGia ? mon.gia * mon.giamGia / 100 : 0)) * mon.soLuong, 0); // Tính tổng tiền
+      .filter((mon) => mon.soLuong > 0)
+      .reduce((tong, mon) => tong + (mon.gia - (mon.giamGia ? mon.gia * mon.giamGia / 100 : 0)) * mon.soLuong, 0);
   }
 
-
-  // Hàm kiểm tra xem có món nào đang được chọn hay không
   coMonAnDuocChon() {
     return this.itemsMonAn.some((mon) => mon.soLuong > 0);
   }
-  // constructor(public router: Router) {}
 
   chuyenSangXacNhan() {
     if (this.id == '' || this.id == null) {
@@ -239,23 +215,18 @@ private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
     }
     console.log(this.itemsMonAn);
     this.router.navigate(['/xacnhangoimon'], {
-      state: { selectedItemsMA: this.selectedItemsMA, id: this.id }, // Truyền selectedItemsMA
+      state: { selectedItemsMA: this.selectedItemsMA, id: this.id },
     });
   }
+
   chuyenSangChiTiet() {
     if (this.id == '' || this.id == null) {
       return;
     }
     this.router.navigate(['/chitietdon'], {
-      state: { id: this.id }, // Truyền selectedItemsMA
+      state: { id: this.id },
     });
   }
-
-
-  // Hàm cuộn đến danh mục tương ứng khi click vào button danh mục
-
-  isSticky = false;
-  selectedItem: any;
 
   @HostListener('window:scroll', [])
   handleScroll() {
@@ -267,7 +238,6 @@ private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
 
     this.isSticky = window.pageYOffset >= stickyWrapperHeight;
 
-    // Giữ lại selectedItem nếu không thay đổi vị trí
     let currentCategory = this.selectedItem;
 
     this.loaiMonAn.forEach((category) => {
@@ -280,11 +250,9 @@ private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
       }
     });
 
-    // Nếu danh mục mới được highlight khác danh mục hiện tại, cuộn ngang để hiện button
     if (this.selectedItem !== currentCategory) {
       this.selectedItem = currentCategory;
 
-      // Tìm nút button tương ứng với danh mục hiện tại
       const selectedButton = document.getElementById(`btn-${currentCategory.ma}`);
       selectedButton?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
@@ -293,7 +261,6 @@ private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
   selectCategory(category: any, event: any) {
     this.selectedItem = category;
 
-    // Tự cuộn thanh ngang để hiển thị danh mục được chọn
     const selectedButton = document.getElementById(`btn-${category.ma}`);
     selectedButton?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
@@ -307,13 +274,12 @@ private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
     }
   }
 
-  itemsMonAnRoot: any[] = [];
   searchMonAn(event: any) {
     const keyword = event.target.value.toLowerCase().trim();
     console.log(keyword);
 
     if (!this.itemsMonAnRoot || this.itemsMonAnRoot.length === 0) {
-      this.itemsMonAnRoot = [...this.itemsMonAn]; // copy danh sách gốc
+      this.itemsMonAnRoot = [...this.itemsMonAn]; 
     }
     console.log(this.itemsMonAnRoot);
 
@@ -342,10 +308,9 @@ private taoDanhSachCombo(thucDonData: any[]): Promise<any[]> {
       const parsed = JSON.parse(hinhAnh);
       return `https://api.duchaibui.id.vn/api/files/download/${parsed.id}`;
     } catch {
-      return ''; // hoặc ảnh mặc định nếu parse lỗi
+      return '';
     }
   }
-  imageUrls: { [key: string]: string } = {};
 
   parseJSON(jsonString: string): any {
     try {

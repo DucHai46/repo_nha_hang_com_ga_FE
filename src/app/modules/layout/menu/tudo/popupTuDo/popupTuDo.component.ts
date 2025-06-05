@@ -31,7 +31,6 @@ export class PopupTuDoComponent implements OnInit {
       }
     });
   }
-  // Form data model
   @Input() formData = {
     tenTuDo: '',
     moTa: '',
@@ -50,7 +49,6 @@ export class PopupTuDoComponent implements OnInit {
   ) {}
   isLoaiTuInValid= false;
 
-  // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
     this.isLoaiTuInValid = !this.formData.loaiTuDo || !this.formData.loaiTuDo.id;
     if (this.isLoaiTuInValid) {
@@ -63,8 +61,7 @@ export class PopupTuDoComponent implements OnInit {
     this.save.emit(dataToSend);
   }
 
-  // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
-    this.close.emit(); // Đóng popup mà không trả về dữ liệu
+    this.close.emit();
   }
 }

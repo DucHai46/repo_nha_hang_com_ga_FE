@@ -43,7 +43,7 @@ export class TudoComponent implements OnInit {
     loaiTuDoId: ''
   };
   search(){
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true;
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.tuDoService.getTuDo(this.searchForm).subscribe(
@@ -69,7 +69,7 @@ export class TudoComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;
     this.search();
   }
 
@@ -99,7 +99,6 @@ export class TudoComponent implements OnInit {
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
       this.tuDoService.updateTuDo(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -138,7 +137,6 @@ export class TudoComponent implements OnInit {
         }
       });
     } else {
-      // Thêm mới bàn
       this.tuDoService.addTuDo(body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -179,7 +177,6 @@ export class TudoComponent implements OnInit {
     }
   }
 
-    // Hàm mở popup Sửa
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;

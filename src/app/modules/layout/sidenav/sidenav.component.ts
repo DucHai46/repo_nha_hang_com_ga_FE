@@ -15,8 +15,6 @@ interface MenuItem {
 
 @Component({
   selector: 'app-sidenav',
-  // standalone :true ,
-  // imports :[RouterModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })

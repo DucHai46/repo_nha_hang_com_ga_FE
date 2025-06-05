@@ -9,13 +9,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
-  // Danh sách URL các background hình ảnh
-  backgrounds: string[] = [
-    'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg',
-    'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg',
-    'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg',
-    'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg'
-  ];
 
   constructor(private router: Router, private authService: AuthService, private notification: NzNotificationService) { }
 

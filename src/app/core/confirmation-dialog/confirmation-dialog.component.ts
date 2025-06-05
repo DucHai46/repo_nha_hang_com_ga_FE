@@ -12,13 +12,11 @@ export class ConfirmationDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: { message: string }
   ) {}
 
-  // Hàm xử lý khi nhấn "Xác nhận"
   onConfirm(): void {
-    this.dialogRef.close(true); // Trả về true để xác nhận xóa
+    this.dialogRef.close(true); 
   }
 
-  // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
-    this.dialogRef.close(false); // Trả về false để hủy
+    this.dialogRef.close(false); 
   }
 }

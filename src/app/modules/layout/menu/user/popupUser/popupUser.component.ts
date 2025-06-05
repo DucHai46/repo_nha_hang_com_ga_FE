@@ -27,7 +27,7 @@ export class PopupUserComponent implements OnInit {
     nhanVienId: '',
   };
 
-  @Input() isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
+  @Input() isEditMode: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
@@ -86,7 +86,7 @@ export class PopupUserComponent implements OnInit {
     )
   }
 
-  // Hàm xử lý khi nhấn "Lưu"
+
   onSave(): void {
     if (this.isEditMode) {
       this.save.emit(this.formData);
@@ -95,7 +95,7 @@ export class PopupUserComponent implements OnInit {
     }
   }
 
-  // Hàm xử lý khi nhấn "Hủy"
+ 
   onCancel(): void {
     this.close.emit();
   }

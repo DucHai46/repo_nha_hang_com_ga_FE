@@ -23,7 +23,7 @@ export class MenuClientComponent implements OnInit {
     trangThai: 1,
   }
 
-  pageSize = 12; // Số sản phẩm mỗi trang
+  pageSize = 12;
   currentPage = 1;
   pagedItems: any[] = [];
   pages: (number | string)[] = [];
@@ -34,7 +34,6 @@ export class MenuClientComponent implements OnInit {
       next: (res: any) => {
         if (res.result && res.data.data) {
           const thucDon: ThucDon = res.data.data[0];
-          // Lấy combo
           const combos = (thucDon.combos || []).map(c => ({
             id: c.id,
             ten: c.name,
@@ -42,7 +41,6 @@ export class MenuClientComponent implements OnInit {
             hinhAnh: c.hinhAnh,
             loai: 'combo'
           }));
-          // Lấy từng món lẻ
           const monLe = (thucDon.loaiMonAns || []).flatMap(loai =>
             (loai.monAns || []).map(m => {
               let giaGoc = Number(m.giaTien) || 0;
@@ -67,7 +65,6 @@ export class MenuClientComponent implements OnInit {
           );
           this.allItems = [...combos, ...monLe];
 
-          // Gọi API lấy base64 cho từng ảnh
           this.allItems.forEach((item, idx) => {
             if (item.hinhAnh) {
               const parsed = this.parseJSON(item.hinhAnh);

@@ -21,7 +21,6 @@ export class AboutComponent implements OnInit, AfterViewInit  {
 
   ngAfterViewInit(): void {
     if(typeof window !== 'undefined') { 
-      // window.scrollTo(0, 0);
 
     }
   }

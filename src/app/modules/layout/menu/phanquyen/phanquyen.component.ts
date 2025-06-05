@@ -268,32 +268,5 @@ export class PhanQuyenComponent implements OnInit {
 
   toggleActive(item: any): void {
     const newStatus = !item.isActive;
-    // Nếu đang bật và đã có nhà hàng khác active thì không cho bật
-    // if (newStatus && this.phanQuyenPaging.some(i => i.isActive)) {
-    //   this.notification.create(
-    //     'error',
-    //     'Thông báo!',
-    //     `Chỉ có thể có 1 nhà hàng được kích hoạt tại một thời điểm.`, {
-    //     nzClass: 'notification-error',
-    //     nzDuration: 2000
-    //   });
-    // }
-    // else {
-    //   item.isActive = newStatus;
-    //   this.phanQuyenService.updatePhanQuyen(item.id, item).subscribe({
-    //     next: (res: any) => {
-    //       if (res.data) {
-    //         this.search();
-    //       } else { }
-    //     },
-    //     error: () => this.notification.create(
-    //       'error',
-    //       'Thông báo!',
-    //       `Cập nhật thất bại`, {
-    //       nzClass: 'notification-error',
-    //       nzDuration: 2000
-    //     })
-    //   });
-    // }
   }
 }

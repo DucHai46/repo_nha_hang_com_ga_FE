@@ -82,11 +82,10 @@ export class PopupThucDonComponent implements OnInit {
   }
   updateData(): void {  
     const loaiMonAnsFromForm = this.formData.loaiMonAns;    
-    // console.log('Dữ liệu loaiMonAnsFromForm:', loaiMonAnsFromForm);
     this.loaiSelections = loaiMonAnsFromForm.map((loai: any) => ({
       selectedLoaiId: loai.id,
       selectedLoaiName: loai.name,
-      filteredMonAn: [], // Dữ liệu món ăn sẽ được điền sau
+      filteredMonAn: [], 
       monAns: loai.monAns.map((item: any) => ({
         monAn: {
           id: item.id,
@@ -96,8 +95,7 @@ export class PopupThucDonComponent implements OnInit {
         }
       }))
     }));  
-    // console.log('Dữ liệu loaiSelections:', this.loaiSelections);
-    // Gọi API để lấy danh sách món ăn cho mỗi loại
+
     this.loaiSelections.forEach((loai, index) => {
         this.monAnService.getMonAn({ idLoaiMonAn: loai.selectedLoaiId }).subscribe({
           next: (res: any) => {
@@ -109,14 +107,12 @@ export class PopupThucDonComponent implements OnInit {
               hinhAnh: nl.hinhAnh,
               giaTien: nl.giaTien
             }));
-            // console.log(this.loaiSelections[index].monAns);
           },
           error: err => {
             console.error('Lỗi khi lấy món ăn:', err);
           }
         });
     });
-    // console.log(this.loaiSelections);
     const comboFromForm = this.formData.combos;    
     this.comboSelections = comboFromForm.map((loai: any) => ({
       selectedComboId: loai.id,
@@ -162,7 +158,6 @@ export class PopupThucDonComponent implements OnInit {
     this.loaiSelections[index].selectedLoaiName = this.loaiMonAn.find(l => l.id === selectedLoaiId)?.name || '';
     this.monAnService.getMonAn({idLoaiMonAn: this.loaiSelections[index].selectedLoaiId}).subscribe({
       next: (res: any) => {
-        // console.log(res.data.data);
         this.loaiSelections[index].filteredMonAn = res.data.data.map((item: any) => ({
           id: item.id,
           name: item.tenMonAn,
@@ -170,7 +165,6 @@ export class PopupThucDonComponent implements OnInit {
           hinhAnh: item.hinhAnh,    
           giaTien: item.giaTien     
         }));
-        // console.log(this.loaiSelections[index].filteredMonAn);
       },
       error: (err: any) => console.log(err)
     });
@@ -244,44 +238,9 @@ export class PopupThucDonComponent implements OnInit {
       loaiMonAns: allMonAns,
       combos:allCombos
     };
-    // if (this.formData.trangThai == 1) {
-    //   // Kiểm tra các thực đơn đang hoạt động
-    //   this.thucDonService.getThucDon({ trangThai: 1 }).subscribe({
-    //     next: (res: any) => {
-    //         // Lọc danh sách thực đơn đang hoạt động và không phải là thực đơn hiện tại
-    //         const activeThucDons = res.data.data.filter((td: any) => td.trangThai === 1 && td.id !== this.formData.id);
-    //           // Cập nhật tất cả thực đơn khác về trạng thái "Không hoạt động"
-    //         const updateObservables = activeThucDons.map((td: any) =>
-    //           this.thucDonService.updateThucDon(td.id, { ...td, trangThai: 0 })
-    //         );
-    //         forkJoin(updateObservables).subscribe({
-    //           next: () => {
-    //               // Sau khi cập nhật trạng thái các thực đơn khác về "Không hoạt động", lưu thực đơn mới với trạng thái "Hoạt động"
-    //             this.save.emit(dataToSend);
-    //           },
-    //           error: (err: any) => {
-    //             console.log('Lỗi khi cập nhật trạng thái các thực đơn:', err);
-    //           }
-    //         });
-    //         console.log("activeThucDons = ",activeThucDons);
-    //         console.log("res = ",res.data.data);
 
-    //     },
-    //     error: (err: any) => {
-    //       console.log('Lỗi khi lấy danh sách thực đơn:', err);
-    //     }
-    //   });
-    // } else {
-    //   // Nếu trạng thái không phải "Hoạt động", trực tiếp lưu thực đơn này
-    //   this.save.emit(dataToSend);
-    //   return;
-    // }
     
     this.save.emit(dataToSend);
-
-
-    // this.save.emit(dataToSend);
-    // console.log(dataToSend);
   }
 
 
@@ -356,13 +315,10 @@ export class PopupThucDonComponent implements OnInit {
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
-        // Create object URL from blob
         const url = window.URL.createObjectURL(response);
         
-        // Open preview in new tab
         window.open(url, '_blank');
         
-        // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
     );

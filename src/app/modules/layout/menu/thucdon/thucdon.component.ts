@@ -48,13 +48,12 @@ export class ThucdonComponent {
     trangThai:''
   };
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.thucDonService.getThucDon(this.searchForm).subscribe({
       next: (res: any) => {
-        this.thucDonPaging = res.data.data; // Lưu toàn bộ dữ liệu
-        // console.log(this.thucDonPaging);
+        this.thucDonPaging = res.data.data; 
         this.paging.page = res.data.paging.currentPage;
         this.paging.size = res.data.paging.pageSize;
         this.paging.total = res.data.paging.totalRecords;
@@ -73,7 +72,7 @@ export class ThucdonComponent {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;
     this.search();
   }
   reset(){
@@ -119,10 +118,8 @@ export class ThucdonComponent {
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
       this.thucDonService.updateThucDon(body.id, body).subscribe({
         next: (res: any) => {
-          // console.log(res);
           if (res.data) {
             this.searchForm.loaiMonAnId = '';
             this.searchForm.comboId = '';
@@ -161,7 +158,6 @@ export class ThucdonComponent {
         )
       });
     } else {
-      // Thêm mới bàn
       this.thucDonService.addThucDon(body).subscribe({
         next: (res: any) => {
           console.log(res);
@@ -209,7 +205,6 @@ export class ThucdonComponent {
     this.isEditMode = true;
     this.formData = item;
     console.log(item);
-    // console.log(this.formData);
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -256,19 +251,15 @@ export class ThucdonComponent {
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
-        // Create object URL from blob
         const url = window.URL.createObjectURL(response);
         
-        // Open preview in new tab
         window.open(url, '_blank');
         
-        // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
     );
   }
   toggleTrangThai(item: any): void {
-    // Nếu đang bật => chuyển thành tắt
     if (item.trangThai === 1) {
       const updatedItem = { ...item, trangThai: 0 };
       this.thucDonService.updateThucDon(item.id, updatedItem).subscribe({
@@ -304,12 +295,10 @@ export class ThucdonComponent {
         )
       });
     } else {
-      // Nếu đang tắt => bật, và tắt tất cả cái đang bật khác
       const dangHoatDong = this.thucDonPaging.find(x => x.trangThai === 1);
   
       const updateCalls = [];
   
-      // Nếu có thực đơn khác đang hoạt động thì tắt nó
       if (dangHoatDong) {
         const updateOff = {
           ...dangHoatDong,
@@ -318,17 +307,14 @@ export class ThucdonComponent {
         updateCalls.push(this.thucDonService.updateThucDon(dangHoatDong.id, updateOff));
       }
   
-      // Bật thực đơn được chọn
       const updateOn = {
         ...item,
         trangThai: 1
       };
       updateCalls.push(this.thucDonService.updateThucDon(item.id, updateOn));
   
-      // Gửi tất cả gọi API
       forkJoin(updateCalls).subscribe({
         next: (results: any) => {
-          // cập nhật local state sau khi thành công
           if (dangHoatDong) dangHoatDong.trangThai = 0;
           item.trangThai = 1;
           this.notification.create(

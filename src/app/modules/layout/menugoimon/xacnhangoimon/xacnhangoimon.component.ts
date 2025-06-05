@@ -68,7 +68,7 @@ export class XacnhangoimonComponent implements OnInit  {
     return this.selectedItemsMA.reduce((tong, mon) => tong + (mon.gia - (mon.giamGia ? mon.gia * mon.giamGia / 100 : 0)) * mon.soLuong, 0);
   }
   troVeMenugoimon() {
-    console.log("Dữ liệu trước khi truyền đi:", this.selectedItemsMA); // Kiểm tra dữ liệu đang truyền đi
+    console.log("Dữ liệu trước khi truyền đi:", this.selectedItemsMA); 
 
     this.router.navigate(['/menugoimon/'+this.id], {
       state: { updatedSelectedItems: this.selectedItemsMA },
@@ -215,7 +215,7 @@ export class XacnhangoimonComponent implements OnInit  {
         },
         (err) => {
           console.error('Không tải được ảnh:', item.ten, err);
-          this.imageUrls[item.ma] = 'assets/images/default-image.png'; // ảnh mặc định nếu cần
+          this.imageUrls[item.ma] = 'assets/images/default-image.png'; 
         }
       );
     }

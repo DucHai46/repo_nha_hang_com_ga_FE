@@ -18,7 +18,6 @@ export class CalamviecComponent {
     private caLamViecService: CaLamViecService
   ) {}
   caLamViecPaging: any[] = [];
-  // itemsSearch: any [] = [];
   paging: any = {
     page: 1,
     size: 10,
@@ -26,7 +25,6 @@ export class CalamviecComponent {
   };
   totalPages = 0;
   ngOnInit(): void {
-    // Khởi tạo component
     this.search();
     this.store.setItems$(this.caLamViecPaging);
     
@@ -36,7 +34,7 @@ export class CalamviecComponent {
     tenCaLamViec: ''
   };
   search() {
-   this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+   this.searchForm.isPaging = true; 
    this.searchForm.pageNumber = this.paging.page;
    this.searchForm.pageSize = this.paging.size;
    this.caLamViecService.getCaLamViec(this.searchForm).subscribe(
@@ -63,7 +61,7 @@ export class CalamviecComponent {
 
   changePageSize(newSize: number){
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu
+    this.paging.page = 1; 
     this.search();
   }
 
@@ -76,14 +74,14 @@ export class CalamviecComponent {
   isEditMode = false;
   formData: any = {}
 
-  // Hàm mở popup thêm mới
+  
   openAddPopup(){
     this.isPopupOpen = true;
     this.isEditMode = false;
     this.formData = {};
   }
 
-  // Hàm đóng popup
+  
   closePopup(): void {
     this.isPopupOpen = false;
     this.isEditMode = false;
@@ -94,9 +92,9 @@ export class CalamviecComponent {
     
     if(!body) return;
 
-    // Nếu true thì sửa loại đơn order 
+   
     if(this.isEditMode){
-      // Sửa loại đơn order 
+ 
       this.caLamViecService.updateCaLamViec(body.id, body).subscribe(
         {
           next: (res: any) => {
@@ -128,7 +126,7 @@ export class CalamviecComponent {
         }
       );
     } else {
-      // Thêm mới loại đơn order
+
       this.caLamViecService.addCaLamViec(body).subscribe(
         {
           next: (res: any) => {
@@ -160,13 +158,13 @@ export class CalamviecComponent {
     }
   }
 
-  // Hàm mở popup sửa
+
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = {
       tenCaLamViec: item.tenCaLamViec,
-      // khungThoiGian: item.khungThoiGian,
+ 
       gioVao: item.gioVao,
       gioRa: item.gioRa,
       id: item.id,
@@ -174,7 +172,6 @@ export class CalamviecComponent {
     };
   }
 
-  // Hàm mở popup xác nhận xóa
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
       width: '400px',
