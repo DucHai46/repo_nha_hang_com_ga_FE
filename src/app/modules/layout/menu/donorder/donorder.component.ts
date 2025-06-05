@@ -14,6 +14,7 @@ import { OrderSignalRServiceService } from '../../../../core/services/OrderSigna
 import { FileService } from '../../../../core/services/file.service';
 
 
+
 @Component({
   selector: 'app-donorder',
   templateUrl: './donorder.component.html',
@@ -57,6 +58,18 @@ export class DonorderComponent implements OnInit {
       }
     });
 
+    this.loaiDonOrderService.getLoaidonorder({}).subscribe({
+      next: (res: any) => {
+        this.loaiDonOrder = res.data.data.map((loaiDon: any) => {
+          return {
+            id: loaiDon.id,
+            tenloaiDon: loaiDon.tenLoaiDon
+          };
+        })
+        console.log(this.loaiDonOrder);
+      }
+    });
+
     this.hoaDonThanhToanService.getHoaDonThanhToan({}).subscribe({
       next: (res: any) => {
         console.log(res.data.data);
@@ -96,6 +109,7 @@ export class DonorderComponent implements OnInit {
   searchForm: any = {
     tenDon: '',
     khachHangs: '',
+    loaiDon: '',
   }
 
   searchKH: any = {
@@ -198,6 +212,7 @@ export class DonorderComponent implements OnInit {
 
   reset() {
     this.searchForm.tenDon = '';
+    this.searchForm.loaiDon = '';
     this.searchForm.khachHangs = '';
     this.khachHangIds = [];
     this.searchForm.khachHang = [];
@@ -212,16 +227,10 @@ export class DonorderComponent implements OnInit {
   isChiTietHoaDonOpen = false;
 
   Status = {
-    trangThai: 1,
+    trangThai: 3,
   }
   Id: string = '';  
-
-  // openAddPopup(): void {
-  //   // console.log(this.loaiDonOrder);
-  //   this.isPopupOpen = true;
-  //   this.isEditMode = false;
-  //   this.formData = {};
-  // }
+  loaiDonName: string = '';
 
   openChiTietPopup(item: any): void {
     this.isChiTietOpen = true;
@@ -249,6 +258,58 @@ export class DonorderComponent implements OnInit {
     this.search(); // load lại dữ liệu sau khi đóng chi tiết
   }
 
+  xacNhan(item: any): void {
+    item.trangThai = 1;
+    const status = {
+      trangThai: 1,
+    };
+    this.donOrderService.updateStatusDonOrder(item.id, status).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.notification.create(
+          'success',
+          'Thông báo!',
+          `Cập nhật thành công`,
+          {
+            nzClass: 'notification-success',
+            nzDuration: 2000
+          }
+        ),
+        this.search();
+      },
+       error: () => {
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Cập nhật thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
+        }
+    });
+  }
+
+  isLoaiDon(item: any) {
+    // Kiểm tra xem item.loaiDon có phải là object với thuộc tính id không
+    if (item.loaiDon && item.loaiDon.id) {
+      if (item.loaiDon.name) {
+        return item.loaiDon.name?.toLowerCase() === 'đơn online';
+      }
+    }
+    return false;
+  }
+
+  huyDon(item: any): void {
+    this.updateDonOrderStatusOnlline(item.id, { trangThai: 5 });
+    this.search();
+  }
+
+  isDaHuy(item: any): boolean {
+    return item.trangThai === 0;
+  }
+
   onSaveCongThuc(body: any): void {
     console.log(body);
     if (!body) return;
@@ -264,6 +325,8 @@ export class DonorderComponent implements OnInit {
               // this.formData.hoaDonThanhToans = [res.data]; // Gán danh sách hóa đơn vào formData
               // this.formData.hoaDonThanhToanId = res.data.id; // Gán ID hóa đơn vào formData
               this.closePopup();
+              console.log(res.data.donOrder);
+              this.updateDonOrderStatusOnlline(this.formHoaDon.donOrder.id, { trangThai: 2 });
               this.notification.create(
                 'success',
                 'Thông báo!',
@@ -273,6 +336,7 @@ export class DonorderComponent implements OnInit {
                   nzDuration: 2000
                 }
               );
+      
               this.openChiTietHoaDonPopup();
             }
           },
@@ -286,11 +350,13 @@ export class DonorderComponent implements OnInit {
             }
           )
         });
+        this.search();
     } else {
 
       // console.log(this.isEditMode);
       const data = body.donOrder;
       console.log(data);
+
 
      // Cập nhật trạng thái hóa đơn thanh toán
       this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
@@ -303,12 +369,11 @@ export class DonorderComponent implements OnInit {
             this.searchForm.gioRa= '';
             // this.search();
             console.log(data);
+        
             this.updateDonOrderStatus(data);
 
-            
-            // this.closeChiTiet();
             this.isChiTietHoaDonOpen = false;
-            this.search();
+            // this.search();
             this.notification.create(
               'success',
               'Thông báo!',
@@ -342,18 +407,55 @@ export class DonorderComponent implements OnInit {
           );
         }
       });
+
+      this.search();
     }
   }
 
-  updateDonOrderStatus(donOrderId: string): void {
-    this.donOrderService.getDonOrderById(donOrderId).subscribe({
-      next: (res: any) => {
-        const item = res.data;
-        console.log(item);
-        this.Id = item.id;
-        console.log(this.Id);  
+  // Cập nhật trạng thái đơn order
+  updateDonOrderStatusOnlline(donOrderId: string, status: { trangThai: number }): void {
+  this.donOrderService.updateStatusDonOrder(donOrderId, status).subscribe({
+    next: (res: any) => {
+      console.log(res);
+      if (res.data) {
+        this.notification.create(
+          'success',
+          'Thông báo!',
+          `Cập nhật thành công`,
+          {
+            nzClass: 'notification-success',
+            nzDuration: 2000
+          }
+        );
+      } else {
+        this.notification.create(
+          'error',
+          'Thông báo!',
+          `Cập nhật thất bại`,
+          {
+            nzClass: 'notification-error',
+            nzDuration: 2000
+          }
+        );
       }
-    });
+    },
+    error: () => {
+      this.notification.create(
+        'error',
+        'Thông báo!',
+        `Cập nhật thất bại`,
+        {
+          nzClass: 'notification-error',
+          nzDuration: 2000
+        }
+      );
+    }
+  });
+}
+
+
+  // cập nhật trạng thái đơn order khi đã thanh toán
+  updateDonOrderStatus(donOrderId: string): void {
     
     console.log(donOrderId);
     this.donOrderService.updateStatusDonOrder(donOrderId, this.Status).subscribe({
@@ -458,6 +560,7 @@ export class DonorderComponent implements OnInit {
     this.isAddMode = true;
     this.formData = item;
     console.log(item);
+    this.loaiDonName = item.loaiDon.name;
     // console.log(this.formData);
   }
   openDeletePopup(item: any): void {

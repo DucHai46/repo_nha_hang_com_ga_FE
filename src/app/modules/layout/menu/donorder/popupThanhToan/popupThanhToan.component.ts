@@ -44,6 +44,13 @@ export class PopupThanhToanComponent implements OnInit {
     trangThai: 1, 
   }
 
+  searchKM: any = {
+    isPaging: true,
+    PageNumber: 1,
+    PageSize: 10,
+    trangThai: 1, 
+  }
+
   searchNH: any = {
     isPaging: true,
     PageNumber: 1,
@@ -150,7 +157,7 @@ openChiTietHoaDonPopup(item: any): void {
       },
     });
 
-    this.khuyenmaiService.getKhuyenMai({}).subscribe({
+    this.khuyenmaiService.getKhuyenMai(this.searchKM).subscribe({
       next: (res: any) => {
         this.khuyenMai = res.data.data.map((item: any) => ({
           id: item.id,

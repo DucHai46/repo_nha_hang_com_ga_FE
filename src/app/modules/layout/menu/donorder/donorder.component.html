@@ -38,6 +38,18 @@
           </option>
         </select> -->
       </div>
+      <div class="flex flex-col gap-2">
+        <label for="giaTri">Loại đơn</label>
+        <select
+          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          id="khachHang"
+          [(ngModel)]="searchForm.loaiDon"
+        >
+          <option *ngFor="let x of loaiDonOrder" [value]="x.id">
+            {{ x.tenloaiDon }}
+          </option>
+        </select>
+      </div>
     </div>
     <!-- button -->
     <div class="flex flex-row gap-4 justify-center items-center">
@@ -99,7 +111,7 @@
       </button>
     </div> -->
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="w-full text-sm text-left rtl:text-right">
+      <table class="w-full text-sm text-left rtl:text-right text-center">
         <thead class="text-xs text-gray-700 uppercase text-center">
           <tr>
             <th scope="col" class="px-6 py-3">STT</th>
@@ -113,7 +125,7 @@
         </thead>
         <tbody>
           <tr
-            class="border-b dark:border-gray-700 border-gray-200"
+            class="border-b dark:border-gray-700 border-gray-200 text-center"
             *ngFor="let item of donOrderPaging; let i = index"
           >
             <td
@@ -149,11 +161,27 @@
               <span
                 class="border border-2 rounded-lg px-1 text-white"
                 [ngClass]="{
-                  'bg-green-500 border-green-500': item.trangThai,
-                  'bg-red-500 border-red-500': !item.trangThai
+                  'bg-green-500 border-green-500': item.trangThai === 3,
+                  'bg-orange-500 border-orange-500': item.trangThai === 2,
+                  'bg-gray-500 border-gray-500': item.trangThai === 1,
+                  'bg-yellow-500 border-yellow-500': item.trangThai === 0,
+                  'bg-blue-500 border-blue-500': item.trangThai === 4,
+                  'bg-red-500 border-red-500': item.trangThai === 5
                 }"
               >
-                {{ item.trangThai ? "Đã thanh toán" : "Chưa thanh toán" }}
+                {{
+                  item.trangThai === 3
+                    ? "Đã thanh toán"
+                    : item.trangThai === 2
+                    ? "Chưa thanh toán"
+                    : item.trangThai === 0
+                    ? "Chưa xác nhận"
+                    : item.trangThai === 1
+                    ? "Đã xác nhận"
+                    : item.trangThai === 4
+                    ? "Hoàn thành"
+                    : "Đã hủy"
+                }}
               </span>
             </td>
             <td
@@ -161,7 +189,10 @@
             >
               <button
                 (click)="openAddHoaDonPopup(item)"
-                *ngIf="isThanhToan(item) && item.trangThai == false"
+                *ngIf="
+                  (isThanhToan(item) && item.trangThai == 2) ||
+                  (item.trangThai == 1 && isThanhToan(item))
+                "
                 [disabled]="!isHoaDon(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1 disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -187,33 +218,48 @@
                   </svg>
                 </p>
               </button>
-              <!-- 
+
               <button
-                (click)="openDeletePopup(item)"
+                (click)="xacNhan(item)"
+                *ngIf="isLoaiDon(item) && item.trangThai == 0"
+                class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
+              >
+                <svg
+                  class="w-6 h-6 text-blue-600 dark:text-blue-400"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </button>
+              <button
+                (click)="huyDon(item)"
+                *ngIf="isLoaiDon(item) && isDaHuy(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-red-100 focus:outline-none rounded-lg px-2 py-1"
               >
-                <p
-                  class="font-medium text-red-600 dark:text-red-500 hover:text-red-800"
+                <svg
+                  class="w-6 h-6 text-red-600 dark:text-red-400"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    class="w-6 h-6 text-red-600 dark:text-red-500"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                    />
-                  </svg>
-                </p>
-              </button> -->
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
               <button
                 (click)="openChiTietPopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"

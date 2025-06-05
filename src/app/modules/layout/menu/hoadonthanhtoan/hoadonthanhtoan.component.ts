@@ -135,7 +135,7 @@ export class HoadonthanhtoanComponent implements OnInit {
   formData: any = {}
   isChiTietOpen = false;
   Status = {
-    trangThai: 1,
+    trangThai: 3,
   }
   Id: string = '';
 
