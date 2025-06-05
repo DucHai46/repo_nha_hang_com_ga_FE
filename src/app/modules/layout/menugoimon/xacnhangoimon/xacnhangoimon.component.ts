@@ -28,8 +28,6 @@ export class XacnhangoimonComponent implements OnInit  {
     if (navigation?.extras?.state?.['selectedItemsMA']) {
       this.selectedItemsMA = navigation.extras.state['selectedItemsMA'];
       this.id = navigation.extras.state['id'];
-      console.log(this.id);
-      console.log("Dữ liệu nhận được từ MenuGoiMonComponent:", this.selectedItemsMA);
     }
 
   }
@@ -40,7 +38,6 @@ export class XacnhangoimonComponent implements OnInit  {
     if (item) {
       item.soLuong += 1;
     }
-    console.log(this.donOrder);
   }
 
   giamSoLuong(ma: string) {
@@ -64,8 +61,6 @@ export class XacnhangoimonComponent implements OnInit  {
     return this.selectedItemsMA.reduce((tong, mon) => tong + (mon.gia - (mon.giamGia ? mon.gia * mon.giamGia / 100 : 0)) * mon.soLuong, 0);
   }
   troVeMenugoimon() {
-    console.log("Dữ liệu trước khi truyền đi:", this.selectedItemsMA); 
-
     this.router.navigate(['/menugoimon/'+this.id], {
       state: { updatedSelectedItems: this.selectedItemsMA },
     });
@@ -76,14 +71,9 @@ export class XacnhangoimonComponent implements OnInit  {
     if(this.id == '' || this.id == null){
       return;
     }
-    console.log(this.selectedItemsMA);
     const don = this.donOrder.find((td: any) => td.trangThai === 0 && td.ban.id === this.id);
     const combo=this.selectedItemsMA.filter((td: any) => td.danhMuc === 'comboMonAn');
     const monAn=this.selectedItemsMA.filter((td: any) => td.danhMuc !== 'comboMonAn');
-    console.log("MonAn: ",monAn);
-    console.log("ComBo: ",combo);
-    console.log("Gia trị ban đầu: ",this.donOrder);
-    console.log("Gia trị ban 2: ",don);
     if(don){
       let loaiDon=don.loaiDon.id;
       let khachHang=don.khachHang.id;
@@ -102,7 +92,6 @@ export class XacnhangoimonComponent implements OnInit  {
           moTa: item.ghiChu
         }))
       };
-      console.log("Chi tiết môi: ",chiTietMoi);
       don.chiTietDonOrder.forEach((chiTiet: any) => {
         chiTiet.monAns = chiTiet.monAns.map((item: any) => ({
           monAn: item.monAn.id ,  
@@ -124,7 +113,6 @@ export class XacnhangoimonComponent implements OnInit  {
       don.ban=this.id;
       don.loaiDon=loaiDon;
       don.khachHang=khachHang;
-      console.log("Gia trị sau khi cập nhật: ",don);
       this.donOrderService.updateDonOrder(don.id,don).subscribe(
         {
 
@@ -140,7 +128,6 @@ export class XacnhangoimonComponent implements OnInit  {
           }
         }
       )
-      console.log("Update thanh cong",this.donOrder);
 
     }else{
       const newDonOrder = {
@@ -168,7 +155,6 @@ export class XacnhangoimonComponent implements OnInit  {
           }
         ]
       };
-      console.log(newDonOrder);
       this.donOrderService.addDonOrder(newDonOrder).subscribe(
         {
           next: (res: any) => {
@@ -183,7 +169,6 @@ export class XacnhangoimonComponent implements OnInit  {
           }
         }
       )
-      console.log("Them moi thanh cong",this.donOrder);
 
     }
 

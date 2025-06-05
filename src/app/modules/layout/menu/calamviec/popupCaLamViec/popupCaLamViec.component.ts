@@ -15,7 +15,6 @@ export class PopupCaLamViecComponent implements OnInit  {
   };
 
   ngOnInit(): void {
-    console.log(this.formData); 
   }
   @Input() isEditMode: boolean = false;
   @Output() close = new EventEmitter<void>();

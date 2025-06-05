@@ -106,10 +106,7 @@ export class MenuClientComponent implements OnInit {
   updatePaging() {
     this.totalPages = Math.ceil(this.allItems.length / this.pageSize) || 1;
     this.pagedItems = this.allItems.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
-    console.log(this.pagedItems);
-    console.log(this.totalPages);
     this.pages = this.getPages();
-    console.log(this.pages);
   }
 
   goToPage(page: string) {

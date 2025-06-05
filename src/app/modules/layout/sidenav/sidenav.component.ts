@@ -30,7 +30,6 @@ export class SidenavComponent implements OnInit {
   ngOnInit(): void {
     if (this.token) {
       const decodedToken = JSON.parse(atob(this.token.split('.')[1]));
-      console.log(decodedToken);
       const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
       const userInfor = {
         id: decodedToken['sub'],
@@ -49,7 +48,6 @@ export class SidenavComponent implements OnInit {
             }
           },
           error: (err: any) => {
-            console.log(err);
           }
         });
       });

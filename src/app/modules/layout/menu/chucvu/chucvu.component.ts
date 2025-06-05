@@ -82,7 +82,6 @@ export class ChucVuComponent implements OnInit {
     this.isEditMode = false;
   }
   onSaveChucVu(body: any): void {
-    console.log(body);
 
     if (!body) return;
 

@@ -217,7 +217,6 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
     this.nhaHangService.getGiaoDien(null, true).subscribe({
       next: (res: any) => {
         this.giaoDien = res.data;
-        console.log(this.giaoDien);
         this.convertAllImageFields();
       }
     });

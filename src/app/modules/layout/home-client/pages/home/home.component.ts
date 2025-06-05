@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.homeClientStore.giaoDien$.subscribe((giaoDien) => {
       this.giaoDien = giaoDien;
     });
-    console.log(this.giaoDien);
   }
 
   ngAfterViewInit(): void {

@@ -113,7 +113,6 @@ export class BananComponent implements OnInit   {
     this.isEditMode = false;
   }
   onSaveCongThuc(body: any): void {
-    console.log(body);
   
     if (!body) return;
   
@@ -211,7 +210,6 @@ export class BananComponent implements OnInit   {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = item;
-    console.log(item);
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

@@ -52,7 +52,6 @@ export class BanggiaComponent implements OnInit {
       {
         next: (res: any) => {
           this.bangGiaPaging = res.data.data;
-          console.log(this.bangGiaPaging);
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;

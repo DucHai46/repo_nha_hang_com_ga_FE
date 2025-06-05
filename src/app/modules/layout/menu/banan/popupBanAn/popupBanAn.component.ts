@@ -29,7 +29,6 @@ export class PopupBanAnComponent implements OnInit {
         }
       },
       error: (err: any) => {
-        console.log(err);
       }
     });
   }

@@ -13,7 +13,6 @@ export class AboutComponent implements OnInit, AfterViewInit  {
   ngOnInit(): void {
     this.homeClientStore.giaoDien$.subscribe((giaoDien) => {
       this.giaoDien = giaoDien;
-      console.log(this.giaoDien);
     });
     
     

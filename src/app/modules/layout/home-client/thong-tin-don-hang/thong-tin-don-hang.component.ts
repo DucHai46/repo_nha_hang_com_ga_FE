@@ -34,10 +34,8 @@ export class ThongTinDonHangComponent implements OnInit {
     ).subscribe({
       next: (donOrderRes: any) => {
         this.donOrder = donOrderRes?.data;
-        console.log(this.donOrder);
       },
       error: (error: any) => {
-        console.log(error);
       }
     });
   }

@@ -88,7 +88,6 @@ export class CalamviecComponent {
   }
 
   onSaveCongThuc(body: any): void {
-    console.log(body);
     
     if(!body) return;
 
@@ -98,7 +97,6 @@ export class CalamviecComponent {
       this.caLamViecService.updateCaLamViec(body.id, body).subscribe(
         {
           next: (res: any) => {
-            console.log(res);
             if(res.data) {
               this.searchForm.tenCaLamViec = '';
               this.search();
