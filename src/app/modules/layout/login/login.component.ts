@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService, private notification: NzNotificationService) { }
 
   currentIndex: number = 0;
-
+  isResetPassword: boolean = false;
   formData = {
     username: '',
     password: ''
@@ -46,6 +46,46 @@ export class LoginComponent implements OnInit {
       },
       error: (err: any) => {
         this.notification.error('Lỗi', 'Đăng nhập thất bại');
+      }
+    });
+  }
+  resetPassword() {
+    this.authService.resetPassword(this.formData.username).subscribe({
+      next: (res: any) => {
+        if (res.code === 200) {
+          this.notification.create(
+            'success',
+            'Thông báo!',
+            `${res.message}`,
+            {
+              nzClass: 'notification-success',    
+              nzDuration: 2000
+            }
+          );          
+          this.isResetPassword = false;
+        } else {
+          this.notification.create(
+            'error',
+            'Lỗi!',
+            `${res.message}`,
+            {
+              nzClass: 'notification-error',    
+              nzDuration: 2000
+            }
+          );
+          this.isResetPassword = false;
+        }
+      },
+      error: (err: any) => {
+        this.notification.create(
+          'error',
+          'Lỗi!',
+          'Đặt lại mật khẩu thất bại',
+          {
+            nzClass: 'notification-error',    
+            nzDuration: 2000
+          }
+        );
       }
     });
   }

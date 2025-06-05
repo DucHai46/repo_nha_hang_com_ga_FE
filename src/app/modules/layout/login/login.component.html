@@ -6,10 +6,9 @@
         src="https://theme.hstatic.net/200000385717/1000767290/14/logo.png?v=465"
         alt="logo"
       />
-      Đăng nhập
     </a>
     <div class="login-box">
-      <div class="login-content">
+      <div class="login-content" *ngIf="!isResetPassword">
         <h1 class="login-title">Đăng nhập vào tài khoản</h1>
         <form class="login-form" action="#">
           <div class="form-group">
@@ -35,9 +34,31 @@
               class="form-input"
               required
             />
+            <a class="forgot-password" (click)="isResetPassword = true">Quên mật khẩu?</a>
           </div>
           <button (click)="login()" type="submit" class="submit-button">
             Đăng nhập
+          </button>
+        </form>
+      </div>
+      <div class="login-content" *ngIf="isResetPassword">
+        <h1 class="login-title">Đặt lại mật khẩu</h1>
+        <form class="login-form" action="#">
+          <div class="form-group">
+            <label for="username" class="form-label">Tên tài khoản</label>
+            <input
+              type="input"
+              name="username"
+              id="username"
+              class="form-input"
+              placeholder="username"
+              [(ngModel)]="formData.username"
+              required
+            />
+            <a class="forgot-password" (click)="isResetPassword = false">Quay lại đăng nhập</a>
+          </div>
+          <button (click)="resetPassword()" type="submit" class="submit-button">
+            Đặt lại mật khẩu
           </button>
         </form>
       </div>

@@ -26,4 +26,7 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  resetPassword(username: string) {
+    return this.http.post(`${this.authUrl}/api/auth/reset-password?username=${username}`, {});
+  }
 }
