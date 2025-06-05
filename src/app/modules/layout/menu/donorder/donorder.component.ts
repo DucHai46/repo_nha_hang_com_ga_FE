@@ -314,7 +314,7 @@ export class DonorderComponent implements OnInit {
     // Kiểm tra xem item.loaiDon có phải là object với thuộc tính id không
     if (item.loaiDon && item.loaiDon.id) {
       if (item.loaiDon.name) {
-        return item.loaiDon.name?.toLowerCase() === 'đơn online';
+        return item.loaiDon.name?.toLowerCase() === 'online';
       }
     }
     return false;
@@ -343,10 +343,11 @@ export class DonorderComponent implements OnInit {
               this.closePopup();
               console.log(res.data.donOrder);
               this.updateDonOrderStatusOnlline(this.formHoaDon.donOrder.id, { trangThai: 2 });
+              this.search();
               this.notification.create(
                 'success',
                 'Thông báo!',
-                `Thêm mới thành công`,
+                `Tạo hóa đơn thành công`,
                 {
                   nzClass: 'notification-success',
                   nzDuration: 2000
@@ -359,7 +360,7 @@ export class DonorderComponent implements OnInit {
           error: () => this.notification.create(
             'error',
             'Thông báo!',
-            `Thêm mới thất bại`,
+            `Tạo hóa đơn thất bại`,
             {
               nzClass: 'notification-error',
               nzDuration: 2000
@@ -371,9 +372,6 @@ export class DonorderComponent implements OnInit {
 
       const data = body.donOrder;
       console.log(data);
-
-
-
      // Cập nhật trạng thái hóa đơn thanh toán
 
       this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
@@ -387,9 +385,8 @@ export class DonorderComponent implements OnInit {
             console.log(data);
         
             this.updateDonOrderStatus(data);
-
+            this.search();
             this.isChiTietHoaDonOpen = false;
-            // this.search();
             this.notification.create(
               'success',
               'Thông báo!',
@@ -423,27 +420,28 @@ export class DonorderComponent implements OnInit {
           );
         }
       });
-
-      this.search();
     }
   }
 
   // Cập nhật trạng thái đơn order
   updateDonOrderStatusOnlline(donOrderId: string, status: { trangThai: number }): void {
-  this.donOrderService.updateStatusDonOrder(donOrderId, status).subscribe({
-    next: (res: any) => {
-      console.log(res);
-      if (res.data) {
-        this.notification.create(
-          'success',
-          'Thông báo!',
-          `Cập nhật thành công`,
-          {
-            nzClass: 'notification-success',
-            nzDuration: 2000
+    this.donOrderService.updateStatusDonOrder(donOrderId, status).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        if (res.data) {
+          this.search();
+          if (res.data) {
+          this.search();
+          if(res.data.ban.id){
+            const banId = res.data.ban.id;
+            console.log(res.data.ban.id);
+            this.updateBanStatus(banId);
           }
-        );
-      } else {
+        }
+        
+        }
+      },
+      error: () => {
         this.notification.create(
           'error',
           'Thông báo!',
@@ -454,19 +452,7 @@ export class DonorderComponent implements OnInit {
           }
         );
       }
-    },
-    error: () => {
-      this.notification.create(
-        'error',
-        'Thông báo!',
-        `Cập nhật thất bại`,
-        {
-          nzClass: 'notification-error',
-          nzDuration: 2000
-        }
-      );
-    }
-  });
+    });
 }
 
 
@@ -479,25 +465,17 @@ export class DonorderComponent implements OnInit {
         console.log(res);
         
         if (res.data) {
+          this.search();
           if(res.data.ban.id){
             const banId = res.data.ban.id;
             console.log(res.data.ban.id);
             this.updateBanStatus(banId);
           }
-          this.notification.create(
-            'success',
-            'Thông báo!',
-            `Cập nhật trạng thái thành công`,
-            {
-              nzClass: 'notification-success',
-              nzDuration: 2000
-            }
-          );
         }else {
             this.notification.create(
               'error',
               'Thông báo!',
-              `Cập nhật thất bại`,
+              `Không có dữ liệu đơn order`,
               {
                 nzClass: 'notification-error',
                 nzDuration: 2000
@@ -532,27 +510,6 @@ export class DonorderComponent implements OnInit {
         this.banAnService.updateBanAn(this.Id, item).subscribe({
           next: (res: any) => {
             console.log(res);
-            if (res.data) {
-              this.notification.create(
-               'success',
-                'Thông báo!',
-                `Cập nhật trạng thái thành công`,
-                {
-                  nzClass: 'notification-success',
-                }
-              )
-            }
-            else {
-            this.notification.create(
-              'error',
-              'Thông báo!',
-              `Cập nhật thất bại`,
-              {
-                nzClass: 'notification-error',
-                nzDuration: 2000
-              }
-            );
-          }
           },
           error: () => {
           this.notification.create(

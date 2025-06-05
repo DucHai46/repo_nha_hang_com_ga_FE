@@ -71,7 +71,7 @@ export class XacnhangoimonComponent implements OnInit  {
     if(this.id == '' || this.id == null){
       return;
     }
-    const don = this.donOrder.find((td: any) => td.trangThai === 0 && td.ban.id === this.id);
+    const don = this.donOrder.find((td: any) => (td.trangThai === 0 || td.trangThai === 1) && td.ban.id === this.id);
     const combo=this.selectedItemsMA.filter((td: any) => td.danhMuc === 'comboMonAn');
     const monAn=this.selectedItemsMA.filter((td: any) => td.danhMuc !== 'comboMonAn');
     if(don){

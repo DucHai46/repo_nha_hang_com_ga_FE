@@ -40,7 +40,9 @@ export class ChitietdonComponent implements OnInit {
       {
         next: (res: any) => {
           this.donOrder = res.data.data;
-          const don = this.donOrder.find((td: any) => td.trangThai === 0 && td.ban.id === this.id);
+          const don = this.donOrder.find((td: any) =>
+            [0, 1].includes(td.trangThai) && td.ban.id === this.id
+          );
           this.tongTien = don.tongTien;
           this.chiTietDonOrder = don.chiTietDonOrder;
           this.banAn=don.ban.name;

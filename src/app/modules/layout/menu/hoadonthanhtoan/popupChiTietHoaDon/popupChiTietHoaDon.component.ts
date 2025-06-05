@@ -1,3 +1,4 @@
+import { DonOrderAdminService } from './../../donorder/services/donorderadmin.service';
 import { MonAnService } from './../../monan/services/monan.service';
 import { PhuongThucThanhToanService } from './../../phuongthucthanhtoan/services/phuongthucthanhtoan.service';
 import { NhanVienService } from './../../nhanvien/services/nhanvien.service';
@@ -43,6 +44,7 @@ export class PopupChiTietHoaDonComponent implements OnInit {
 
   dsMonAns: any; 
 
+  donOrderId: any;
 
   isClosePopup = false;
 
@@ -117,17 +119,13 @@ export class PopupChiTietHoaDonComponent implements OnInit {
       trangthai: 1,
     };
     console.log(this.form);
-
-    
-
+    // this.donOrderId = this.formData.donOrder.id; // lưu id đơn order để cập nhật trạng thái khi xuất file pdf
     this.save.emit(this.form);
-
   }
   onChange(){
     const status = true;
     this.change.emit(status);
   }
-
 
   countFoodItems() {
     if (!this.donOrder || !this.donOrder.chiTietDonOrder || !Array.isArray(this.donOrder.chiTietDonOrder)) {
@@ -233,6 +231,62 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     console.log('Danh sách combo:', this.listCombos);
   }
 
+  // Cập nhật trạng thái đơn order
+  updateDonOrderStatusOnlline(donOrderId: string, status: { trangThai: number }): void {
+    this.donOrderAdminService.updateStatusDonOrder(donOrderId, status).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        if (res.data) {
+          this.notification.create(
+            'success',
+            'Thông báo!',
+            `Cập nhật thành công`,
+            {
+              nzClass: 'notification-success',
+              nzDuration: 2000
+            }
+          );
+        } else {
+          this.notification.create(
+            'error',
+            'Thông báo!',
+            `Cập nhật thất bại`,
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
+        }
+      },
+      error: () => {
+        this.notification.create(
+          'error',
+          'Thông báo!',
+          `Cập nhật thất bại`,
+          {
+            nzClass: 'notification-error',
+            nzDuration: 2000
+          }
+        );
+      }
+    });
+}
+
+  changeStatus() {
+    console.log(this.formData.donOrder.id);
+    this.donOrderService.getDonOrderById(this.formData.donOrder.id).subscribe({
+      next: (res: any) => {
+        if(res.data){
+          this.donOrder = res.data;
+          console.log(this.donOrder);
+          if(this.donOrder.loaiDon.name.toLowerCase() === 'offline'){
+            this.updateDonOrderStatusOnlline(this.formData.donOrder.id, { trangThai: 4 });
+          }
+        }
+      }
+    });  
+  }
+
   closeChiTiet() {
     console.log(this.formData);
     this.close.emit();
@@ -247,6 +301,8 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     private nhanVienService: NhanVienService,
     private phuongThucThanhToanService: PhuongThucThanhToanService,
     private monAnService: MonAnService,
+    private notification: NzNotificationService,
+    private donOrderAdminService: DonOrderAdminService,
   ) {}
 
   getImageUrl(hinhAnh: string): string {
@@ -312,6 +368,9 @@ export class PopupChiTietHoaDonComponent implements OnInit {
 
     const element: Element = document.getElementById('hoadon')!;
     html2pdf().from(element).set(options).save();
+
+    this.changeStatus();
+
   }
 }
 

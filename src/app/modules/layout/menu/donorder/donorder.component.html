@@ -138,7 +138,16 @@
               {{ item.tenDon }}
             </td>
             <td class="px-6 py-4">
-              {{ item.loaiDon.name }}
+              <span
+                class="border border-2 rounded-lg px-1 text-white"
+                [ngClass]="{
+                  'bg-green-500 border-green-500':
+                    item.loaiDon.name === 'Online',
+                  'bg-red-500 border-red-500': item.loaiDon.name === 'Offline'
+                }"
+              >
+                {{ item.loaiDon.name }}
+              </span>
             </td>
             <td class="px-6 py-4">
               {{ item.ban.name }}

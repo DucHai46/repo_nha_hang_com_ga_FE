@@ -171,26 +171,7 @@ export class HoadonthanhtoanComponent implements OnInit {
             console.log(res.data.ban.id);
             this.updateBanStatus(banId);
           }
-          this.notification.create(
-            'success',
-            'Thông báo!',
-            `Cập nhật trạng thái thành công`,
-            {
-              nzClass: 'notification-success',
-              nzDuration: 2000
-            }
-          );
-        }else {
-            this.notification.create(
-              'error',
-              'Thông báo!',
-              `Cập nhật thất bại`,
-              {
-                nzClass: 'notification-error',
-                nzDuration: 2000
-              }
-            );
-          }
+        }
       },
        error: () => {
           this.notification.create(
@@ -219,27 +200,7 @@ export class HoadonthanhtoanComponent implements OnInit {
         this.banAnService.updateBanAn(this.Id, item).subscribe({
           next: (res: any) => {
             console.log(res);
-            if (res.data) {
-              this.notification.create(
-               'success',
-                'Thông báo!',
-                `Cập nhật trạng thái thành công`,
-                {
-                  nzClass: 'notification-success',
-                }
-              )
-            }
-            else {
-            this.notification.create(
-              'error',
-              'Thông báo!',
-              `Cập nhật thất bại`,
-              {
-                nzClass: 'notification-error',
-                nzDuration: 2000
-              }
-            );
-          }
+           
           },
           error: () => {
           this.notification.create(
