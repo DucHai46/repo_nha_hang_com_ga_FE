@@ -28,7 +28,11 @@ export class ThongTinDonHangComponent implements OnInit {
       take(1)
     ).subscribe(params => {
       this.donOrderId = params['id'];
+      this.getDonOrder();
     });
+  }
+
+  getDonOrder(): void {
     this.donOrderService.getDonOrderById(this.donOrderId).pipe(
       take(1)
     ).subscribe({
@@ -42,11 +46,11 @@ export class ThongTinDonHangComponent implements OnInit {
 
   canCancelOrder(): boolean {
     if (!this.donOrder?.ngayTao) return false;
-    
+
     const orderTime = new Date(this.donOrder.ngayTao);
     const currentTime = new Date();
     const diffInMinutes = (currentTime.getTime() - orderTime.getTime()) / (1000 * 60);
-    
+
     return diffInMinutes <= 15 && this.donOrder?.trangThai === 0;
   }
 
@@ -61,30 +65,30 @@ export class ThongTinDonHangComponent implements OnInit {
         this.donOrderService.huyDonOrder(this.donOrderId, this.donOrder?.tenDon).pipe(
           take(1)
         ).subscribe({
-        next: () => {
-          this.notification.create(
-            'success',
-            'Thông báo!',
-            `Hủy đơn hàng thành công`,
-            {
-              nzClass: 'notification-success',    
-              nzDuration: 2000
-            }
-          );          
-          this.router.navigate(['home-client/thong-tin-don-hang',this.donOrderId]);
-        },
-        error: (error) => {
-          this.notification.create(
-            'error',
-            'Thông báo!',
-            `Có lỗi xảy ra khi hủy đơn hàng`,
-            {
-              nzClass: 'notification-error',    
-              nzDuration: 2000
-            }
-          );
-        }
-      });
+          next: () => {
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Hủy đơn hàng thành công`,
+              {
+                nzClass: 'notification-success',
+                nzDuration: 2000
+              }
+            );
+            this.getDonOrder();
+          },
+          error: (error) => {
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Có lỗi xảy ra khi hủy đơn hàng`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            );
+          }
+        });
       }
     });
   }
@@ -102,31 +106,31 @@ export class ThongTinDonHangComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.donOrderService.xacNhanDonOrder(this.donOrderId, this.donOrder?.tenDon).pipe(take(1)).subscribe({
-        next: () => {
-          this.notification.create(
-            'success',
-            'Thông báo!',
-            `Xác nhận đơn hàng thành công`,
-            {
-              nzClass: 'notification-success',    
-              nzDuration: 2000
-            }
-          );
-          this.router.navigate(['home-client/thong-tin-don-hang',this.donOrderId]);
-        },
-        error: (error) => {
-          this.notification.create(
-            'error',
-            'Thông báo!',
-            `Có lỗi xảy ra khi xác nhận đơn hàng`,
-            {
-              nzClass: 'notification-error',    
-              nzDuration: 2000
-            }
-          );
-        }
-      });
-    }
+          next: () => {
+            this.notification.create(
+              'success',
+              'Thông báo!',
+              `Xác nhận đơn hàng thành công`,
+              {
+                nzClass: 'notification-success',
+                nzDuration: 2000
+              }
+            );
+            this.getDonOrder();
+          },
+          error: (error) => {
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Có lỗi xảy ra khi xác nhận đơn hàng`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            );
+          }
+        });
+      }
     });
   }
 }
