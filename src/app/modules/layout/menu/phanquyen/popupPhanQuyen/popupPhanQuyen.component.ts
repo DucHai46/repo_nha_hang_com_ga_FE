@@ -14,8 +14,8 @@ export class PopupPhanQuyenComponent {
     moTa: '',
     danhSachMenu: []
   };
-  @Input() isEditMode: boolean = false; 
-  @Input() isChiTietOpen: boolean = false; 
+  @Input() isEditMode: boolean = false;
+  @Input() isChiTietOpen: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
   constructor(
@@ -27,7 +27,7 @@ export class PopupPhanQuyenComponent {
       {
         next: (res: any) => {
           if (res.data) {
-            this.menuDynamic = res.data.data.filter((item: MenuDynamic) => item.parent.id === null);
+            this.menuDynamic = res.data.data
             console.log(this.menuDynamic);
           }
         },
