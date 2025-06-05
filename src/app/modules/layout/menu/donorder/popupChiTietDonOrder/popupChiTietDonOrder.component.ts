@@ -10,9 +10,9 @@ import { DonOrderAdminService } from '../services/donorderadmin.service';
   styleUrl: './popupChiTietDonOrder.component.scss'
 })
 export class PopupChiTietDonOrderComponent implements OnInit {
-  @Input() formData: any;     // Nhận dữ liệu đơn order từ bên ngoài
-  @Output() close = new EventEmitter<void>(); // Khi bấm nút đóng
-  @Output() updateStatus = new EventEmitter<any>(); // Emit sự kiện khi cập nhật trạng thái
+  @Input() formData: any;   
+  @Output() close = new EventEmitter<void>(); 
+  @Output() updateStatus = new EventEmitter<any>();
   showPopup = false;
   popupX = 0;
   popupY = 0;
@@ -58,23 +58,17 @@ export class PopupChiTietDonOrderComponent implements OnInit {
   constructor(
     private fileService: FileService,
     private notification: NzNotificationService,
-    private donOrderService: DonOrderAdminService, // Thêm service vào đây
+    private donOrderService: DonOrderAdminService,  
     private ComboService: ComboService
   ) { }
 
-  // Phương thức xử lý thay đổi trạng thái món ăn
   toggleFoodStatus(monAn: any, chiTietIndex: number, monAnIndex: number) {
-    // Đảo ngược trạng thái hiện tại (0: Đang chế biến, 1: Đã hoàn thành)
     const newStatus = monAn.monAn_trangThai === 1 ? 0 : 1;
     monAn.monAn_trangThai = newStatus;
 
-    // Tạo bản sao của đơn order để cập nhật
     const updatedOrder = { ...this.formData };
 
-    // Cập nhật trạng thái món ăn trong bản sao
     updatedOrder.chiTietDonOrder[chiTietIndex].monAns[monAnIndex].monAn_trangThai = newStatus;
-
-    // Kiểm tra ID có hợp lệ không trước khi gửi request
     if (!updatedOrder.id || typeof updatedOrder.id !== 'string' || updatedOrder.id.length !== 24) {
       this.notification.create(
         'error',
@@ -88,7 +82,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       return;
     }
 
-    // Gọi trực tiếp API updateDonOrder
     updatedOrder.loaiDon = updatedOrder.loaiDon.id;
     updatedOrder.ban = updatedOrder.ban.id;
     updatedOrder.khachHang = updatedOrder.khachHang.id;
@@ -104,10 +97,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       next: (res: any) => {
         console.log('Cập nhật trạng thái thành công', res);
 
-        // Vẫn có thể emit sự kiện để thông báo cho component cha biết đã cập nhật thành công
-        // this.updateStatus.emit(res);
-
-        // Hiển thị thông báo
         this.formData = res.data;
         this.notification.create(
           'success',
@@ -134,20 +123,17 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     });
   }
 
-  // Phương thức xử lý thay đổi trạng thái chi tiết order
   toggleStatus(chiTiet: any, chiTietIndex: number) {
+
     // Đảo ngược trạng thái hiện tại (0: Đang chế biến, 1: Đã hoàn thành)
 
     const newStatus = chiTiet.trangThai === 1 ? 0 : 1;
     chiTiet.trangThai = newStatus;
 
-    // Tạo bản sao của đơn order để cập nhật
     const updatedOrder = { ...this.formData };
 
-    // Cập nhật trạng thái món ăn trong bản sao
     updatedOrder.chiTietDonOrder[chiTietIndex].trangThai = newStatus;
 
-    // Kiểm tra ID có hợp lệ không trước khi gửi request
     if (!updatedOrder.id || typeof updatedOrder.id !== 'string' || updatedOrder.id.length !== 24) {
       this.notification.create(
         'error',
@@ -161,7 +147,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       return;
     }
 
-    // Gọi trực tiếp API updateDonOrder
     updatedOrder.loaiDon = updatedOrder.loaiDon.id;
     updatedOrder.ban = updatedOrder.ban.id;
     updatedOrder.khachHang = updatedOrder.khachHang.id;
@@ -177,10 +162,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       next: (res: any) => {
         console.log('Cập nhật trạng thái thành công', res);
 
-        // Vẫn có thể emit sự kiện để thông báo cho component cha biết đã cập nhật thành công
-        // this.updateStatus.emit(res);
-
-        // Hiển thị thông báo
         this.formData = res.data;
         this.notification.create(
           'success',
@@ -207,19 +188,14 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     });
   }
 
-  // Phương thức xử lý thay đổi trạng thái combo
   toggleComboStatus(comBo: any, chiTietIndex: number, comBoIndex: number) {
-    // Đảo ngược trạng thái hiện tại (0: Đang chế biến, 1: Đã hoàn thành)
     const newStatus = comBo.comBo_trangThai === 1 ? 0 : 1;
     comBo.comBo_trangThai = newStatus;
 
-    // Tạo bản sao của đơn order để cập nhật
     const updatedOrder = { ...this.formData };
 
-    // Cập nhật trạng thái món ăn trong bản sao
     updatedOrder.chiTietDonOrder[chiTietIndex].comBos[comBoIndex].comBo_trangThai = newStatus;
 
-    // Kiểm tra ID có hợp lệ không trước khi gửi request
     if (!updatedOrder.id || typeof updatedOrder.id !== 'string' || updatedOrder.id.length !== 24) {
       this.notification.create(
         'error',
@@ -233,7 +209,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       return;
     }
 
-    // Gọi trực tiếp API updateDonOrder
     updatedOrder.loaiDon = updatedOrder.loaiDon.id;
     updatedOrder.ban = updatedOrder.ban.id;
     updatedOrder.khachHang = updatedOrder.khachHang.id;
@@ -249,10 +224,7 @@ export class PopupChiTietDonOrderComponent implements OnInit {
       next: (res: any) => {
         console.log('Cập nhật trạng thái thành công', res);
 
-        // Vẫn có thể emit sự kiện để thông báo cho component cha biết đã cập nhật thành công
-        // this.updateStatus.emit(res);
 
-        // Hiển thị thông báo
         this.formData = res.data;
         this.notification.create(
           'success',

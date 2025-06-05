@@ -1,8 +1,8 @@
 .xac-nhan-container {
     padding: 1rem;
-    background-color: #f9f9f9; // Nền sáng dịu nhẹ
+    background-color: #f9f9f9;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Đổ bóng để tạo chiều sâu
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   
     .header {
       position: sticky;
@@ -26,13 +26,13 @@
         cursor: pointer;
         font-size: 1rem;
         font-weight: 600;
-        color: #ff5252 !important; // Đỏ nổi bật 
+        color: #ff5252 !important;
         padding: 5px 10px;
         border-radius: 5px;
         transition: background-color 0.2s;
   
         &:hover {
-          background-color: rgba(255, 82, 82, 0.1); // Hiệu ứng hover
+          background-color: rgba(255, 82, 82, 0.1);
         }
       }
     }
@@ -43,7 +43,7 @@
       margin-bottom: 10px;
       border-radius: 8px;
       display: flex;
-      flex-direction: column; // Để note-text nằm dưới phần item
+      flex-direction: column;
   
       .item-container {
         display: flex;
@@ -55,7 +55,7 @@
           height: 50px;
           border-radius: 8px;
           margin-right: 10px;
-          object-fit: cover; // Giúp ảnh không bị méo
+          object-fit: cover;
         }
   
         .item-details {
@@ -68,7 +68,7 @@
           }
   
           .item-price {
-            color: #757575; // Màu ghi cho giá
+            color: #757575;
             font-size: 0.9rem;
           }
         }
@@ -88,7 +88,7 @@
             transition: background-color 0.2s;
   
             &:hover {
-              background-color: #e0e0e0; // Màu hover cho nút
+              background-color: #e0e0e0;
             }
           }
   
@@ -104,10 +104,9 @@
         padding: 1rem 0;
         font-size: 1.25rem;
         font-weight: bold;
-        color: #1f2937; // Màu tối dịu mắt
+        color: #1f2937;
       }
   
-      // Textarea cho nhắn nhủ
       .note-text {
         width: 100%;
         margin-top: 5px;
@@ -119,7 +118,7 @@
         background-color: #f9f9f9;
   
         &:focus {
-          border-color: #4caf50; // Màu nổi bật khi nhập
+          border-color: #4caf50;
           outline: none;
         }
       }
@@ -130,24 +129,23 @@
       padding: 1rem 0;
       font-size: 1.25rem;
       font-weight: bold;
-      color: #1f2937; // Màu tối dịu mắt
+      color: #1f2937;
     }
   
-    // Footer sticky với nút xác nhận
     .fixed {
-      position: fixed; /* Giữ cố định khi cuộn */
+      position: fixed;
     }
     .bottom-0 {
-      bottom: 0; /* Gắn ở cuối màn hình */
+      bottom: 0;
     }
     .left-0 {
       left: 0;
     }
     .w-full {
-      width: 100%; /* Chiều rộng 100% */
+      width: 100%;
     }
     .content-wrapper {
-      padding-bottom: 40px; /* Bù trừ chiều cao cho thanh tổng tiền */
+      padding-bottom: 40px;
     }
     .fixed-bottom-bar {
       padding: 8px 0;  
@@ -155,8 +153,7 @@
     }
     
     .fixed-bottom-bar button {
-      padding: 4px 8px;  /* Giảm padding của nút xác nhận */
-      font-size: 14px;   /* Giảm cỡ chữ của nút */
+      padding: 4px 8px;
+      font-size: 14px;
     }
 }
-  

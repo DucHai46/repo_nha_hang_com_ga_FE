@@ -1,0 +1,87 @@
+<div class="checkout-container">
+  <div class="checkout-form">
+    <h2>Thông tin giao hàng</h2>
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label>Họ và tên</label>
+        <input formControlName="tenKhachHang" placeholder="Nhập họ và tên" />
+        <div
+          *ngIf="
+            customerForm.get('tenKhachHang')?.invalid &&
+            customerForm.get('tenKhachHang')?.touched
+          "
+          class="error"
+        >
+          Vui lòng nhập họ tên
+        </div>
+      </div>
+      <div>
+        <label>Email</label>
+        <input formControlName="email" placeholder="Nhập email" />
+        <div
+          *ngIf="
+            customerForm.get('email')?.invalid &&
+            customerForm.get('email')?.touched
+          "
+          class="error"
+        >
+          Email không hợp lệ
+        </div>
+      </div>
+      <div>
+        <label>Số điện thoại</label>
+        <input formControlName="soDienThoai" placeholder="Nhập số điện thoại" />
+        <div
+          *ngIf="
+            customerForm.get('soDienThoai')?.invalid &&
+            customerForm.get('soDienThoai')?.touched
+          "
+          class="error"
+        >
+          Số điện thoại không hợp lệ
+        </div>
+      </div>
+      <div>
+        <label>Địa chỉ</label>
+        <input formControlName="diaChi" placeholder="Nhập địa chỉ" />
+        <div
+          *ngIf="
+            customerForm.get('diaChi')?.invalid &&
+            customerForm.get('diaChi')?.touched
+          "
+          class="error"
+        >
+          Vui lòng nhập địa chỉ
+        </div>
+      </div>
+      <button type="submit">Hoàn tất đơn hàng</button>
+    </form>
+  </div>
+  <div class="checkout-cart">
+    <h2>Đơn hàng của bạn</h2>
+    <div *ngIf="cart$ | async as cart">
+      <div *ngFor="let c of cart" class="cart-item">
+        <img [src]="c.item.hinhAnh" alt="{{ c.item.ten }}" class="cart-img" />
+        <div class="cart-info">
+          <div>{{ c.item.ten }}</div>
+          <div>{{ c.item.gia | number }}₫ x {{ c.quantity }}</div>
+        </div>
+        <div class="cart-total">{{ c.item.gia * c.quantity | number }}₫</div>
+      </div>
+      <div class="cart-summary">
+        <div>
+          Tạm tính: <span>{{ getTotal(cart) | number }}₫</span>
+        </div>
+        <div>
+          <small
+            >Giá chưa bao gồm VAT, Khuyến mại, Phụ phí / Price does not include
+            VAT, Discount, Additional fee</small
+          >
+        </div>
+        <div class="cart-grand-total">
+          Tổng cộng: <span>{{ getTotal(cart) | number }}₫</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

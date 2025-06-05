@@ -47,7 +47,6 @@ export class PopupDonDatBanComponent implements OnInit {
       error: (err: any) => console.log(err)
     });
   }
-  // Form data model
   @Input() formData = {
     khungGio: '',
     ban: {
@@ -72,7 +71,6 @@ export class PopupDonDatBanComponent implements OnInit {
 
   ) {}
 
-  // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
     const dataToSend = {
       ...this.formData,
@@ -81,8 +79,7 @@ export class PopupDonDatBanComponent implements OnInit {
     };
     this.save.emit(dataToSend);
   }
-  // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
-    this.close.emit(); // Đóng popup mà không trả về dữ liệu
+    this.close.emit(); 
   }
 }

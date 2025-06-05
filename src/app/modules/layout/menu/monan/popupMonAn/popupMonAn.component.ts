@@ -57,7 +57,7 @@ export class PopupMonAnComponent implements OnInit {
       error: (err: any) => console.log(err)
     });
 
-    this.giamgiaService.getGiamGia({}).subscribe({
+    this.giamgiaService.getGiamGia({trangThai:0}).subscribe({
       next: (res: any) => {
             this.giamGia = [
               {
@@ -128,7 +128,7 @@ export class PopupMonAnComponent implements OnInit {
     this.save.emit(dataToSend);
   }
   onCancel(): void {
-    this.close.emit(); // Đóng popup mà không trả về dữ liệu
+    this.close.emit();
   }
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;

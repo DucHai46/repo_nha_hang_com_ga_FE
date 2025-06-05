@@ -13,7 +13,6 @@ export class AboutComponent implements OnInit, AfterViewInit  {
   ngOnInit(): void {
     this.homeClientStore.giaoDien$.subscribe((giaoDien) => {
       this.giaoDien = giaoDien;
-      console.log(this.giaoDien);
     });
     
     
@@ -21,7 +20,6 @@ export class AboutComponent implements OnInit, AfterViewInit  {
 
   ngAfterViewInit(): void {
     if(typeof window !== 'undefined') { 
-      // window.scrollTo(0, 0);
 
     }
   }

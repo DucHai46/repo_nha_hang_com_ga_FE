@@ -26,7 +26,6 @@ export class PopupGiaoDienComponent implements OnInit {
   }
 
   private initializeFormData() {
-    // Khởi tạo cấu trúc dữ liệu mặc định nếu chưa có
     if (!this.formData.header) {
       this.formData.header = {
         logo: '',
@@ -77,7 +76,6 @@ export class PopupGiaoDienComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  // Header methods
   onHeaderLogoSelected(event: any): void {
     this.uploadFile(event, (fileData: string) => {
       this.formData.header.logo = fileData;
@@ -98,7 +96,6 @@ export class PopupGiaoDienComponent implements OnInit {
     });
   }
 
-  // Home methods
   onHomeImageSelected(event: any): void {
     this.uploadFile(event, (fileData: string) => {
       this.formData.home.image = fileData;
@@ -141,7 +138,6 @@ export class PopupGiaoDienComponent implements OnInit {
     });
   }
 
-  // About methods
   addAboutContent(): void {
     this.formData.about.content.push({
       title: '',
@@ -160,7 +156,6 @@ export class PopupGiaoDienComponent implements OnInit {
     });
   }
 
-  // Footer methods
   onFooterLogoSelected(event: any): void {
     this.uploadFile(event, (fileData: string) => {
       this.formData.footer.logo = fileData;
@@ -199,7 +194,6 @@ export class PopupGiaoDienComponent implements OnInit {
     this.formData.footer.social.splice(index, 1);
   }
 
-  // Utility method for file upload
   private uploadFile(event: any, callback: (fileData: string) => void): void {
     const file: File = event.target.files[0];
     if (file) {

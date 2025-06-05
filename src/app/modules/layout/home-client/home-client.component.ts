@@ -4,7 +4,7 @@ import { NhaHangService } from '../menu/nhahang/services/nhahang.service';
 import { FileService } from '../../../core/services/file.service';
 import { HomeClientStore } from './store/home-client.store';
 import { GiaoDien } from '../../../models/GiaoDien';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-client',
@@ -34,7 +34,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
   cartItems: { item: any, quantity: number }[] = [];
   showCart = false;
 
-  constructor(private nhaHangService: NhaHangService, private fileService: FileService, public homeClientStore: HomeClientStore, private notifyService: NzNotificationService) {
+  constructor(private nhaHangService: NhaHangService, private fileService: FileService, public homeClientStore: HomeClientStore, private notifyService: NzNotificationService, private router: Router) {
     this.homeClientStore.cart$.subscribe(cart => {
       this.cartItems = cart;
       this.cartCount = cart.reduce((sum, c) => sum + c.quantity, 0);
@@ -84,7 +84,6 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
   convertAllImageFields(): void {
     if (this.giaoDien) {
-      // Header
       if (this.giaoDien.header) {
         if (this.giaoDien.header.logo) {
           const parsed = this.parseJSON(this.giaoDien.header.logo);
@@ -101,7 +100,6 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
             );
           }
         }
-        // Convert imageSlider array
         if (this.giaoDien.header.imageSlider) {
           this.giaoDien.header.imageSlider.forEach((slider, idx) => {
             const parsed = this.parseJSON(slider);
@@ -121,7 +119,6 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
 
-      // Home
       if (this.giaoDien.home) {
         if (this.giaoDien.home.image) {
           const parsed = this.parseJSON(this.giaoDien.home.image);
@@ -138,7 +135,6 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
             );
           }
         }
-        // Convert content1 images
         if (this.giaoDien.home.content1) {
           this.giaoDien.home.content1.forEach(content => {
             if (content.image) {
@@ -156,7 +152,6 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           });
         }
-        // Convert content2 images
         if (this.giaoDien.home.content2) {
           this.giaoDien.home.content2.forEach(content => {
             if (content.image) {
@@ -176,7 +171,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
 
-      // About
+
       if (this.giaoDien.about?.content) {
         this.giaoDien.about.content.forEach(content => {
           if (content.image) {
@@ -195,7 +190,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
 
-      // Footer
+
       if (this.giaoDien.footer?.logo) {
         const parsed = this.parseJSON(this.giaoDien.footer.logo);
         if (parsed?.id) {
@@ -222,7 +217,6 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
     this.nhaHangService.getGiaoDien(null, true).subscribe({
       next: (res: any) => {
         this.giaoDien = res.data;
-        console.log(this.giaoDien);
         this.convertAllImageFields();
       }
     });
@@ -253,7 +247,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    // Update indicators
+
     const indicators = document.querySelectorAll('[data-carousel-slide-to]');
     indicators.forEach((indicator, i) => {
       if (i === index) {
@@ -286,7 +280,7 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
   private startAutoSlide() {
     setInterval(() => {
       this.nextSlide();
-    }, 5000); // Change slide every 5 seconds
+    }, 5000);
   }
 
   getContrastColor(backgroundColor: string): string {
@@ -302,8 +296,6 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   thanhToan() {
-    this.notifyService.create('success', 'Thanh toán thành công', 'Thanh toán thành công').onClose.subscribe(() => {
-      this.homeClientStore.clearCart();
-    });
+    this.router.navigate(['home-client/thanh-toan']);
   }
 }

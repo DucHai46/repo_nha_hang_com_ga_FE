@@ -1,54 +1,54 @@
 <div class="popup-backdrop">
   <div
-    class="popup-box bg-white rounded-lg p-6 shadow-lg max-w-6xl mx-auto relative"
+    class="popup-box bg-white rounded-lg p-6 shadow-lg max-w-6xl mx-auto relative text-[15px]"
   >
+    <!-- Nút X đỏ -->
     <button
       (click)="closePopup()"
-      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl"
+      class="absolute top-4 right-4 !text-red-600 !hover:text-red-800 text-2xl font-bold"
     >
-      &times;
+      X
     </button>
+    <div id="hoadon">
+      <!-- Tiêu đề công ty -->
+      <div class="text-center font-serif mb-2">
+        <h1 class="text-xl font-semibold uppercase">Cơm gà Singapore</h1>
+        <p
+          class="text-sm italic"
+          style="font-family: 'Segoe UI', 'Roboto', sans-serif"
+        >
+          {{ nhaHang.diaChi }}
+        </p>
+      </div>
 
-    <h2 class="text-2xl font-bold mb-6 text-center">Chi tiết phiếu xuất</h2>
+      <!-- Ngày lập phiếu -->
+      <div class="text-right mt-2">
+        <span class="italic"
+          >Ngày lập phiếu: {{ formData.ngayLap | date : "dd/MM/yyyy" }}</span
+        >
+      </div>
 
-    <div class="space-y-6 text-gray-800">
-      <div class="space-y-4">
-        <!-- Dòng 1: Tên phiếu + Tên người giao -->
-        <div class="flex gap-12">
-          <div>
-            <strong class="text-gray-700">Tên phiếu:</strong>
-            {{ formData.tenPhieu }}
-          </div>
-          <div>
-            <strong class="text-gray-700">Người nhận:</strong>
-            {{ formData.nguoiNhan }}
-          </div>
-          <div>
-            <strong class="text-gray-700">Ngày lập:</strong>
-            {{ formData.ngayLap | date : "dd/MM/yyyy" }}
-          </div>
-        </div>
-        <div class="flex gap-12">
-          <div>
-            <strong class="text-gray-700">Địa điểm:</strong>
-            {{ formData.diaDiem }}
-          </div>
-          <div>
-            <strong class="text-gray-700">Lý do xuất:</strong>
-            {{ formData.lyDoXuat }}
-          </div>
-        </div>
+      <!-- Tiêu đề phiếu -->
+      <h2 class="text-2xl font-bold my-4 text-center underline">
+        Phiếu xuất kho
+      </h2>
 
-        <!-- Dòng 2: Nhà cung cấp + Nhân viên -->
-        <div class="flex gap-12">
+      <!-- Thông tin chung -->
+      <div class="grid grid-cols-2 gap-x-16 mb-6 text-gray-800 text-sm">
+        <!-- Cột trái -->
+        <div class="space-y-2">
+          <div><strong>Tên phiếu:</strong> {{ formData.tenPhieu }}</div>
           <div>
-            <strong class="text-gray-700">Nhân viên:</strong>
-            {{ formData.nhanVien.name }}
+            <strong>Tên người lập:</strong> {{ formData.nhanVien.name }}
           </div>
+          <div><strong>Chức vụ:</strong> Nhân viên kho</div>
+          <div><strong>Lý do xuất:</strong> {{ formData.lyDoXuat }}</div>
         </div>
 
-        <div>
-          <strong class="text-gray-700">Ghi chú:</strong> {{ formData.ghiChu }}
+        <!-- Cột phải -->
+        <div class="space-y-2 pl-20">
+          <div><strong>Địa điểm:</strong> {{ formData.diaDiem }}</div>
+          <div><strong>Ghi chú:</strong> {{ formData.ghiChu }}</div>
         </div>
       </div>
 
@@ -110,14 +110,24 @@
         </div>
       </div>
 
-      <div class="mt-8 flex">
-        <button
-          (click)="closePopup()"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition !ml-auto"
-        >
-          Đóng
-        </button>
+      <!-- Ký tên -->
+      <div class="flex justify-end mt-12 text-sm px-10 qr-container">
+        <div class="text-right">
+          <p class="font-semibold">Người lập phiếu</p>
+          <p class="italic">(Ký, họ tên)</p>
+          <p class="mt-12 font-semibold">{{ formData.nhanVien.name }}</p>
+        </div>
       </div>
+    </div>
+
+    <!-- Nút đóng -->
+    <div class="mt-8 flex">
+      <button
+        (click)="pdf()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition !ml-auto"
+      >
+        Xuất PDF
+      </button>
     </div>
   </div>
 </div>

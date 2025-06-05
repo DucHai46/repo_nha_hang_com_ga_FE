@@ -15,7 +15,7 @@ export class PopupPhuongThucThanhToanComponent {
     moTa: '',
   };
 
-  @Input() isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
+  @Input() isEditMode: boolean = false; 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
@@ -24,7 +24,6 @@ export class PopupPhuongThucThanhToanComponent {
     private notification: NzNotificationService
   ){}
 
-  //Hàm xử lý khi nhấn nút lưu
   onSave(): void {
     const dataToSend = {
       ...this.formData,
@@ -41,7 +40,6 @@ export class PopupPhuongThucThanhToanComponent {
     this.save.emit(dataToSend);
   }
 
-  //Hàm xử lý khi nhấn nút "Hủy" - Cancel
   onCancel(): void {
     this.close.emit();
   }

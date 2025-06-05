@@ -21,7 +21,6 @@ export class BananComponent implements OnInit   {
   banAnPaging: any[] = []; 
   itemsSearch: any[] = [];
   loaiBanAn: LoaiBanAn[] = [];
-// Thêm vào component class
   paging: any = {
     page: 1,
     size: 10,
@@ -65,12 +64,12 @@ export class BananComponent implements OnInit   {
   }
 
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.banAnService.getBanAn(this.searchForm).subscribe({
       next: (res: any) => {
-        this.banAnPaging = res.data.data; // Lưu toàn bộ dữ liệu
+        this.banAnPaging = res.data.data; 
         this.paging.page = res.data.paging.currentPage;
         this.paging.size = res.data.paging.pageSize;
         this.paging.total = res.data.paging.totalRecords;
@@ -82,7 +81,6 @@ export class BananComponent implements OnInit   {
     });  
   }
 
-  // Thêm vào component class
   changePage(newPage: number) {
     if (newPage < 1 || newPage > this.totalPages) return;
     this.paging.page = newPage;
@@ -91,7 +89,7 @@ export class BananComponent implements OnInit   {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1; 
     this.search();
   }
 
@@ -115,12 +113,11 @@ export class BananComponent implements OnInit   {
     this.isEditMode = false;
   }
   onSaveCongThuc(body: any): void {
-    console.log(body);
   
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
+ 
       this.banAnService.updateBanAn(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -163,7 +160,7 @@ export class BananComponent implements OnInit   {
         }
       });
     } else {
-      // Thêm mới bàn
+
       this.banAnService.addBanAn(body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -208,12 +205,11 @@ export class BananComponent implements OnInit   {
     }
   }
 
-    // Hàm mở popup Sửa
+
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = item;
-    console.log(item);
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

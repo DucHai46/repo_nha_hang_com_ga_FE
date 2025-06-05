@@ -41,4 +41,16 @@ export class OrderSignalRServiceService {
       this.hubConnection.on('ChangeStatusOrder', callback);
     }
   }
+
+  public cancelOrderListener(callback: (message: string) => void): void {
+    if (this.hubConnection) {
+      this.hubConnection.on('CancelOrder', callback);
+    }
+  }
+
+  public confirmOrderListener(callback: (message: string) => void): void {
+    if (this.hubConnection) {
+      this.hubConnection.on('ConfirmOrder', callback);
+    }
+  }
 }

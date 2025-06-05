@@ -19,7 +19,6 @@ export class PopupChucVuComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.formData);
   }
 
   onSave(): void {

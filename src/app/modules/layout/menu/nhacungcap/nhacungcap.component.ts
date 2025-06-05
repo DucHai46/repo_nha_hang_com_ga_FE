@@ -27,13 +27,12 @@ export class NhacungcapComponent implements OnInit {
     this.store.setItems$(this.nhaCungCapPaging);
   }
   searchForm: any = {
-    // ma: '',
     tenNhaCungCap: '',
     diaChi: '',
   };
 
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.nhacungcapService.getNhaCungCap(this.searchForm).subscribe(
@@ -59,7 +58,7 @@ export class NhacungcapComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1; 
     this.search();
   }
 
@@ -87,7 +86,6 @@ export class NhacungcapComponent implements OnInit {
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
       this.nhacungcapService.updateNhaCungCap(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -127,7 +125,6 @@ export class NhacungcapComponent implements OnInit {
         )
       });
     } else {
-      // Thêm mới bàn
       this.nhacungcapService.addNhaCungCap(body).subscribe({
         next: (res: any) => {
           if (res.data) {

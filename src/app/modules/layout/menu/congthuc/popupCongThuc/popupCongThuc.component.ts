@@ -75,7 +75,6 @@ export class PopupCongThucComponent implements OnInit {
       }))
     }));
   
-    // Gọi API để fill `filteredNguyenLieu` từng loại
     this.loaiSelections.forEach((loai, index) => {
       this.nguyenLieuService.getNguyenLieu({ loaiNguyenLieuId: loai.selectedLoaiId }).subscribe({
         next: (res: any) => {
@@ -106,7 +105,7 @@ export class PopupCongThucComponent implements OnInit {
       nguyenLieu: {
         id: '',
         name: ''
-      },  // chưa chọn nguyên liệu
+      },  
       soLuong: 0,
       ghiChu: ''
     });
@@ -177,7 +176,6 @@ export class PopupCongThucComponent implements OnInit {
     };
 
     this.save.emit(dataToSend);
-    // console.log(dataToSend);
   }
 
   onCancel(): void {

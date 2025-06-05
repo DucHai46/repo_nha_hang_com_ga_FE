@@ -65,7 +65,7 @@ export class HoadonthanhtoanComponent implements OnInit {
   search() {
     console.log('Search form:', this.searchForm);
     if (this.searchForm.nhanViens) {
-      this.searchNV.isPaging = true; // Lấy tất cả dữ liệu
+      this.searchNV.isPaging = true; 
       this.searchNV.PageNumber = this.paging.page;
       this.searchNV.PageSize = this.paging.size;
       this.searchNV.tenNhanVien = this.searchForm.nhanViens;
@@ -86,7 +86,7 @@ export class HoadonthanhtoanComponent implements OnInit {
   }
 
   searchHoaDon() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true;
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     console.log(this.searchForm);
@@ -105,7 +105,6 @@ export class HoadonthanhtoanComponent implements OnInit {
         }
       }
     )
-    // this.searchForm.khachHang = this.searchKH.tenKhachHang;
 
   }
 
@@ -117,7 +116,7 @@ export class HoadonthanhtoanComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1; 
     this.search();
   }
 
@@ -149,10 +148,9 @@ export class HoadonthanhtoanComponent implements OnInit {
 
   closeChiTiet(): void {
     this.isChiTietOpen = false;
-    this.search(); // load lại dữ liệu sau khi đóng chi tiết
+    this.search();
   }
 
-  // change status don order
   updateDonOrderStatus(donOrderId: string): void {
     this.donOrderAdminService.getDonOrderById(donOrderId).subscribe({
       next: (res: any) => {
@@ -168,7 +166,6 @@ export class HoadonthanhtoanComponent implements OnInit {
       next: (res: any) => {
         console.log(res);
         if (res.data) {
-          //Cập nhật trạng thái bàn về trống
           if(res.data.ban.id){
             const banId = res.data.ban.id;
             console.log(res.data.ban.id);
@@ -209,7 +206,6 @@ export class HoadonthanhtoanComponent implements OnInit {
     });
   }
 
-  // cập nhật trạng thái bàn về trống
   updateBanStatus(banAnId: string): void {
     this.banAnService.getBanAnById(banAnId).subscribe({
        next: (res: any) => {
@@ -271,7 +267,6 @@ export class HoadonthanhtoanComponent implements OnInit {
     console.log(data);
 
     if (this.isEditMode) {
-      // Cập nhật trạng thái hóa đơn thanh toán
       this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
         next: (res: any) => {
           console.log(res);
@@ -319,7 +314,6 @@ export class HoadonthanhtoanComponent implements OnInit {
         }
       });
     } else {
-      // Trả về danh sách đơn order
       this.searchForm.tenHoaDon = '';
       this.searchForm.nhanViens = '';
       this.searchForm.gioVao= '';
@@ -333,7 +327,6 @@ export class HoadonthanhtoanComponent implements OnInit {
     this.isEditMode = true;
     this.formData = item;
     console.log(item);
-    // console.log(this.formData);
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

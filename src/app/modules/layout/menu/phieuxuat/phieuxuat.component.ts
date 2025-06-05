@@ -34,7 +34,7 @@ export class PhieuxuatComponent {
     denNgay:''
   }
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.phieuXuatService.getPhieuXuat(this.searchForm).subscribe(
@@ -60,7 +60,7 @@ export class PhieuxuatComponent {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1; 
     this.search();
   }
   reset(){
@@ -93,7 +93,6 @@ export class PhieuxuatComponent {
   onSaveCongThuc(body: any): void {
     console.log(body);
     if (!body) return;
-      // Thêm mới bàn
     this.phieuXuatService.addPhieuXuat(body).subscribe({
       next: (res: any) => {
         if (res.data) {

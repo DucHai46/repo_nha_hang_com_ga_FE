@@ -57,11 +57,10 @@ export class UserComponent implements OnInit {
   }
 
   searchForm: any = {
-    // ma: '',
     searchFullName: ''
   };
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.userService.getAllUser(this.searchForm).subscribe(
@@ -87,7 +86,7 @@ export class UserComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1; 
     this.search();
   }
 
@@ -99,7 +98,6 @@ export class UserComponent implements OnInit {
   isPopupOpen = false;
   isEditMode = false;
   formData: any = {}
-  // Hàm mở popup Thêm
   openAddPopup(): void {
     this.isPopupOpen = true;
     this.isEditMode = false;
@@ -175,7 +173,6 @@ export class UserComponent implements OnInit {
 
 
 
-  // Hàm mở popup Sửa
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;

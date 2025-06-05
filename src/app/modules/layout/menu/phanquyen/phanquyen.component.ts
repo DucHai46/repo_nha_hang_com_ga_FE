@@ -32,7 +32,7 @@ export class PhanQuyenComponent implements OnInit {
   };
 
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.phanQuyenService.getPhanQuyen(this.searchForm).subscribe(
@@ -58,7 +58,7 @@ export class PhanQuyenComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1; 
     this.search();
   }
 
@@ -87,7 +87,6 @@ export class PhanQuyenComponent implements OnInit {
     if (!body) return;
 
     if (this.isEditMode) {
-      // Sửa bàn
       this.phanQuyenService.updatePhanQuyen(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -126,7 +125,6 @@ export class PhanQuyenComponent implements OnInit {
         )
       });
     } else {
-      // Thêm mới bàn
       this.phanQuyenService.addPhanQuyen(body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -254,13 +252,10 @@ export class PhanQuyenComponent implements OnInit {
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
-        // Create object URL from blob
         const url = window.URL.createObjectURL(response);
 
-        // Open preview in new tab
         window.open(url, '_blank');
 
-        // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
     );
@@ -268,32 +263,5 @@ export class PhanQuyenComponent implements OnInit {
 
   toggleActive(item: any): void {
     const newStatus = !item.isActive;
-    // Nếu đang bật và đã có nhà hàng khác active thì không cho bật
-    // if (newStatus && this.phanQuyenPaging.some(i => i.isActive)) {
-    //   this.notification.create(
-    //     'error',
-    //     'Thông báo!',
-    //     `Chỉ có thể có 1 nhà hàng được kích hoạt tại một thời điểm.`, {
-    //     nzClass: 'notification-error',
-    //     nzDuration: 2000
-    //   });
-    // }
-    // else {
-    //   item.isActive = newStatus;
-    //   this.phanQuyenService.updatePhanQuyen(item.id, item).subscribe({
-    //     next: (res: any) => {
-    //       if (res.data) {
-    //         this.search();
-    //       } else { }
-    //     },
-    //     error: () => this.notification.create(
-    //       'error',
-    //       'Thông báo!',
-    //       `Cập nhật thất bại`, {
-    //       nzClass: 'notification-error',
-    //       nzDuration: 2000
-    //     })
-    //   });
-    // }
   }
 }

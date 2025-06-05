@@ -9,18 +9,11 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
-  // Danh sách URL các background hình ảnh
-  backgrounds: string[] = [
-    'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg',
-    'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg',
-    'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg',
-    'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg'
-  ];
 
   constructor(private router: Router, private authService: AuthService, private notification: NzNotificationService) { }
 
   currentIndex: number = 0;
-
+  isResetPassword: boolean = false;
   formData = {
     username: '',
     password: ''
@@ -35,7 +28,6 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(this.formData).subscribe({
       next: (res: any) => {
-        console.log(res);
         if (res.token) {
           localStorage.setItem('token', res.token);
           this.router.navigate(['/main/dashboard']);
@@ -46,6 +38,46 @@ export class LoginComponent implements OnInit {
       },
       error: (err: any) => {
         this.notification.error('Lỗi', 'Đăng nhập thất bại');
+      }
+    });
+  }
+  resetPassword() {
+    this.authService.resetPassword(this.formData.username).subscribe({
+      next: (res: any) => {
+        if (res.code === 200) {
+          this.notification.create(
+            'success',
+            'Thông báo!',
+            `${res.message}`,
+            {
+              nzClass: 'notification-success',    
+              nzDuration: 2000
+            }
+          );          
+          this.isResetPassword = false;
+        } else {
+          this.notification.create(
+            'error',
+            'Lỗi!',
+            `${res.message}`,
+            {
+              nzClass: 'notification-error',    
+              nzDuration: 2000
+            }
+          );
+          this.isResetPassword = false;
+        }
+      },
+      error: (err: any) => {
+        this.notification.create(
+          'error',
+          'Lỗi!',
+          'Đặt lại mật khẩu thất bại',
+          {
+            nzClass: 'notification-error',    
+            nzDuration: 2000
+          }
+        );
       }
     });
   }

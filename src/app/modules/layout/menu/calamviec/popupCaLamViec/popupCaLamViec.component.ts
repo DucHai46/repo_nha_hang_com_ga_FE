@@ -9,16 +9,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class PopupCaLamViecComponent implements OnInit  {
   @Input() formData = {
     tenCaLamViec: '',
-    // khungThoiGian: '',
     gioVao: '',
     gioRa: '',
     moTa: '',
   };
 
   ngOnInit(): void {
-    console.log(this.formData); // Log dữ liệu đầu vào để kiểm tra giá trị đầu vào
   }
-  @Input() isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
+  @Input() isEditMode: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
   isTenCaLamViecUnvalid = false;
@@ -27,21 +25,18 @@ export class PopupCaLamViecComponent implements OnInit  {
 
   constructor() {}
 
-  //Hàm xử lý khi nhấn nút lưu
   onSave(): void {
-    // Kiểm tra tính hợp lệ của dữ liệu
     this.isTenCaLamViecUnvalid = !this.formData.tenCaLamViec || this.formData.tenCaLamViec.trim() === '';
     this.isGioVaoUnvalid = !this.formData.gioVao;
     this.isGioRaUnvalid = !this.formData.gioRa;
 
     if (this.isTenCaLamViecUnvalid || this.isGioVaoUnvalid || this.isGioRaUnvalid) {
-      return; // Không làm gì cả nếu dữ liệu không hợp lệ
+      return;
     }
 
     this.save.emit(this.formData);
   }
 
-  //Hàm xử lý khi nhấn nút "Hủy" - Cancel
   onCancel(): void {
     this.close.emit();
   }

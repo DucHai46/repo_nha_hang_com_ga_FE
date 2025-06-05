@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { LichLamViecNhanVienStore } from './store/lich-lam-viec-nhan-vien.store';
-import { MatDialog } from '@angular/material/dialog';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { LichLamViecNhanVienService } from './services/lichlamviecnhanvien.service';
-import { NhanVienService } from '../nhanvien/services/nhanvien.service';
-import { CaLamViecService } from '../calamviec/services/calamviec.service';
-import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-lichlamviecnhanvien',
@@ -15,14 +11,10 @@ import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialo
 export class LichlamviecnhanvienComponent {
   constructor(
     private store: LichLamViecNhanVienStore, 
-    private dialog: MatDialog,
     private notification: NzNotificationService,
     private lichLamViecService: LichLamViecNhanVienService,
-    private nhanVienService: NhanVienService,
-    private caLamViecService: CaLamViecService,
   ) {}
   lichLamViecPaging: any[] = [];
-  // itemsSearch: any [] = [];
   paging: any = {
     page: 1,
     size: 10,
@@ -30,7 +22,6 @@ export class LichlamviecnhanvienComponent {
   };
   totalPages = 0;
   ngOnInit(): void {
-    // Khởi tạo component
     this.search();
     this.store.setItems$(this.lichLamViecPaging);
     
@@ -40,7 +31,7 @@ export class LichlamviecnhanvienComponent {
     ngay: '',
   };
   search() {
-   this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+   this.searchForm.isPaging = true;
    this.searchForm.pageNumber = this.paging.page;
    this.searchForm.pageSize = this.paging.size;
    this.lichLamViecService.getLichLamViec(this.searchForm).subscribe(
@@ -67,7 +58,7 @@ export class LichlamviecnhanvienComponent {
 
   changePageSize(newSize: number){
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu
+    this.paging.page = 1;
     this.search();
   }
 
@@ -82,14 +73,12 @@ export class LichlamviecnhanvienComponent {
   formData: any = {}
 
 
-  // Hàm đóng popup
   closePopup(): void {
     this.isPopupOpen = false;
     this.isOpenChiTietPopup = false;
     this.isEditMode = false;
   }
 
-  //Hàm mở popup chi tiết lịch làm việc
   openChiTietPopup(item: any): void {
     this.isOpenChiTietPopup = true;
     this.isEditMode = true;
@@ -100,135 +89,4 @@ export class LichlamviecnhanvienComponent {
       moTa: item.moTa,
     };
   }
-
-  // onSaveCongThuc(body: any): void {
-  //   console.log(body);
-    
-  //   if(!body) return;
-
-  //   // Nếu true thì sửa lịch làm việc
-  //   if(this.isEditMode){
-  //     // Sửa lịch làm việc
-  //     this.lichLamViecService.updateLichLamViec(body.id, body).subscribe(
-  //       {
-  //         next: (res: any) => {
-  //           console.log(res);
-  //           if(res.data) {
-  //             this.searchForm.ngay = '';
-  //             this.search();
-  //             this.closePopup();
-  //             this.notification.create(
-  //               'success',
-  //               'Thông báo!',
-  //               `Cập nhật thành công`,
-  //               {
-  //                 nzClass: 'notification-success',
-  //                 nzDuration: 2000
-  //               }
-  //             )
-  //           }
-  //         },
-  //         error: () => this.notification.create(
-  //           'error',
-  //           'Thông báo!',
-  //           `Cập nhật thất bại`,
-  //           {
-  //             nzClass: 'notification-error',
-  //             nzDuration: 2000
-  //           }
-  //         )
-  //       }
-  //     );
-  //   } else {
-  //     // Thêm mới lịch làm việc
-  //     this.lichLamViecService.addLichLamViec(body).subscribe(
-  //       {
-  //         next: (res: any) => {
-  //           if(res.data) {
-  //             this.searchForm.ngay = '';
-  //             this.search();
-  //             this.closePopup();
-  //             this.notification.create(
-  //               'success',
-  //               'Thông báo!',
-  //               `Thêm mới thành công`,
-  //               {
-  //                 nzClass: 'notification-success',
-  //                 nzDuration: 2000
-  //               }
-  //             );
-  //           }
-  //         },
-  //         error: () => this.notification.create(
-  //           'error',
-  //           'Thông báo!',
-  //           `Thêm mới thất bại`,
-  //           {
-  //             nzClass: 'notification-error',
-  //             nzDuration: 2000
-  //           }
-  //         )
-  //       });
-  //   }
-  // }
-
-  // Hàm mở popup sửa
-  // openEditPopup(item: any): void {
-  //   this.isPopupOpen = true;
-  //   this.isEditMode = true;
-  //   this.formData = {
-  //     ngay: item.ngay,
-  //     chiTietLichLamViec: item.chiTietLichLamViec,
-  //     id: item.id,
-  //     moTa: item.moTa,
-  //   };
-  // }
-
-  // Hàm mở popup xác nhận xóa
-  // openDeletePopup(item: any): void {
-  //   const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
-  //     width: '400px',
-  //    data: { message: `Bạn có chắc chắn muốn xóa lịch làm việc ngày "${item.ngay}" không?` },
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if(result) {
-  //      this.lichLamViecService.deleteLichLamViec(item.id).subscribe(
-  //       {
-  //        next: (res: any) => {
-  //         this.search();
-  //         this.notification.create(
-  //           'success',
-  //           'Thông báo!',
-  //           `Xóa thành công`,
-  //           {
-  //             nzClass: 'notification-success',
-  //             nzDuration: 2000
-  //           }
-  //         );
-  //        },
-  //        error: () => this.notification.create(
-  //         'error',
-  //         'Thông báo!',
-  //         `Xóa thất bại`,
-  //         {
-  //           nzClass: 'notification-error',
-  //           nzDuration: 2000
-  //         } 
-  //        )
-  //       } 
-  //      ) 
-  //     } else {
-  //       this.notification.create(
-  //         'error',
-  //         'Thông báo!',
-  //         `Xóa thất bại`, 
-  //         {
-  //           nzClass: 'notification-error',
-  //           nzDuration: 2000
-  //         }
-  //       )
-  //     }  
-  //   });
-  // }
 }

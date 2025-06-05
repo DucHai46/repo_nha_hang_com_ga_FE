@@ -23,7 +23,7 @@ export class MenuClientComponent implements OnInit {
     trangThai: 1,
   }
 
-  pageSize = 12; // Số sản phẩm mỗi trang
+  pageSize = 12;
   currentPage = 1;
   pagedItems: any[] = [];
   pages: (number | string)[] = [];
@@ -32,15 +32,15 @@ export class MenuClientComponent implements OnInit {
   ngOnInit(): void {
     this.thucDonService.getThucDon(this.params).subscribe({
       next: (res: any) => {
-        if(res.result && res.data.data) {
+        if (res.result && res.data.data) {
           const thucDon: ThucDon = res.data.data[0];
-          // Lấy combo
           const combos = (thucDon.combos || []).map(c => ({
+            id: c.id,
             ten: c.name,
             gia: c.giaTien,
-            hinhAnh: c.hinhAnh
+            hinhAnh: c.hinhAnh,
+            loai: 'combo'
           }));
-          // Lấy từng món lẻ
           const monLe = (thucDon.loaiMonAns || []).flatMap(loai =>
             (loai.monAns || []).map(m => {
               let giaGoc = Number(m.giaTien) || 0;
@@ -52,18 +52,19 @@ export class MenuClientComponent implements OnInit {
                 giaDaGiam = giaGoc - soTienGiam;
               }
               return {
+                id: m.id,
                 ten: m.tenMonAn,
                 gia: giaDaGiam,
                 giaGoc: giaGoc,
                 giamGia: giamGiaPercent,
                 soTienGiam: soTienGiam,
-                hinhAnh: m.hinhAnh
+                hinhAnh: m.hinhAnh,
+                loai: 'monan'
               };
             })
           );
           this.allItems = [...combos, ...monLe];
 
-          // Gọi API lấy base64 cho từng ảnh
           this.allItems.forEach((item, idx) => {
             if (item.hinhAnh) {
               const parsed = this.parseJSON(item.hinhAnh);
@@ -105,10 +106,7 @@ export class MenuClientComponent implements OnInit {
   updatePaging() {
     this.totalPages = Math.ceil(this.allItems.length / this.pageSize) || 1;
     this.pagedItems = this.allItems.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
-    console.log(this.pagedItems);
-    console.log(this.totalPages);
     this.pages = this.getPages();
-    console.log(this.pages);
   }
 
   goToPage(page: string) {

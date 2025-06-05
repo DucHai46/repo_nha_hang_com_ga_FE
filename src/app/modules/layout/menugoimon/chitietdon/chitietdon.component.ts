@@ -32,7 +32,6 @@ export class ChitietdonComponent implements OnInit {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['id']) {
       this.id = navigation.extras.state['id'];
-      console.log(this.id);
     }
   }
 
@@ -41,12 +40,9 @@ export class ChitietdonComponent implements OnInit {
       {
         next: (res: any) => {
           this.donOrder = res.data.data;
-          // console.log(this.donOrder);
           const don = this.donOrder.find((td: any) => td.trangThai === 0 && td.ban.id === this.id);
-          console.log(don);
           this.tongTien = don.tongTien;
           this.chiTietDonOrder = don.chiTietDonOrder;
-          console.log(this.chiTietDonOrder);
           this.banAn=don.ban.name;
         }
       }
@@ -54,7 +50,6 @@ export class ChitietdonComponent implements OnInit {
   }
   nhacBep(){
     const thongDiep=this.banAn;
-    console.log(thongDiep);
     this.donOrderService.nhacDonOrder(thongDiep?? '').subscribe();
   }
 }

@@ -29,12 +29,11 @@ export class ChucVuComponent implements OnInit {
   }
 
   searchForm: any = {
-    // ma: '',
     tenChucVu: ''
   };
 
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true;
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.chucvuService.getChucVu(this.searchForm).subscribe(
@@ -60,7 +59,7 @@ export class ChucVuComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;  
     this.search();
   }
 
@@ -69,7 +68,6 @@ export class ChucVuComponent implements OnInit {
     this.search()
   }
 
-  // Hàm mở popup Thêm
   isPopupOpen = false;
   isEditMode = false;
   formData: any = {}
@@ -84,12 +82,10 @@ export class ChucVuComponent implements OnInit {
     this.isEditMode = false;
   }
   onSaveChucVu(body: any): void {
-    console.log(body);
 
     if (!body) return;
 
     if (this.isEditMode) {
-      // Sửa bàn
       this.chucvuService.updateChucVu(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -128,7 +124,6 @@ export class ChucVuComponent implements OnInit {
         )
       });
     } else {
-      // Thêm mới bàn
       this.chucvuService.addChucVu(body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -180,7 +175,6 @@ export class ChucVuComponent implements OnInit {
   }
 
 
-  // Hàm mở popup xác nhận xóa
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',

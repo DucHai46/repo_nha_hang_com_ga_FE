@@ -36,7 +36,7 @@ export class PhieukiemkeComponent implements OnInit {
     denNgay: '',
   }
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.phieuKiemKeService.getPhieuKiemKe(this.searchForm).subscribe(
@@ -62,7 +62,7 @@ export class PhieukiemkeComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1; 
     this.search();
   }
   reset(){
@@ -95,7 +95,6 @@ export class PhieukiemkeComponent implements OnInit {
   onSaveCongThuc(body: any): void {
     console.log(body);
     if (!body) return;
-      // Thêm mới bàn
     this.phieuKiemKeService.addPhieuKiemKe(body).subscribe({
       next: (res: any) => {
         if (res.data) {

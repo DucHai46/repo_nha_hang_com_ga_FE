@@ -45,14 +45,13 @@ export class BanggiaComponent implements OnInit {
     idMonAn: ''
   };
   search(){
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.bangGiaService.getBangGia(this.searchForm).subscribe(
       {
         next: (res: any) => {
           this.bangGiaPaging = res.data.data;
-          console.log(this.bangGiaPaging);
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -72,7 +71,7 @@ export class BanggiaComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;
     this.search();
   }
   reset(){

@@ -17,10 +17,10 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   styleUrl: './popupThanhToan.component.scss'
 })
 export class PopupThanhToanComponent implements OnInit {
-  @Input() formData: any;     // Nhận dữ liệu công thức từ bên ngoài
-  @Input() form: any; // Lưu dữ liệu để tạo hóa đơn 
-  @Output() close = new EventEmitter<void>(); // Khi bấm nút đóng
-  @Output() save = new EventEmitter<any>(); // Emit sự kiện khi cập nhật trạng thái
+  @Input() formData: any;    
+  @Input() form: any; 
+  @Output() close = new EventEmitter<void>(); 
+  @Output() save = new EventEmitter<any>(); 
   @Input() isAddMode: boolean = false;
   @Output() openChiTietHoaDon = new EventEmitter<void>();
 
@@ -94,25 +94,11 @@ openChiTietHoaDonPopup(item: any): void {
   
 
   onCancel(): void {
-    this.close.emit(); // Đóng popup mà không trả về dữ liệu
+    this.close.emit(); 
   }
 
   ngOnInit(): void {
-    // this.nhaHangService.getNhaHang(this.searchNH).subscribe( {
-    //   next: (res: any) => {
-    //     this.nhaHang = res.data.data;
-    //     this.nhaHangId = this.nhaHang.id;
-    //     console.log(this.nhaHang.tenNhaHang);
-
-    //     this.form = {
-    //     nhaHangs: this.nhaHangId,
-    //   };
-    //   console.log(this.form);
-
-    //     console.log(this.nhaHang);
-    //     // console.log(this.formData);
-    //   }, 
-    // });
+    
 
     this.nhaHangService.getNhaHang(this.searchNH).subscribe({
       next: (res: any) => {
@@ -120,7 +106,6 @@ openChiTietHoaDonPopup(item: any): void {
         console.log(this.nhaHangs);
         console.log(this.nhaHangs[0].id);
         this.form.nhaHang = this.nhaHangs[0].id;
-        // console.log(this.form);
       },
     });
     const userInfo = JSON.parse(localStorage.getItem('userInfor') || '{}');
@@ -135,14 +120,6 @@ openChiTietHoaDonPopup(item: any): void {
         this.nhanViens = res.data;
         this.form.NhanVien = this.nhanViens.id;
 
-        console.log(this.form.NhanVien);
-        // // Lọc ra chỉ những nhân viên có chức vụ là Thu Ngân
-        // this.nhanVien = allNhanVien.filter((nv: any) => nv.chucVu === 'Thu ngân');
-        
-        // console.log('Danh sách nhân viên Thu Ngân:', this.nhanVien);
-        // if (this.nhanVien.length > 0) {
-        //   console.log('ID nhân viên Thu Ngân đầu tiên:', this.nhanVien[0].id);
-        // 
       },
     });
 
@@ -157,7 +134,10 @@ openChiTietHoaDonPopup(item: any): void {
       },
     });
 
-    this.khuyenmaiService.getKhuyenMai(this.searchKM).subscribe({
+
+
+    this.khuyenmaiService.getKhuyenMai({trangThai:0}).subscribe({
+
       next: (res: any) => {
         this.khuyenMai = res.data.data.map((item: any) => ({
           id: item.id,
@@ -179,7 +159,6 @@ openChiTietHoaDonPopup(item: any): void {
     });
 
     this.form = {
-    // nhaHang: this.nhaHangs.id,
     donOrder: this.formData.id,
     gioVao: this.formData.createdDate,
     gioRa: new Date(),
@@ -194,14 +173,10 @@ openChiTietHoaDonPopup(item: any): void {
     this.close.emit();
   }
   constructor(
-    private fileService: FileService,
-    private notification: NzNotificationService,
-    private donOrderService: DonOrderAdminService, // Thêm service vào đây
     private nhanVienService: NhanVienService,
     private nhaHangService: NhaHangService,
     private phuPhiService: PhuPhiService,
     private khuyenmaiService: khuyenmaiService,
     private phuongThucThanhToanService: PhuongThucThanhToanService,
-    private donOrderAdminService: DonOrderAdminService,
   ) {}
 }

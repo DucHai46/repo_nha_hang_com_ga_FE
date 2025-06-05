@@ -1,8 +1,8 @@
 export interface GiamGia {
   id:string;
   tenGiamGia: string;
-  ngayBatDau: string;  // ISO string
-  ngayKetThuc: string; // ISO string
+  ngayBatDau: string;  
+  ngayKetThuc: string; 
   giaTri: number;
   moTa:string;
 }

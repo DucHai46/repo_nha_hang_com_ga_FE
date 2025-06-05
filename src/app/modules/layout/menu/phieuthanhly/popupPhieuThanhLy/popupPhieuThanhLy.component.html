@@ -16,23 +16,17 @@
           />
         </div>
         <div class="form-group">
-          <label for="nhân viên">Nhân viên: <span *ngIf="isNhanVienUnValid" class="text-red-500">*</span></label>
-          <div class="flex items-center gap-2">
-            <select
-              id="nhanVien"
-              [(ngModel)]="formData.nhanVien"
-              name="NhanVien"
-              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-            >
-              <option *ngFor="let danhMuc of nhanVien" [ngValue]="danhMuc.id">
-                {{ danhMuc.name }}
-              </option>
-            </select>
-          </div>
-          <p *ngIf="isNhanVienUnValid" class="text-red-500 text-sm mt-1">
-            Vui lòng chọn nhân viên.
-          </p>
-
+          <label for="materialName">Nhân viên:</label>
+          <select
+            id="dvt"
+            [(ngModel)]="nhanViens.id"
+            name="nhanvien"
+            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          >
+            <option [ngValue]="nhanViens.id">
+              {{ nhanViens.tenNhanVien }}
+            </option>
+          </select>
         </div>
 
         <!-- ------------------------------------------------- --------------------------------------------------->

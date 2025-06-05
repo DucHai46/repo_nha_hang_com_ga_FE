@@ -1,68 +1,123 @@
 <div class="popup-backdrop">
   <div
-    class="popup-box bg-white rounded-lg p-6 shadow-lg max-w-6xl mx-auto relative"
+    class="popup-box bg-white rounded-lg p-6 shadow-lg max-w-6xl mx-auto relative text-[15px]"
   >
+    <!-- Nút đóng -->
     <button
       (click)="closePopup()"
-      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl"
+      class="absolute top-4 right-4 !text-red-600 !hover:text-red-800 text-2xl font-bold"
     >
-      &times;
+      X
     </button>
 
-    <h2 class="text-2xl font-bold mb-6 text-center">Chi tiết phiếu kiểm kê</h2>
+    <div id="hoadon">
+      <!-- Tiêu đề -->
+      <div class="text-center font-serif mb-2">
+        <h1 class="text-xl font-semibold uppercase">Cơm gà Singapore</h1>
+        <p
+          class="text-sm italic"
+          style="font-family: 'Segoe UI', 'Roboto', sans-serif"
+        >
+          {{ nhaHang.diaChi }}
+        </p>
+      </div>
 
-    <div class="space-y-6 text-gray-800">
-      <div class="space-y-4">
-        <!-- Dòng 1: Tên phiếu + Tên người giao -->
-        <div class="flex gap-12">
+      <!-- Ngày (nếu có) -->
+
+      <div class="text-right mt-2">
+        <span class="italic"
+          >Ngày kiểm kê: {{ formData.ngayKiemKe | date : "dd/MM/yyyy" }}</span
+        >
+      </div>
+
+      <!-- Tiêu đề phiếu -->
+      <h2 class="text-2xl font-bold my-4 text-center underline">
+        Phiếu kiểm kê
+      </h2>
+
+      <!-- Thông tin chung: chia 2 cột -->
+      <div class="grid grid-cols-2 gap-x-16 mb-6 text-gray-800 text-sm">
+        <!-- Cột trái -->
+        <div class="space-y-2">
+          <div><strong>Tên phiếu:</strong> {{ formData.tenPhieu }}</div>
           <div>
-            <strong class="text-gray-700">Tên phiếu:</strong>
-            {{ formData.tenPhieu }}
+            <strong>Tên người lập:</strong> {{ formData.nhanVien.name }}
           </div>
-          <div>
-            <strong class="text-gray-700">Địa điểm:</strong>
-            {{ formData.diaDiem }}
-          </div>
+          <div><strong>Chức vụ:</strong> Nhân viên kho</div>
         </div>
 
-        <!-- Dòng 2: Nhà cung cấp + Nhân viên -->
-        <div class="flex gap-12">
-          <div>
-            <strong class="text-gray-700">Nhân viên:</strong>
-            {{ formData.nhanVien.name }}
-          </div>
+        <!-- Cột phải -->
+        <div class="space-y-2 pl-20">
+          <div><strong>Địa điểm:</strong> {{ formData.diaDiem }}</div>
+          <div><strong>Ghi chú:</strong> {{ formData.ghiChu }}</div>
         </div>
-
-        <div>
-          <strong class="text-gray-700">Ghi chú:</strong> {{ formData.ghiChu }}
-        </div>
-
       </div>
 
       <!-- BẢNG NGUYÊN LIỆU -->
       <div>
         <h3 class="font-semibold text-gray-700 mb-3">Danh sách nguyên liệu:</h3>
         <div class="overflow-x-auto">
-          <table class="min-w-full table-auto border-collapse border border-gray-300">
+          <table
+            class="min-w-full table-auto border-collapse border border-gray-300"
+          >
             <thead>
               <tr class="bg-gray-100">
-                <th class="border border-gray-300 px-4 py-2 text-left">Tên nguyên liệu</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">
+                  Tên nguyên liệu
+                </th>
                 <th class="border border-gray-300 px-4 py-2 text-left">Loại</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Số lượng</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Số lượng thực tế</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Chênh lệch</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Ghi chú</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">
+                  Số lượng hệ thống
+                </th>
+                <th class="border border-gray-300 px-4 py-2 text-left">
+                  Số lượng nhập
+                </th>
+                <th class="border border-gray-300 px-4 py-2 text-left">
+                  Số lượng xuất
+                </th>
+                <th class="border border-gray-300 px-4 py-2 text-left">
+                  Số lượng thực tế
+                </th>
+                <th class="border border-gray-300 px-4 py-2 text-left">
+                  Chênh lệch
+                </th>
+                <th class="border border-gray-300 px-4 py-2 text-left">
+                  Ghi chú
+                </th>
               </tr>
             </thead>
             <tbody>
               <ng-container *ngFor="let loai of formData.loaiNguyenLieus">
-                <tr *ngFor="let nl of loai.nguyenLieus" class="hover:bg-gray-50">
-                  <td class="border border-gray-300 px-4 py-2">{{ nl.tenNguyenLieu }}</td>
-                  <td class="border border-gray-300 px-4 py-2">{{ loai.name}}</td>
-                  <td class="border border-gray-300 px-4 py-2">{{ nl.soLuong}}</td>
-                  <td class="border border-gray-300 px-4 py-2">{{ nl.soLuongThucTe}}</td>
-                  <td class="border border-gray-300 px-4 py-2">{{ nl.chenhLech}}</td>
-                  <td class="border border-gray-300 px-4 py-2 italic text-gray-600">{{ nl.ghiChu}}</td>
+                <tr
+                  *ngFor="let nl of loai.nguyenLieus"
+                  class="hover:bg-gray-50"
+                >
+                  <td class="border border-gray-300 px-4 py-2">
+                    {{ nl.tenNguyenLieu }}
+                  </td>
+                  <td class="border border-gray-300 px-4 py-2">
+                    {{ loai.name }}
+                  </td>
+                  <td class="border border-gray-300 px-4 py-2">
+                    {{ nl.soLuong }}
+                  </td>
+                  <td class="border border-gray-300 px-4 py-2">
+                    {{ nl.soLuongNhap }}
+                  </td>
+                  <td class="border border-gray-300 px-4 py-2">
+                    {{ nl.soLuongXuat }}
+                  </td>
+                  <td class="border border-gray-300 px-4 py-2">
+                    {{ nl.soLuongThucTe }}
+                  </td>
+                  <td class="border border-gray-300 px-4 py-2">
+                    {{ nl.chenhLech }}
+                  </td>
+                  <td
+                    class="border border-gray-300 px-4 py-2 italic text-gray-600"
+                  >
+                    {{ nl.ghiChu }}
+                  </td>
                 </tr>
               </ng-container>
             </tbody>
@@ -70,14 +125,26 @@
         </div>
       </div>
 
-      <div class="mt-8 flex">
-        <button
-          (click)="closePopup()"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition !ml-auto"
-        >
-          Đóng
-        </button>
+      <!-- Ký tên -->
+      <div class="qr-container">
+        <div class="flex justify-end mt-12 text-sm px-10 ">
+          <div class="text-right">
+            <p class="font-semibold">Người kiểm kê</p>
+            <p class="italic">(Ký, họ tên)</p>
+            <p class="mt-12 font-semibold">{{ formData.nhanVien.name }}</p>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <!-- Nút đóng -->
+    <div class="mt-8 flex">
+      <button
+        (click)="pdf()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition !ml-auto"
+      >
+        Xuất PDF
+      </button>
     </div>
   </div>
 </div>

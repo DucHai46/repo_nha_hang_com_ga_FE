@@ -48,7 +48,6 @@ export class MonanComponent implements OnInit {
         {
           next: (res: any) => {
             this.loaiMonAn = res.data.data;
-            // console.log(this.loaiMonAn);
           }
         }
       )
@@ -74,7 +73,7 @@ export class MonanComponent implements OnInit {
     giaTien: '',
   }
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true;
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.monAnService.getMonAn(this.searchForm).subscribe(
@@ -102,7 +101,7 @@ export class MonanComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;
     this.search();
   }
   reset(){
@@ -131,7 +130,6 @@ export class MonanComponent implements OnInit {
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
       this.monAnService.updateMonAn(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -181,7 +179,6 @@ export class MonanComponent implements OnInit {
       });
     } else {
       console.log(body);
-      // Thêm mới bàn
       this.monAnService.addMonAn(body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -292,13 +289,10 @@ export class MonanComponent implements OnInit {
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
-        // Create object URL from blob
         const url = window.URL.createObjectURL(response);
         
-        // Open preview in new tab
         window.open(url, '_blank');
         
-        // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
     );
@@ -306,7 +300,7 @@ export class MonanComponent implements OnInit {
   isChiTietOpen=false;
   chiTietCongThuc: any = {};
   openChiTietPopup(item: any): void {
-    this.isChiTietOpen = true; // mở popup ChiTiet
+    this.isChiTietOpen = true; 
     const congThucId=item.congThuc.id;
     console.log(congThucId);
     this.congthucService.getCongThucById(congThucId).subscribe((response: any) => {

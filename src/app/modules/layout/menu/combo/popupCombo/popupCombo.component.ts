@@ -93,7 +93,7 @@ export class PopupComboComponent implements OnInit {
     this.loaiSelections = loaiMonAnsFromForm.map((loai: any) => ({
       selectedLoaiId: loai.id,
       selectedLoaiName: loai.name,
-      filteredMonAn: [], // Dữ liệu món ăn sẽ được điền sau
+      filteredMonAn: [], 
       monAns: loai.monAns.map((item: any) => ({
         monAn: {
           id: item.id,
@@ -104,7 +104,6 @@ export class PopupComboComponent implements OnInit {
       }))
     }));  
     console.log('Dữ liệu loaiSelections:', this.loaiSelections);
-    // Gọi API để lấy danh sách món ăn cho mỗi loại
     this.loaiSelections.forEach((loai, index) => {
         this.monAnService.getMonAn({ idLoaiMonAn: loai.selectedLoaiId }).subscribe({
           next: (res: any) => {
@@ -152,7 +151,6 @@ export class PopupComboComponent implements OnInit {
     this.loaiSelections[index].selectedLoaiName = this.loaiMonAn.find(l => l.id === selectedLoaiId)?.name || '';
     this.monAnService.getMonAn({idLoaiMonAn: this.loaiSelections[index].selectedLoaiId}).subscribe({
       next: (res: any) => {
-        // console.log(res.data.data);
         this.loaiSelections[index].filteredMonAn = res.data.data.map((item: any) => ({
           id: item.id,
           name: item.tenMonAn,
@@ -160,7 +158,6 @@ export class PopupComboComponent implements OnInit {
           hinhAnh: item.hinhAnh,    
           giaTien: item.giaTien     
         }));
-        // console.log(this.loaiSelections[index].filteredMonAn);
       },
       error: (err: any) => console.log(err)
     });
@@ -226,7 +223,6 @@ export class PopupComboComponent implements OnInit {
     console.log("Datatosend:",dataToSend);
 
     this.save.emit(dataToSend);
-    // console.log(dataToSend);
   }
 
   onCancel(): void {
@@ -301,13 +297,10 @@ export class PopupComboComponent implements OnInit {
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
-        // Create object URL from blob
         const url = window.URL.createObjectURL(response);
         
-        // Open preview in new tab
         window.open(url, '_blank');
         
-        // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
     );
