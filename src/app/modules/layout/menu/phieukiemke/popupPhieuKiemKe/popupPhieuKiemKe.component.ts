@@ -28,14 +28,6 @@ export class PopupPhieuKiemKeComponent implements OnInit {
       selectedLoaiId: '',
       selectedLoaiName: '',
       filteredNguyenLieu: [
-        // {
-        //   id: '',
-        //   name: '',
-        //   soLuong: 0,
-        //   soLuongThucTe:0,
-        //   chenhLech:0,
-        //   ghiChu:""  
-        // }
       ]
     }
   ];
@@ -131,7 +123,6 @@ export class PopupPhieuKiemKeComponent implements OnInit {
             soLuongXuat: 0
           };
 
-          // Tính số lượng nhập từ phieuNhap
           if (this.phieuNhap) {
             this.phieuNhap.forEach((phieu: any) => {
               phieu.nguyenLieus.forEach((nl: any) => {
@@ -143,7 +134,6 @@ export class PopupPhieuKiemKeComponent implements OnInit {
             });
           }
 
-          // Tính số lượng xuất từ phieuXuat
           if (this.phieuXuat) {
             this.phieuXuat.forEach((phieu: any) => {
               phieu.loaiNguyenLieus.forEach((loai: any) => {

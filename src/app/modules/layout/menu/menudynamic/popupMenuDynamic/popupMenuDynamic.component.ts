@@ -72,7 +72,6 @@ export class PopupMenuDynamicComponent implements OnInit {
       parent: this.formData.parent?.id || null,
       position: this.formData.position.toString() || null
     };
-    // console.log(body);
     this.save.emit(body);
   }
 

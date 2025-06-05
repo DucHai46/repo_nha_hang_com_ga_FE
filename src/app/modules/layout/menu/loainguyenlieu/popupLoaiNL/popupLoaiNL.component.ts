@@ -17,7 +17,6 @@ export class PopupLoaiNLComponent implements OnInit {
           name: item.tenDanhMuc
         }));
 
-        // Nếu đang ở chế độ sửa, gán lại object từ danh sách (để binding đúng)
         if (this.isEditMode) {
           const categoryId = this.formData.danhMucNguyenLieu.id;
           const selectedCategory = this.danhMucNguyenLieu.find(
@@ -33,7 +32,6 @@ export class PopupLoaiNLComponent implements OnInit {
       }
     });
   }
-  // Form data model
   @Input() formData = {
     tenLoai: '',
     moTa: '',
@@ -52,7 +50,6 @@ export class PopupLoaiNLComponent implements OnInit {
   ) {}
   loaiDanhMucInValid= false;
 
-  // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
     this.loaiDanhMucInValid = !this.formData.danhMucNguyenLieu || !this.formData.danhMucNguyenLieu.id;
     if (this.loaiDanhMucInValid) {
@@ -64,8 +61,7 @@ export class PopupLoaiNLComponent implements OnInit {
     };
     this.save.emit(dataToSend);
   }
-  // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
-    this.close.emit(); // Đóng popup mà không trả về dữ liệu
+    this.close.emit(); 
   }
 }

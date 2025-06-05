@@ -100,7 +100,6 @@ export class PopupPhieuThanhLyComponent implements OnInit {
     this.loaiSelections[index].selectedLoaiName = this.loaiNguyenLieu.find(l => l.id === selectedLoaiId)?.name || '';
     this.nguyenLieuService.getNguyenLieu({loaiNguyenLieuId: this.loaiSelections[index].selectedLoaiId}).subscribe({
         next: (res: any) => {
-        // console.log(res.data.data);
         this.loaiSelections[index].filteredNguyenLieu = res.data.data.map((item: any) => ({
           id: item.id,
           name: item.tenNguyenLieu,
@@ -111,7 +110,6 @@ export class PopupPhieuThanhLyComponent implements OnInit {
           hanSuDung: item.hanSuDung,
           soLuong: item.soLuong,
         }));
-        // console.log(this.loaiSelections[index].filteredMonAn);
       },
       error: (err: any) => console.log(err)
     });
@@ -120,12 +118,7 @@ export class PopupPhieuThanhLyComponent implements OnInit {
   isLoaiDuplicate(selectedLoaiId: string, index: number): boolean {
     return this.loaiSelections.some((s, idx) => idx !== index && s.selectedLoaiId === selectedLoaiId);
   }
-  // isNguyenLieuDuplicate(nl: any, loaiIndex: number, nguyenLieuIndex: number): boolean {
-  //   const loai = this.loaiSelections[loaiIndex];
-  //   return loai.nguyenLieus.some((x: any, idx: number) => 
-  //     idx !== nguyenLieuIndex  && x.nguyenLieu.id === nl.id
-  //   );
-  // }
+
   updateChenhLech(loai: any): void {
     const soLuong = Number(loai.soLuong) || 0;
     const donGia = Number(loai.soLuongThanhLy) || 0;

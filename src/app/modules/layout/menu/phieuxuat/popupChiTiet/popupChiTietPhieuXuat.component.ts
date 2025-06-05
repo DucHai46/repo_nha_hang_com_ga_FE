@@ -10,8 +10,8 @@ import html2pdf from 'html2pdf.js';
   styleUrls: ['./popupChiTietPhieuXuat.component.scss']
 })
 export class PopupChiTietPhieuXuatComponent implements OnInit  {
-  @Input() formData: any;     // Nhận dữ liệu công thức từ bên ngoài
-  @Output() close = new EventEmitter<void>(); // Khi bấm nút đóng
+  @Input() formData: any;     
+  @Output() close = new EventEmitter<void>(); 
   nhaHang: any;
 
   closePopup() {

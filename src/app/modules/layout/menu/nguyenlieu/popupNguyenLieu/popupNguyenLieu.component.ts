@@ -65,7 +65,6 @@ export class PopupNguyenLieuComponent implements OnInit {
       error: (err: any) => console.log(err)
     });
   }
-  // Form data model
   @Input() formData = {
     tenNguyenLieu: '',
     moTa: '',
@@ -95,7 +94,6 @@ export class PopupNguyenLieuComponent implements OnInit {
   private donViTinhService: DonViTinhService,
   ) {}
 
-  // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
     const dataToSend = {
       ...this.formData,
@@ -105,8 +103,7 @@ export class PopupNguyenLieuComponent implements OnInit {
     };
     this.save.emit(dataToSend);
   }
-  // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
-    this.close.emit(); // Đóng popup mà không trả về dữ liệu
+    this.close.emit(); 
   }
 }

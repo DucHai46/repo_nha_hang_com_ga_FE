@@ -104,7 +104,7 @@ export class PopupPhieuXuatComponent implements OnInit {
     this.loaiSelections[index].selectedLoaiName = this.loaiNguyenLieu.find(l => l.id === selectedLoaiId)?.name || '';
     this.nguyenLieuService.getNguyenLieu({loaiNguyenLieuId: this.loaiSelections[index].selectedLoaiId}).subscribe({
         next: (res: any) => {
-        // console.log(res.data.data);
+
         this.loaiSelections[index].filteredNguyenLieu = res.data.data.map((item: any) => ({
           id: item.id,
           name: item.tenNguyenLieu,
@@ -116,7 +116,6 @@ export class PopupPhieuXuatComponent implements OnInit {
           soLuong: item.soLuong,
           trangThai: item.trangThai
         }));
-        // console.log(this.loaiSelections[index].filteredMonAn);
       },
       error: (err: any) => console.log(err)
     });
@@ -128,7 +127,6 @@ export class PopupPhieuXuatComponent implements OnInit {
     this.loaiSelections[index].selectedLoaiName = this.loaiNguyenLieu.find(l => l.id === selectedLoaiId)?.name || '';
     this.nguyenLieuService.getNguyenLieu({loaiNguyenLieuId: this.loaiSelections[index].selectedLoaiId ,trangThai:trangThai1}).subscribe({
         next: (res: any) => {
-        // console.log(res.data.data);
         this.loaiSelections[index].filteredNguyenLieu = res.data.data.map((item: any) => ({
           id: item.id,
           name: item.tenNguyenLieu,
@@ -140,7 +138,6 @@ export class PopupPhieuXuatComponent implements OnInit {
           soLuong: item.soLuong,
           trangThai: item.trangThai
         }));
-        // console.log(this.loaiSelections[index].filteredMonAn);
       },
       error: (err: any) => console.log(err)
     });

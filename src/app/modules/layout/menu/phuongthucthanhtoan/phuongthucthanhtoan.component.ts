@@ -36,7 +36,7 @@ export class PhuongThucThanhToanComponent {
     tenPhuongThuc: ''
   };
   search() {
-   this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+   this.searchForm.isPaging = true; 
    this.searchForm.pageNumber = this.paging.page;
    this.searchForm.pageSize = this.paging.size;
    console.log(this.searchForm);
@@ -65,7 +65,7 @@ export class PhuongThucThanhToanComponent {
 
   changePageSize(newSize: number){
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu
+    this.paging.page = 1; 
     this.search();
   }
 
@@ -78,14 +78,12 @@ export class PhuongThucThanhToanComponent {
   isEditMode = false;
   formData: any = {}
 
-  // Hàm mở popup thêm mới
   openAddPopup(){
     this.isPopupOpen = true;
     this.isEditMode = false;
     this.formData = {};
   }
 
-  // Hàm đóng popup
   closePopup(): void {
     this.isPopupOpen = false;
     this.isEditMode = false;
@@ -96,9 +94,7 @@ export class PhuongThucThanhToanComponent {
     
     if(!body) return;
 
-    // Nếu true thì sửa loại đơn order 
     if(this.isEditMode){
-      // Sửa loại đơn order 
       this.phuongThucThanhToanService.updatePhuongThucThanhToan(body.id, body).subscribe(
         {
           next: (res: any) => {
@@ -130,7 +126,6 @@ export class PhuongThucThanhToanComponent {
         }
       );
     } else {
-      // Thêm mới loại đơn order
       this.phuongThucThanhToanService.addPhuongThucThanhToan(body).subscribe(
         {
           next: (res: any) => {
@@ -162,21 +157,17 @@ export class PhuongThucThanhToanComponent {
     }
   }
 
-  // Hàm mở popup sửa
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = {
       tenPhuongThuc: item.tenPhuongThuc,
-      // giaTri: item.giaTri,
       qrCode: item.qrCode,
       id: item.id,
       moTa: item.moTa,
-      // trangThai: item.trangThai
     };
   }
 
-  // Hàm mở popup xác nhận xóa
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
       width: '400px',
@@ -234,13 +225,10 @@ export class PhuongThucThanhToanComponent {
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
-        // Create object URL from blob
         const url = window.URL.createObjectURL(response);
         
-        // Open preview in new tab
         window.open(url, '_blank');
         
-        // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
     );

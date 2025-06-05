@@ -34,7 +34,7 @@ export class XacnhangoimonComponent implements OnInit  {
 
   }
 
-  // Tăng số lượng món ăn
+
   tangSoLuong(ma: string) {
     const item = this.selectedItemsMA.find((mon) => mon.ma === ma);
     if (item) {
@@ -43,19 +43,16 @@ export class XacnhangoimonComponent implements OnInit  {
     console.log(this.donOrder);
   }
 
-  // Giảm số lượng món ăn (và xóa nếu số lượng <= 0)
   giamSoLuong(ma: string) {
     const item = this.selectedItemsMA.find((mon) => mon.ma === ma);
     if (item && item.soLuong > 0) {
       item.soLuong -= 1;
     }
-    // Xóa món nếu số lượng về 0
     if (item?.soLuong === 0) {
       this.selectedItemsMA = this.selectedItemsMA.filter((mon) => mon.ma !== ma);
     }
   }
 
-  // Xóa tất cả món ăn
   xoaTatCa() {
     const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa tất cả các món đã chọn?");
     if (confirmDelete) {
@@ -63,7 +60,6 @@ export class XacnhangoimonComponent implements OnInit  {
     }
   }
 
-  // Tính tổng tiền
   tinhTongTien(): number {
     return this.selectedItemsMA.reduce((tong, mon) => tong + (mon.gia - (mon.giamGia ? mon.gia * mon.giamGia / 100 : 0)) * mon.soLuong, 0);
   }

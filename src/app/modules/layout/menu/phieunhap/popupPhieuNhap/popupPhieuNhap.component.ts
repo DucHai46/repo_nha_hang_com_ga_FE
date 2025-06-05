@@ -117,9 +117,7 @@ export class PopupPhieuNhapComponent implements OnInit {
   }
   onInputChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    // Loại bỏ ký tự không phải số
     let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
-    // Giới hạn 11 ký tự
     if (filteredValue.length > 11) {
       filteredValue = filteredValue.substring(0, 11);
     }

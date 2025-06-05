@@ -14,13 +14,11 @@ export class PopupPhanQuyenComponent {
     moTa: '',
     danhSachMenu: []
   };
-  @Input() isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
-  @Input() isChiTietOpen: boolean = false; // Biến kiểm tra xem là thêm hay sửa
+  @Input() isEditMode: boolean = false; 
+  @Input() isChiTietOpen: boolean = false; 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
   constructor(
-    private fileService: FileService,
-    private notification: NzNotificationService,
     private menuDynamicService: MenuDynamicService
   ) { }
   menuDynamic: MenuDynamic[] = [];

@@ -29,12 +29,11 @@ export class NhanVienComponent implements OnInit {
   }
 
   searchForm: any = {
-    // ma: '',
     tenChucVu: ''
   };
 
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.nhanvienService.getNhanVien(this.searchForm).subscribe(
@@ -60,7 +59,7 @@ export class NhanVienComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1; 
     this.search();
   }
 
@@ -69,7 +68,6 @@ export class NhanVienComponent implements OnInit {
     this.search()
   }
 
-  // Hàm mở popup Thêm
   isPopupOpen = false;
   isEditMode = false;
   formData: any = {}
@@ -89,7 +87,6 @@ export class NhanVienComponent implements OnInit {
     if (!body) return;
 
     if (this.isEditMode) {
-      // Sửa bàn
       this.nhanvienService.updateNhanVien(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -128,7 +125,6 @@ export class NhanVienComponent implements OnInit {
         )
       });
     } else {
-      // Thêm mới bàn
       this.nhanvienService.addNhanVien(body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -185,7 +181,6 @@ export class NhanVienComponent implements OnInit {
   }
 
 
-  // Hàm mở popup xác nhận xóa
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
