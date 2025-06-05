@@ -39,13 +39,12 @@ export class ComboComponent implements OnInit {
       giaTien: '',
     };
     search() {
-      this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+      this.searchForm.isPaging = true; 
       this.searchForm.PageNumber = this.paging.page;
       this.searchForm.PageSize = this.paging.size;
       this.comboService.getCombo(this.searchForm).subscribe({
         next: (res: any) => {
-          this.comboPaging = res.data.data; // Lưu toàn bộ dữ liệu
-          console.log(this.comboPaging);
+          this.comboPaging = res.data.data;
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -64,7 +63,7 @@ export class ComboComponent implements OnInit {
   
     changePageSize(newSize: number) {
       this.paging.size = newSize;
-      this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+      this.paging.page = 1; 
       this.search();
     }
     reset(){
@@ -99,10 +98,8 @@ export class ComboComponent implements OnInit {
       if (!body) return;
     
       if (this.isEditMode) {
-        // Sửa bàn
         this.comboService.updateCombo(body.id, body).subscribe({
           next: (res: any) => {
-            // console.log(res);
             if (res.data) {
               this.searchForm.tenCombo = '';
               this.searchForm.giaTien = '';
@@ -142,7 +139,6 @@ export class ComboComponent implements OnInit {
           }
         });
       } else {
-        // Thêm mới bàn
         this.comboService.addCombo(body).subscribe({
           next: (res: any) => {
             console.log(res);
@@ -191,7 +187,6 @@ export class ComboComponent implements OnInit {
       this.isEditMode = true;
       this.formData = item;
       console.log(item);
-      // console.log(this.formData);
     }
     openDeletePopup(item: any): void {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -251,13 +246,10 @@ export class ComboComponent implements OnInit {
     download(fileId: string): void {
       this.fileService.downloadFile(fileId).subscribe(
         (response: Blob) => {
-          // Create object URL from blob
           const url = window.URL.createObjectURL(response);
           
-          // Open preview in new tab
           window.open(url, '_blank');
           
-          // Cleanup object URL after preview opens
           window.URL.revokeObjectURL(url);
         }
       );

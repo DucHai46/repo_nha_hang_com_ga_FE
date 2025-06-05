@@ -25,13 +25,11 @@ export class DonorderComponent implements OnInit {
     private dialog: MatDialog,
     private notification: NzNotificationService,
     private donOrderService: DonOrderAdminService,
-    private loaiDonOrderService: LoaidonorderService,
     private banAnService: BanAnService,
     private khachHangService: KhachHangService,
     private orderSignalRService: OrderSignalRServiceService,
     private hoaDonThanhToanService: HoaDonThanhToanService,
     private fileService: FileService,
-    // private banAnService: BanAnService,
 
   ) { }
   donOrderPaging: any[] = [];
@@ -76,7 +74,7 @@ export class DonorderComponent implements OnInit {
           nzDuration: 2000
         }
       );
-      // this.search();
+      this.search();
     });
       this.orderSignalRService.addOrderListener2((message) => {
       this.notification.create(
@@ -149,11 +147,8 @@ export class DonorderComponent implements OnInit {
   }
 
   isHoaDon(item: any) {
-    // Kiểm tra xem đơn order này đã có hóa đơn chưa
-    // Tìm trong mảng hoaDons xem có hóa đơn nào có donOrder.id trùng với item.id không
     const hoaDonExists = this.hoaDons.some((hd: any) => hd.donOrder.id === item.id);
 
-    // Trả về ngược lại kết quả (true nếu chưa có hóa đơn, false nếu đã có)
     return !hoaDonExists;
   }
 
@@ -161,7 +156,7 @@ export class DonorderComponent implements OnInit {
 
     console.log('Search form:', this.searchForm);
     if (this.searchForm.khachHangs) {
-      this.searchKH.isPaging = true; // Lấy tất cả dữ liệu
+      this.searchKH.isPaging = true; 
       this.searchKH.PageNumber = this.paging.page;
       this.searchKH.PageSize = this.paging.size;
       this.searchKH.tenKhachHang = this.searchForm.khachHangs;
@@ -171,11 +166,9 @@ export class DonorderComponent implements OnInit {
           this.khachHangIds = res.data.data.map((kh: any) => kh.id);
           this.searchForm.khachHang = this.khachHangIds;
           this.searchDonOrder();
-          // console.log(this.khachHang);
         }
       });
     } else {
-      //   // Nếu không nhập tên khách hàng, xóa khachHangIds khỏi searchForm nếu có
       if (this.khachHangIds) {
         this.khachHangIds = [];
       }
@@ -184,7 +177,7 @@ export class DonorderComponent implements OnInit {
   }
 
   searchDonOrder() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     console.log(this.searchForm);
@@ -203,8 +196,6 @@ export class DonorderComponent implements OnInit {
         }
       }
     )
-    // this.searchForm.khachHang = this.searchKH.tenKhachHang;
-    // this.checkThanhToan();
 
   }
 
@@ -217,7 +208,7 @@ export class DonorderComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;  
     this.search();
   }
 
@@ -230,7 +221,7 @@ export class DonorderComponent implements OnInit {
   }
 
   isPopupOpen = false;
-  isAddMode = false; // Tạo hóa đơn
+  isAddMode = false; 
   formData: any = {}
   formHoaDon: any = {};
   isChiTietOpen = false;
@@ -241,13 +232,6 @@ export class DonorderComponent implements OnInit {
   }
   Id: string = '';  
 
-  // openAddPopup(): void {
-  //   // console.log(this.loaiDonOrder);
-  //   this.isPopupOpen = true;
-  //   this.isEditMode = false;
-  //   this.formData = {};
-  // }
-
   openChiTietPopup(item: any): void {
     this.isChiTietOpen = true;
     this.formData = item;
@@ -256,12 +240,12 @@ export class DonorderComponent implements OnInit {
 
   openChiTietHoaDonPopup(): void {
     this.isChiTietHoaDonOpen = true;
-    this.formData = this.formHoaDon; // Gán formData bằng formHoaDon
+    this.formData = this.formHoaDon;  
     console.log(this.formData);
   }
   closeChiTietHoaDon(): void {
     this.isChiTietHoaDonOpen = false;
-    this.search(); // load lại dữ liệu sau khi đóng chi tiết
+    this.search();
   }
 
   closePopup(): void {
@@ -271,7 +255,7 @@ export class DonorderComponent implements OnInit {
 
   closeChiTiet(): void {
     this.isChiTietOpen = false;
-    this.search(); // load lại dữ liệu sau khi đóng chi tiết
+    this.search();
   }
 
   onSaveCongThuc(body: any): void {
@@ -280,14 +264,11 @@ export class DonorderComponent implements OnInit {
     console.log(body);
 
     if (this.isAddMode) {
-      // Tạo hóa đơn
       this.hoaDonThanhToanService.addHoaDonThanhToan(body).subscribe(
         {
           next: (res: any) => {
             if (res.data) {
-              this.formHoaDon = res.data; // Lưu thông tin hóa đơn vào formHoaDon
-              // this.formData.hoaDonThanhToans = [res.data]; // Gán danh sách hóa đơn vào formData
-              // this.formData.hoaDonThanhToanId = res.data.id; // Gán ID hóa đơn vào formData
+              this.formHoaDon = res.data;
               this.closePopup();
               this.notification.create(
                 'success',
@@ -313,11 +294,9 @@ export class DonorderComponent implements OnInit {
         });
     } else {
 
-      // console.log(this.isEditMode);
       const data = body.donOrder;
       console.log(data);
 
-     // Cập nhật trạng thái hóa đơn thanh toán
       this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
         next: (res: any) => {
           console.log(res);
@@ -326,12 +305,9 @@ export class DonorderComponent implements OnInit {
             this.searchForm.nhanViens = '';
             this.searchForm.gioVao= '';
             this.searchForm.gioRa= '';
-            // this.search();
             console.log(data);
             this.updateDonOrderStatus(data);
 
-            
-            // this.closeChiTiet();
             this.isChiTietHoaDonOpen = false;
             this.search();
             this.notification.create(
@@ -386,7 +362,6 @@ export class DonorderComponent implements OnInit {
         console.log(res);
         
         if (res.data) {
-          //Cập nhật trạng thái bàn về trống
           if(res.data.ban.id){
             const banId = res.data.ban.id;
             console.log(res.data.ban.id);
@@ -483,7 +458,6 @@ export class DonorderComponent implements OnInit {
     this.isAddMode = true;
     this.formData = item;
     console.log(item);
-    // console.log(this.formData);
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -533,7 +507,6 @@ export class DonorderComponent implements OnInit {
     });
   }
 
-  // up ảnh
   parseJSON(jsonString: string): any {
     try {
       return JSON.parse(jsonString);
@@ -545,13 +518,10 @@ export class DonorderComponent implements OnInit {
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
-        // Create object URL from blob
         const url = window.URL.createObjectURL(response);
 
-        // Open preview in new tab
         window.open(url, '_blank');
 
-        // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
     );

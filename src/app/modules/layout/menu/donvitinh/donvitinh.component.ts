@@ -30,12 +30,10 @@ export class DonvitinhComponent implements OnInit {
     this.store.setItems$(this.donViTinhPaging);
   }
   searchForm: any = {
-    // ma: '',
     tenDonViTinh: ''
   };
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
-    this.searchForm.PageNumber = this.paging.page;
+    this.searchForm.isPaging = true; 
     this.searchForm.PageSize = this.paging.size;
     this.donvitinhService.getDonViTinh(this.searchForm).subscribe(
       {
@@ -60,7 +58,7 @@ export class DonvitinhComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1; 
     this.search();
   }
 
@@ -71,7 +69,6 @@ export class DonvitinhComponent implements OnInit {
   isPopupOpen = false;
   isEditMode = false;
   formData: any = {}
-  // Hàm mở popup Thêm
   openAddPopup(): void {
     this.isPopupOpen = true;
     this.isEditMode = false;
@@ -87,7 +84,6 @@ export class DonvitinhComponent implements OnInit {
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
       this.donvitinhService.updateDonViTinh(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -126,7 +122,6 @@ export class DonvitinhComponent implements OnInit {
         )
       });
     } else {
-      // Thêm mới bàn
       this.donvitinhService.addDonViTinh(body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -169,7 +164,6 @@ export class DonvitinhComponent implements OnInit {
 
 
 
-  // Hàm mở popup Sửa
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;

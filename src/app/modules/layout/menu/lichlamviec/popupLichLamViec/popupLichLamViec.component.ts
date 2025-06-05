@@ -1,4 +1,3 @@
-// Các import giữ nguyên
 import { ChucVuService } from './../../chucvu/services/chucvu.service';
 import { NhanVienService } from './../../nhanvien/services/nhanvien.service';
 import { CaLamViecService } from './../../calamviec/services/calamviec.service';
@@ -86,7 +85,7 @@ export class PopupLichLamViecComponent implements OnInit {
     } else {
       console.log(this.isEditMode);
       console.log(this.formData);
-      this.formData.ngay = this.formatDate(this.formData.ngay); // Format date
+      this.formData.ngay = this.formatDate(this.formData.ngay); 
       if (this.formData && this.formData.chiTietLichLamViec) {
         this.formData.chiTietLichLamViec.forEach((ca: any, caIndex: number) => {
           if (ca.nhanVienCa) {
@@ -112,34 +111,28 @@ export class PopupLichLamViecComponent implements OnInit {
   }
 
   onSave(): void {
-    // Kiểm tra ngày làm việc
     if (!this.formData.ngay) {
       this.notification.error('Lỗi', 'Vui lòng chọn ngày làm việc');
       return;
     }
 
-    // Kiểm tra thông tin ca làm việc
     for (let i = 0; i < this.formData.chiTietLichLamViec.length; i++) {
       const ca = this.formData.chiTietLichLamViec[i];
       
-      // Kiểm tra ca làm việc đã chọn chưa
       if (!ca.caLamViec || !ca.caLamViec.id) {
         this.notification.error('Lỗi', `Vui lòng chọn ca làm việc ở ca thứ ${i + 1}`);
         return;
       }
       
-      // Kiểm tra nhân viên trong ca
       for (let j = 0; j < ca.nhanVienCa.length; j++) {
         const nv = ca.nhanVienCa[j];
         const key = `${i}_${j}`;
         
-        // Kiểm tra chức vụ đã chọn chưa
         if (!this.selectedChucVu[key]) {
           this.notification.error('Lỗi', `Vui lòng chọn chức vụ cho nhân viên ${j + 1} ở ca thứ ${i + 1}`);
           return;
         }
         
-        // Kiểm tra nhân viên đã chọn chưa
         if (!nv.nhanVien || !nv.nhanVien.id) {
           this.notification.error('Lỗi', `Vui lòng chọn nhân viên ${j + 1} ở ca thứ ${i + 1}`);
           return;
@@ -147,7 +140,6 @@ export class PopupLichLamViecComponent implements OnInit {
       }
     }
 
-    // Nếu tất cả validation đều pass, tiếp tục lưu dữ liệu
     const dataToSend = {
       id: this.formData.id,
       ngay: this.formData.ngay,
@@ -187,33 +179,22 @@ export class PopupLichLamViecComponent implements OnInit {
     this.close.emit();
   }
 
-  // Hàm chuyển đổi ngày thành định dạng YYYY-MM-DD
-private formatDate(date: any): string {
-  // Nếu date là null, undefined hoặc falsy, trả về ngày hiện tại (ví dụ: "2025-05-30")
+  private formatDate(date: any): string {
   if (!date) return new Date().toISOString().split('T')[0];
 
-  // Nếu date là chuỗi (ví dụ: "2025-05-30", "2025/05/30")
   if (typeof date === 'string') {
-    // Thử chuyển chuỗi thành đối tượng Date
     const parsedDate = new Date(date);
-    // Kiểm tra xem Date có hợp lệ không (không phải NaN)
     if (!isNaN(parsedDate.getTime())) {
-      // Trả về ngày ở định dạng YYYY-MM-DD
       return parsedDate.toISOString().split('T')[0];
     }
   }
 
-  // Nếu date là object có thuộc tính ticks (định dạng từ .NET, ví dụ: { ticks: 638522208000000000 })
   if (date.ticks) {
-    // Chuyển ticks thành mili-giây (1 tick = 100 nanosecond, nên chia cho 10,000 để ra mili-giây)
     const parsedDate = new Date(date.ticks / 10000);
-    // Kiểm tra xem Date có hợp lệ không
     if (!isNaN(parsedDate.getTime())) {
-      // Trả về ngày ở định dạng YYYY-MM-DD
       return parsedDate.toISOString().split('T')[0];
     }
   }
-  // Nếu không xử lý được định dạng nào, trả về ngày hiện tại làm giá trị dự phòng
   return new Date().toISOString().split('T')[0];
 }
 
@@ -229,8 +210,8 @@ private formatDate(date: any): string {
         }
       ]
     });
-    const caIndex = this.formData.chiTietLichLamViec.length - 1; // Chỉ số ca mới
-    const nvIndex = 0; // Nhân viên đầu tiên trong ca mới
+    const caIndex = this.formData.chiTietLichLamViec.length - 1; 
+    const nvIndex = 0; 
     const key = `${caIndex}_${nvIndex}`;
     this.selectedChucVu[key] = '';
   }

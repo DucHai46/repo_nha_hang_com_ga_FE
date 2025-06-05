@@ -31,23 +31,19 @@ export class CongthucComponent implements OnInit {
   totalPages = 0;
   ngOnInit(): void {
     this.store.setItems$(this.congThucPaging);  
-    // this.nguyenLieuService.getNguyenLieu({}).subscribe({
-    //   next: (res: any) => {
-    //     this.nguyenLieu = res.data.data;
-    //   }
-    // });
+
     this.search();
   }
   searchForm: any = {
     tenCongThuc: '',
   };
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.congThucService.getCongThuc(this.searchForm).subscribe({
       next: (res: any) => {
-        this.congThucPaging = res.data.data; // Lưu toàn bộ dữ liệu
+        this.congThucPaging = res.data.data; 
         this.paging.page = res.data.paging.currentPage;
         this.paging.size = res.data.paging.pageSize;
         this.paging.total = res.data.paging.totalRecords;
@@ -67,7 +63,7 @@ export class CongthucComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;
     this.search();
   }
   reset(){
@@ -100,10 +96,8 @@ export class CongthucComponent implements OnInit {
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
       this.congThucService.updateCongThuc(body.id, body).subscribe({
         next: (res: any) => {
-          // console.log(res);
           if (res.data) {
             this.searchForm.tenCongThuc = '';
             this.search();
@@ -142,7 +136,6 @@ export class CongthucComponent implements OnInit {
         }
       });
     } else {
-      // Thêm mới bàn
       this.congThucService.addCongThuc(body).subscribe({
         next: (res: any) => {
           
@@ -192,8 +185,6 @@ export class CongthucComponent implements OnInit {
     this.isEditMode = true;
     this.formData = item;
     console.log(item);
-    // console.log(item);
-    // console.log(this.formData);
   }
   
   openChiTietPopup(item: any): void {
@@ -267,13 +258,10 @@ export class CongthucComponent implements OnInit {
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
-        // Create object URL from blob
         const url = window.URL.createObjectURL(response);
         
-        // Open preview in new tab
         window.open(url, '_blank');
         
-        // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
     );

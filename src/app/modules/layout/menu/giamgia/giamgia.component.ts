@@ -30,11 +30,10 @@ export class GiamgiaComponent implements OnInit {
     this.store.setItems$(this.giamGiaPaging);
   }
   searchForm: any = {
-    // ma: '',
     tenGiamGia: ''
   };
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.giamgiaService.getGiamGia(this.searchForm).subscribe(
@@ -59,7 +58,7 @@ export class GiamgiaComponent implements OnInit {
   }
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;  
     this.search();
   }
   reset() {
@@ -84,7 +83,6 @@ export class GiamgiaComponent implements OnInit {
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
       this.giamgiaService.updateGiamGia(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -123,7 +121,6 @@ export class GiamgiaComponent implements OnInit {
         )
       });
     } else {
-      // Thêm mới bàn
       this.giamgiaService.addGiamGia(body).subscribe({
         next: (res: any) => {
           if (res.data) {

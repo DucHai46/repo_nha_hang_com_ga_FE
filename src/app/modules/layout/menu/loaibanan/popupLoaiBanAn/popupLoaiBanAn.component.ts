@@ -12,18 +12,16 @@ export class PopupLoaiBanAnComponent {
     moTa: '',
   };
 
-  @Input() isEditMode: boolean = false; // Biến kiểm tra xem là thêm hay sửa
+  @Input() isEditMode: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
   constructor() {}
 
-  // Hàm xử lý khi nhấn "Lưu"
   onSave(): void {
     this.save.emit(this.formData); 
   }
 
-  // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
    this.close.emit();
   }

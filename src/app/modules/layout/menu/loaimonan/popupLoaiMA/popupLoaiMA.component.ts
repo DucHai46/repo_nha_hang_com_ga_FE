@@ -31,7 +31,6 @@ export class PopupLoaiMAComponent implements OnInit {
       }
     });
   }
-  // Form data model
   @Input() formData = {
     tenLoai: '',
     moTa: '',
@@ -49,7 +48,7 @@ export class PopupLoaiMAComponent implements OnInit {
   ) {}
   isDanhMucInValid =false;
 
-  // Hàm xử lý khi nhấn "Lưu"
+
   onSave(): void {
     this.isDanhMucInValid = !this.formData.danhMucMonAn || !this.formData.danhMucMonAn.id;
     if (this.isDanhMucInValid) {
@@ -61,8 +60,7 @@ export class PopupLoaiMAComponent implements OnInit {
     };
     this.save.emit(dataToSend);
   }
-  // Hàm xử lý khi nhấn "Hủy"
   onCancel(): void {
-    this.close.emit(); // Đóng popup mà không trả về dữ liệu
+    this.close.emit(); 
   }
 }

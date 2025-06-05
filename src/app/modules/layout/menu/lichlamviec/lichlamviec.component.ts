@@ -18,11 +18,8 @@ export class LichlamviecComponent {
     private dialog: MatDialog,
     private notification: NzNotificationService,
     private lichLamViecService: LichLamViecService,
-    private nhanVienService: NhanVienService,
-    private caLamViecService: CaLamViecService,
   ) {}
   lichLamViecPaging: any[] = [];
-  // itemsSearch: any [] = [];
   paging: any = {
     page: 1,
     size: 10,
@@ -30,7 +27,6 @@ export class LichlamviecComponent {
   };
   totalPages = 0;
   ngOnInit(): void {
-    // Khởi tạo component
     this.search();
     this.store.setItems$(this.lichLamViecPaging);
     
@@ -44,7 +40,7 @@ export class LichlamviecComponent {
   };
   
   search() {
-   this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+   this.searchForm.isPaging = true; 
    this.searchForm.pageNumber = this.paging.page;
    this.searchForm.pageSize = this.paging.size;
    this.lichLamViecService.getLichLamViec(this.searchForm).subscribe(
@@ -71,7 +67,7 @@ export class LichlamviecComponent {
 
   changePageSize(newSize: number){
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu
+    this.paging.page = 1;
     this.search();
   }
 
@@ -88,21 +84,18 @@ export class LichlamviecComponent {
   formData: any = {};
   isEditLichLamViec = false;
 
-  // Hàm mở popup thêm mới
   openAddPopup(){
     this.isPopupOpen = true;
     this.isEditMode = false;
     this.formData = {};
   }
 
-  // Hàm đóng popup
   closePopup(): void {
     this.isPopupOpen = false;
     this.isOpenChiTietPopup = false;
     this.isEditMode = false;
   }
 
-  //Hàm mở popup chi tiết lịch làm việc
   openChiTietPopup(item: any): void {
     this.isOpenChiTietPopup = true;
     this.isEditMode = true;
@@ -119,9 +112,7 @@ export class LichlamviecComponent {
     
     if(!body) return;
 
-    // Nếu true thì sửa lịch làm việc
     if(this.isEditMode){
-      // Sửa lịch làm việc
       this.lichLamViecService.updateLichLamViec(body.id, body).subscribe(
         {
           next: (res: any) => {
@@ -155,7 +146,6 @@ export class LichlamviecComponent {
         }
       );
     } else {
-      // Thêm mới lịch làm việc
       this.lichLamViecService.addLichLamViec(body).subscribe(
         {
           next: (res: any) => {
@@ -189,7 +179,6 @@ export class LichlamviecComponent {
     }
   }
 
-  // Hàm mở popup sửa
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
@@ -201,7 +190,6 @@ export class LichlamviecComponent {
     };
   }
 
-  // Hàm mở popup xác nhận xóa
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
       width: '400px',
@@ -249,11 +237,9 @@ export class LichlamviecComponent {
     });
   }
 
-  //Hàm kiểm tra sửa lịch làm việc
   isEdit(item: any){
     const currentDate = new Date();
     const ngayLamViec = new Date(item.ngay);
-    // Reset giờ phút giây về 0 cho cả hai ngày
     currentDate.setHours(0, 0, 0, 0);
     ngayLamViec.setHours(0, 0, 0, 0);
    

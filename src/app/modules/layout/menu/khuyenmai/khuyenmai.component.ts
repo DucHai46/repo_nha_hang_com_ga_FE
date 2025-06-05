@@ -32,11 +32,10 @@ export class KhuyenmaiComponent implements OnInit {
     this.store.setItems$(this.khuyenMaiPaging);
   }
   searchForm: any = {
-    // ma: '',
     tenKhuyenMai: ''
   };
   search() {
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.khuyenmaiService.getKhuyenMai(this.searchForm).subscribe(
@@ -62,7 +61,7 @@ export class KhuyenmaiComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;  
     this.search();
   }
 
@@ -91,7 +90,6 @@ export class KhuyenmaiComponent implements OnInit {
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
       this.khuyenmaiService.updateKhuyenMai(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -130,7 +128,6 @@ export class KhuyenmaiComponent implements OnInit {
         )
       });
     } else {
-      // Thêm mới bàn
       this.khuyenmaiService.addKhuyenMai(body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -171,8 +168,7 @@ export class KhuyenmaiComponent implements OnInit {
     }
   }
 
-  
-    // Hàm mở popup Sửa
+
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;

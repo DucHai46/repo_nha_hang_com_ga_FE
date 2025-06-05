@@ -31,7 +31,7 @@ export class DanhmucmonanComponent implements OnInit {
   }; 
 
   search(){
-    this.searchForm.isPaging = true; // Lấy tất cả dữ liệu
+    this.searchForm.isPaging = true;  
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.danhmucmonanService.getDanhMucMonAn(this.searchForm).subscribe(
@@ -57,7 +57,7 @@ export class DanhmucmonanComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1; // Reset về trang đầu khi thay đổi kích thước trang
+    this.paging.page = 1;
     this.search();
   }
 
@@ -85,7 +85,6 @@ export class DanhmucmonanComponent implements OnInit {
     if (!body) return;
   
     if (this.isEditMode) {
-      // Sửa bàn
       this.danhmucmonanService.updateDanhMucMonAn(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -123,7 +122,6 @@ export class DanhmucmonanComponent implements OnInit {
         )
       });
     } else {
-      // Thêm mới bàn
       this.danhmucmonanService.addDanhMucMonAn(body).subscribe({
         next: (res: any) => {
           if (res.data) {

@@ -13,7 +13,7 @@ export class PopupKhachhangComponent {
     soDienThoai: '',
   };
 
-  @Input() isEditMode: boolean = false; // Biến kiểm tra xem là sửa hay thêm
+  @Input() isEditMode: boolean = false; 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 

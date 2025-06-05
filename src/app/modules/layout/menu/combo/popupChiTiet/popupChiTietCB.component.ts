@@ -8,8 +8,8 @@ import { FileService } from '../../../../../core/services/file.service';
   styleUrls: ['./popupChiTietCB.component.scss']
 })
 export class PopupChiTietCBComponent  {
-  @Input() formData: any;     // Nhận dữ liệu công thức từ bên ngoài
-  @Output() close = new EventEmitter<void>(); // Khi bấm nút đóng
+  @Input() formData: any;  
+  @Output() close = new EventEmitter<void>(); 
 
   closePopup() {
     console.log(this.formData);
@@ -26,13 +26,10 @@ export class PopupChiTietCBComponent  {
   download(fileId: string): void {
     this.fileService.downloadFile(fileId).subscribe(
       (response: Blob) => {
-        // Create object URL from blob
         const url = window.URL.createObjectURL(response);
         
-        // Open preview in new tab
         window.open(url, '_blank');
         
-        // Cleanup object URL after preview opens
         window.URL.revokeObjectURL(url);
       }
     );

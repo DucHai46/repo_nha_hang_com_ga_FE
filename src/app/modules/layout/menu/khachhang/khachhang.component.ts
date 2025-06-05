@@ -27,7 +27,6 @@ export class KhachhangComponent implements OnInit {
   };
   totalPages = 0;
   ngOnInit(): void {
-    // Khởi tạo component
     this.search();
     this.store.setItems$(this.khachHangPaging);
   }
@@ -46,7 +45,6 @@ export class KhachhangComponent implements OnInit {
       {
         next: (res: any) => {
           this.khachHangPaging = res.data.data;
-          // console.log(this.khachHangPaging);
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -127,7 +125,6 @@ export class KhachhangComponent implements OnInit {
         }
       );
     } else {
-      // Add KH
       this.khachhangService.addKhachHang(body).subscribe(
         {
           next: (res: any) => {
