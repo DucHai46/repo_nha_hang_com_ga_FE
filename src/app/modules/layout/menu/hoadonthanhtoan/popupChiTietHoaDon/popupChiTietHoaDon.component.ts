@@ -49,11 +49,9 @@ export class PopupChiTietHoaDonComponent implements OnInit {
   isClosePopup = false;
 
   ngOnInit(): void {
-    console.log(this.formData);
    this.donOrderService.getDonOrderById(this.formData.donOrder.id).subscribe({
       next: (res: any) => {
         this.donOrder = res.data;
-        console.log(this.donOrder);
 
         this.countFoodItems();
         
@@ -68,28 +66,24 @@ export class PopupChiTietHoaDonComponent implements OnInit {
       next: (res: any) => {
         this.nhaHang = res.data;
         this.loadNhaHangImages();
-        console.log(this.nhaHang);
       },
     });
 
     this.nhanVienService.getNhanVienById(this.formData.nhanVien.id).subscribe({
       next: (res: any) => {
         this.nhanVien = res.data;
-        console.log(this.nhanVien);
       },
     });
 
     this.phuPhiService.getPhuPhiById(this.formData.phuPhi.id).subscribe({
       next: (res: any) => {
         this.phuPhi = res.data;
-        console.log(this.phuPhi);
       },
     });
  
     this.phuongThucThanhToanService.getPhuongThucThanhToanById(this.formData.phuongThucThanhToan.id).subscribe({
       next: (res: any) => {
         this.phuongThucThanhToan = res.data;
-        console.log(this.phuongThucThanhToan);
         this.loadAllImages();
       },
     });
@@ -97,7 +91,6 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     this.khuyenmaiService.getKhuyenMaiById(this.formData.khuyenMai.id).subscribe({
       next: (res: any) => {
         this.khuyenMai = res.data;
-        console.log(this.khuyenMai);
       },
     });
   }
@@ -118,8 +111,6 @@ export class PopupChiTietHoaDonComponent implements OnInit {
       phuPhi: this.formData.phuPhi.id,
       trangthai: 1,
     };
-    console.log(this.form);
-    // this.donOrderId = this.formData.donOrder.id; // lưu id đơn order để cập nhật trạng thái khi xuất file pdf
     this.save.emit(this.form);
   }
   onChange(){
@@ -129,7 +120,6 @@ export class PopupChiTietHoaDonComponent implements OnInit {
 
   countFoodItems() {
     if (!this.donOrder || !this.donOrder.chiTietDonOrder || !Array.isArray(this.donOrder.chiTietDonOrder)) {
-      console.log('Không có dữ liệu chi tiết đơn order hoặc cấu trúc không đúng');
       return;
     }
     const foodCountMap = new Map<string, { count: number; name: string; price: number; type: string }>();
@@ -201,7 +191,6 @@ export class PopupChiTietHoaDonComponent implements OnInit {
       type: data.type
     }));
     
-    console.log('Danh sách món ăn và combo đã lọc và đếm:', this.foodCounts);
     
     this.listMonAns = this.foodCounts.filter(item => item.type === 'monAn'); 
     this.listCombos = this.foodCounts.filter(item => item.type === 'comBo');
@@ -211,12 +200,10 @@ export class PopupChiTietHoaDonComponent implements OnInit {
         next: (res: any) => {
           if (res.data && res.data.giamGia) {
             item.giamGias = res.data.giamGia.giaTri;
-            console.log(`Món ăn ${item.name} có giảm giá: ${item.giamGias}`);
             
             item.giaSauGiam = item.price * (1 - item.giamGias / 100);
           } else {
             item.giamGias = 0;
-            console.log(`Món ăn ${item.name} không có thông tin giảm giá`);
           }
         },
         error: (err) => {
@@ -226,16 +213,11 @@ export class PopupChiTietHoaDonComponent implements OnInit {
         },
       });
     }
-    
-    console.log('Danh sách món ăn:', this.listMonAns);
-    console.log('Danh sách combo:', this.listCombos);
   }
 
-  // Cập nhật trạng thái đơn order
   updateDonOrderStatusOnlline(donOrderId: string, status: { trangThai: number }): void {
     this.donOrderAdminService.updateStatusDonOrder(donOrderId, status).subscribe({
       next: (res: any) => {
-        console.log(res);
         if (res.data) {
           this.notification.create(
             'success',
@@ -273,12 +255,10 @@ export class PopupChiTietHoaDonComponent implements OnInit {
 }
 
   changeStatus() {
-    console.log(this.formData.donOrder.id);
     this.donOrderService.getDonOrderById(this.formData.donOrder.id).subscribe({
       next: (res: any) => {
         if(res.data){
           this.donOrder = res.data;
-          console.log(this.donOrder);
           if(this.donOrder.loaiDon.name.toLowerCase() === 'offline'){
             this.updateDonOrderStatusOnlline(this.formData.donOrder.id, { trangThai: 4 });
           }
@@ -288,7 +268,6 @@ export class PopupChiTietHoaDonComponent implements OnInit {
   }
 
   closeChiTiet() {
-    console.log(this.formData);
     this.close.emit();
   }
 

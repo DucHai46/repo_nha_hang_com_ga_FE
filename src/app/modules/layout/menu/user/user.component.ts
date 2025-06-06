@@ -108,7 +108,6 @@ export class UserComponent implements OnInit {
     this.isEditMode = false;
   }
   onSaveUser(body: any): void {
-    console.log(body);
 
     if (!body) return;
 
@@ -245,7 +244,6 @@ export class UserComponent implements OnInit {
   }
 
   onSaveChangePassword(body: any): void {
-    console.log(body);
     this.userService.updateUserPassword(body.id, body).subscribe({
       next: (res: any) => {
         this.search();
@@ -317,7 +315,6 @@ export class UserComponent implements OnInit {
   }
 
   onSavePhanQuyen(body: any): void {
-    console.log(body);
     this.userService.updateUserRole(body.id, body).subscribe({
       next: (res: any) => {
         this.search();

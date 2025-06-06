@@ -28,7 +28,6 @@ export class PopupLoaiNLComponent implements OnInit {
         }
       },
       error: (err: any) => {
-        console.log(err);
       }
     });
   }

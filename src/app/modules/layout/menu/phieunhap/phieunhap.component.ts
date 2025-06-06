@@ -83,7 +83,6 @@ export class PhieunhapComponent implements OnInit {
   openChiTietPopup(item: any): void {
     this.isChiTietOpen = true; 
     this.formData = item;     
-    console.log(this.formData);
   }
   closeChiTiet(): void {
     this.isChiTietOpen = false;
@@ -93,7 +92,6 @@ export class PhieunhapComponent implements OnInit {
     this.isEditMode = false;
   }
   onSaveCongThuc(body: any): void {
-    console.log(body);
     if (!body) return;
     this.phieuNhapService.addPhieuNhap(body).subscribe({
       next: (res: any) => {

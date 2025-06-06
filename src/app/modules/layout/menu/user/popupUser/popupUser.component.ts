@@ -76,7 +76,6 @@ export class PopupUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.formData);
     this.nhanVienService.getNhanVien({ isPaging: true, page: 1, size: 1000 }).subscribe(
       {
         next: (res: any) => {

@@ -103,7 +103,6 @@ export class ThucdonComponent {
   openChiTietPopup(item: any): void {
     this.isChiTietOpen = true; 
     this.formData = item;     
-    console.log(this.formData);
   }
   closePopup(): void {
     this.isPopupOpen = false;
@@ -113,7 +112,6 @@ export class ThucdonComponent {
     this.isChiTietOpen = false;
   }
   onSaveCongThuc(body: any): void {
-    console.log(body);
   
     if (!body) return;
   
@@ -160,7 +158,6 @@ export class ThucdonComponent {
     } else {
       this.thucDonService.addThucDon(body).subscribe({
         next: (res: any) => {
-          console.log(res);
           if (res.data) {
             this.searchForm.loaiMonAnId = '';
             this.searchForm.comboId = '';
@@ -204,7 +201,6 @@ export class ThucdonComponent {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = item;
-    console.log(item);
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

@@ -87,7 +87,6 @@ openChiTietHoaDonPopup(item: any): void {
     if(this.isTenHoaDonUnValid || this.isSoNguoiUnValid || this.isPhuPhiUnValid || this.isKhuyenMaiUnValid || this.isPhuongThucThanhToanUnValid){
       return;
     }
-    console.log(this.form);
     this.save.emit(this.form);
   }
 
@@ -103,8 +102,6 @@ openChiTietHoaDonPopup(item: any): void {
     this.nhaHangService.getNhaHang(this.searchNH).subscribe({
       next: (res: any) => {
         this.nhaHangs = res.data.data;
-        console.log(this.nhaHangs);
-        console.log(this.nhaHangs[0].id);
         this.form.nhaHang = this.nhaHangs[0].id;
       },
     });
@@ -113,8 +110,6 @@ openChiTietHoaDonPopup(item: any): void {
       id: userInfo.id,
       name: userInfo.name,
     }
-    console.log(this.nhanVien);
-    console.log(this.nhanVien);
     this.nhanVienService.getNhanVienById(userInfo.nhanVienId).subscribe({
       next: (res: any) => {
         this.nhanViens = res.data;
@@ -130,7 +125,6 @@ openChiTietHoaDonPopup(item: any): void {
           name: item.tenPhuPhi,
           giaTri: item.giaTri
         }));
-        console.log(this.phuPhi);
       },
     });
 
@@ -144,7 +138,6 @@ openChiTietHoaDonPopup(item: any): void {
           name: item.tenKhuyenMai,
           giaTri: item.giaTri
         }))
-        console.log(this.khuyenMai);
       },
     });
 
@@ -154,7 +147,6 @@ openChiTietHoaDonPopup(item: any): void {
           id: item.id,
           name: item.tenPhuongThuc,
         }))
-        console.log(this.phuongThucThanhToan);
       },
     });
 
@@ -164,12 +156,10 @@ openChiTietHoaDonPopup(item: any): void {
     gioRa: new Date(),
     trangthai: 0,
   };
-  console.log(this.form);
 
   }
 
   closePopup() {
-    console.log(this.formData);
     this.close.emit();
   }
   constructor(

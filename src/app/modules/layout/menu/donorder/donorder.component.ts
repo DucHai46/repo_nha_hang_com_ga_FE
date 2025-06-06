@@ -53,7 +53,6 @@ export class DonorderComponent implements OnInit {
     this.khachHangService.getKhachHang({}).subscribe({
       next: (res: any) => {
         this.khachHang = res.data.data;
-        console.log(this.khachHang);
       }
     });
 
@@ -65,13 +64,11 @@ export class DonorderComponent implements OnInit {
             tenloaiDon: loaiDon.tenLoaiDon
           };
         })
-        console.log(this.loaiDonOrder);
       }
     });
 
     this.hoaDonThanhToanService.getHoaDonThanhToan({}).subscribe({
       next: (res: any) => {
-        console.log(res.data.data);
         this.hoaDons = res.data.data;
       }
     });
@@ -169,7 +166,6 @@ export class DonorderComponent implements OnInit {
 
   search() {
 
-    console.log('Search form:', this.searchForm);
     if (this.searchForm.khachHangs) {
       this.searchKH.isPaging = true; 
       this.searchKH.PageNumber = this.paging.page;
@@ -195,12 +191,10 @@ export class DonorderComponent implements OnInit {
     this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    console.log(this.searchForm);
     this.donOrderService.getDonOrder(this.searchForm).subscribe(
       {
         next: (res: any) => {
           this.donOrderPaging = res.data.data;
-          console.log(this.donOrderPaging);
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -254,13 +248,11 @@ export class DonorderComponent implements OnInit {
   openChiTietPopup(item: any): void {
     this.isChiTietOpen = true;
     this.formData = item;
-    console.log(this.formData);
   }
 
   openChiTietHoaDonPopup(): void {
     this.isChiTietHoaDonOpen = true;
     this.formData = this.formHoaDon;  
-    console.log(this.formData);
   }
   closeChiTietHoaDon(): void {
     this.isChiTietHoaDonOpen = false;
@@ -284,7 +276,6 @@ export class DonorderComponent implements OnInit {
     };
     this.donOrderService.updateStatusDonOrder(item.id, status).subscribe({
       next: (res: any) => {
-        console.log(res);
         this.notification.create(
           'success',
           'Thông báo!',
@@ -311,7 +302,6 @@ export class DonorderComponent implements OnInit {
   }
 
   isLoaiDon(item: any) {
-    // Kiểm tra xem item.loaiDon có phải là object với thuộc tính id không
     if (item.loaiDon && item.loaiDon.id) {
       if (item.loaiDon.name) {
         return item.loaiDon.name?.toLowerCase() === 'online';
@@ -330,9 +320,7 @@ export class DonorderComponent implements OnInit {
   }
 
   onSaveCongThuc(body: any): void {
-    console.log(body);
     if (!body) return;
-    console.log(body);
 
     if (this.isAddMode) {
       this.hoaDonThanhToanService.addHoaDonThanhToan(body).subscribe(
@@ -341,7 +329,6 @@ export class DonorderComponent implements OnInit {
             if (res.data) {
               this.formHoaDon = res.data;
               this.closePopup();
-              console.log(res.data.donOrder);
               this.updateDonOrderStatusOnlline(this.formHoaDon.donOrder.id, { trangThai: 2 });
               this.search();
               this.notification.create(
@@ -371,18 +358,14 @@ export class DonorderComponent implements OnInit {
     } else {
 
       const data = body.donOrder;
-      console.log(data);
-     // Cập nhật trạng thái hóa đơn thanh toán
 
       this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
         next: (res: any) => {
-          console.log(res);
           if (res.data) {
             this.searchForm.tenHoaDon = '';
             this.searchForm.nhanViens = '';
             this.searchForm.gioVao= '';
             this.searchForm.gioRa= '';
-            console.log(data);
         
             this.updateDonOrderStatus(data);
             this.search();
@@ -423,18 +406,15 @@ export class DonorderComponent implements OnInit {
     }
   }
 
-  // Cập nhật trạng thái đơn order
   updateDonOrderStatusOnlline(donOrderId: string, status: { trangThai: number }): void {
     this.donOrderService.updateStatusDonOrder(donOrderId, status).subscribe({
       next: (res: any) => {
-        console.log(res);
         if (res.data) {
           this.search();
           if (res.data) {
           this.search();
           if(res.data.ban.id){
             const banId = res.data.ban.id;
-            console.log(res.data.ban.id);
             this.updateBanStatus(banId);
           }
         }
@@ -456,19 +436,15 @@ export class DonorderComponent implements OnInit {
 }
 
 
-  // cập nhật trạng thái đơn order khi đã thanh toán
   updateDonOrderStatus(donOrderId: string): void {
     
-    console.log(donOrderId);
     this.donOrderService.updateStatusDonOrder(donOrderId, this.Status).subscribe({
       next: (res: any) => {
-        console.log(res);
         
         if (res.data) {
           this.search();
           if(res.data.ban.id){
             const banId = res.data.ban.id;
-            console.log(res.data.ban.id);
             this.updateBanStatus(banId);
           }
         }else {
@@ -501,15 +477,11 @@ export class DonorderComponent implements OnInit {
     this.banAnService.getBanAnById(banAnId).subscribe({
        next: (res: any) => {
         const item = res.data;
-        console.log(item);
         this.Id = item.id;
-        console.log(this.Id);
         item.trangThai = 0;
         item.loaiBan = item.loaiBan.id;
-        console.log(item);
         this.banAnService.updateBanAn(this.Id, item).subscribe({
           next: (res: any) => {
-            console.log(res);
           },
           error: () => {
           this.notification.create(
@@ -531,10 +503,8 @@ export class DonorderComponent implements OnInit {
     this.isPopupOpen = true;
     this.isAddMode = true;
     this.formData = item;
-    console.log(item);
 
     this.loaiDonName = item.loaiDon.name;
-    // console.log(this.formData);
 
   }
   openDeletePopup(item: any): void {

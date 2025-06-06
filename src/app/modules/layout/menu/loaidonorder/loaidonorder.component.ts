@@ -89,7 +89,6 @@ export class LoaidonorderComponent implements OnInit {
   }
 
   onSaveCongThuc(body: any): void {
-    console.log(body);
 
     if (!body) return;
 
@@ -97,7 +96,6 @@ export class LoaidonorderComponent implements OnInit {
       this.loaidonorderService.updateLoaidonorder(body.id, body).subscribe(
         {
           next: (res: any) => {
-            console.log(res);
             if (res.data) {
               this.searchForm.tenLoaiDon = '';
               this.search();

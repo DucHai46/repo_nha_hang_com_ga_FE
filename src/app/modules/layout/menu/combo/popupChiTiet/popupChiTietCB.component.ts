@@ -12,7 +12,6 @@ export class PopupChiTietCBComponent  {
   @Output() close = new EventEmitter<void>(); 
 
   closePopup() {
-    console.log(this.formData);
     this.close.emit();
   }
   constructor(private fileService: FileService) {}

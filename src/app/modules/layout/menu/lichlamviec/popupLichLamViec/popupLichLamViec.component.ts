@@ -31,7 +31,6 @@ export class PopupLichLamViecComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.formData.ngay);
     this.nhanVienService.getNhanVien({}).subscribe({
       next: (res: any) => {
         this.nhanVien = res.data.data.map((item: any) => ({
@@ -83,8 +82,6 @@ export class PopupLichLamViecComponent implements OnInit {
         });
       });
     } else {
-      console.log(this.isEditMode);
-      console.log(this.formData);
       this.formData.ngay = this.formatDate(this.formData.ngay); 
       if (this.formData && this.formData.chiTietLichLamViec) {
         this.formData.chiTietLichLamViec.forEach((ca: any, caIndex: number) => {
@@ -106,7 +103,6 @@ export class PopupLichLamViecComponent implements OnInit {
           }
         });
       }
-      console.log(this.formData);
     }  
   }
 

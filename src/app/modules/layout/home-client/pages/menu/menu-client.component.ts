@@ -30,67 +30,75 @@ export class MenuClientComponent implements OnInit {
   totalPages = 1;
 
   ngOnInit(): void {
-    this.thucDonService.getThucDon(this.params).subscribe({
-      next: (res: any) => {
-        if (res.result && res.data.data) {
-          const thucDon: ThucDon = res.data.data[0];
-          const combos = (thucDon.combos || []).map(c => ({
-            id: c.id,
-            ten: c.name,
-            gia: c.giaTien,
-            hinhAnh: c.hinhAnh,
-            loai: 'combo'
-          }));
-          const monLe = (thucDon.loaiMonAns || []).flatMap(loai =>
-            (loai.monAns || []).map(m => {
-              let giaGoc = Number(m.giaTien) || 0;
-              let giamGiaPercent = Number(m.giamGia) || 0;
-              let soTienGiam = 0;
-              let giaDaGiam = giaGoc;
-              if (giamGiaPercent > 0 && giamGiaPercent < 100) {
-                soTienGiam = Math.round(giaGoc * giamGiaPercent / 100);
-                giaDaGiam = giaGoc - soTienGiam;
+    this.homeClientStore.menuItems$.subscribe((menuItems) => {
+      if (menuItems.length > 0) {
+        this.allItems = menuItems;
+        this.updatePaging();
+      }
+      else {
+        this.thucDonService.getThucDon(this.params).subscribe({
+          next: (res: any) => {
+            if (res.result && res.data.data) {
+            const thucDon: ThucDon = res.data.data[0];
+            const combos = (thucDon.combos || []).map(c => ({
+              id: c.id,
+              ten: c.name,
+              gia: c.giaTien,
+              hinhAnh: c.hinhAnh,
+              loai: 'combo'
+            }));
+            const monLe = (thucDon.loaiMonAns || []).flatMap(loai =>
+              (loai.monAns || []).map(m => {
+                let giaGoc = Number(m.giaTien) || 0;
+                let giamGiaPercent = Number(m.giamGia) || 0;
+                let soTienGiam = 0;
+                let giaDaGiam = giaGoc;
+                if (giamGiaPercent > 0 && giamGiaPercent < 100) {
+                  soTienGiam = Math.round(giaGoc * giamGiaPercent / 100);
+                  giaDaGiam = giaGoc - soTienGiam;
+                }
+                return {
+                  id: m.id,
+                  ten: m.tenMonAn,
+                  gia: giaDaGiam,
+                  giaGoc: giaGoc,
+                  giamGia: giamGiaPercent,
+                  soTienGiam: soTienGiam,
+                  hinhAnh: m.hinhAnh,
+                  loai: 'monan'
+                };
+              })
+            );
+            this.allItems = [...combos, ...monLe];
+  
+            this.allItems.forEach((item, idx) => {
+              if (item.hinhAnh) {
+                const parsed = this.parseJSON(item.hinhAnh);
+                if (parsed?.id) {
+                  this.fileService.downloadFile(parsed.id).subscribe(
+                    (blob: Blob) => {
+                      const url = URL.createObjectURL(blob);
+                      if (item.hinhAnh) {
+                        item.hinhAnh = url;
+                      }
+                    },
+                    (error) => console.error('Lỗi tải ảnh:', item.hinhAnh, error)
+                  );
+                }
+              } else {
+                this.allItems[idx].hinhAnh = '';
               }
-              return {
-                id: m.id,
-                ten: m.tenMonAn,
-                gia: giaDaGiam,
-                giaGoc: giaGoc,
-                giamGia: giamGiaPercent,
-                soTienGiam: soTienGiam,
-                hinhAnh: m.hinhAnh,
-                loai: 'monan'
-              };
-            })
-          );
-          this.allItems = [...combos, ...monLe];
-
-          this.allItems.forEach((item, idx) => {
-            if (item.hinhAnh) {
-              const parsed = this.parseJSON(item.hinhAnh);
-              if (parsed?.id) {
-                this.fileService.downloadFile(parsed.id).subscribe(
-                  (blob: Blob) => {
-                    const url = URL.createObjectURL(blob);
-                    if (item.hinhAnh) {
-                      item.hinhAnh = url;
-                    }
-                  },
-                  (error) => console.error('Lỗi tải ảnh:', item.hinhAnh, error)
-                );
-              }
-            } else {
-              this.allItems[idx].hinhAnh = '';
-            }
-          });
-
-          this.updatePaging();
-        } else {
+            });
+            this.homeClientStore.setMenuItems(this.allItems);
+            this.updatePaging();
+          } else {
+            this.allItems = [];
+          }
+        },
+        error: (err: any) => {
           this.allItems = [];
         }
-      },
-      error: (err: any) => {
-        this.allItems = [];
+       });
       }
     });
   }

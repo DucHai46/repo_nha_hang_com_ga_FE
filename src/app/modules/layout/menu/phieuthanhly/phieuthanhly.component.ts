@@ -40,7 +40,6 @@ export class PhieuthanhlyComponent implements OnInit {
       {
         next: (res: any) => {
           this.phieuThanhLyPaging = res.data.data;
-          console.log("Nhin vao day:",this.phieuThanhLyPaging);
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -81,7 +80,6 @@ export class PhieuthanhlyComponent implements OnInit {
   openChiTietPopup(item: any): void {
     this.isChiTietOpen = true; 
     this.formData = item;     
-    console.log(this.formData);
   }
   closeChiTiet(): void {
     this.isChiTietOpen = false;
@@ -91,7 +89,6 @@ export class PhieuthanhlyComponent implements OnInit {
     this.isEditMode = false;
   }
   onSaveCongThuc(body: any): void {
-    console.log(body);
     if (!body) return;
     this.phieuThanhLyService.addPhieuThanhLy(body).subscribe({
       next: (res: any) => {

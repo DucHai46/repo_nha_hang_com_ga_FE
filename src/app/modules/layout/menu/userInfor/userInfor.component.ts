@@ -81,24 +81,20 @@ export class UserInforComponent implements OnInit {
 
   ngOnInit() {
     const userInfor = JSON.parse(localStorage.getItem('userInfor') || '{}');
-    console.log(userInfor);
     this.nhanVienService.getNhanVienById(userInfor.nhanVienId).subscribe({
       next: (res: any) => {
         if (res) {
           this.nhanVien = res.data;
-          console.log(this.nhanVien);
           this.personalForm.patchValue(this.nhanVien);
         }
       },
       error: (err: any) => {
-        console.log(err);
       }
     });
     this.userService.getUserInfo(userInfor.id).subscribe({
       next: (res: any) => {
         if (res) {
           this.userInfo = res;
-          console.log(this.userInfo);
           this.accountForm.patchValue(this.userInfo);
         }
       },
@@ -159,7 +155,6 @@ export class UserInforComponent implements OnInit {
         formData.password = this.accountForm.value.newPassword;
       }
 
-      console.log(formData);
 
       this.userService.updateUser(this.userInfo.id, formData).subscribe({
         next: (res: any) => {

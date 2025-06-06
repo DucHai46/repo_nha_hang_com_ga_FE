@@ -89,7 +89,6 @@ export class PopupComboComponent implements OnInit {
   }
   updateData(): void {
     const loaiMonAnsFromForm = this.formData.loaiMonAns;    
-    console.log('Dữ liệu loaiMonAnsFromForm:', loaiMonAnsFromForm);
     this.loaiSelections = loaiMonAnsFromForm.map((loai: any) => ({
       selectedLoaiId: loai.id,
       selectedLoaiName: loai.name,
@@ -103,7 +102,6 @@ export class PopupComboComponent implements OnInit {
         }
       }))
     }));  
-    console.log('Dữ liệu loaiSelections:', this.loaiSelections);
     this.loaiSelections.forEach((loai, index) => {
         this.monAnService.getMonAn({ idLoaiMonAn: loai.selectedLoaiId }).subscribe({
           next: (res: any) => {
@@ -115,7 +113,6 @@ export class PopupComboComponent implements OnInit {
               hinhAnh: nl.hinhAnh,
               giaTien: nl.giaTien
             }));
-            console.log(this.loaiSelections[index].monAns);
           },
           error: err => {
             console.error('Lỗi khi lấy món ăn:', err);
@@ -220,7 +217,6 @@ export class PopupComboComponent implements OnInit {
         : '',
       loaiMonAns: allMonAns
     };
-    console.log("Datatosend:",dataToSend);
 
     this.save.emit(dataToSend);
   }

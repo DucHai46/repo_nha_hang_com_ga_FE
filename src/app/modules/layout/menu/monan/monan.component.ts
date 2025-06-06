@@ -80,7 +80,6 @@ export class MonanComponent implements OnInit {
       {
         next: (res: any) => {
           this.monAnPaging = res.data.data;
-          console.log(this.monAnPaging);
           this.loadAllImages();
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
@@ -114,7 +113,6 @@ export class MonanComponent implements OnInit {
   isEditMode = false;
   formData: any = {}
   openAddPopup(): void {
-          console.log(this.loaiMonAn);
     this.isPopupOpen = true;
     this.isEditMode = false;
     this.formData = {};
@@ -124,7 +122,6 @@ export class MonanComponent implements OnInit {
     this.isEditMode = false;
   }
   onSaveCongThuc(body: any): void {
-    console.log(body);
 
   
     if (!body) return;
@@ -138,9 +135,7 @@ export class MonanComponent implements OnInit {
               giaTri:res.data.giaTien,
               tenGia:'Giá của món ' + res.data.tenMonAn,
             };
-            console.log(bangGia);
             this.bangGiaService.addBangGia(bangGia).subscribe();
-            console.log(bangGia);
             this.searchForm.tenMonAn = '';
             this.searchForm.idLoaiMonAn='';
             this.searchForm.giaTien='';
@@ -178,7 +173,6 @@ export class MonanComponent implements OnInit {
         )
       });
     } else {
-      console.log(body);
       this.monAnService.addMonAn(body).subscribe({
         next: (res: any) => {
           if (res.data) {
@@ -187,7 +181,6 @@ export class MonanComponent implements OnInit {
               giaTri:res.data.giaTien,
               tenGia:'Giá của món ' + res.data.tenMonAn,
             };
-            console.log(bangGia);
             this.bangGiaService.addBangGia(bangGia).subscribe();
             this.searchForm.tenMonAn = '';
             this.searchForm.idLoaiMonAn='';
@@ -302,11 +295,9 @@ export class MonanComponent implements OnInit {
   openChiTietPopup(item: any): void {
     this.isChiTietOpen = true; 
     const congThucId=item.congThuc.id;
-    console.log(congThucId);
     this.congthucService.getCongThucById(congThucId).subscribe((response: any) => {
       this.chiTietCongThuc = response.data;
     });
-    console.log(this.chiTietCongThuc);
 
   }
   closeChiTiet(): void {

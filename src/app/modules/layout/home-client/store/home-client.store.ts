@@ -6,15 +6,19 @@ export interface HomeClientState {
     items: any[];
     giaoDien?: GiaoDien;
     cart: { item: any, quantity: number }[];
+    menuItems: any[];
 }
 
 export const initialState: HomeClientState = {
     items: [],
     giaoDien: undefined,
     cart: [],
+    menuItems: [],
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class HomeClientStore extends ComponentStore<HomeClientState> {
     constructor() {
         super(initialState);
@@ -73,4 +77,11 @@ export class HomeClientStore extends ComponentStore<HomeClientState> {
         }
         return { ...state, cart };
     });
+
+    readonly setMenuItems = this.updater((state, menuItems: any[]) => ({
+        ...state,
+        menuItems,
+    }));
+
+    readonly menuItems$ = this.select((state) => state.menuItems);
 }
