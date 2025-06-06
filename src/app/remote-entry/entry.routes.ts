@@ -67,7 +67,6 @@ export const remoteRoutes: Route[] = [
         path: 'main',
         component: MainComponent,
         children: [
-          // { path: 'dashboard', component: MonanComponent },
           //Quản trị hệ thống
           { path: 'menudynamic', component: MenuDynamicComponent, canActivate: [AuthGuard] },
           { path: 'nhahang', component: NhaHangComponent, canActivate: [AuthGuard] },

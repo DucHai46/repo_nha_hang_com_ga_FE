@@ -117,11 +117,10 @@ export class SidenavComponent implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('userInfor');
     localStorage.removeItem('menuItems');
-    this.router.navigate(['']);
+    this.router.navigate(['/login']);
   }
 
   infoUser() {
-
     this.router.navigate(['/main/userinfor']);
   }
 }

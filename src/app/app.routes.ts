@@ -12,6 +12,10 @@ import { ThongTinDonHangComponent } from './modules/layout/home-client/thong-tin
 export const appRoutes: Route[] = [
   {
     path: '',
+    component: HomeClientComponent,
+  },
+  {
+    path: 'login',
     component: LoginComponent,
   },
   {
@@ -34,6 +38,5 @@ export const appRoutes: Route[] = [
       { path: 'thanh-toan', component: ThanhToanComponent },
       { path: 'thong-tin-don-hang/:id', component: ThongTinDonHangComponent },
     ]
-
   }
 ];

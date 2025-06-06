@@ -16,7 +16,9 @@ export const initialState: HomeClientState = {
     menuItems: [],
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class HomeClientStore extends ComponentStore<HomeClientState> {
     constructor() {
         super(initialState);
