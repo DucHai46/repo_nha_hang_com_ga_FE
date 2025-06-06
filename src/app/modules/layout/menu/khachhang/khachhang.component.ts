@@ -32,7 +32,9 @@ export class KhachhangComponent implements OnInit {
   }
 
   searchForm: any = {
-    tenKhachHang: ''
+    tenKhachHang: '',
+    diaChi: '',
+    soDienThoai: ''
   };
 
   search() {
@@ -69,6 +71,8 @@ export class KhachhangComponent implements OnInit {
 
   reset() {
     this.searchForm.tenKhachHang = '';
+    this.searchForm.diaChi = '';
+    this.searchForm.soDienThoai = '';
     this.search();
   }
 
@@ -96,8 +100,7 @@ export class KhachhangComponent implements OnInit {
         {
           next: (res: any) => {
             if (res.data) {
-              this.searchForm.tenKhachHang = '';
-              this.search();
+              this.reset();
               this.closePopup();
               this.notification.create(
                 'success',
@@ -126,8 +129,7 @@ export class KhachhangComponent implements OnInit {
         {
           next: (res: any) => {
             if (res.data) {
-              this.searchForm.tenKhachHang = '';
-              this.search();
+              this.reset();
               this.closePopup();
               this.notification.create(
                 'success',

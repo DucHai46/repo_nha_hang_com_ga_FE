@@ -8,9 +8,9 @@
     class="flex flex-row gap-4 p-5 bg-white rounded-lg w-full justify-between"
   >
     <!-- form -->
-    <div class="flex flex-row gap-4">
+    <div class="grid grid-cols-3 gap-4">
       <div class="flex flex-col gap-2">
-        <label for="searchTen">Tên </label>
+        <label for="searchTen">Tên phụ phí</label>
         <input
           class="border border-gray-300 rounded-md p-2"
           id="searchTen"
@@ -18,6 +18,13 @@
           type="text"
           placeholder="Tên phụ phí"
         />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="searchTrangThai">Trạng thái</label>
+        <select class="border border-gray-300 rounded-md p-2" id="searchTrangThai" [(ngModel)]="searchForm.trangThai">
+          <option value=1>Hoạt động</option>
+          <option value=0>Không hoạt động</option>
+        </select>
       </div>
     </div>
     <!-- button -->

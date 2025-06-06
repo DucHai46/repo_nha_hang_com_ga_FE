@@ -29,12 +29,16 @@ export class NhaHangComponent implements OnInit {
 
   searchForm: any = {
     label: '',
+    isActive: null
   };
 
   search() {
     this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
+    if(this.searchForm.isActive == null){
+      delete this.searchForm.isActive;
+    }
     this.nhaHangService.getNhaHang(this.searchForm).subscribe(
       {
         next: (res: any) => {
@@ -65,6 +69,7 @@ export class NhaHangComponent implements OnInit {
 
   reset() {
     this.searchForm.label = '';
+    this.searchForm.isActive = null;
     this.search()
   }
   isPopupOpen = false;
@@ -90,8 +95,7 @@ export class NhaHangComponent implements OnInit {
       this.nhaHangService.updateNhaHang(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenNhaHang = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',
@@ -128,8 +132,7 @@ export class NhaHangComponent implements OnInit {
       this.nhaHangService.addNhaHang(body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenNhaHang = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',

@@ -31,12 +31,16 @@ export class PhuphiComponent implements OnInit  {
   }
 
   searchForm: any = {
-    tenPhuPhi: ''
+    tenPhuPhi: '',
+    trangThai: null
   };
   search() {
    this.searchForm.isPaging = true; 
    this.searchForm.pageNumber = this.paging.page;
    this.searchForm.pageSize = this.paging.size;
+   if(this.searchForm.trangThai == null){
+    delete this.searchForm.trangThai;
+   }  
    this.phuPhiService.getPhuPhi(this.searchForm).subscribe(
     {
      next: (res: any) => {
@@ -67,6 +71,7 @@ export class PhuphiComponent implements OnInit  {
 
   reset(){
    this.searchForm.tenPhuPhi = '';
+   this.searchForm.trangThai = null;
    this.search(); 
   }
 
@@ -94,8 +99,7 @@ export class PhuphiComponent implements OnInit  {
         {
           next: (res: any) => {
             if(res.data) {
-              this.searchForm.tenPhuPhi = '';
-              this.search();
+              this.reset();
               this.closePopup();
               this.notification.create(
                 'success',
@@ -124,8 +128,7 @@ export class PhuphiComponent implements OnInit  {
         {
           next: (res: any) => {
             if(res.data) {
-              this.searchForm.tenPhuPhi = '';
-              this.search();
+              this.reset();
               this.closePopup();
               this.notification.create(
                 'success',

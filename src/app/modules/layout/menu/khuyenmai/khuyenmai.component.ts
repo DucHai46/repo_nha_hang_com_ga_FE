@@ -32,12 +32,21 @@ export class KhuyenmaiComponent implements OnInit {
     this.store.setItems$(this.khuyenMaiPaging);
   }
   searchForm: any = {
-    tenKhuyenMai: ''
+    tenKhuyenMai: '',
+    ngayBatDau: null,
+    ngayKetThuc: null,
+    trangThai: null
   };
   search() {
     this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
+    Object.keys(this.searchForm).forEach(key => {
+      if (this.searchForm[key] === null) {
+        delete this.searchForm[key];
+      }
+    });
+
     this.khuyenmaiService.getKhuyenMai(this.searchForm).subscribe(
       {
         next: (res: any) => {
@@ -67,6 +76,9 @@ export class KhuyenmaiComponent implements OnInit {
 
   reset() {
     this.searchForm.tenKhuyenMai = '';
+    this.searchForm.ngayBatDau = null;
+    this.searchForm.ngayKetThuc = null;
+    this.searchForm.trangThai = null;
     this.search()
   }
 
@@ -92,8 +104,7 @@ export class KhuyenmaiComponent implements OnInit {
       this.khuyenmaiService.updateKhuyenMai(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenKhuyenMai = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',
@@ -130,8 +141,7 @@ export class KhuyenmaiComponent implements OnInit {
       this.khuyenmaiService.addKhuyenMai(body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenKhuyenMai = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',

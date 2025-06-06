@@ -29,12 +29,18 @@ export class NhacungcapComponent implements OnInit {
   searchForm: any = {
     tenNhaCungCap: '',
     diaChi: '',
+    soDienThoai: ''
   };
 
   search() {
     this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
+    Object.keys(this.searchForm).forEach(key => {
+      if (this.searchForm[key] === null) {
+        delete this.searchForm[key];
+      }
+    });
     this.nhacungcapService.getNhaCungCap(this.searchForm).subscribe(
       {
         next: (res: any) => {
@@ -65,6 +71,7 @@ export class NhacungcapComponent implements OnInit {
   reset() {
     this.searchForm.tenNhaCungCap = '';
     this.searchForm.diaChi = '';
+    this.searchForm.soDienThoai = '';
     this.search()
   }
   isPopupOpen = false;
@@ -88,9 +95,7 @@ export class NhacungcapComponent implements OnInit {
       this.nhacungcapService.updateNhaCungCap(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenNhaCungCap = '';
-            this.searchForm.diaChi = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',
@@ -127,9 +132,7 @@ export class NhacungcapComponent implements OnInit {
       this.nhacungcapService.addNhaCungCap(body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenNhaCungCap = '';
-            this.searchForm.diaChi = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',

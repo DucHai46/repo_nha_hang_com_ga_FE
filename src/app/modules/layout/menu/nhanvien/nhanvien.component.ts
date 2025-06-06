@@ -5,16 +5,16 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 import { NhanVienService } from './services/nhanvien.service';
 import { NhanVien, NhanVienResponse } from '../../../../models/NhanVien';
-
+import { ChucVuService } from '../chucvu/services/chucvu.service';
 @Component({
   selector: 'app-nhanvien',
   templateUrl: './nhanvien.component.html',
   styleUrl: './nhanvien.component.scss'
 })
 export class NhanVienComponent implements OnInit {
-  constructor(private store: NhanVienStore, private dialog: MatDialog, private notification: NzNotificationService, private nhanvienService: NhanVienService) { }
+  constructor(private store: NhanVienStore, private dialog: MatDialog, private notification: NzNotificationService, private nhanvienService: NhanVienService, private chucVuService: ChucVuService) { }
   nhanVienPaging: NhanVienResponse[] = [];
-  itemsSearch: any[] = [];
+  chucVu: any[] = [];
   paging: any = {
     page: 1,
     size: 10,
@@ -26,10 +26,19 @@ export class NhanVienComponent implements OnInit {
   ngOnInit(): void {
     this.search();
     this.store.setItems$(this.nhanVienPaging);
+    this.chucVuService.getChucVu({isPaging: false, PageNumber: 1, PageSize: 1000}).subscribe(
+      {
+        next: (res: any) => {
+          this.chucVu = res.data.data;
+        }
+      }
+    )
   }
 
   searchForm: any = {
-    tenChucVu: ''
+    tenChucVu: '',
+    chucVuId: '',
+    soDienThoai: ''
   };
 
   search() {
@@ -65,6 +74,8 @@ export class NhanVienComponent implements OnInit {
 
   reset() {
     this.searchForm.tenChucVu = '';
+    this.searchForm.chucVuId = '';
+    this.searchForm.soDienThoai = '';
     this.search()
   }
 
@@ -89,8 +100,7 @@ export class NhanVienComponent implements OnInit {
       this.nhanvienService.updateNhanVien(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenChucVu = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',
@@ -127,8 +137,7 @@ export class NhanVienComponent implements OnInit {
       this.nhanvienService.addNhanVien(body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenChucVu = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',
