@@ -12,7 +12,8 @@ import { ThongTinDonHangComponent } from './modules/layout/home-client/thong-tin
 export const appRoutes: Route[] = [
   {
     path: '',
-    component: HomeClientComponent,
+    redirectTo: 'home-client',
+    pathMatch: 'full'
   },
   {
     path: 'login',
