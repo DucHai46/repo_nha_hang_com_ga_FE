@@ -279,7 +279,7 @@ export class DonorderComponent implements OnInit {
         this.notification.create(
           'success',
           'Thông báo!',
-          `Cập nhật thành công`,
+          `Xác nhận đơn order thành công`,
           {
             nzClass: 'notification-success',
             nzDuration: 2000
@@ -291,7 +291,7 @@ export class DonorderComponent implements OnInit {
           this.notification.create(
             'error',
             'Thông báo!',
-            `Cập nhật thất bại`,
+            `Xác nhận đơn order thất bại`,
             {
               nzClass: 'notification-error',
               nzDuration: 2000
@@ -369,11 +369,11 @@ export class DonorderComponent implements OnInit {
         
             this.updateDonOrderStatus(data);
             this.search();
-            this.isChiTietHoaDonOpen = false;
+            // this.isChiTietHoaDonOpen = false;
             this.notification.create(
               'success',
               'Thông báo!',
-              `Cập nhật thành công`,
+              `Thanh toán thành công`,
               {
                 nzClass: 'notification-success',
                 nzDuration: 2000
@@ -383,7 +383,7 @@ export class DonorderComponent implements OnInit {
             this.notification.create(
               'error',
               'Thông báo!',
-              `Cập nhật thất bại`,
+              `Thanh toán thất bại`,
               {
                 nzClass: 'notification-error',
                 nzDuration: 2000

@@ -22,6 +22,7 @@ export class PopupChiTietHoaDonComponent implements OnInit {
   @Input() formData: any;   
   @Input() form: any;
   @Output() close = new EventEmitter<void>(); 
+  @Output() close1 = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>(); 
   @Output() change = new EventEmitter<boolean>(); 
 
@@ -269,6 +270,7 @@ export class PopupChiTietHoaDonComponent implements OnInit {
 
   closeChiTiet() {
     this.close.emit();
+    this.close1.emit();
   }
 
   constructor(
@@ -346,9 +348,16 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     }
 
     const element: Element = document.getElementById('hoadon')!;
-    html2pdf().from(element).set(options).save();
+    html2pdf().from(element).set(options).save().then(() => {
+      // Chờ xuất PDF xong mới đóng
+      this.changeStatus();
+      this.close.emit();
+      this.close1.emit();
+    });;
 
-    this.changeStatus();
+    // this.changeStatus();
+    // this.close.emit();
+
 
   }
 }

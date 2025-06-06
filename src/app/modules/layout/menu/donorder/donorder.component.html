@@ -150,10 +150,10 @@
               </span>
             </td>
             <td class="px-6 py-4">
-              {{ item.ban.name }}
+              {{ item?.ban?.name || "Bàn 0" }}
             </td>
             <td class="px-6 py-4">
-              {{ item.khachHang.name }}
+              {{ item?.khachHang?.name || "Cửa hàng" }}
             </td>
 
             <!-- <td class="px-6 py-4" style="min-width: 300px; max-width: 400px; white-space: normal;">
@@ -352,6 +352,6 @@
 <app-popupChiTietHoaDon
   *ngIf="isChiTietHoaDonOpen"
   [formData]="formHoaDon"
-  (close)="closeChiTietHoaDon()"
+  (close1)="closeChiTietHoaDon()"
   (save)="onSaveCongThuc($event)"
 ></app-popupChiTietHoaDon>
