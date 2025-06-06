@@ -119,7 +119,6 @@ export class PopupChiTietHoaDonComponent implements OnInit {
       trangthai: 1,
     };
     console.log(this.form);
-    // this.donOrderId = this.formData.donOrder.id; // lưu id đơn order để cập nhật trạng thái khi xuất file pdf
     this.save.emit(this.form);
   }
   onChange(){
@@ -231,7 +230,6 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     console.log('Danh sách combo:', this.listCombos);
   }
 
-  // Cập nhật trạng thái đơn order
   updateDonOrderStatusOnlline(donOrderId: string, status: { trangThai: number }): void {
     this.donOrderAdminService.updateStatusDonOrder(donOrderId, status).subscribe({
       next: (res: any) => {

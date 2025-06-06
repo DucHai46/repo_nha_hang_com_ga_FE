@@ -311,7 +311,6 @@ export class DonorderComponent implements OnInit {
   }
 
   isLoaiDon(item: any) {
-    // Kiểm tra xem item.loaiDon có phải là object với thuộc tính id không
     if (item.loaiDon && item.loaiDon.id) {
       if (item.loaiDon.name) {
         return item.loaiDon.name?.toLowerCase() === 'online';
@@ -372,7 +371,6 @@ export class DonorderComponent implements OnInit {
 
       const data = body.donOrder;
       console.log(data);
-     // Cập nhật trạng thái hóa đơn thanh toán
 
       this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
         next: (res: any) => {
@@ -423,7 +421,6 @@ export class DonorderComponent implements OnInit {
     }
   }
 
-  // Cập nhật trạng thái đơn order
   updateDonOrderStatusOnlline(donOrderId: string, status: { trangThai: number }): void {
     this.donOrderService.updateStatusDonOrder(donOrderId, status).subscribe({
       next: (res: any) => {
@@ -456,7 +453,6 @@ export class DonorderComponent implements OnInit {
 }
 
 
-  // cập nhật trạng thái đơn order khi đã thanh toán
   updateDonOrderStatus(donOrderId: string): void {
     
     console.log(donOrderId);
@@ -534,7 +530,6 @@ export class DonorderComponent implements OnInit {
     console.log(item);
 
     this.loaiDonName = item.loaiDon.name;
-    // console.log(this.formData);
 
   }
   openDeletePopup(item: any): void {

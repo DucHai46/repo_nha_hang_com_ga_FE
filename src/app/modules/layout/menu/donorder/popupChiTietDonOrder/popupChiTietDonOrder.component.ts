@@ -125,8 +125,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
 
   toggleStatus(chiTiet: any, chiTietIndex: number) {
 
-    // Đảo ngược trạng thái hiện tại (0: Đang chế biến, 1: Đã hoàn thành)
-
     const newStatus = chiTiet.trangThai === 1 ? 0 : 1;
     chiTiet.trangThai = newStatus;
 
