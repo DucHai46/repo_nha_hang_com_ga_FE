@@ -38,7 +38,7 @@
         </p>
         <p>Số khách: <span>3</span></p>
         <p>
-          Bàn: <span>{{ donOrder.ban.name }}</span>
+          Bàn: <span>{{ donOrder?.ban?.name || "Bàn 0" }}</span>
         </p>
         <p>
           Khách hàng:
@@ -115,7 +115,7 @@
       </div>
 
       <div class="note text-center qr-container">
-        <p>Giá trên đã bao gồm VAT 8% nếu khách yêu cầu xuất hóa đơn VAT.</p>
+        <p>Giá trên đã bao gồm thuế GTGT (VAT).</p>
         <p>Giá trên đã áp dụng các mã giảm giá trên từng món ăn.</p>
         <p>Cảm ơn quý khách và hẹn gặp lại!!!</p>
       </div>

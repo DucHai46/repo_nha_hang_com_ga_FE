@@ -62,6 +62,11 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     private ComboService: ComboService
   ) { }
 
+  isDonOrderLocked(): boolean {
+    return [0, 2, 3, 4, 5].includes(this.formData?.trangThai);
+  }
+
+
   toggleFoodStatus(monAn: any, chiTietIndex: number, monAnIndex: number) {
     const newStatus = monAn.monAn_trangThai === 1 ? 0 : 1;
     monAn.monAn_trangThai = newStatus;

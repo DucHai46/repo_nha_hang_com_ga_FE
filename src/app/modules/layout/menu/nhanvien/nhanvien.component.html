@@ -127,18 +127,12 @@
         </thead>
         <tbody>
           <tr
-            class="border-b dark:border-gray-700 border-gray-200"
+            class="border-b dark:border-gray-700 border-gray-200 text-center"
             *ngFor="let item of nhanVienPaging; let i = index"
           >
             <td class="px-6 py-4 font-medium whitespace-nowrap text-center">
               {{ i + 1 }}
             </td>
-            <!-- <th
-              scope="row"
-              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              {{ item.ma }}
-            </th> -->
             <td class="px-6 py-4">
               {{ item.tenNhanVien }}
             </td>
