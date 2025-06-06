@@ -176,6 +176,8 @@ export class MenugoimonComponent implements OnInit {
     const item = this.itemsMonAn.find((mon: any) => mon.ma === ma);
     if (item) {
       item.soLuong += 1;  
+      this.updateSelectedItemsMA(item);  
+      console.log('Tăng số lượng:', item);
     }
   }
 

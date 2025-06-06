@@ -29,12 +29,20 @@ export class MenuDynamicComponent implements OnInit {
 
   searchForm: any = {
     label: '',
+    isActive: null,
+    isParent: null
   };
 
   search() {
     this.searchForm.isPaging = true; 
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
+    if(this.searchForm.isActive == null){
+      delete this.searchForm.isActive;
+    }
+    if(this.searchForm.isParent == null){
+      delete this.searchForm.isParent;
+    }
     this.menuDynamicService.getMenuDynamic(this.searchForm).subscribe(
       {
         next: (res: any) => {
@@ -65,8 +73,11 @@ export class MenuDynamicComponent implements OnInit {
 
   reset() {
     this.searchForm.label = '';
+    this.searchForm.isActive = null;
+    this.searchForm.isParent = null;
     this.search()
   }
+
   isPopupOpen = false;
   isEditMode = false;
   isDetailMode = false;
@@ -90,8 +101,7 @@ export class MenuDynamicComponent implements OnInit {
       this.menuDynamicService.updateMenuDynamic(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.label = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',
@@ -128,8 +138,7 @@ export class MenuDynamicComponent implements OnInit {
       this.menuDynamicService.addMenuDynamic(body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.tenDanhMuc = '';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',

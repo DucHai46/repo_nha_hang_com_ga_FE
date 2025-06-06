@@ -139,7 +139,6 @@ export class PopupPhieuXuatComponent implements OnInit {
     });
     this.loaiSelections[index].nguyenLieus = [];
     this.loaiSelections[index].nguyenLieus = [];
-
   }
   isLoaiDuplicate(selectedLoaiId: string, index: number): boolean {
     return this.loaiSelections.some((s, idx) => idx !== index && s.selectedLoaiId === selectedLoaiId);

@@ -94,7 +94,6 @@ export class SidenavComponent implements OnInit {
         });
       });
     });
-    console.log(this.items);
     if (this.items.length > 0) {
       const findFirstValidRoute = (items: MenuItem[]): string | null => {
         for (const item of items) {
