@@ -40,6 +40,7 @@
             type="text"
             id="materialName"
             value="{{ formData.tenDon }}"
+            disabled
             name="tenDonOrder"
           />
         </div>
@@ -49,6 +50,7 @@
             id="dvt"
             [(ngModel)]="nhanViens.id"
             name="nhanvien"
+            disabled
             class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
           >
             <option [ngValue]="nhanViens.id">
