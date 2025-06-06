@@ -120,6 +120,7 @@
             <th scope="col" class="px-6 py-3">Bàn</th>
             <th scope="col" class="px-6 py-3">Khách Hàng</th>
             <th scope="col" class="px-6 py-3">Trạng Thái</th>
+            <th scope="col" class="px-6 py-3">Ngày</th>
             <th scope="col" class="px-6 py-3">Thao tác</th>
           </tr>
         </thead>
@@ -192,6 +193,9 @@
                     : "Đã hủy"
                 }}
               </span>
+            </td>
+            <td class="px-6 py-4">
+              {{ item.ngayTao | date : "dd/MM/yyyy" }}
             </td>
             <td
               class="px-6 py-4 flex flex-row gap-2 justify-center items-center"

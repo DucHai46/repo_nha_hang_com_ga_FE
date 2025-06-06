@@ -152,7 +152,7 @@ openChiTietHoaDonPopup(item: any): void {
 
     this.form = {
     donOrder: this.formData.id,
-    gioVao: this.formData.createdDate,
+    gioVao: this.formData.ngayTao,
     gioRa: new Date(),
     trangthai: 0,
   };
