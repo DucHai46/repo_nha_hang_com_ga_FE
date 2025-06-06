@@ -27,7 +27,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     this.ComboService.getCombo({}).subscribe({
       next: (res: any) => {
         this.comBos = res.data.data;
-        console.log(this.comBos);
       },
       error: (err) => {
         console.error('Lỗi khi lấy thông tin combo:', err);
@@ -38,7 +37,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
   onMouseMove(event: MouseEvent, item: any) {
 
     this.hoveredItem = this.comBos.find((combo: any) => combo.id === item.comBo.id);
-    console.log(this.hoveredItem);
     this.updatePosition(event);
   }
 
@@ -51,7 +49,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     this.popupY = event.clientY + 15;
   }
   closePopup() {
-    console.log(this.formData);
     this.close.emit();
   }
 
@@ -95,7 +92,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     })
     this.donOrderService.updateDonOrders(updatedOrder.id, updatedOrder).subscribe({
       next: (res: any) => {
-        console.log('Cập nhật trạng thái thành công', res);
 
         this.formData = res.data;
         this.notification.create(
@@ -158,8 +154,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     })
     this.donOrderService.updateDonOrders(updatedOrder.id, updatedOrder).subscribe({
       next: (res: any) => {
-        console.log('Cập nhật trạng thái thành công', res);
-
         this.formData = res.data;
         this.notification.create(
           'success',
@@ -220,9 +214,6 @@ export class PopupChiTietDonOrderComponent implements OnInit {
     })
     this.donOrderService.updateDonOrders(updatedOrder.id, updatedOrder).subscribe({
       next: (res: any) => {
-        console.log('Cập nhật trạng thái thành công', res);
-
-
         this.formData = res.data;
         this.notification.create(
           'success',

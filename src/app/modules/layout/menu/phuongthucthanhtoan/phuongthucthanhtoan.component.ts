@@ -39,7 +39,6 @@ export class PhuongThucThanhToanComponent {
    this.searchForm.isPaging = true; 
    this.searchForm.pageNumber = this.paging.page;
    this.searchForm.pageSize = this.paging.size;
-   console.log(this.searchForm);
    this.phuongThucThanhToanService.getPhuongThucThanhToan(this.searchForm).subscribe(
     {
      next: (res: any) => {
@@ -90,15 +89,12 @@ export class PhuongThucThanhToanComponent {
   }
 
   onSaveCongThuc(body: any): void {
-    console.log(body);
-    
     if(!body) return;
 
     if(this.isEditMode){
       this.phuongThucThanhToanService.updatePhuongThucThanhToan(body.id, body).subscribe(
         {
           next: (res: any) => {
-            console.log(res);
             if(res.data) {
               this.searchForm.tenPhuongThuc = '';
               this.search();

@@ -66,25 +66,20 @@ export class PopupPhieuKiemKeComponent implements OnInit {
     this.phieuNhapService.getPhieuNhap({}).subscribe({
       next: (res: any) => {
         this.phieuNhap=res.data.data;
-        console.log("Phieu nhap:",this.phieuNhap);
       },
       error: (err: any) => console.log(err)
     });
     this.phieuXuatService.getPhieuXuat({}).subscribe({
       next: (res: any) => {
         this.phieuXuat=res.data.data;
-        console.log("Phieu xuat:",this.phieuXuat);
       },
       error: (err: any) => console.log(err)
     });
-    console.log(this.nhanVien);
-    console.log(this.nhanVien);
     this.nhanVienService.getNhanVienById(userInfo.nhanVienId).subscribe({
       next: (res: any) => {
         this.nhanViens = res.data;
         this.formData.nhanVien = this.nhanViens.id;
 
-        console.log(this.formData.nhanVien);
       },
     });
 
@@ -128,7 +123,6 @@ export class PopupPhieuKiemKeComponent implements OnInit {
               phieu.nguyenLieus.forEach((nl: any) => {
                 if (nl.id === item.id) {
                   nguyenLieuItem.soLuongNhap += nl.soLuong;
-                  console.log("So luong nhap:",nguyenLieuItem.soLuongNhap);
                 }
               });
             });
@@ -140,7 +134,6 @@ export class PopupPhieuKiemKeComponent implements OnInit {
                 loai.nguyenLieus.forEach((nl: any) => {
                   if (nl.id === item.id) {
                     nguyenLieuItem.soLuongXuat += nl.soLuongXuat;
-                    console.log("So luong xuat",nguyenLieuItem.soLuongXuat);
                   }
                 });
               });
@@ -174,7 +167,6 @@ export class PopupPhieuKiemKeComponent implements OnInit {
   }
   isNhanVienUnValid=false;
   onSave(): void {
-    console.log(this.loaiSelections);
     const allLoaiNguyenLieus = this.loaiSelections.map(loai => ({
       id: loai.selectedLoaiId,
       nguyenLieus: loai.filteredNguyenLieu.map((item: any) => ({
@@ -201,7 +193,6 @@ export class PopupPhieuKiemKeComponent implements OnInit {
       
       loaiNguyenLieus: allLoaiNguyenLieus
     };
-    console.log(dataToSend);
 
     this.save.emit(dataToSend);
 

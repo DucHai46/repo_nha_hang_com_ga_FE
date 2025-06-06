@@ -81,7 +81,6 @@ export class PhieuxuatComponent {
   openChiTietPopup(item: any): void {
     this.isChiTietOpen = true; 
     this.formData = item;     
-    console.log(this.formData);
   }
   closeChiTiet(): void {
     this.isChiTietOpen = false;
@@ -91,7 +90,6 @@ export class PhieuxuatComponent {
     this.isEditMode = false;
   }
   onSaveCongThuc(body: any): void {
-    console.log(body);
     if (!body) return;
     this.phieuXuatService.addPhieuXuat(body).subscribe({
       next: (res: any) => {

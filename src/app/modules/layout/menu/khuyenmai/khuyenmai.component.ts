@@ -85,7 +85,6 @@ export class KhuyenmaiComponent implements OnInit {
     this.isEditMode = false;
   }
   onSaveCongThuc(body: any): void {
-    console.log(body);
   
     if (!body) return;
   

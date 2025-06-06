@@ -108,7 +108,6 @@ export class LichlamviecComponent {
   }
 
   onSaveCongThuc(body: any): void {
-    console.log(body);
     
     if(!body) return;
 
@@ -116,7 +115,6 @@ export class LichlamviecComponent {
       this.lichLamViecService.updateLichLamViec(body.id, body).subscribe(
         {
           next: (res: any) => {
-            console.log(res);
             if(res.data) {
               this.searchForm.ngay = '';
               this.searchForm.tuNgay = '';

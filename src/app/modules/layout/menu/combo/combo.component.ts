@@ -83,7 +83,6 @@ export class ComboComponent implements OnInit {
     openChiTietPopup(item: any): void {
       this.isChiTietOpen = true; 
       this.formData = item;     
-      console.log(this.formData);
     }
     closePopup(): void {
       this.isPopupOpen = false;
@@ -93,7 +92,6 @@ export class ComboComponent implements OnInit {
       this.isChiTietOpen = false;
     }
     onSaveCongThuc(body: any): void {
-      console.log(body);
     
       if (!body) return;
     
@@ -141,7 +139,6 @@ export class ComboComponent implements OnInit {
       } else {
         this.comboService.addCombo(body).subscribe({
           next: (res: any) => {
-            console.log(res);
             if (res.data) {
               this.searchForm.tenCombo = '';
               this.searchForm.giaTien = '';
@@ -186,7 +183,6 @@ export class ComboComponent implements OnInit {
       this.isPopupOpen = true;
       this.isEditMode = true;
       this.formData = item;
-      console.log(item);
     }
     openDeletePopup(item: any): void {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

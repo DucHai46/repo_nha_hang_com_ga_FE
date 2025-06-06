@@ -15,7 +15,6 @@ export class PopupChiTietPhieuXuatComponent implements OnInit  {
   nhaHang: any;
 
   closePopup() {
-    console.log(this.formData);
     this.close.emit();
   }
   
@@ -26,7 +25,6 @@ export class PopupChiTietPhieuXuatComponent implements OnInit  {
     this.nhaHangService.getNhaHang({isActive: true}).subscribe({
       next: (res: any) => {
         this.nhaHang= res.data.data[0];
-        console.log(this.nhaHang);
       },
       error: (err: any) => console.log(err)
     });

@@ -27,7 +27,6 @@ export class PopupTuDoComponent implements OnInit {
         }
       },
       error: (err: any) => {
-        console.log(err);
       }
     });
   }

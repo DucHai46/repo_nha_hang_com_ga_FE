@@ -28,7 +28,6 @@ export class PopupPhanQuyenComponent {
         next: (res: any) => {
           if (res.data) {
             this.menuDynamic = res.data.data
-            console.log(this.menuDynamic);
           }
         },
         error: (err: any) => {

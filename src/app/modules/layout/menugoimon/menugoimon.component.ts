@@ -54,7 +54,6 @@ export class MenugoimonComponent implements OnInit {
         this.itemsRoot2 = await this.taoDanhSachMonAn(this.thucDon);
         this.combo = await this.taoDanhSachCombo(this.thucDon);
         this.itemsMonAn = [...this.itemsRoot2, ...this.combo];
-        console.log(this.itemsMonAn);
         this.loadAllImages();
 
         if (updatedSelectedItems) {
@@ -67,7 +66,6 @@ export class MenugoimonComponent implements OnInit {
       error: (err: any) => console.log(err),
     });
     this.id = this.route.snapshot.paramMap.get('id') || '';
-    console.log('ID:', this.id);
   }
 
   private taoDanhSachMonAn(thucDonData: any[]): Promise<any[]> {
@@ -96,7 +94,6 @@ export class MenugoimonComponent implements OnInit {
               });
             });
           });
-          console.log(danhSach);
           resolve(danhSach);
         },
         error: (err: any) => {
@@ -131,7 +128,6 @@ export class MenugoimonComponent implements OnInit {
               }
             });
           });
-          console.log(danhSach);
           resolve(danhSach);
         },
         error: (err: any) => {
@@ -151,8 +147,7 @@ export class MenugoimonComponent implements OnInit {
           soLuong: updatedItem.soLuong
         };
       }
-    });
-    console.log("itemsMonAn sau khi cập nhật:", this.itemsMonAn);  
+    }); 
   }
 
   getMonAnTheoDanhMuc(maDanhMuc: string) {
@@ -181,8 +176,6 @@ export class MenugoimonComponent implements OnInit {
     const item = this.itemsMonAn.find((mon: any) => mon.ma === ma);
     if (item) {
       item.soLuong += 1;  
-      this.updateSelectedItemsMA(item);  
-      console.log('Tăng số lượng:', item);
     }
   }
 
@@ -195,7 +188,6 @@ export class MenugoimonComponent implements OnInit {
         item.soLuong = 0;
       }
       this.updateSelectedItemsMA(item);
-      console.log('Giảm số lượng:', item.soLuong);
     }
   }
 
@@ -213,7 +205,6 @@ export class MenugoimonComponent implements OnInit {
     if (this.id == '' || this.id == null) {
       return;
     }
-    console.log(this.itemsMonAn);
     this.router.navigate(['/xacnhangoimon'], {
       state: { selectedItemsMA: this.selectedItemsMA, id: this.id },
     });
@@ -276,12 +267,10 @@ export class MenugoimonComponent implements OnInit {
 
   searchMonAn(event: any) {
     const keyword = event.target.value.toLowerCase().trim();
-    console.log(keyword);
 
     if (!this.itemsMonAnRoot || this.itemsMonAnRoot.length === 0) {
       this.itemsMonAnRoot = [...this.itemsMonAn]; 
     }
-    console.log(this.itemsMonAnRoot);
 
     if (keyword === '') {
       this.itemsMonAn = [...this.itemsMonAnRoot];
@@ -291,7 +280,6 @@ export class MenugoimonComponent implements OnInit {
     const filtered = this.itemsMonAnRoot.filter((mon: any) =>
       String(mon.ten).toLowerCase().includes(keyword)
     );
-    console.log(filtered);
 
 
     if (filtered.length > 0) {

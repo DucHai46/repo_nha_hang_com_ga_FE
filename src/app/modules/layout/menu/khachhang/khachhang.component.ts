@@ -36,11 +36,9 @@ export class KhachhangComponent implements OnInit {
   };
 
   search() {
-    console.log(this.paging)
     this.searchForm.isPaging = true;
     this.searchForm.pageNumber = this.paging.page;
     this.searchForm.pageSize = this.paging.size;
-    console.log(this.searchForm);
     this.khachhangService.getKhachHang(this.searchForm).subscribe(
       {
         next: (res: any) => {
@@ -90,7 +88,6 @@ export class KhachhangComponent implements OnInit {
   }
 
   onSaveCongThuc(body: any): void {
-    console.log(body);
 
     if (!body) return;
 

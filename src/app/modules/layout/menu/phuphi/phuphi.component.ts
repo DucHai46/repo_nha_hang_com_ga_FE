@@ -86,7 +86,6 @@ export class PhuphiComponent implements OnInit  {
   }
 
   onSaveCongThuc(body: any): void {
-    console.log(body);
     
     if(!body) return;
 
@@ -94,7 +93,6 @@ export class PhuphiComponent implements OnInit  {
       this.phuPhiService.updatePhuPhi(body.id, body).subscribe(
         {
           next: (res: any) => {
-            console.log(res);
             if(res.data) {
               this.searchForm.tenPhuPhi = '';
               this.search();

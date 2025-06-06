@@ -83,7 +83,6 @@ export class MenuDynamicComponent implements OnInit {
     this.isDetailMode = false;
   }
   onSaveMenuDynamic(body: any): void {
-    console.log(body);
 
     if (!body) return;
 
@@ -244,7 +243,6 @@ export class MenuDynamicComponent implements OnInit {
     this.isDetailMode = true;
     this.menuDynamicService.getMenuDynamicById(item.id).subscribe((response: any) => {
       this.formData = response.data;
-      console.log(this.formData);
     });
   }
 }

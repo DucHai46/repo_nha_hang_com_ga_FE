@@ -63,7 +63,6 @@ export class HoadonthanhtoanComponent implements OnInit {
   }
 
   search() {
-    console.log('Search form:', this.searchForm);
     if (this.searchForm.nhanViens) {
       this.searchNV.isPaging = true; 
       this.searchNV.PageNumber = this.paging.page;
@@ -73,7 +72,6 @@ export class HoadonthanhtoanComponent implements OnInit {
         next: (res: any) => {
           const resData = res.data.data;
            this.searchForm.nhanVien = resData[0].id;
-           console.log(this.searchForm.nhanVien);
           this.searchHoaDon();
         }
       });
@@ -89,12 +87,10 @@ export class HoadonthanhtoanComponent implements OnInit {
     this.searchForm.isPaging = true;
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
-    console.log(this.searchForm);
     this.hoaDonThanhToanService.getHoaDonThanhToan(this.searchForm).subscribe(
       {
         next: (res: any) => {
           this.hoaDonPaging = res.data.data;
-          console.log(this.hoaDonPaging);
           this.paging.page = res.data.paging.currentPage;
           this.paging.size = res.data.paging.pageSize;
           this.paging.total = res.data.paging.totalRecords;
@@ -143,7 +139,6 @@ export class HoadonthanhtoanComponent implements OnInit {
     this.isChiTietOpen = true;
     this.isEditMode = true;
     this.formData = item;
-    console.log(this.formData);
   }
 
   closeChiTiet(): void {
@@ -155,20 +150,15 @@ export class HoadonthanhtoanComponent implements OnInit {
     this.donOrderAdminService.getDonOrderById(donOrderId).subscribe({
       next: (res: any) => {
         const item = res.data;
-        console.log(item);
         this.Id = item.id;
-        console.log(this.Id);  
       }
     });
     
-    console.log(donOrderId);
     this.donOrderAdminService.updateStatusDonOrder(donOrderId, this.Status).subscribe({
       next: (res: any) => {
-        console.log(res);
         if (res.data) {
           if(res.data.ban.id){
             const banId = res.data.ban.id;
-            console.log(res.data.ban.id);
             this.updateBanStatus(banId);
           }
         }
@@ -191,16 +181,11 @@ export class HoadonthanhtoanComponent implements OnInit {
     this.banAnService.getBanAnById(banAnId).subscribe({
        next: (res: any) => {
         const item = res.data;
-        console.log(item);
         this.Id = item.id;
-        console.log(this.Id);
         item.trangThai = 0;
         item.loaiBan = item.loaiBan.id;
-        console.log(item);
         this.banAnService.updateBanAn(this.Id, item).subscribe({
           next: (res: any) => {
-            console.log(res);
-           
           },
           error: () => {
           this.notification.create(
@@ -219,25 +204,18 @@ export class HoadonthanhtoanComponent implements OnInit {
   }
 
   onSaveCongThuc(body: any): void {
-    console.log(body);
     if (!body) return;
-    console.log(body);
-    console.log(body.id)
-    console.log(this.isEditMode);
     const data = body.donOrder;
-    console.log(data);
 
     if (this.isEditMode) {
       this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
         next: (res: any) => {
-          console.log(res);
           if (res.data) {
             this.searchForm.tenHoaDon = '';
             this.searchForm.nhanViens = '';
             this.searchForm.gioVao= '';
             this.searchForm.gioRa= '';
             this.search();
-            console.log(data);
             this.updateDonOrderStatus(data);
             
             this.closeChiTiet();
@@ -287,7 +265,6 @@ export class HoadonthanhtoanComponent implements OnInit {
     this.isPopupOpen = true;
     this.isEditMode = true;
     this.formData = item;
-    console.log(item);
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

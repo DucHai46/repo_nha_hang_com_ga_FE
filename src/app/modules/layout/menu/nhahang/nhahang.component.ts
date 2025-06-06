@@ -83,7 +83,6 @@ export class NhaHangComponent implements OnInit {
     this.isPopupGiaoDienOpen = false;
   }
   onSaveNhaHang(body: any): void {
-    console.log(body);
 
     if (!body) return;
 
@@ -244,7 +243,6 @@ export class NhaHangComponent implements OnInit {
     this.isChiTietOpen = true;
     this.nhaHangService.getNhaHangById(item.id).subscribe((response: any) => {
       this.formData = response.data;
-      console.log(this.formData);
     });
   }
 
@@ -301,7 +299,6 @@ export class NhaHangComponent implements OnInit {
   isPopupGiaoDienOpen = false;
   selectedItem: any;
   openGiaoDienPopup(item: any): void {
-    console.log(item);
     this.isPopupGiaoDienOpen = true;
     if (item.giaoDien) {
       this.isEditMode = true;
@@ -320,8 +317,6 @@ export class NhaHangComponent implements OnInit {
   }
 
   onSaveGiaoDien(body: any): void {
-    console.log(body);
-    console.log(this.selectedItem);
     if (this.isEditMode) {
       this.nhaHangService.updateGiaoDien(this.selectedItem.id, body).subscribe({
         next: (res: any) => {

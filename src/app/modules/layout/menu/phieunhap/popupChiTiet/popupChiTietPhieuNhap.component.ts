@@ -15,7 +15,6 @@ export class PopupChiTietPhieuNhapComponent implements OnInit {
   nhaHang: any;
 
   closePopup() {
-    console.log(this.formData);
     this.close.emit();
   }
   constructor(private fileService: FileService
@@ -25,7 +24,6 @@ export class PopupChiTietPhieuNhapComponent implements OnInit {
     this.nhaHangService.getNhaHang({isActive: true}).subscribe({
       next: (res: any) => {
         this.nhaHang= res.data.data[0];
-        console.log(this.nhaHang);
       },
       error: (err: any) => console.log(err)
     });

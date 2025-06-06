@@ -82,8 +82,6 @@ export class PhanQuyenComponent implements OnInit {
     this.isEditMode = false;
   }
   onSavePhanQuyen(body: any): void {
-    console.log(body);
-
     if (!body) return;
 
     if (this.isEditMode) {
@@ -237,7 +235,6 @@ export class PhanQuyenComponent implements OnInit {
     this.isChiTietOpen = true;
     this.phanQuyenService.getPhanQuyenById(item.id).subscribe((response: any) => {
       this.formData = response.data;
-      console.log(this.formData);
     });
   }
 

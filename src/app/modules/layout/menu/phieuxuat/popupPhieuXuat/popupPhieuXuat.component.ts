@@ -62,14 +62,10 @@ export class PopupPhieuXuatComponent implements OnInit {
       id: userInfo.id,
       name: userInfo.name,
     }
-    console.log(this.nhanVien);
-    console.log(this.nhanVien);
     this.nhanVienService.getNhanVienById(userInfo.nhanVienId).subscribe({
       next: (res: any) => {
         this.nhanViens = res.data;
         this.formData.nhanVien = this.nhanViens.id;
-
-        console.log(this.formData.nhanVien);
       },
     });
 
@@ -184,7 +180,6 @@ export class PopupPhieuXuatComponent implements OnInit {
   isNhanVienUnValid=false;
   isLyDoUnValid=false;
   onSave(): void {
-    console.log(this.loaiSelections);
     const allLoaiNguyenLieus = this.loaiSelections.map(loai => ({
       id: loai.selectedLoaiId,
       nguyenLieus: loai.nguyenLieus.map((item: any) => ({
@@ -211,8 +206,6 @@ export class PopupPhieuXuatComponent implements OnInit {
       
       loaiNguyenLieus: allLoaiNguyenLieus
     };
-    console.log(dataToSend);
-
     this.save.emit(dataToSend);
 
   }

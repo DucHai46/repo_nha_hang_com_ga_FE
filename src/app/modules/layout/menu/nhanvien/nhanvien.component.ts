@@ -82,7 +82,6 @@ export class NhanVienComponent implements OnInit {
     this.isEditMode = false;
   }
   onSaveNhanVien(body: any): void {
-    console.log(body);
 
     if (!body) return;
 

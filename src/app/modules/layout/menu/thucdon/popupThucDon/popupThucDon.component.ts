@@ -179,7 +179,6 @@ export class PopupThucDonComponent implements OnInit {
     this.comboSelections[index].hinhAnh = this.combo.find(l => l.id === selectedComboId)?.hinhAnh || '';
     this.comboSelections[index].giaTien = this.combo.find(l => l.id === selectedComboId)?.giaTien || '';
     this.comboSelections[index].moTa = this.combo.find(l => l.id === selectedComboId)?.moTa || '';
-    console.log(this.comboSelections[index]);
   }
   isLoaiDuplicate(selectedLoaiId: string, index: number): boolean {
     return this.loaiSelections.some((s, idx) => idx !== index && s.selectedLoaiId === selectedLoaiId);

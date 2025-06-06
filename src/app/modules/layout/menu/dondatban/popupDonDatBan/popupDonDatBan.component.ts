@@ -100,7 +100,6 @@ export class PopupDonDatBanComponent implements OnInit {
     if(this.isEditMode){
       this.khachHangService.updateKhachHang(this.formData.khachHang.id,this.khachHangTT).subscribe({
         next: (res: any) => {
-          console.log(res.data);
           const date = new Date(this.formData.khungGio);
           const formattedKhungGio = date.toLocaleString('vi-VN', {
             day: '2-digit',
@@ -116,7 +115,6 @@ export class PopupDonDatBanComponent implements OnInit {
             ban: this.formData.ban.id,
             khachHang: res.data.id,
           };
-          console.log(dataToSend);
           this.save.emit(dataToSend);
         },
         error: (err: any) => console.log(err)
@@ -124,7 +122,6 @@ export class PopupDonDatBanComponent implements OnInit {
     }else{
       this.khachHangService.addKhachHang(this.khachHangTT).subscribe({
         next: (res: any) => {
-          console.log(res.data);
           const date = new Date(this.formData.khungGio);
           const formattedKhungGio = date.toLocaleString('vi-VN', {
             day: '2-digit',
@@ -140,7 +137,6 @@ export class PopupDonDatBanComponent implements OnInit {
             ban: this.formData.ban.id,
             khachHang: res.data.id,
           };
-          console.log(dataToSend);
           this.save.emit(dataToSend);
         },
         error: (err: any) => console.log(err)

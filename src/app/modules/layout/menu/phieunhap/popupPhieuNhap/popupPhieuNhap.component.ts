@@ -103,14 +103,10 @@ export class PopupPhieuNhapComponent implements OnInit {
       id: userInfo.id,
       name: userInfo.name,
     }
-    console.log(this.nhanVien);
-    console.log(this.nhanVien);
     this.nhanVienService.getNhanVienById(userInfo.nhanVienId).subscribe({
       next: (res: any) => {
         this.nhanViens = res.data;
         this.formData.nhanVien = this.nhanViens.id;
-
-        console.log(this.formData.nhanVien);
       },
     });
 
@@ -140,7 +136,6 @@ export class PopupPhieuNhapComponent implements OnInit {
       donGia: 0,
       thanhTien: 0
     });
-     console.log(this.nguyenLieuSelection);
   }
   updateThanhTien(loai: any): void {
     const soLuong = Number(loai.soLuong) || 0;
@@ -159,7 +154,6 @@ export class PopupPhieuNhapComponent implements OnInit {
   isNhanVienUnvalid=false;
   isDienGiaiUnvalid=false;
   onSave(): void {
-    console.log(this.nguyenLieuSelection);
     const allNguyenLieus = this.nguyenLieuSelection.map(loai => ({
       id: loai.selectedLoaiId,
       tenNguyenLieu: loai.tenNguyenLieu,
@@ -191,7 +185,6 @@ export class PopupPhieuNhapComponent implements OnInit {
       nhanVien: this.formData.nhanVien||null,
       nguyenLieus: allNguyenLieus
     };
-    console.log(dataToSend);
 
     this.save.emit(dataToSend);
 

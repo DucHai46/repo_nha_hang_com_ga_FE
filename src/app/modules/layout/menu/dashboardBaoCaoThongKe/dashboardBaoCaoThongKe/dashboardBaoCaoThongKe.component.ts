@@ -50,7 +50,6 @@ export class DashboardBaoCaoThongKeComponent implements OnInit {
   };
   doanhThuTypeSelected: any;
   onChangeDoanhThuType(event: any) {
-    console.log(event.target.value);
     this.doanhThuTypeSelected = event.target.value;
   }
   formThongKeDoanhthu = {
@@ -85,7 +84,6 @@ export class DashboardBaoCaoThongKeComponent implements OnInit {
   };
   bestSellingMonAnTypeSelected: any;
   onChangeBestSellingMonAnType(event: any) {
-    console.log(event.target.value);
     this.bestSellingMonAnTypeSelected = event.target.value;
   }
   formBestSellingMonAn = {
@@ -121,7 +119,6 @@ export class DashboardBaoCaoThongKeComponent implements OnInit {
   };
   matDoKhachHangTypeSelected: any;
   onChangeMatDoKhachHangType(event: any) {
-    console.log(event.target.value);
     this.matDoKhachHangTypeSelected = event.target.value;
   }
   formMatDoKhachHang = {
@@ -156,7 +153,6 @@ export class DashboardBaoCaoThongKeComponent implements OnInit {
   };
   khoanChiTypeSelected: any;
   onChangeKhoanChiType(event: any) {
-    console.log(event.target.value);
     this.khoanChiTypeSelected = event.target.value;
   }
   formThongKeKhoanChi = {
