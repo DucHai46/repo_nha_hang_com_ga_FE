@@ -94,6 +94,28 @@ export class SidenavComponent implements OnInit {
         });
       });
     });
+    console.log(this.items);
+    if (this.items.length > 0) {
+      const findFirstValidRoute = (items: MenuItem[]): string | null => {
+        for (const item of items) {
+          if (item.routeLink && item.routeLink.startsWith('main/')) {
+            return item.routeLink;
+          }
+          if (item.children && item.children.length > 0) {
+            const childRoute = findFirstValidRoute(item.children);
+            if (childRoute) {
+              return childRoute;
+            }
+          }
+        }
+        return null;
+      };
+
+      const firstValidRoute = findFirstValidRoute(this.items);
+      if (firstValidRoute) {
+        this.router.navigate([firstValidRoute]);
+      }
+    }
   }
 
   items: MenuItem[] = [

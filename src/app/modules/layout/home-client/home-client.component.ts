@@ -287,4 +287,8 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
+
+  login() {
+    this.router.navigate(['/login']);
+  }
 }
