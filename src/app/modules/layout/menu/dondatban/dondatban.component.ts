@@ -50,7 +50,10 @@ export class DondatbanComponent implements OnInit {
   searchForm: any={
     ban: '',
     khachHang: '',
-    khungGio: '',
+    tuNgay: '',
+    denNgay: '',
+    tuGio: '',
+    denGio: '',
   }
   search() {
     this.searchForm.isPaging = true;  
@@ -85,7 +88,10 @@ export class DondatbanComponent implements OnInit {
   reset(){
     this.searchForm.ban = '';
     this.searchForm.khachHang='';
-    this.searchForm.khungGio='';
+    this.searchForm.tuNgay = '';
+    this.searchForm.denNgay = '';
+    this.searchForm.tuGio = '';
+    this.searchForm.denGio = '';
     this.search();
   }
   isPopupOpen = false;
@@ -108,10 +114,7 @@ export class DondatbanComponent implements OnInit {
       this.donDatBanService.updateDonDatBan(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.ban = '';
-            this.searchForm.khachHang='';
-            this.searchForm.khungGio='';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',
@@ -148,10 +151,7 @@ export class DondatbanComponent implements OnInit {
       this.donDatBanService.addDonDatBan(body).subscribe({
         next: (res: any) => {
           if (res.data) {
-            this.searchForm.ban = '';
-            this.searchForm.khachHang='';
-            this.searchForm.khungGio='';
-            this.search();
+            this.reset();
             this.closePopup();
             this.notification.create(
               'success',
