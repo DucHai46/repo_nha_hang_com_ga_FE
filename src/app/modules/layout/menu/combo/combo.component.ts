@@ -37,6 +37,7 @@ export class ComboComponent implements OnInit {
     searchForm: any = {
       tenCombo: '',
       giaTien: '',
+      giaTienCaoNhat: '',
     };
     search() {
       this.searchForm.isPaging = true; 
@@ -69,6 +70,7 @@ export class ComboComponent implements OnInit {
     reset(){
       this.searchForm.tenCombo = '';
       this.searchForm.giaTien = '';
+      this.searchForm.giaTienCaoNhat = '';
       this.search();
     }
     isPopupOpen = false;
@@ -101,6 +103,7 @@ export class ComboComponent implements OnInit {
             if (res.data) {
               this.searchForm.tenCombo = '';
               this.searchForm.giaTien = '';
+              this.searchForm.giaTienCaoNhat = '';
               this.search();
               this.closePopup();
               this.notification.create(
@@ -142,6 +145,7 @@ export class ComboComponent implements OnInit {
             if (res.data) {
               this.searchForm.tenCombo = '';
               this.searchForm.giaTien = '';
+              this.searchForm.giaTienCaoNhat = '';
               this.search();
               this.closePopup();
               this.notification.create(
