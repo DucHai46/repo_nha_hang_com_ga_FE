@@ -171,6 +171,15 @@ export class PopupLichLamViecComponent implements OnInit {
     });
   }
 
+  // Kiểm tra xem nhân viên nvId đã được chọn ở vị trí khác trong cùng ca làm việc chưa
+  isNVDuplicate(nvId: string, caIndex: number, currentNvIndex: number): boolean {
+    if (!nvId) return false;
+    const nhanVienCaList = this.formData.chiTietLichLamViec[caIndex]?.nhanVienCa || [];
+    return nhanVienCaList.some((nv: any, index: number) => index !== currentNvIndex && nv.nhanVien.id === nvId);
+  }
+
+
+
   onCancel(): void {
     this.close.emit();
   }

@@ -219,6 +219,7 @@ export class HoadonthanhtoanComponent implements OnInit {
             this.updateDonOrderStatus(data);
             
             // this.closeChiTiet();
+            this.openChiTietPopup(res.data);
             this.notification.create(
               'success',
               'Thông báo!',

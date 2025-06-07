@@ -87,10 +87,9 @@
             >
               <option value="" disabled>-- Chọn nhân viên --</option>
               <option
-                *ngFor="
-                  let nvItem of nhanVienTheoChucVu[i + '_' + j] || nhanVien
-                "
+                *ngFor="let nvItem of nhanVienTheoChucVu[i + '_' + j] || []"
                 [value]="nvItem.id"
+                [disabled]="isNVDuplicate(nvItem.id, i, j)"
               >
                 {{ nvItem.name }}
               </option>
