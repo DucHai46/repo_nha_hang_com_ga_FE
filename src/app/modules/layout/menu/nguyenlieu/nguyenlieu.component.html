@@ -1,311 +1,298 @@
 <div class="mt-10 mr-10">
-    <!-- nhãn -->
-    <div class="flex flex-row gap-4 mb-5">
-      <p class="text-2xl font-bold">Nguyên liệu</p>
+  <!-- nhãn -->
+  <div class="flex flex-row gap-4 mb-5">
+    <p class="text-2xl font-bold">Nguyên liệu</p>
+  </div>
+  <!-- form search -->
+  <div
+    class="flex flex-row gap-4 p-5 bg-white rounded-lg w-full justify-between"
+  >
+    <!-- form -->
+    <div class="grid grid-cols-5 gap-4">
+      <div class="flex flex-col gap-2">
+        <label for="searchTenNguyenLieu">Tên nguyên liệu</label>
+        <input
+          class="border border-gray-300 rounded-md p-2"
+          id="searchTenNguyenLieu"
+          [(ngModel)]="searchForm.tenNguyenLieu"
+          type="text"
+          placeholder="Tìm kiếm"
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="searchLoaiNguyenLieu">Loại nguyên liệu</label>
+        <select
+          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          id="searchLoaiNguyenLieu"
+          [(ngModel)]="searchForm.loaiNguyenLieuId"
+        >
+          <option *ngFor="let loai of loaiNguyenLieu" [value]="loai.id">
+            {{ loai.tenLoai }}
+          </option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="searchTuDo">Tủ đồ</label>
+        <select
+          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          id="searchTuDo"
+          [(ngModel)]="searchForm.tuDoId"
+        >
+          <option *ngFor="let tu of tuDo" [value]="tu.id">
+            {{ tu.tenTuDo }}
+          </option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="searchDonViTinh">Đơn vị tính</label>
+        <select
+          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
+          id="searchDonViTinh"
+          [(ngModel)]="searchForm.donViTinhId"
+        >
+          <option *ngFor="let donvi of donViTinh" [value]="donvi.id">
+            {{ donvi.tenDonViTinh }}
+          </option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="searchTrangThai">Trạng thái nguyên liệu</label>
+        <select
+          id="searchTrangThai"
+          class="border border-gray-300 rounded-md p-2 w-full bg-white focus:outline-none"
+          [(ngModel)]="searchForm.trangThai"
+        >
+          <option [value]="''">Tất cả</option>
+          <option [value]="0">Hàng mới</option>
+          <option [value]="2">Đã qua sử dụng</option>
+        </select>
+      </div>
     </div>
-    <!-- form search -->
-    <div
-      class="flex flex-row gap-4 p-5 bg-white rounded-lg w-full justify-between"
-    >
-      <!-- form -->
-      <div class="flex flex-row gap-4">
-        <div class="flex flex-col gap-2">
-          <label for="searchTenNguyenLieu">Tên nguyên liệu</label>
-          <input
-            class="border border-gray-300 rounded-md p-2"
-            id="searchTenNguyenLieu"
-            [(ngModel)]="searchForm.tenNguyenLieu"
-            type="text"
-            placeholder="Tìm kiếm"
+    <!-- button -->
+    <div class="flex flex-row gap-4 justify-center items-end">
+      <button
+        class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        (click)="reset()"
+      >
+        <svg
+          class="w-6 h-6 text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"
           />
-        </div>
-        <div class="flex flex-col gap-2">
-          <label for="searchLoaiNguyenLieu">Loại nguyên liệu</label>
-          <select
-            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-            id="searchLoaiNguyenLieu"
-            [(ngModel)]="searchForm.loaiNguyenLieuId"
-          >
-            <option
-              *ngFor="let loai of loaiNguyenLieu"
-              [value]="loai.id"
-            >
-              {{ loai.tenLoai }}
-            </option>
-          </select>
-        </div>
-        <div class="flex flex-col gap-2">
-            <label for="searchTuDo">Tủ đồ</label>
-            <select
-              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-              id="searchTuDo"
-              [(ngModel)]="searchForm.tuDoId"
-            >
-              <option
-                *ngFor="let tu of tuDo"
-                [value]="tu.id"
-              >
-                {{ tu.tenTuDo }}
-              </option>
-            </select>
-        </div>
-        <div class="flex flex-col gap-2">
-            <label for="searchDonViTinh">Đơn vị tính</label>
-            <select
-              class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
-              id="searchDonViTinh"
-              [(ngModel)]="searchForm.donViTinhId"
-            >
-              <option
-                *ngFor="let donvi of donViTinh"
-                [value]="donvi.id"
-              >
-                {{ donvi.tenDonViTinh }}
-              </option>
-            </select>
-        </div>
-        <div class="flex flex-col gap-2">
-          <label for="searchTrangThai">Trạng thái nguyên liệu</label>
-          <select
-            id="searchTrangThai"
-            class="border border-gray-300 rounded-md p-2 w-full bg-white focus:outline-none"
-            [(ngModel)]="searchForm.trangThai"
-          >
-            <option [value]="''">Tất cả</option>
-            <option [value]="0">Hàng mới</option>
-            <option [value]="2">Đã qua sử dụng</option>
-          </select>
-        </div>
-      </div>
-      <!-- button -->
-      <div class="flex flex-row gap-4 justify-center items-center">
-        <button
-          class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          (click)="reset()"
+        </svg>
+        <p>Làm mới</p>
+      </button>
+      <button
+        class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        (click)="search()"
+      >
+        <svg
+          class="w-6 h-6 text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
         >
-          <svg
-            class="w-6 h-6 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"
-            />
-          </svg>
-          <p>Làm mới</p>
-        </button>
-        <button
-          class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          (click)="search()"
-        >
-          <svg
-            class="w-6 h-6 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-width="2"
-              d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-            />
-          </svg>
-          <p>Tìm kiếm</p>
-        </button>
-      </div>
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-width="2"
+            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+          />
+        </svg>
+        <p>Tìm kiếm</p>
+      </button>
     </div>
-    <!-- table -->
-    <div class="flex flex-col gap-4 p-5 bg-white rounded-lg w-full mt-5">
-      <div class="flex justify-end">
+  </div>
+  <!-- table -->
+  <div class="flex flex-col gap-4 p-5 bg-white rounded-lg w-full mt-5">
+    <!-- <div class="flex justify-end">
         <button
           (click)="openAddPopup()"
           class="bg-blue-500 text-white px-4 py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-blue-600 active:scale-95 focus:outline-none shadow-md hover:shadow-lg"
         >
           Thêm
         </button>
-      </div>
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right">
-          <thead class="text-xs text-gray-700 uppercase text-center">
-            <tr>
-              <th scope="col" class="px-6 py-3">STT</th>
-              <!-- <th scope="col" class="px-6 py-3">Mã loại</th> -->
-              <th scope="col" class="px-6 py-3">Tên nguyên liệu</th>
-              <!-- <th scope="col" class="px-6 py-3">Mô tả</th> -->
-              <th scope="col" class="px-6 py-3">Đơn vị tính</th>
-              <th scope="col" class="px-6 py-3">Số lượng</th>
-              <th scope="col" class="px-6 py-3">Hạn sử dụng</th>
-              <th scope="col" class="px-6 py-3">Loại nguyên liệu</th>
-              <th scope="col" class="px-6 py-3">Tủ đồ</th>
-              <th scope="col" class="px-6 py-3">Trạng thái</th>
-              <th scope="col" class="px-6 py-3">Thao tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              class="border-b dark:border-gray-700 border-gray-200"
-              *ngFor="let item of nguyenLieuPaging; let i = index"
+      </div> -->
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left rtl:text-right">
+        <thead class="text-xs text-gray-700 uppercase text-center">
+          <tr>
+            <th scope="col" class="px-6 py-3">STT</th>
+            <!-- <th scope="col" class="px-6 py-3">Mã loại</th> -->
+            <th scope="col" class="px-6 py-3">Tên nguyên liệu</th>
+            <!-- <th scope="col" class="px-6 py-3">Mô tả</th> -->
+            <th scope="col" class="px-6 py-3">Đơn vị tính</th>
+            <th scope="col" class="px-6 py-3">Số lượng</th>
+            <th scope="col" class="px-6 py-3">Hạn sử dụng</th>
+            <th scope="col" class="px-6 py-3">Loại nguyên liệu</th>
+            <th scope="col" class="px-6 py-3">Tủ đồ</th>
+            <th scope="col" class="px-6 py-3">Trạng thái</th>
+            <th scope="col" class="px-6 py-3">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="border-b dark:border-gray-700 border-gray-200"
+            *ngFor="let item of nguyenLieuPaging; let i = index"
+          >
+            <td
+              scope="row"
+              class="px-6 py-4 font-medium whitespace-nowrap text-center"
             >
-              <td
-                scope="row"
-                class="px-6 py-4 font-medium whitespace-nowrap text-center"
-              >
-                {{ i + 1 }}
-              </td>
-              <!-- <td class="px-6 py-4">
+              {{ i + 1 }}
+            </td>
+            <!-- <td class="px-6 py-4">
                 {{ item.ma }}
               </td> -->
-              <td class="px-6 py-4">
-                {{ item.tenNguyenLieu }}
-              </td>
-              <!-- <td class="px-6 py-4">
+            <td class="px-6 py-4">
+              {{ item.tenNguyenLieu }}
+            </td>
+            <!-- <td class="px-6 py-4">
                 {{ item.moTa }}
               </td> -->
-              <td class="px-6 py-4">
-                {{ item.donViTinh.name }}
-              </td>
-              <td class="px-6 py-4">
-                {{ item.soLuong }}
-              </td>
-              <td class="px-6 py-4">
-                {{ item.hanSuDung | date : "dd/MM/yyyy" }}
-              </td>
-              <td class="px-6 py-4">
-                {{ item.loaiNguyenLieu.name }}
-              </td>
-              <td class="px-6 py-4">
-                {{ item.tuDo.name }}
-              </td>
-              <td class="px-6 py-4">
-                <span
-                  class="border border-2 rounded-lg px-1 py-1 text-white whitespace-nowrap"
-                  [ngClass]="getTrangThaiClass(item.trangThai)"
-                >
-                  {{ getTrangThaiName(item.trangThai) }}
-                </span>
-              </td>
-              <td
-                class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
+            <td class="px-6 py-4">
+              {{ item.donViTinh.name }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.soLuong }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.hanSuDung | date : "dd/MM/yyyy" }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.loaiNguyenLieu.name }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.tuDo.name }}
+            </td>
+            <td class="px-6 py-4">
+              <span
+                class="border border-2 rounded-lg px-1 py-1 text-white whitespace-nowrap"
+                [ngClass]="getTrangThaiClass(item.trangThai)"
               >
-                <button
-                    (click)="openEditPopup(item)"
-                  class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
+                {{ getTrangThaiName(item.trangThai) }}
+              </span>
+            </td>
+            <td
+              class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
+            >
+              <button
+                (click)="openEditPopup(item)"
+                class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
+              >
+                <p
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-800"
                 >
-                  <p
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-800"
+                  <svg
+                    class="w-6 h-6 text-blue-600 dark:text-blue-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      class="w-6 h-6 text-blue-600 dark:text-blue-500"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                      />
-                    </svg>
-                  </p>
-                </button>
-  
-                <button
-                  (click)="openDeletePopup(item)"
-                  class="transition-transform transform hover:scale-105 hover:bg-red-100 focus:outline-none rounded-lg px-2 py-1"
-                >
-                  <p
-                    class="font-medium text-red-600 dark:text-red-500 hover:text-red-800"
-                  >
-                    <svg
-                      class="w-6 h-6 text-red-600 dark:text-red-500"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                      />
-                    </svg>
-                  </p>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                    />
+                  </svg>
+                </p>
+              </button>
 
-      <div class="pagination-controls mt-4 flex justify-end">
-        <div class="flex items-center justify-between gap-2">
-          <div class="text-gray-600">
-            Tổng số bản ghi: {{ paging.total }}
-          </div>
-  
-          <div class="flex items-center gap-2">
-            <button 
-              (click)="changePage(paging.page - 1)"
-              [disabled]="paging.page === 1"
-              class="!text-black px-3 py-1 border rounded disabled:opacity-50"
-            >
-              Previous
-            </button>
-            
-            <span class="mx-2">
-              Trang {{ paging.page }} / {{ totalPages }}
-            </span>
-            
-            <button 
-              (click)="changePage(paging.page + 1)"
-              [disabled]="paging.page === totalPages"
-              class="!text-black px-3 py-1 border rounded disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
-  
-          <div class="flex items-center gap-2">
-            <span>Hiển thị:</span>
-            <select 
-              [(ngModel)]="paging.size" 
-              (change)="changePageSize(paging.size)"
-              class="border rounded px-2 py-1"
-            >
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-            </select>
-          </div>
+              <button
+                (click)="openDeletePopup(item)"
+                class="transition-transform transform hover:scale-105 hover:bg-red-100 focus:outline-none rounded-lg px-2 py-1"
+              >
+                <p
+                  class="font-medium text-red-600 dark:text-red-500 hover:text-red-800"
+                >
+                  <svg
+                    class="w-6 h-6 text-red-600 dark:text-red-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                    />
+                  </svg>
+                </p>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination-controls mt-4 flex justify-end">
+      <div class="flex items-center justify-between gap-2">
+        <div class="text-gray-600">Tổng số bản ghi: {{ paging.total }}</div>
+
+        <div class="flex items-center gap-2">
+          <button
+            (click)="changePage(paging.page - 1)"
+            [disabled]="paging.page === 1"
+            class="!text-black px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+
+          <span class="mx-2"> Trang {{ paging.page }} / {{ totalPages }} </span>
+
+          <button
+            (click)="changePage(paging.page + 1)"
+            [disabled]="paging.page === totalPages"
+            class="!text-black px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span>Hiển thị:</span>
+          <select
+            [(ngModel)]="paging.size"
+            (change)="changePageSize(paging.size)"
+            class="border rounded px-2 py-1"
+          >
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+          </select>
         </div>
       </div>
     </div>
   </div>
-  <app-popupNguyenLieu
+</div>
+<app-popupNguyenLieu
   *ngIf="isPopupOpen"
   [isEditMode]="isEditMode"
   [formData]="formData"
   (close)="closePopup()"
   (save)="onSaveCongThuc($event)"
-  ></app-popupNguyenLieu>
+></app-popupNguyenLieu>

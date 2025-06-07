@@ -8,7 +8,9 @@
         <div class="form-group">
           <label for="tenKhachHang"
             >Tên khách hàng:
-            <span *ngIf="isKhachHangUnvalid" class="text-red-500">*</span></label
+            <span *ngIf="isKhachHangUnvalid" class="text-red-500"
+              >*</span
+            ></label
           >
           <div class="flex items-center gap-2">
             <textarea
@@ -46,14 +48,19 @@
         <div class="form-group">
           <label for="soDienThoai"
             >Số điện thoại:
-            <span *ngIf="isSoDienThoaiUnvalid" class="text-red-500">*</span></label
+            <span *ngIf="isSoDienThoaiUnvalid" class="text-red-500"
+              >*</span
+            ></label
           >
           <div class="flex items-center gap-2">
             <textarea
               id="soDienThoai"
               [(ngModel)]="khachHangTT.soDienThoai"
+              maxlength="11"
               name="soDienThoai"
               placeholder="Nhập số điện thoại..."
+              pattern="^[0-9]{0,11}$"
+            (input)="onInputChange($event)"
             ></textarea>
           </div>
           <p *ngIf="isSoDienThoaiUnvalid" class="text-red-500 text-sm mt-1">
@@ -61,16 +68,22 @@
           </p>
         </div>
 
-        <div class="form-group mb-4">
-          <label for="khungGio" class="block text-sm font-medium text-gray-700 mb-1">
-            Khung giờ:
-          </label>
+        <div class="form-group">
+          <label for="ngayBatDau">Ngày Đặt:</label>
           <input
-            type="datetime-local"
-            id="khungGio"
-            [(ngModel)]="formData.khungGio"
-            name="khungGio"
-            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            type="date"
+            id="ngayBatDau"
+            [(ngModel)]="formData.ngayDat"
+            name="ngayBatDau"
+          />
+        </div>
+        <div class="form-group">
+          <label for="gioDat">Giờ đặt:</label>
+          <input
+            type="time"
+            id="gioDat"
+            [(ngModel)]="formData.gioDat"
+            name="gioDat"
           />
         </div>
 

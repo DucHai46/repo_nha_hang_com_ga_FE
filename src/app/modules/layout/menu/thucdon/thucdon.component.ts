@@ -200,7 +200,7 @@ export class ThucdonComponent {
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
-    this.formData = item;
+    this.formData = { ...item };
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

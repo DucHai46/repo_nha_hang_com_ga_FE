@@ -4,7 +4,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './popupKhuyenMai.component.html',
   styleUrls: ['./popupKhuyenMai.component.scss']
 })
-export class PopupKhuyenMaiComponent {
+export class PopupKhuyenMaiComponent implements OnInit {
   @Input() formData = {
     tenKhuyenMai: '',
     ngayBatDau: '',
@@ -19,6 +19,17 @@ export class PopupKhuyenMaiComponent {
 
   constructor(
   ) {}
+  ngOnInit(): void {
+    this.formData.ngayBatDau = this.toDateString(this.formData.ngayBatDau);
+    this.formData.ngayKetThuc = this.toDateString(this.formData.ngayKetThuc);
+  }
+  toDateString(date: any): string {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
 
   onSave(): void {
     this.save.emit(this.formData); 

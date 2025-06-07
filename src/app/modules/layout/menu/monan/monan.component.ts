@@ -71,6 +71,7 @@ export class MonanComponent implements OnInit {
     tenMonAn: '',
     idLoaiMonAn: '',
     giaTien: '',
+    giaTienCaoNhat: '',
   }
   search() {
     this.searchForm.isPaging = true;
@@ -107,6 +108,7 @@ export class MonanComponent implements OnInit {
     this.searchForm.tenMonAn = '';
     this.searchForm.idLoaiMonAn='';
     this.searchForm.giaTien='';
+    this.searchForm.giaTienCaoNhat='';
     this.search();
   }
   isPopupOpen = false;
@@ -139,6 +141,7 @@ export class MonanComponent implements OnInit {
             this.searchForm.tenMonAn = '';
             this.searchForm.idLoaiMonAn='';
             this.searchForm.giaTien='';
+            this.searchForm.giaTienCaoNhat='';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -185,6 +188,7 @@ export class MonanComponent implements OnInit {
             this.searchForm.tenMonAn = '';
             this.searchForm.idLoaiMonAn='';
             this.searchForm.giaTien='';
+            this.searchForm.giaTienCaoNhat='';
             this.search();
             this.closePopup();
             this.notification.create(
@@ -223,7 +227,7 @@ export class MonanComponent implements OnInit {
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
-    this.formData = item;
+    this.formData = { ...item };
   }
   openDeletePopup(item: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

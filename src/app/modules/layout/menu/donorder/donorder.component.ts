@@ -87,7 +87,7 @@ export class DonorderComponent implements OnInit {
       );
       this.search();
     });
-      this.orderSignalRService.addOrderListener2((message) => {
+    this.orderSignalRService.addOrderListener2((message) => {
       this.notification.create(
         'success',
         'Thông báo!',
@@ -123,7 +123,7 @@ export class DonorderComponent implements OnInit {
         }
       );
       this.search();
-    }); 
+    });
   }
 
 
@@ -167,7 +167,7 @@ export class DonorderComponent implements OnInit {
   search() {
 
     if (this.searchForm.khachHangs) {
-      this.searchKH.isPaging = true; 
+      this.searchKH.isPaging = true;
       this.searchKH.PageNumber = this.paging.page;
       this.searchKH.PageSize = this.paging.size;
       this.searchKH.tenKhachHang = this.searchForm.khachHangs;
@@ -188,7 +188,7 @@ export class DonorderComponent implements OnInit {
   }
 
   searchDonOrder() {
-    this.searchForm.isPaging = true; 
+    this.searchForm.isPaging = true;
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
     this.donOrderService.getDonOrder(this.searchForm).subscribe(
@@ -217,7 +217,7 @@ export class DonorderComponent implements OnInit {
 
   changePageSize(newSize: number) {
     this.paging.size = newSize;
-    this.paging.page = 1;  
+    this.paging.page = 1;
     this.search();
   }
 
@@ -231,7 +231,7 @@ export class DonorderComponent implements OnInit {
   }
 
   isPopupOpen = false;
-  isAddMode = false; 
+  isAddMode = false;
   formData: any = {}
   formHoaDon: any = {};
   isChiTietOpen = false;
@@ -240,7 +240,7 @@ export class DonorderComponent implements OnInit {
   Status = {
     trangThai: 3,
   }
-  Id: string = '';  
+  Id: string = '';
 
   loaiDonName: string = '';
 
@@ -252,7 +252,7 @@ export class DonorderComponent implements OnInit {
 
   openChiTietHoaDonPopup(): void {
     this.isChiTietHoaDonOpen = true;
-    this.formData = this.formHoaDon;  
+    this.formData = this.formHoaDon;
   }
   closeChiTietHoaDon(): void {
     this.isChiTietHoaDonOpen = false;
@@ -286,19 +286,19 @@ export class DonorderComponent implements OnInit {
             nzDuration: 2000
           }
         ),
-        this.search();
+          this.search();
       },
-       error: () => {
-          this.notification.create(
-            'error',
-            'Thông báo!',
-            `Xác nhận đơn order thất bại`,
-            {
-              nzClass: 'notification-error',
-              nzDuration: 2000
-            }
-          );
-        }
+      error: () => {
+        this.notification.create(
+          'error',
+          'Thông báo!',
+          `Xác nhận đơn order thất bại`,
+          {
+            nzClass: 'notification-error',
+            nzDuration: 2000
+          }
+        );
+      }
     });
   }
 
@@ -341,7 +341,7 @@ export class DonorderComponent implements OnInit {
                   nzDuration: 2000
                 }
               );
-      
+
               this.openChiTietHoaDonPopup();
             }
           },
@@ -355,7 +355,7 @@ export class DonorderComponent implements OnInit {
             }
           )
         });
-        this.search();
+      this.search();
     } else {
 
       const data = body.donOrder;
@@ -366,9 +366,9 @@ export class DonorderComponent implements OnInit {
             this.formHoaDon = res.data;
             this.searchForm.tenHoaDon = '';
             this.searchForm.nhanViens = '';
-            this.searchForm.gioVao= '';
-            this.searchForm.gioRa= '';
-        
+            this.searchForm.gioVao = '';
+            this.searchForm.gioRa = '';
+
             this.updateDonOrderStatus(data);
             this.search();
             // this.openChiTietHoaDonPopup();
@@ -415,13 +415,13 @@ export class DonorderComponent implements OnInit {
         if (res.data) {
           this.search();
           if (res.data) {
-          this.search();
-          if(res.data.ban.id){
-            const banId = res.data.ban.id;
-            this.updateBanStatus(banId);
+            this.search();
+            if (res.data.ban.id) {
+              const banId = res.data.ban.id;
+              this.updateBanStatus(banId);
+            }
           }
-        }
-        
+
         }
       },
       error: () => {
@@ -436,49 +436,49 @@ export class DonorderComponent implements OnInit {
         );
       }
     });
-}
+  }
 
 
   updateDonOrderStatus(donOrderId: string): void {
-    
+
     this.donOrderService.updateStatusDonOrder(donOrderId, this.Status).subscribe({
       next: (res: any) => {
-        
+
         if (res.data) {
           this.search();
-          if(res.data.ban.id){
+          if (res.data.ban.id) {
             const banId = res.data.ban.id;
             this.updateBanStatus(banId);
           }
-        }else {
-            this.notification.create(
-              'error',
-              'Thông báo!',
-              `Không có dữ liệu đơn order`,
-              {
-                nzClass: 'notification-error',
-                nzDuration: 2000
-              }
-            );
-          }
-      },
-       error: () => {
+        } else {
           this.notification.create(
             'error',
             'Thông báo!',
-            `Cập nhật thất bại`,
+            `Không có dữ liệu đơn order`,
             {
               nzClass: 'notification-error',
               nzDuration: 2000
             }
           );
         }
+      },
+      error: () => {
+        this.notification.create(
+          'error',
+          'Thông báo!',
+          `Cập nhật thất bại`,
+          {
+            nzClass: 'notification-error',
+            nzDuration: 2000
+          }
+        );
+      }
     });
   }
 
   updateBanStatus(banAnId: string): void {
     this.banAnService.getBanAnById(banAnId).subscribe({
-       next: (res: any) => {
+      next: (res: any) => {
         const item = res.data;
         this.Id = item.id;
         item.trangThai = 0;
@@ -487,17 +487,17 @@ export class DonorderComponent implements OnInit {
           next: (res: any) => {
           },
           error: () => {
-          this.notification.create(
-            'error',
-            'Thông báo!',
-            `Cập nhật thất bại`,
-            {
-              nzClass: 'notification-error',
-              nzDuration: 2000
-            }
-          );
-        }
-        }); 
+            this.notification.create(
+              'error',
+              'Thông báo!',
+              `Cập nhật thất bại`,
+              {
+                nzClass: 'notification-error',
+                nzDuration: 2000
+              }
+            );
+          }
+        });
       }
     });
   }

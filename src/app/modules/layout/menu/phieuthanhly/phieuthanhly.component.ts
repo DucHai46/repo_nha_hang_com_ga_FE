@@ -4,6 +4,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { PhieuThanhLyStore } from './store/phieu-thanh-ly.store';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 import { PhieuThanhLyService } from './services/phieuthanhly.service';
+import { NhanVienService } from '../nhanvien/services/nhanvien.service';
 
 @Component({
   selector: 'app-phieuthanhly',
@@ -14,9 +15,11 @@ export class PhieuthanhlyComponent implements OnInit {
   constructor(private store: PhieuThanhLyStore,
     private dialog: MatDialog,
     private notification: NzNotificationService,
-    private phieuThanhLyService: PhieuThanhLyService) {}
+    private phieuThanhLyService: PhieuThanhLyService,
+    private nhanVienService: NhanVienService) {}
   phieuThanhLyPaging: any[] = [];
   itemsSearch: any[] = [];  
+  nhanVien: any[] = [];
   paging: any = {
     page: 1,
     size: 10,
@@ -25,12 +28,18 @@ export class PhieuthanhlyComponent implements OnInit {
   totalPages = 0
   ngOnInit(): void {
     this.store.setItems$(this.phieuThanhLyPaging);
+    this.nhanVienService.getNhanVien({}).subscribe({
+      next: (res: any) => {
+        this.nhanVien = res.data.data;
+      }
+    })
     this.search();  
   }
   searchForm: any={
     tenPhieu:'',
     tuNgay:'',
-    denNgay:''
+    denNgay:'',
+    nhanVienId: ''
   }
   search() {
     this.searchForm.isPaging = true; 
@@ -66,6 +75,7 @@ export class PhieuthanhlyComponent implements OnInit {
     this.searchForm.tenPhieu='';
     this.searchForm.tuNgay = '';
     this.searchForm.denNgay = '';
+    this.searchForm.nhanVienId = '';
     this.search();
   }
   isPopupOpen = false;
@@ -96,6 +106,7 @@ export class PhieuthanhlyComponent implements OnInit {
           this.searchForm.tenPhieu='';
           this.searchForm.tuNgay = '';
           this.searchForm.denNgay = '';
+          this.searchForm.nhanVienId = '';
           this.search();
           this.closePopup();
           this.notification.create(

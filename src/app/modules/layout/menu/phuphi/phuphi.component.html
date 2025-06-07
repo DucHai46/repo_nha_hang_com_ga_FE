@@ -21,9 +21,13 @@
       </div>
       <div class="flex flex-col gap-2">
         <label for="searchTrangThai">Trạng thái</label>
-        <select class="border border-gray-300 rounded-md p-2" id="searchTrangThai" [(ngModel)]="searchForm.trangThai">
-          <option value=1>Hoạt động</option>
-          <option value=0>Không hoạt động</option>
+        <select
+          class="border border-gray-300 rounded-md p-2"
+          id="searchTrangThai"
+          [(ngModel)]="searchForm.trangThai"
+        >
+          <option value="1">Hoạt động</option>
+          <option value="0">Không hoạt động</option>
         </select>
       </div>
     </div>
@@ -116,10 +120,18 @@
               {{ item.moTa }}
             </td>
             <td class="px-6 py-4">
-              {{ item.trangThai ? "Hoạt động" : "Không hoạt động" }}
+              <span
+                class="border border-2 rounded-lg px-1 text-white"
+                [ngClass]="{
+                  'bg-green-500 border-green-500': item.trangThai == 1,
+                  'bg-red-500 border-red-500': item.trangThai == 0
+                }"
+              >
+                {{ item.trangThai ? "Hoạt động" : "Không hoạt động" }}
+              </span>
             </td>
             <td
-              class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
+              class="px-6 py-4 flex flex-row gap-2 justify-center items-end"
             >
               <button
                 (click)="openEditPopup(item)"

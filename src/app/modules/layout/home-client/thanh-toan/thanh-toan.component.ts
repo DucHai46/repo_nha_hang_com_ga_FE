@@ -89,7 +89,15 @@ export class ThanhToanComponent implements OnInit {
                 take(1)
               ).subscribe({
                 next: (donOrderRes: any) => {
-                  this.notifyService.success('Thành công', 'Đặt hàng thành công!');
+                  this.notifyService.create(
+                    'success',
+                    'Thành công',
+                    'Đặt hàng thành công!',
+                    {
+                      nzClass: 'notification-success',
+                      nzDuration: 2000
+                    }
+                  );
                   this.emailService.sendEmail({
                     to: data.email,
                     subject: 'Đơn hàng của bạn đã được đặt thành công',
@@ -103,14 +111,30 @@ export class ThanhToanComponent implements OnInit {
                   this.router.navigate(['/home-client']);
                 },
                 error: () => {
-                  this.notifyService.error('Lỗi', 'Tạo đơn hàng thất bại!');
+                  this.notifyService.create(
+                    'error',
+                    'Lỗi',
+                    'Tạo đơn hàng thất bại!',
+                    {
+                      nzClass: 'notification-error',
+                      nzDuration: 2000
+                    }
+                  );
                 }
               });
             });
           });
         },
         error: (err) => {
-          this.notifyService.error('Lỗi', 'Có lỗi xảy ra khi đặt hàng!');
+          this.notifyService.create(
+            'error',
+            'Lỗi',
+            'Có lỗi xảy ra khi đặt hàng!',
+            {
+              nzClass: 'notification-error',
+              nzDuration: 2000
+            }
+          );
         }
       });
     } else {

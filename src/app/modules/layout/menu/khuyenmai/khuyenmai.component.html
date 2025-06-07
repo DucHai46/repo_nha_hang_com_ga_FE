@@ -23,7 +23,7 @@
         <label for="searchNgayBatDau">Ngày bắt đầu</label>
         <input
           class="border border-gray-300 rounded-md p-2"
-          id="searchNgayBatDau" 
+          id="searchNgayBatDau"
           [(ngModel)]="searchForm.ngayBatDau"
           type="date"
           placeholder="Ngày bắt đầu"
@@ -35,20 +35,24 @@
           class="border border-gray-300 rounded-md p-2"
           id="searchNgayKetThuc"
           [(ngModel)]="searchForm.ngayKetThuc"
-          type="date"   
+          type="date"
           placeholder="Ngày kết thúc"
         />
       </div>
       <div class="flex flex-col gap-2">
         <label for="searchTrangThai">Trạng thái</label>
-        <select class="border border-gray-300 rounded-md p-2" id="searchTrangThai" [(ngModel)]="searchForm.trangThai">
-          <option value=0>Đang áp dụng</option>
-          <option value=1>Hết hạn</option>
+        <select
+          class="border border-gray-300 rounded-md p-2"
+          id="searchTrangThai"
+          [(ngModel)]="searchForm.trangThai"
+        >
+          <option value="0">Đang áp dụng</option>
+          <option value="1">Hết hạn</option>
         </select>
       </div>
     </div>
     <!-- button -->
-    <div class="flex flex-row gap-2 justify-center items-center">
+    <div class="flex flex-row gap-2 justify-center items-end">
       <button
         class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
         (click)="reset()"

@@ -58,7 +58,8 @@ export class PopupDonDatBanComponent implements OnInit {
 
   }
   @Input() formData = {
-    khungGio: '',
+    ngayDat: '',
+    gioDat: '',
     ban: {
       id: '',
       name: ''
@@ -100,18 +101,10 @@ export class PopupDonDatBanComponent implements OnInit {
     if(this.isEditMode){
       this.khachHangService.updateKhachHang(this.formData.khachHang.id,this.khachHangTT).subscribe({
         next: (res: any) => {
-          const date = new Date(this.formData.khungGio);
-          const formattedKhungGio = date.toLocaleString('vi-VN', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-          });
-
           const dataToSend = {
             ...this.formData,
-            khungGio: formattedKhungGio,
+            ngayDat: this.formData.ngayDat,
+            gioDat: this.formData.gioDat,
             ban: this.formData.ban.id,
             khachHang: res.data.id,
           };
@@ -122,18 +115,10 @@ export class PopupDonDatBanComponent implements OnInit {
     }else{
       this.khachHangService.addKhachHang(this.khachHangTT).subscribe({
         next: (res: any) => {
-          const date = new Date(this.formData.khungGio);
-          const formattedKhungGio = date.toLocaleString('vi-VN', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-          });
-
           const dataToSend = {
             ...this.formData,
-            khungGio: formattedKhungGio,
+            ngayDat:this.formData.ngayDat,
+            gioDat: this.formData.gioDat +':00',
             ban: this.formData.ban.id,
             khachHang: res.data.id,
           };
@@ -146,5 +131,14 @@ export class PopupDonDatBanComponent implements OnInit {
   }
   onCancel(): void {
     this.close.emit(); 
+  }
+  onInputChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
+    if (filteredValue.length > 11) {
+      filteredValue = filteredValue.substring(0, 11);
+    }
+    inputElement.value = filteredValue;
+    this.khachHangTT.soDienThoai = filteredValue;
   }
 }

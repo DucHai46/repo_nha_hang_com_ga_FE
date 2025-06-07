@@ -89,7 +89,21 @@ export class HomeClientComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   thanhToan(): void {
-    this.router.navigate(['home-client/thanh-toan']);
+    this.homeClientStore.cart$.subscribe(cart => {
+      if (cart.length === 0) {
+        this.notifyService.create(
+          'error',
+          'Thông báo!',
+          `Giỏ hàng trống`,
+          {
+            nzClass: 'notification-error',
+            nzDuration: 2000
+          }
+        );
+        return;
+      }
+      this.router.navigate(['home-client/thanh-toan']);
+    });
   }
 
   showSlide(index: number): void {

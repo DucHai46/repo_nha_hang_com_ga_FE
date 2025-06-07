@@ -166,7 +166,7 @@ export class DonvitinhComponent implements OnInit {
   openEditPopup(item: any): void {
     this.isPopupOpen = true;
     this.isEditMode = true;
-    this.formData = item;
+    this.formData = { ...item };
   }
 
   openDeletePopup(item: any): void {

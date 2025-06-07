@@ -105,6 +105,7 @@
             name="phuphi"
             class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
           >
+            <option [ngValue]="null">-- Chọn phụ phí --</option>
             <option *ngFor="let x of phuPhi" [ngValue]="x.id">
               {{ x.name }}
             </option>
@@ -126,6 +127,7 @@
             name="phuphi"
             class="border border-gray-300 rounded-md p-2 w-full bg-white focus:bg-white focus:outline-none"
           >
+            <option [ngValue]="null">-- Chọn khuyến mãi --</option>
             <option *ngFor="let x of khuyenMai" [ngValue]="x.id">
               {{ x.name }}
             </option>
