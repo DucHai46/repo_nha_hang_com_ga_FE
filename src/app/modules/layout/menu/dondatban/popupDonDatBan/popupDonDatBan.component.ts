@@ -132,4 +132,13 @@ export class PopupDonDatBanComponent implements OnInit {
   onCancel(): void {
     this.close.emit(); 
   }
+  onInputChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
+    if (filteredValue.length > 11) {
+      filteredValue = filteredValue.substring(0, 11);
+    }
+    inputElement.value = filteredValue;
+    this.khachHangTT.soDienThoai = filteredValue;
+  }
 }
