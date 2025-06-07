@@ -4,6 +4,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { PhieuNhapStore } from './store/phieu-nhap.store';
 import { ConfirmationDialogComponent } from '../../../../core/confirmation-dialog/confirmation-dialog.component';
 import { PhieuNhapService } from './services/phieunhap.service';
+import { NhanVienService } from '../nhanvien/services/nhanvien.service';
 
 @Component({
   selector: 'app-phieunhap',
@@ -14,7 +15,8 @@ export class PhieunhapComponent implements OnInit {
   constructor(private store: PhieuNhapStore,
     private dialog: MatDialog,
     private notification: NzNotificationService,
-    private phieuNhapService: PhieuNhapService) {}
+    private phieuNhapService: PhieuNhapService,
+    private nhanVienService: NhanVienService) {}
   
   phieuNhapPaging: any[] = [];
   itemsSearch: any[] = [];  
@@ -24,15 +26,24 @@ export class PhieunhapComponent implements OnInit {
     total: 0
   }
   totalPages = 0
+  nhanVien: any[] = [];
   
   ngOnInit(): void {
     this.store.setItems$(this.phieuNhapPaging);
+    this.nhanVienService.getNhanVien({}).subscribe(
+      {
+        next: (res: any) => {
+          this.nhanVien = res.data.data;
+        }
+      }
+    );
     this.search();  
   }
   searchForm: any={
     tenPhieu:'',
     tuNgay: '',
     denNgay: '',
+    nhanVienId:''
   }
   search() {
     this.searchForm.isPaging = true;      
@@ -68,6 +79,7 @@ export class PhieunhapComponent implements OnInit {
     this.searchForm.tenPhieu='';
     this.searchForm.tuNgay = '';
     this.searchForm.denNgay = '';
+    this.searchForm.nhanVienId = '';
     this.search();
   }
   isPopupOpen = false;
@@ -99,6 +111,7 @@ export class PhieunhapComponent implements OnInit {
           this.searchForm.tenPhieu = '';
           this.searchForm.tuNgay = '';
           this.searchForm.denNgay = '';
+          this.searchForm.nhanVienId = '';
           this.search();
           this.closePopup();
           this.notification.create(

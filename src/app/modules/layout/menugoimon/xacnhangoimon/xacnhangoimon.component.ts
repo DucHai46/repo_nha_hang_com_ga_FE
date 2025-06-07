@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { DonOrderService } from '../services/donorder.service';
 import { FileService } from '../../../../core/services/file.service';
+import { BanAnService } from '../../menu/banan/services/banan.service';
 
 @Component({
   selector: 'app-xacnhangoimon',
@@ -12,6 +13,7 @@ export class XacnhangoimonComponent implements OnInit  {
   selectedItemsMA: any[] = [];
   donOrder: any[] = [];
   id: string = '';
+  banAn: any[] = [];
   ngOnInit(): void {
       this.donOrderService.getDonOrder({}).subscribe(
         {
@@ -20,10 +22,17 @@ export class XacnhangoimonComponent implements OnInit  {
           }
         }
       )
+      this.banAnService.getBanAn({}).subscribe(
+        {
+          next: (res: any) => {
+            this.banAn = res.data.data;
+          }
+        }
+      )
       this.loadImagesForSelectedItems();
   }
 
-  constructor(public router: Router,private donOrderService: DonOrderService, private fileService: FileService) {
+  constructor(public router: Router,private donOrderService: DonOrderService, private fileService: FileService, private banAnService: BanAnService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['selectedItemsMA']) {
       this.selectedItemsMA = navigation.extras.state['selectedItemsMA'];
@@ -71,6 +80,7 @@ export class XacnhangoimonComponent implements OnInit  {
     if(this.id == '' || this.id == null){
       return;
     }
+    const tenBanAn = this.banAn.find((td: any) => td.id === this.id)?.tenBan;
     const don = this.donOrder.find((td: any) => (td.trangThai === 0 || td.trangThai === 1) && td.ban.id === this.id);
     const combo=this.selectedItemsMA.filter((td: any) => td.danhMuc === 'comboMonAn');
     const monAn=this.selectedItemsMA.filter((td: any) => td.danhMuc !== 'comboMonAn');
@@ -131,7 +141,7 @@ export class XacnhangoimonComponent implements OnInit  {
 
     }else{
       const newDonOrder = {
-        tenDon: 'Đơn mới bàn số ' + this.id,
+        tenDon: 'Đơn mới ' + tenBanAn,
         loaiDon: this.loaiDon,                    
         ban:  this.id ,
         khachHang: '',                 
