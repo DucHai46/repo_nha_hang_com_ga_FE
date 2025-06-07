@@ -56,8 +56,11 @@
             <textarea
               id="soDienThoai"
               [(ngModel)]="khachHangTT.soDienThoai"
+              maxlength="11"
               name="soDienThoai"
               placeholder="Nhập số điện thoại..."
+              pattern="^[0-9]{0,11}$"
+            (input)="onInputChange($event)"
             ></textarea>
           </div>
           <p *ngIf="isSoDienThoaiUnvalid" class="text-red-500 text-sm mt-1">
