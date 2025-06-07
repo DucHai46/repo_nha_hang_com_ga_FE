@@ -110,9 +110,12 @@ export class SidenavComponent implements OnInit {
         return null;
       };
 
-      const firstValidRoute = findFirstValidRoute(this.items);
-      if (firstValidRoute) {
-        this.router.navigate([firstValidRoute]);
+      const currentUrl = this.router.url;
+      if (!currentUrl.includes('main/')) {
+        const firstValidRoute = findFirstValidRoute(this.items);
+        if (firstValidRoute) {
+          this.router.navigate([firstValidRoute]);
+        }
       }
     }
   }

@@ -31,7 +31,7 @@
       </div>
     </div>
     <!-- button -->
-    <div class="flex flex-row gap-2 justify-center items-center">
+    <div class="flex flex-row gap-2 justify-center items-end">
       <button
         class="flex flex-row gap-2 bg-blue-500 text-white px-4 py-2 rounded-md transition-all hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
         (click)="reset()"
@@ -184,24 +184,20 @@
 
     <div class="pagination-controls mt-4 flex justify-end">
       <div class="flex items-center justify-between gap-2">
-        <div class="text-gray-600">
-          Tổng số bản ghi: {{ paging.total }}
-        </div>
+        <div class="text-gray-600">Tổng số bản ghi: {{ paging.total }}</div>
 
         <div class="flex items-center gap-2">
-          <button 
+          <button
             (click)="changePage(paging.page - 1)"
             [disabled]="paging.page === 1"
             class="!text-black px-3 py-1 border rounded disabled:opacity-50"
           >
             Previous
           </button>
-          
-          <span class="mx-2">
-            Trang {{ paging.page }} / {{ totalPages }}
-          </span>
-          
-          <button 
+
+          <span class="mx-2"> Trang {{ paging.page }} / {{ totalPages }} </span>
+
+          <button
             (click)="changePage(paging.page + 1)"
             [disabled]="paging.page === totalPages"
             class="!text-black px-3 py-1 border rounded disabled:opacity-50"
@@ -212,8 +208,8 @@
 
         <div class="flex items-center gap-2">
           <span>Hiển thị:</span>
-          <select 
-            [(ngModel)]="paging.size" 
+          <select
+            [(ngModel)]="paging.size"
             (change)="changePageSize(paging.size)"
             class="border rounded px-2 py-1"
           >
@@ -227,10 +223,9 @@
   </div>
 </div>
 <app-popupLoaiTuDo
-*ngIf="isPopupOpen"
-[isEditMode]="isEditMode"
-[formData]="formData"
-(close)="closePopup()"
-(save)="onSaveCongThuc($event)"
+  *ngIf="isPopupOpen"
+  [isEditMode]="isEditMode"
+  [formData]="formData"
+  (close)="closePopup()"
+  (save)="onSaveCongThuc($event)"
 ></app-popupLoaiTuDo>
-

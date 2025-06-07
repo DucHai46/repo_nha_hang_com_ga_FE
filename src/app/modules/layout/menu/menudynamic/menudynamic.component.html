@@ -21,19 +21,28 @@
       </div>
       <div class="flex w-full flex-col gap-2">
         <label for="searchTen">Cấp menu</label>
-        <select class="border border-gray-300 rounded-md p-2" id="searchTen" [(ngModel)]="searchForm.isParent" placeholder="Cấp menu">
+        <select
+          class="border border-gray-300 rounded-md p-2"
+          id="searchTen"
+          [(ngModel)]="searchForm.isParent"
+          placeholder="Cấp menu"
+        >
           <option value="true">Cấp 1</option>
           <option value="false">Cấp 2</option>
         </select>
       </div>
       <div class="flex w-full flex-col gap-2">
         <label for="searchTen">Trạng thái</label>
-        <select class="border border-gray-300 rounded-md p-2" id="searchTen" [(ngModel)]="searchForm.isActive" placeholder="Trạng thái">
+        <select
+          class="border border-gray-300 rounded-md p-2"
+          id="searchTen"
+          [(ngModel)]="searchForm.isActive"
+          placeholder="Trạng thái"
+        >
           <option value="true">Hoạt động</option>
           <option value="false">Không hoạt động</option>
         </select>
       </div>
-
     </div>
     <!-- button -->
     <div class="flex flex-row gap-4 justify-center items-end">

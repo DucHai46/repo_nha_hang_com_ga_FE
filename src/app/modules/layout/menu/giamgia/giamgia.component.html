@@ -30,20 +30,24 @@
         />
       </div>
       <div class="flex flex-col gap-2">
-        <label for="searchNgayKetThuc">Ngày kết thúc</label>  
-        <input  
+        <label for="searchNgayKetThuc">Ngày kết thúc</label>
+        <input
           class="border border-gray-300 rounded-md p-2"
           id="searchNgayKetThuc"
           [(ngModel)]="searchForm.ngayKetThuc"
           type="date"
           placeholder="Ngày kết thúc"
-        />  
+        />
       </div>
       <div class="flex flex-col gap-2">
         <label for="searchTrangThai">Trạng thái</label>
-        <select class="border border-gray-300 rounded-md p-2" id="searchTrangThai" [(ngModel)]="searchForm.trangThai">
-          <option value=0>Đang áp dụng</option>
-          <option value=1>Hết hạn</option>
+        <select
+          class="border border-gray-300 rounded-md p-2"
+          id="searchTrangThai"
+          [(ngModel)]="searchForm.trangThai"
+        >
+          <option value="0">Đang áp dụng</option>
+          <option value="1">Hết hạn</option>
         </select>
       </div>
     </div>
@@ -152,11 +156,17 @@
               {{ item.moTa }}
             </td>
             <td class="px-6 py-4">
-              {{ item.trangThai == 0 ? "Đang áp dụng" : "Hết hạn" }}
+              <span
+                class="border border-2 rounded-lg px-1 text-white"
+                [ngClass]="{
+                  'bg-green-500 border-green-500': item.trangThai == 0,
+                  'bg-red-500 border-red-500': item.trangThai == 1
+                }"
+              >
+                {{ item.trangThai == 0 ? "Đang áp dụng" : "Hết hạn" }}
+              </span>
             </td>
-            <td
-              class="px-6 py-4 flex flex-row gap-2 justify-center items-center"
-            >
+            <td class="px-6 py-4 flex flex-row gap-2 justify-center items-end">
               <button
                 (click)="openEditPopup(item)"
                 class="transition-transform transform hover:scale-105 hover:bg-blue-100 focus:outline-none rounded-lg px-2 py-1"
