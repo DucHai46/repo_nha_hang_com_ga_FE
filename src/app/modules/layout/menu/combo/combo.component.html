@@ -28,7 +28,17 @@
               type="text"
               placeholder="Tìm kiếm"
             />
-          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="searchGiaTienCaoNhat">Giá tiền cao nhất: </label>
+          <input
+            class="border border-gray-300 rounded-md p-2"
+            id="searchGiaTienCaoNhat"
+            [(ngModel)]="searchForm.giaTienCaoNhat"
+            type="text"
+            placeholder="Tìm kiếm"
+          />
+        </div>
       </div>
       <!-- button -->
       <div class="flex flex-row gap-4 justify-center items-center">
@@ -99,7 +109,7 @@
               <!-- <th scope="col" class="px-6 py-3">Nguyên liệu</th> -->
               <th scope="col" class="px-6 py-3">Giá tiền</th>
               <th scope="col" class="px-6 py-3">Mô tả</th>
-              <th scope="col" class="px-6 py-3">Giảm giá</th>
+              <th scope="col" class="px-6 py-3">Giảm giá(%)</th>
 
               <th scope="col" class="px-6 py-3">Thao tác</th>
             </tr>
