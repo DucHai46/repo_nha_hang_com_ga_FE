@@ -332,7 +332,7 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     }
   }
 
-  pdf(){
+  async pdf(){
     const options = {
       filename: `HoaDon_${this.formData.id}_${new Date().getTime()}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
@@ -348,17 +348,11 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     }
 
     const element: Element = document.getElementById('hoadon')!;
-    html2pdf().from(element).set(options).save().then(() => {
-      // Chờ xuất PDF xong mới đóng
-      this.changeStatus();
+    html2pdf().from(element).set(options).save().then(async () => {
+      await this.changeStatus();
       this.close.emit();
       this.close1.emit();
-    });;
-
-    // this.changeStatus();
-    // this.close.emit();
-
-
+    });
   }
 }
 

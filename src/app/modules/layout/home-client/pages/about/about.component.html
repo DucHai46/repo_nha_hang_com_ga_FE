@@ -1,4 +1,4 @@
-<body class="bg-white text-gray-800">
+<body class="!bg-white text-gray-800">
   <div class="max-w-4xl mx-auto px-4 py-10">
     <!-- Tiêu đề -->
     <h1 class="text-3xl font-bold text-yellow-600 mb-6">Giới thiệu</h1>
@@ -8,7 +8,9 @@
       class="space-y-6 text-justify leading-relaxed"
       *ngFor="let content of giaoDien?.about?.content; let i = index"
     >
-      <p>{{ content.title }}</p>
+      <p class="text-xl">
+        <i>{{ content.title }}</i>
+      </p>
 
       <p>
         {{ content.content }}

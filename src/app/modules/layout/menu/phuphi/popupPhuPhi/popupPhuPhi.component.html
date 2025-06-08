@@ -38,7 +38,11 @@
         </div>
         <div class="form-group">
           <label for="description">Trạng Thái:</label>
-          <select [(ngModel)]="formData.trangThai" name="trangThai">
+          <select
+            [(ngModel)]="formData.trangThai"
+            name="trangThai"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md"
+          >
             <option value="1">Hoạt Động</option>
             <option value="0">Ngừng Hoạt Động</option>
           </select>

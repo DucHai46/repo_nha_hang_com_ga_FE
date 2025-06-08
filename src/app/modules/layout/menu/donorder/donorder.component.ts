@@ -256,6 +256,7 @@ export class DonorderComponent implements OnInit {
   }
   closeChiTietHoaDon(): void {
     this.isChiTietHoaDonOpen = false;
+    console.log("reload lại đơn order");
     this.search();
   }
 
@@ -362,6 +363,7 @@ export class DonorderComponent implements OnInit {
       this.hoaDonThanhToanService.updateHoaDonThanhToan(body.id, body).subscribe({
         next: (res: any) => {
           if (res.data) {
+            this.formHoaDon = res.data;
             this.searchForm.tenHoaDon = '';
             this.searchForm.nhanViens = '';
             this.searchForm.gioVao = '';
@@ -369,7 +371,7 @@ export class DonorderComponent implements OnInit {
 
             this.updateDonOrderStatus(data);
             this.search();
-            // this.isChiTietHoaDonOpen = false;
+            // this.openChiTietHoaDonPopup();
             this.notification.create(
               'success',
               'Thông báo!',
@@ -379,6 +381,7 @@ export class DonorderComponent implements OnInit {
                 nzDuration: 2000
               }
             );
+            this.openChiTietHoaDonPopup();
           } else {
             this.notification.create(
               'error',

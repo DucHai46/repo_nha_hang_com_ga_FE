@@ -1,27 +1,6 @@
 <div class="mt-10 mr-10">
   <!-- nhãn -->
   <div class="flex flex-row gap-4 mb-5">
-    <!-- <p class="flex justify-center items-center">
-      <a
-        ><svg
-          class="w-6 h-6 text-gray-800 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m15 19-7-7 7-7"
-          />
-        </svg>
-      </a>
-    </p> -->
     <p class="text-2xl font-bold">Quản lý nhân viên</p>
   </div>
   <!-- form search -->
@@ -29,17 +8,7 @@
     class="flex flex-row gap-4 p-5 bg-white rounded-lg w-full justify-between"
   >
     <!-- form -->
-    <div class="grid grid-cols-3 gap-4">
-      <!-- <div class="flex flex-col gap-2">
-        <label for="searchMa">Mã danh mục</label>
-        <input
-          class="border border-gray-300 rounded-md p-2"
-          id="searchMa"
-          [(ngModel)]="searchForm.ma"
-          type="text"
-          placeholder="Tìm kiếm"
-        />
-      </div> -->
+    <div class="grid grid-cols-4 gap-4">
       <div class="flex flex-col gap-2">
         <label for="searchTen">Tên nhân viên</label>
         <input
@@ -74,7 +43,18 @@
           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
         />
       </div>
+      <div class="flex flex-col gap-2">
+        <label for="searchTen">Địa Chỉ</label>
+        <input
+          class="border border-gray-300 rounded-md p-2"
+          id="searchTen"
+          [(ngModel)]="searchForm.diaChi"
+          type="text"
+          placeholder="Địa chỉ"
+        />
+      </div>
     </div>
+
     <!-- button -->
     <div class="flex flex-row gap-2 justify-center items-end">
       <button

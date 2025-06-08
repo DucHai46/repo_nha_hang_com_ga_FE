@@ -38,7 +38,9 @@ export class NhanVienComponent implements OnInit {
   searchForm: any = {
     tenChucVu: '',
     chucVuId: '',
-    soDienThoai: ''
+    soDienThoai: '',
+    diaChi: '',
+
   };
 
   search() {
@@ -76,6 +78,7 @@ export class NhanVienComponent implements OnInit {
     this.searchForm.tenChucVu = '';
     this.searchForm.chucVuId = '';
     this.searchForm.soDienThoai = '';
+    this.searchForm.diaChi = '',
     this.search()
   }
 
