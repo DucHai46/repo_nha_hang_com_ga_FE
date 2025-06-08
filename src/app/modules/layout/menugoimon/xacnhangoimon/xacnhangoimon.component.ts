@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { DonOrderService } from '../services/donorder.service';
 import { FileService } from '../../../../core/services/file.service';
 import { BanAnService } from '../../menu/banan/services/banan.service';
@@ -9,30 +9,24 @@ import { BanAnService } from '../../menu/banan/services/banan.service';
   templateUrl: './xacnhangoimon.component.html',
   styleUrl: './xacnhangoimon.component.scss'
 })
-export class XacnhangoimonComponent implements OnInit  {
+export class XacnhangoimonComponent implements OnInit {
   selectedItemsMA: any[] = [];
   donOrder: any[] = [];
   id: string = '';
   banAn: any[] = [];
   ngOnInit(): void {
-      this.donOrderService.getDonOrder({}).subscribe(
-        {
-          next: (res: any) => {
-            this.donOrder = res.data.data;
-          }
+    this.donOrderService.getDonOrder({}).subscribe(
+      {
+        next: (res: any) => {
+          this.donOrder = res.data.data;
         }
-      )
-      this.banAnService.getBanAn({}).subscribe(
-        {
-          next: (res: any) => {
-            this.banAn = res.data.data;
-          }
-        }
-      )
-      this.loadImagesForSelectedItems();
+      }
+    )
+
+    this.loadImagesForSelectedItems();
   }
 
-  constructor(public router: Router,private donOrderService: DonOrderService, private fileService: FileService, private banAnService: BanAnService) {
+  constructor(public router: Router, private donOrderService: DonOrderService, private fileService: FileService, private banAnService: BanAnService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['selectedItemsMA']) {
       this.selectedItemsMA = navigation.extras.state['selectedItemsMA'];
@@ -70,23 +64,31 @@ export class XacnhangoimonComponent implements OnInit  {
     return this.selectedItemsMA.reduce((tong, mon) => tong + (mon.gia - (mon.giamGia ? mon.gia * mon.giamGia / 100 : 0)) * mon.soLuong, 0);
   }
   troVeMenugoimon() {
-    this.router.navigate(['/menugoimon/'+this.id], {
+    this.router.navigate(['/menugoimon/' + this.id], {
       state: { updatedSelectedItems: this.selectedItemsMA },
     });
   }
 
-  loaiDon="682c90d72046cb04ec849880"
-  xacNhanDonOrder(){
-    if(this.id == '' || this.id == null){
+  loaiDon = "682c90d72046cb04ec849880"
+  async xacNhanDonOrder() {
+    if (this.id == '' || this.id == null) {
       return;
     }
-    const tenBanAn = this.banAn.find((td: any) => td.id === this.id)?.tenBan;
+    let tenBanAn = '';
+    await this.banAnService.getBanAn({}).subscribe(
+      {
+        next: (res: any) => {
+          this.banAn = res.data.data;
+          tenBanAn = this.banAn.find((td: any) => td.id === this.id)?.tenBan;
+        }
+      }
+    )
     const don = this.donOrder.find((td: any) => (td.trangThai === 0 || td.trangThai === 1) && td.ban.id === this.id);
-    const combo=this.selectedItemsMA.filter((td: any) => td.danhMuc === 'comboMonAn');
-    const monAn=this.selectedItemsMA.filter((td: any) => td.danhMuc !== 'comboMonAn');
-    if(don){
-      let loaiDon=don.loaiDon.id;
-      let khachHang=don.khachHang.id;
+    const combo = this.selectedItemsMA.filter((td: any) => td.danhMuc === 'comboMonAn');
+    const monAn = this.selectedItemsMA.filter((td: any) => td.danhMuc !== 'comboMonAn');
+    if (don) {
+      let loaiDon = don.loaiDon.id;
+      let khachHang = don.khachHang.id;
       const chiTietMoi = {
         trangThai: 0,
         monAns: monAn.map((item: any) => ({
@@ -104,7 +106,7 @@ export class XacnhangoimonComponent implements OnInit  {
       };
       don.chiTietDonOrder.forEach((chiTiet: any) => {
         chiTiet.monAns = chiTiet.monAns.map((item: any) => ({
-          monAn: item.monAn.id ,  
+          monAn: item.monAn.id,
           monAn_trangThai: item.monAn_trangThai,
           soLuong: item.soLuong,
           moTa: item.moTa
@@ -112,40 +114,40 @@ export class XacnhangoimonComponent implements OnInit  {
         }));
 
         chiTiet.comBos = chiTiet.comBos.map((item: any) => ({
-          comBo: item.comBo.id ,
+          comBo: item.comBo.id,
           comBo_trangThai: item.comBo_trangThai,
           soLuong: item.soLuong,
           moTa: item.moTa
         }));
       });
       don.chiTietDonOrder.push(chiTietMoi);
-      don.tongTien=don.tongTien + this.tinhTongTien();
-      don.ban=this.id;
-      don.loaiDon=loaiDon;
-      don.khachHang=khachHang;
-      this.donOrderService.updateDonOrder(don.id,don).subscribe(
+      don.tongTien = don.tongTien + this.tinhTongTien();
+      don.ban = this.id;
+      don.loaiDon = loaiDon;
+      don.khachHang = khachHang;
+      this.donOrderService.updateDonOrder(don.id, don).subscribe(
         {
 
           next: (res: any) => {
-            if(res.data){
+            if (res.data) {
               this.selectedItemsMA = [];
-              this.router.navigate(['/menugoimon/'+this.id], {
+              this.router.navigate(['/menugoimon/' + this.id], {
                 state: { updatedSelectedItems: this.selectedItemsMA },
               });
-            }else{
+            } else {
               alert('Thêm mới thất bại');
             }
           }
         }
       )
 
-    }else{
+    } else {
       const newDonOrder = {
         tenDon: 'Đơn mới ' + tenBanAn,
-        loaiDon: this.loaiDon,                    
-        ban:  this.id ,
-        khachHang: '',                 
-        trangThai: 0,                          
+        loaiDon: this.loaiDon,
+        ban: this.id,
+        khachHang: '',
+        trangThai: 0,
         tongTien: this.tinhTongTien(),
         chiTietDonOrder: [
           {
@@ -153,8 +155,8 @@ export class XacnhangoimonComponent implements OnInit  {
             monAns: monAn.map((item: any) => ({
               monAn: item.ma,
               monAn_trangThai: 0,
-              soLuong: item.soLuong ,
-              moTa: item.ghiChu 
+              soLuong: item.soLuong,
+              moTa: item.ghiChu
             })),
             combos: combo.map((item: any) => ({
               comBo: item.ma,
@@ -168,12 +170,12 @@ export class XacnhangoimonComponent implements OnInit  {
       this.donOrderService.addDonOrder(newDonOrder).subscribe(
         {
           next: (res: any) => {
-            if(res.data){
+            if (res.data) {
               this.selectedItemsMA = [];
-              this.router.navigate(['/menugoimon/'+this.id], {
+              this.router.navigate(['/menugoimon/' + this.id], {
                 state: { updatedSelectedItems: this.selectedItemsMA },
               });
-            }else{
+            } else {
               alert('Thêm mới thất bại');
             }
           }
@@ -196,20 +198,20 @@ export class XacnhangoimonComponent implements OnInit  {
     }
   }
   loadImagesForSelectedItems(): void {
-  for (let item of this.selectedItemsMA) {
-    const parsed = this.parseJSON(item.hinhAnh);
-    if (parsed?.id && item.ma) {
-      this.fileService.downloadFile(parsed.id).subscribe(
-        (blob: Blob) => {
-          const url = URL.createObjectURL(blob);
-          this.imageUrls[item.ma] = url;
-        },
-        (err) => {
-          console.error('Không tải được ảnh:', item.ten, err);
-          this.imageUrls[item.ma] = 'assets/images/default-image.png'; 
-        }
-      );
+    for (let item of this.selectedItemsMA) {
+      const parsed = this.parseJSON(item.hinhAnh);
+      if (parsed?.id && item.ma) {
+        this.fileService.downloadFile(parsed.id).subscribe(
+          (blob: Blob) => {
+            const url = URL.createObjectURL(blob);
+            this.imageUrls[item.ma] = url;
+          },
+          (err) => {
+            console.error('Không tải được ảnh:', item.ten, err);
+            this.imageUrls[item.ma] = 'assets/images/default-image.png';
+          }
+        );
+      }
     }
   }
-}
 }
