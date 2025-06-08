@@ -45,75 +45,79 @@
 </div>
 
 <!-- Hiển thị món ăn theo danh mục -->
-<ng-container *ngFor="let category of loaiMonAn">
-  <div
-    *ngIf="check(category.ma)"
-    id="{{ category.ma }}"
-    class="mb-4 content-wrapper px-4"
-  >
-    <h2 class="text-xl font-bold mb-2 category-title">{{ category.ten }}</h2>
+<div class="pb-10">
+  <ng-container *ngFor="let category of loaiMonAn">
+    <div
+      *ngIf="check(category.ma)"
+      id="{{ category.ma }}"
+      class="mb-4 content-wrapper px-4"
+    >
+      <h2 class="text-xl font-bold mb-2 category-title">{{ category.ten }}</h2>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div
-        *ngFor="let item of getMonAnTheoDanhMuc(category.ma)"
-        class="p-4 bg-white rounded-lg shadow-lg flex flex-col justify-between"
-      >
-        <img
-          [src]="imageUrls[item.ma]"
-          alt="Image Preview"
-          class="rounded-lg w-full h-35 object-cover"
-        />
-        <h3 class="mt-2 text-lg font-bold">{{ item.ten }}</h3>
-        <div *ngIf="item.giamGia > 0; else noDiscount">
-          <p class="text-red-600 text-xl font-bold">
-            {{ (item.gia * (1 - item.giamGia / 100)) | number:'1.0-0' }}₫
-          </p>
-          <div class="text-red-600 font-bold">
-            <span class="line-through text-gray-400 mr-1">{{ item.gia | number }}₫</span>
-            <span>-{{ item.giamGia }}%</span>
-          </div>
-        </div>
-
-        <!-- Nếu không giảm giá -->
-        <ng-template #noDiscount>
-          <p class="text-red-600 text-xl font-bold">
-            {{ item.gia | number:'1.0-0' }}₫
-          </p>
-        </ng-template>
-
-        <!-- Nút tùy thuộc vào trạng thái -->
-        <div class="mt-3">
-          <!-- Nếu số lượng là 0, hiện nút "+" -->
-          <div *ngIf="item.soLuong === 0">
-            <button
-              (click)="tangSoLuong(item.ma)"
-              class="px-2 py-1 bg-blue-500 rounded-lg"
-            >
-              +
-            </button>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div
+          *ngFor="let item of getMonAnTheoDanhMuc(category.ma)"
+          class="p-4 bg-white rounded-lg shadow-lg flex flex-col justify-between"
+        >
+          <img
+            [src]="imageUrls[item.ma]"
+            alt="Image Preview"
+            class="rounded-lg w-full h-35 object-cover"
+          />
+          <h3 class="mt-2 text-lg font-bold">{{ item.ten }}</h3>
+          <div *ngIf="item.giamGia > 0; else noDiscount">
+            <p class="text-red-600 text-xl font-bold">
+              {{ item.gia * (1 - item.giamGia / 100) | number : "1.0-0" }}₫
+            </p>
+            <div class="text-red-600 font-bold">
+              <span class="line-through text-gray-400 mr-1"
+                >{{ item.gia | number }}₫</span
+              >
+              <span>-{{ item.giamGia }}%</span>
+            </div>
           </div>
 
-          <!-- Nếu số lượng lớn hơn 0, hiện giao diện tăng/giảm -->
-          <div *ngIf="item.soLuong > 0" class="flex items-center">
-            <button
-              (click)="giamSoLuong(item.ma)"
-              class="px-2 py-1 bg-gray-300 rounded-lg !text-black"
-            >
-              -
-            </button>
-            <span class="mx-3 text-lg">{{ item.soLuong }}</span>
-            <button
-              (click)="tangSoLuong(item.ma)"
-              class="px-2 py-1 bg-gray-300 rounded-lg !text-black"
-            >
-              +
-            </button>
+          <!-- Nếu không giảm giá -->
+          <ng-template #noDiscount>
+            <p class="text-red-600 text-xl font-bold">
+              {{ item.gia | number : "1.0-0" }}₫
+            </p>
+          </ng-template>
+
+          <!-- Nút tùy thuộc vào trạng thái -->
+          <div class="mt-3">
+            <!-- Nếu số lượng là 0, hiện nút "+" -->
+            <div *ngIf="item.soLuong === 0">
+              <button
+                (click)="tangSoLuong(item.ma)"
+                class="px-2 py-1 bg-blue-500 rounded-lg"
+              >
+                +
+              </button>
+            </div>
+
+            <!-- Nếu số lượng lớn hơn 0, hiện giao diện tăng/giảm -->
+            <div *ngIf="item.soLuong > 0" class="flex items-center">
+              <button
+                (click)="giamSoLuong(item.ma)"
+                class="px-2 py-1 bg-gray-300 rounded-lg !text-black"
+              >
+                -
+              </button>
+              <span class="mx-3 text-lg">{{ item.soLuong }}</span>
+              <button
+                (click)="tangSoLuong(item.ma)"
+                class="px-2 py-1 bg-gray-300 rounded-lg !text-black"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
+</div>
 <!-- Thanh tổng tiền, chỉ hiển thị khi có ít nhất 1 món -->
 <div
   *ngIf="coMonAnDuocChon()"

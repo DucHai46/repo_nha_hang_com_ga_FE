@@ -7,6 +7,7 @@ import { ComboService } from '../menu/combo/services/combo.service';
 import { LoaiMonAn } from '../../../models/LoaiMonAn';
 import { ThucDon } from '../../../models/ThucDon';
 import { MonAn } from '../../../models/MonAn';
+import { BanAnService } from '../menu/banan/services/banan.service';
 import { FileService } from '../../../core/services/file.service';
 
 @Component({
@@ -27,6 +28,8 @@ export class MenugoimonComponent implements OnInit {
   selectedItem: any;
   itemsMonAnRoot: any[] = [];
   imageUrls: { [key: string]: string } = {};
+  banAn: any[] = [];
+  tenBanAn: string = '';
 
   constructor(
     public router: Router,
@@ -35,7 +38,8 @@ export class MenugoimonComponent implements OnInit {
     private monAnService: MonAnService,
     private route: ActivatedRoute,
     private fileService: FileService,
-    private comboService: ComboService
+    private comboService: ComboService,
+    private banAnService: BanAnService
   ) { }
 
   ngOnInit() {
@@ -65,6 +69,14 @@ export class MenugoimonComponent implements OnInit {
       },
       error: (err: any) => console.log(err),
     });
+    this.banAnService.getBanAn({}).subscribe({
+      next: (res: any) => {
+        this.banAn = res.data.data;
+        console.log(res.data.data);
+        this.tenBanAn = res.data.data.find((item: any) => item.id === this.id)?.tenBan;
+        console.log("tenbanAn:",this.tenBanAn);
+      }
+    })
     this.id = this.route.snapshot.paramMap.get('id') || '';
   }
 
@@ -207,8 +219,10 @@ export class MenugoimonComponent implements OnInit {
     if (this.id == '' || this.id == null) {
       return;
     }
+          console.log(this.tenBanAn);
     this.router.navigate(['/xacnhangoimon'], {
-      state: { selectedItemsMA: this.selectedItemsMA, id: this.id },
+
+      state: { selectedItemsMA: this.selectedItemsMA, id: this.id ,tenBanAn:this.tenBanAn},
     });
   }
 
