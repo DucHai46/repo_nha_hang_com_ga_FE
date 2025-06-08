@@ -13,7 +13,8 @@ export class XacnhangoimonComponent implements OnInit  {
   selectedItemsMA: any[] = [];
   donOrder: any[] = [];
   id: string = '';
-  banAn: any[] = [];
+  tenBanAn: string = '';  
+
   ngOnInit(): void {
       this.donOrderService.getDonOrder({}).subscribe(
         {
@@ -22,13 +23,13 @@ export class XacnhangoimonComponent implements OnInit  {
           }
         }
       )
-      this.banAnService.getBanAn({}).subscribe(
-        {
-          next: (res: any) => {
-            this.banAn = res.data.data;
-          }
-        }
-      )
+      // this.banAnService.getBanAn({}).subscribe(
+      //   {
+      //     next: (res: any) => {
+      //       this.banAn = res.data.data;
+      //     }
+      //   }
+      // )
       this.loadImagesForSelectedItems();
   }
 
@@ -37,6 +38,8 @@ export class XacnhangoimonComponent implements OnInit  {
     if (navigation?.extras?.state?.['selectedItemsMA']) {
       this.selectedItemsMA = navigation.extras.state['selectedItemsMA'];
       this.id = navigation.extras.state['id'];
+      this.tenBanAn=navigation.extras.state['tenBanAn'];
+      console.log(this.tenBanAn);
     }
 
   }
@@ -80,7 +83,7 @@ export class XacnhangoimonComponent implements OnInit  {
     if(this.id == '' || this.id == null){
       return;
     }
-    const tenBanAn = this.banAn.find((td: any) => td.id === this.id)?.tenBan;
+    // const tenBanAn = this.banAn.find((td: any) => td.id === this.id)?.tenBan;
     const don = this.donOrder.find((td: any) => (td.trangThai === 0 || td.trangThai === 1) && td.ban.id === this.id);
     const combo=this.selectedItemsMA.filter((td: any) => td.danhMuc === 'comboMonAn');
     const monAn=this.selectedItemsMA.filter((td: any) => td.danhMuc !== 'comboMonAn');
@@ -141,7 +144,7 @@ export class XacnhangoimonComponent implements OnInit  {
 
     }else{
       const newDonOrder = {
-        tenDon: 'Đơn mới ' + tenBanAn,
+        tenDon: 'Đơn mới ' + this.tenBanAn,
         loaiDon: this.loaiDon,                    
         ban:  this.id ,
         khachHang: '',                 
