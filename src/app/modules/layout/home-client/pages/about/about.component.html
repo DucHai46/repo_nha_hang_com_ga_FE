@@ -17,6 +17,7 @@
       </p>
 
       <img
+        *ngIf="content.image?.trim()"
         [src]="content.image"
         alt="Không gian nhà hàng"
         class="rounded-lg shadow-md w-full"

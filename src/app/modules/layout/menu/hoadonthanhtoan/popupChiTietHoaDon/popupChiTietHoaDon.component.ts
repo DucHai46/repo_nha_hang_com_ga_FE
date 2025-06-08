@@ -350,6 +350,7 @@ export class PopupChiTietHoaDonComponent implements OnInit {
     const element: Element = document.getElementById('hoadon')!;
     html2pdf().from(element).set(options).save().then(async () => {
       await this.changeStatus();
+      await new Promise(resolve => setTimeout(resolve, 500));
       this.close.emit();
       this.close1.emit();
     });

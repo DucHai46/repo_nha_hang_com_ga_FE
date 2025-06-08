@@ -17,6 +17,7 @@ export interface DonOrder {
     chiTietDonOrder: ChiTietDonOrder[];
     tongTien: number;
     createDate: Date;
+    ngayTaoDon: Date;
 }
 
 interface ChiTietDonOrder {

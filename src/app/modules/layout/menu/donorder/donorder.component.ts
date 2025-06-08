@@ -131,6 +131,7 @@ export class DonorderComponent implements OnInit {
     tenDon: '',
     khachHangs: '',
     loaiDon: '',
+    ngayTaoDon: '',
   }
 
   searchKH: any = {
@@ -188,6 +189,9 @@ export class DonorderComponent implements OnInit {
   }
 
   searchDonOrder() {
+    if(this.searchForm.ngayTaoDon == ''){
+     this.searchForm.ngayTaoDon = null;
+    }
     this.searchForm.isPaging = true;
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
@@ -225,6 +229,7 @@ export class DonorderComponent implements OnInit {
     this.searchForm.tenDon = '';
     this.searchForm.loaiDon = '';
     this.searchForm.khachHangs = '';
+    this.searchForm.ngayTaoDon = '';
     this.khachHangIds = [];
     this.searchForm.khachHang = [];
     this.search();
