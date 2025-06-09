@@ -48,16 +48,17 @@ export class PopupMenuDynamicComponent implements OnInit {
   @Input() isDetailMode: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
-  
+
   menuDynamic: any[] = [];
 
-  constructor(private menuDynamicService: MenuDynamicService) {}
+  constructor(private menuDynamicService: MenuDynamicService) { }
 
   ngOnInit(): void {
-    this.menuDynamicService.getMenuDynamic({isPaging: false}).subscribe({
+    this.menuDynamicService.getMenuDynamic({ isPaging: false }).subscribe({
       next: (res: any) => {
-        if(res.result == 1){
+        if (res.result == 1) {
           this.menuDynamic = res.data.data;
+          this.menuDynamic = this.menuDynamic.filter(menu => menu.parent?.id === null);
         }
       },
       error: (err: any) => {

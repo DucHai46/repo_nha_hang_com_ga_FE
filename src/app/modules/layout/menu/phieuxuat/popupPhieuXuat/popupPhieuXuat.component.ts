@@ -20,7 +20,7 @@ export class PopupPhieuXuatComponent implements OnInit {
     lyDoXuat: '',
     diaDiem: '',
     ghiChu: '',
-    nhanVien:'',
+    nhanVien: '',
     loaiNguyenLieus: [],
   };
 
@@ -45,9 +45,15 @@ export class PopupPhieuXuatComponent implements OnInit {
     private phieuXuatService: PhieuXuatService,
     private nguyenLieuService: NguyenlieuService,
     private donViTinhService: DonViTinhService
-  ){}
+  ) { }
 
   ngOnInit(): void {
+    this.phieuXuatService.randomNamePhieuXuat().subscribe({
+      next: (res: any) => {
+        this.formData.tenPhieu = res.value;
+      },
+      error: (err: any) => console.log(err)
+    });
     this.loaiNguyenLieuService.getLoaiNguyenLieu({}).subscribe({
       next: (res: any) => {
         this.loaiNguyenLieu = res.data.data.map((item: any) => ({
@@ -89,17 +95,17 @@ export class PopupPhieuXuatComponent implements OnInit {
           id: '',
           name: ''
         },
-        soLuongBanDau:0,
-        soLuongXuat:0,
-        chenhLech:0,  
+        soLuongBanDau: 0,
+        soLuongXuat: 0,
+        chenhLech: 0,
       }
     });
   }
   onLoaiNguyenLieuChange(index: number): void {
     const selectedLoaiId = this.loaiSelections[index].selectedLoaiId;
     this.loaiSelections[index].selectedLoaiName = this.loaiNguyenLieu.find(l => l.id === selectedLoaiId)?.name || '';
-    this.nguyenLieuService.getNguyenLieu({loaiNguyenLieuId: this.loaiSelections[index].selectedLoaiId}).subscribe({
-        next: (res: any) => {
+    this.nguyenLieuService.getNguyenLieu({ loaiNguyenLieuId: this.loaiSelections[index].selectedLoaiId }).subscribe({
+      next: (res: any) => {
 
         this.loaiSelections[index].filteredNguyenLieu = res.data.data.map((item: any) => ({
           id: item.id,
@@ -118,11 +124,11 @@ export class PopupPhieuXuatComponent implements OnInit {
     this.loaiSelections[index].selectedNguyenLieuId = '';
     this.loaiSelections[index].nguyenLieus = [];
   }
-    onTrangThaiNguyenLieuChange(index: number,trangThai1:number): void {
+  onTrangThaiNguyenLieuChange(index: number, trangThai1: number): void {
     const selectedLoaiId = this.loaiSelections[index].selectedLoaiId;
     this.loaiSelections[index].selectedLoaiName = this.loaiNguyenLieu.find(l => l.id === selectedLoaiId)?.name || '';
-    this.nguyenLieuService.getNguyenLieu({loaiNguyenLieuId: this.loaiSelections[index].selectedLoaiId ,trangThai:trangThai1}).subscribe({
-        next: (res: any) => {
+    this.nguyenLieuService.getNguyenLieu({ loaiNguyenLieuId: this.loaiSelections[index].selectedLoaiId, trangThai: trangThai1 }).subscribe({
+      next: (res: any) => {
         this.loaiSelections[index].filteredNguyenLieu = res.data.data.map((item: any) => ({
           id: item.id,
           name: item.tenNguyenLieu,
@@ -145,20 +151,20 @@ export class PopupPhieuXuatComponent implements OnInit {
   }
   isNguyenLieuDuplicate(nl: any, loaiIndex: number, nguyenLieuIndex: number): boolean {
     const loai = this.loaiSelections[loaiIndex];
-    return loai.nguyenLieus.some((x: any, idx: number) => 
-      idx !== nguyenLieuIndex  && x.nguyenLieu.id === nl.id
+    return loai.nguyenLieus.some((x: any, idx: number) =>
+      idx !== nguyenLieuIndex && x.nguyenLieu.id === nl.id
     );
   }
   updateChenhLech(loai: any): void {
     const soLuong = Number(loai.nguyenLieu.soLuong) || 0;
     const donGia = Number(loai.nguyenLieu.soLuongXuat) || 0;
-      if (donGia < 0) {
-        loai.nguyenLieu.soLuongXuat = 0;
+    if (donGia < 0) {
+      loai.nguyenLieu.soLuongXuat = 0;
     } else if (donGia > soLuong) {
-        loai.nguyenLieu.soLuongXuat = soLuong;
+      loai.nguyenLieu.soLuongXuat = soLuong;
     }
     loai.nguyenLieu.chenhLech = soLuong - loai.nguyenLieu.soLuongXuat;
-    
+
   }
   updateNguyenLieuName(loai: any, item: any) {
     const found = loai.filteredNguyenLieu.find((nl: any) => nl.id === item.nguyenLieu.id);
@@ -176,22 +182,22 @@ export class PopupPhieuXuatComponent implements OnInit {
   removeLoaiSelection(index: number): void {
     this.loaiSelections.splice(index, 1);
   }
-  isNhanVienUnValid=false;
-  isLyDoUnValid=false;
+  isNhanVienUnValid = false;
+  isLyDoUnValid = false;
   onSave(): void {
     const allLoaiNguyenLieus = this.loaiSelections.map(loai => ({
       id: loai.selectedLoaiId,
       nguyenLieus: loai.nguyenLieus.map((item: any) => ({
         id: item.nguyenLieu.id,
-        donViTinh:item.nguyenLieu.donViTinh.id,
+        donViTinh: item.nguyenLieu.donViTinh.id,
         soLuong: item.nguyenLieu.soLuong,
         soLuongXuat: item.nguyenLieu.soLuongXuat,
-        chenhLech: item.nguyenLieu.chenhLech,        
+        chenhLech: item.nguyenLieu.chenhLech,
       }))
     }));
-    this.isNhanVienUnValid=!this.formData.nhanVien;
-    this.isLyDoUnValid=!this.formData.lyDoXuat;
-    if(this.isNhanVienUnValid || this.isLyDoUnValid){
+    this.isNhanVienUnValid = !this.formData.nhanVien;
+    this.isLyDoUnValid = !this.formData.lyDoXuat;
+    if (this.isNhanVienUnValid || this.isLyDoUnValid) {
       return;
     }
 
@@ -201,8 +207,8 @@ export class PopupPhieuXuatComponent implements OnInit {
       lyDoXuat: this.formData.lyDoXuat,
       diaDiem: this.formData.diaDiem,
       ghiChu: this.formData.ghiChu,
-      nhanVien: this.formData.nhanVien||null,
-      
+      nhanVien: this.formData.nhanVien || null,
+
       loaiNguyenLieus: allLoaiNguyenLieus
     };
     this.save.emit(dataToSend);

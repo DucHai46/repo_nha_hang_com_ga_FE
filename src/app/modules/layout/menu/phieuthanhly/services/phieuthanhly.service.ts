@@ -25,4 +25,7 @@ export class PhieuThanhLyService {
   deletePhieuThanhLy(id: string) {
     return this.http.delete(`${this.apiUrl}/api/phieu-thanh-ly/${id}`);
   }
+  randomNamePhieuThanhLy() {
+    return this.http.get(`${this.apiUrl}/api/phieu-thanh-ly/check-ten-phieu-thanh-ly`);
+  }
 }

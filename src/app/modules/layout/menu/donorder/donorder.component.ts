@@ -189,8 +189,8 @@ export class DonorderComponent implements OnInit {
   }
 
   searchDonOrder() {
-    if(this.searchForm.ngayTaoDon == ''){
-     this.searchForm.ngayTaoDon = null;
+    if (this.searchForm.ngayTaoDon == '') {
+      this.searchForm.ngayTaoDon = null;
     }
     this.searchForm.isPaging = true;
     this.searchForm.PageNumber = this.paging.page;
