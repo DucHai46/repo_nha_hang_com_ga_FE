@@ -25,4 +25,8 @@ export class PhieuKiemKeService {
   deletePhieuKiemKe(id: string) {
     return this.http.delete(`${this.apiUrl}/api/phieu-kiem-ke/${id}`);
   }
+
+  randomNamePhieuKiemKe() {
+    return this.http.get(`${this.apiUrl}/api/phieu-kiem-ke/check-ten-phieu-kiem-ke`);
+  }
 }

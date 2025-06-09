@@ -66,4 +66,12 @@ button{
   }
 }
 
+td {
+  text-align: center !important;
+  padding: 0.5rem !important;
+  .flex {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
 

@@ -25,4 +25,8 @@ export class PhieuXuatService {
   deletePhieuXuat(id: string) {
     return this.http.delete(`${this.apiUrl}/api/phieu-xuat/${id}`);
   }
+
+  randomNamePhieuXuat() {
+    return this.http.get(`${this.apiUrl}/api/phieu-xuat/check-ten-phieu-xuat`);
+  }
 }

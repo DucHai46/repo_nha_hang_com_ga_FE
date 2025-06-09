@@ -13,6 +13,7 @@
             [(ngModel)]="formData.tenPhieu"
             name="tenThucDon"
             placeholder="Nhập tên Phiếu..."
+            [disabled]="true"
           />
         </div>
         <!-- <div class="form-group">
@@ -209,7 +210,10 @@
 
         <!-- ------------------------------------------------------------------------------------------------------------ -->
         <div class="form-group">
-          <label for="diaDiem">Lý do xuất: <span *ngIf="isLyDoUnValid" class="text-red-500">*</span></label>
+          <label for="diaDiem"
+            >Lý do xuất:
+            <span *ngIf="isLyDoUnValid" class="text-red-500">*</span></label
+          >
           <div class="flex item-centers gap-2">
             <textarea
               id="lyDo"
@@ -221,7 +225,6 @@
           <p *ngIf="isLyDoUnValid" class="text-red-500 text-sm mt-1">
             Vui lớng nhập lý do
           </p>
-
         </div>
         <div class="form-group">
           <label for="diaDiem">Địa điểm:</label>
