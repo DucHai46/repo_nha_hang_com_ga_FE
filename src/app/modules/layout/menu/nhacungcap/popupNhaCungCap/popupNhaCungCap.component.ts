@@ -24,13 +24,26 @@ export class PopupNhaCungCapComponent {
   onCancel(): void {
     this.close.emit();
   }
+  phoneError: string = '';
   onInputChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
-    if (filteredValue.length > 11) {
-      filteredValue = filteredValue.substring(0, 11);
+    if (filteredValue.length > 0 && !filteredValue.startsWith('0')) {
+      filteredValue = '0' + filteredValue;
     }
-    inputElement.value = filteredValue;
-    this.formData.soDienThoai = filteredValue;
+    if (filteredValue.length > 10) {
+      filteredValue = filteredValue.substring(0, 10);
+    }
+    if (filteredValue.length === 10) {
+      inputElement.value = filteredValue;
+      this.formData.soDienThoai = filteredValue;
+      this.phoneError = '';
+    } else {
+      inputElement.value = filteredValue;
+      this.formData.soDienThoai = '';
+      if (filteredValue.length > 0) {
+        this.phoneError = 'Số điện thoại phải có 10 chữ số';
+      }
+    }
   }
 }

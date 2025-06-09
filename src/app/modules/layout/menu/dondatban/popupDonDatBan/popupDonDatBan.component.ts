@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BanAnService } from '../../banan/services/banan.service'; 
+import { BanAnService } from '../../banan/services/banan.service';
 import { KhachHangService } from '../../khachhang/services/khachhang.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class PopupDonDatBanComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.banAnService.getBanAn({trangThai: 0}).subscribe({
+    this.banAnService.getBanAn({ trangThai: 0 }).subscribe({
       next: (res: any) => {
         this.banAn = res.data.data.map((item: any) => ({
           id: item.id,
@@ -70,7 +70,7 @@ export class PopupDonDatBanComponent implements OnInit {
     },
   };
 
-  khachHangTT= {
+  khachHangTT = {
     tenKhachHang: '',
     diaChi: '',
     email: '',
@@ -83,23 +83,23 @@ export class PopupDonDatBanComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
- constructor(
-  private banAnService: BanAnService,
-  private khachHangService: KhachHangService,
+  constructor(
+    private banAnService: BanAnService,
+    private khachHangService: KhachHangService,
 
-  ) {}
-  isKhachHangUnvalid=false;
-  isSoDienThoaiUnvalid=false;
+  ) { }
+  isKhachHangUnvalid = false;
+  isSoDienThoaiUnvalid = false;
 
 
   onSave(): void {
-    this.isKhachHangUnvalid= !this.khachHangTT.tenKhachHang
-    this.isSoDienThoaiUnvalid=!this.khachHangTT.soDienThoai
-    if(this.isKhachHangUnvalid || this.isSoDienThoaiUnvalid){
+    this.isKhachHangUnvalid = !this.khachHangTT.tenKhachHang
+    this.isSoDienThoaiUnvalid = !this.khachHangTT.soDienThoai
+    if (this.isKhachHangUnvalid || this.isSoDienThoaiUnvalid) {
       return;
     }
-    if(this.isEditMode){
-      this.khachHangService.updateKhachHang(this.formData.khachHang.id,this.khachHangTT).subscribe({
+    if (this.isEditMode) {
+      this.khachHangService.updateKhachHang(this.formData.khachHang.id, this.khachHangTT).subscribe({
         next: (res: any) => {
           const dataToSend = {
             ...this.formData,
@@ -111,14 +111,14 @@ export class PopupDonDatBanComponent implements OnInit {
           this.save.emit(dataToSend);
         },
         error: (err: any) => console.log(err)
-      }); 
-    }else{
+      });
+    } else {
       this.khachHangService.addKhachHang(this.khachHangTT).subscribe({
         next: (res: any) => {
           const dataToSend = {
             ...this.formData,
-            ngayDat:this.formData.ngayDat,
-            gioDat: this.formData.gioDat +':00',
+            ngayDat: this.formData.ngayDat,
+            gioDat: this.formData.gioDat + ':00',
             ban: this.formData.ban.id,
             khachHang: res.data.id,
           };
@@ -126,19 +126,32 @@ export class PopupDonDatBanComponent implements OnInit {
         },
         error: (err: any) => console.log(err)
       });
-  }
+    }
 
   }
   onCancel(): void {
-    this.close.emit(); 
+    this.close.emit();
   }
+  phoneError: string = '';
   onInputChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
-    if (filteredValue.length > 11) {
-      filteredValue = filteredValue.substring(0, 11);
+    if (filteredValue.length > 0 && !filteredValue.startsWith('0')) {
+      filteredValue = '0' + filteredValue;
     }
-    inputElement.value = filteredValue;
-    this.khachHangTT.soDienThoai = filteredValue;
-  }
+    if (filteredValue.length > 10) {
+      filteredValue = filteredValue.substring(0, 10);
+    }
+    if (filteredValue.length === 10) {
+      inputElement.value = filteredValue;
+      this.khachHangTT.soDienThoai = filteredValue;
+      this.phoneError = '';
+    } else {
+      inputElement.value = filteredValue;
+      this.khachHangTT.soDienThoai = '';
+      if (filteredValue.length > 0) {
+        this.phoneError = 'Số điện thoại phải có 10 chữ số';
+      }
+    }
+  } 
 }

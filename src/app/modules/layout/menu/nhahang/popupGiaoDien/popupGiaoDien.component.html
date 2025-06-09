@@ -441,11 +441,14 @@
                   class="border border-gray-300 p-2 rounded flex-1"
                   [disabled]="isChiTietOpen"
                   minlength="10"
-                  maxlength="11"
+                  maxlength="10"
                   required
-                  pattern="^[0-9]{0,11}$"
+                  pattern="^0[0-9]{9}$"
                   (input)="onInputChange($event, i)"
                 />
+                <small class="text-red-500" *ngIf="phoneError">{{
+                  phoneError
+                }}</small>
                 <button
                   type="button"
                   class="btn-danger"

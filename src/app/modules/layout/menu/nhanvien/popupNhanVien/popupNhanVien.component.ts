@@ -49,8 +49,14 @@ export class PopupNhanVienComponent implements OnInit {
   onInputChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
+    if (filteredValue.length > 0 && !filteredValue.startsWith('0')) {
+      filteredValue = '0' + filteredValue;
+    }
     if (filteredValue.length > 11) {
       filteredValue = filteredValue.substring(0, 11);
+    }
+    if (filteredValue.length > 0 && filteredValue.length < 10) {
+      return;
     }
     inputElement.value = filteredValue;
     this.formData.soDienThoai = filteredValue;
