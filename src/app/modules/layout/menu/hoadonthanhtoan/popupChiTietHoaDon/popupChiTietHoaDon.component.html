@@ -140,7 +140,9 @@
       <button class="btn-pay" (click)="onSave()">Thanh toán</button>
     </div>
     <div class="action-buttons">
-      <button class="btn-pay" (click)="pdf()">Xuất PDF</button>
+      <button class="btn-pay" (click)="pdf()" *ngIf="formData.trangthai">
+        Xuất PDF
+      </button>
     </div>
   </div>
 </div>
