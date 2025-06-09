@@ -4,6 +4,7 @@ import { ThucDon } from '../../../../../models/ThucDon';
 import { FileService } from '../../../../../core/services/file.service';
 import { HomeClientStore } from '../../store/home-client.store';
 import { FormsModule } from '@angular/forms';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-menu-client',
@@ -17,7 +18,8 @@ export class MenuClientComponent implements OnInit {
   constructor(
     private thucDonService: ThucDonService,
     private fileService: FileService,
-    private homeClientStore: HomeClientStore
+    private homeClientStore: HomeClientStore,
+    private notificationService: NzNotificationService
   ) { }
 
   allItems: any[] = [];
@@ -162,5 +164,12 @@ export class MenuClientComponent implements OnInit {
 
   addToCart(item: any) {
     this.homeClientStore.addToCart(item);
+    this.notificationService.success('Thêm vào giỏ hàng thành công', 'Thông báo', {
+      nzDuration: 2000,
+      nzStyle: {
+        backgroundColor: '#4CAF50',
+        color: '#fff'
+      }
+    });
   }
 }
