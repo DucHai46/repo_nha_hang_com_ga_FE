@@ -164,12 +164,14 @@ export class MenuClientComponent implements OnInit {
 
   addToCart(item: any) {
     this.homeClientStore.addToCart(item);
-    this.notificationService.success('Thêm vào giỏ hàng thành công', 'Thông báo', {
-      nzDuration: 2000,
-      nzStyle: {
-        backgroundColor: '#4CAF50',
-        color: '#fff'
+    this.notificationService.create(
+      'success',
+      'Thông báo',
+      'Thêm vào giỏ hàng thành công',
+      {
+        nzClass: 'notification-success',
+        nzDuration: 2000
       }
-    });
+    );
   }
 }
