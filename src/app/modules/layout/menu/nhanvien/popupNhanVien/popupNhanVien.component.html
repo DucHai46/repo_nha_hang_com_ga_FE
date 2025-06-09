@@ -30,11 +30,14 @@
                 placeholder="Nhập số điện thoại..."
                 class="w-full"
                 minlength="10"
-                maxlength="11"
+                maxlength="10"
                 required
-                pattern="^[0-9]{0,11}$"
+                pattern="^0[0-9]{9}$"
                 (input)="onInputChange($event)"
               />
+              <small class="text-red-500" *ngIf="phoneError">{{
+                phoneError
+              }}</small>
             </div>
 
             <div class="form-group">
