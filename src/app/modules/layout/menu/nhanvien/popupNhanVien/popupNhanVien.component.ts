@@ -35,7 +35,7 @@ export class PopupNhanVienComponent implements OnInit {
   isChucVuInValid = false
 
   onSave(): void {
-    this.isChucVuInValid = !this.formData.chucVu ;
+    this.isChucVuInValid = !this.formData.chucVu;
     if (this.isChucVuInValid) {
       return;
     }
@@ -44,5 +44,15 @@ export class PopupNhanVienComponent implements OnInit {
 
   onCancel(): void {
     this.close.emit();
+  }
+
+  onInputChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
+    if (filteredValue.length > 11) {
+      filteredValue = filteredValue.substring(0, 11);
+    }
+    inputElement.value = filteredValue;
+    this.formData.soDienThoai = filteredValue;
   }
 }

@@ -46,6 +46,10 @@
                 name="soDienThoai"
                 placeholder="Nhập số điện thoại..."
                 [disabled]="isChiTietOpen"
+                maxlength="11"
+                required
+                pattern="^[0-9]{0,11}$"
+                (input)="onInputChange($event)"
               />
             </div>
 

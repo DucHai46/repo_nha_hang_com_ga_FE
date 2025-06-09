@@ -32,7 +32,7 @@ export class PopupPhieuNhapComponent implements OnInit {
       tenNguyenLieu: '',
       moTa: '',
       hanSuDung: '',
-      soLuong:0,
+      soLuong: 0,
       loaiNguyenLieu: '',
       donViTinh: '',
       tuDo: '',
@@ -56,7 +56,7 @@ export class PopupPhieuNhapComponent implements OnInit {
     private nhaCungCapService: NhaCungCapService,
     private nhanVienService: NhanVienService,
     private notification: NzNotificationService
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.loaiNguyenLieuService.getLoaiNguyenLieu({}).subscribe({
@@ -128,7 +128,7 @@ export class PopupPhieuNhapComponent implements OnInit {
       tenNguyenLieu: '',
       moTa: '',
       hanSuDung: '',
-      soLuong:0,
+      soLuong: 0,
       loaiNguyenLieu: '',
       donViTinh: '',
       tuDo: '',
@@ -144,15 +144,15 @@ export class PopupPhieuNhapComponent implements OnInit {
     this.updateTongTien();
   }
   updateTongTien(): void {
-  this.formData.tongTien = this.nguyenLieuSelection.reduce((total, item) => {
-    return total + (Number(item.thanhTien) || 0);
-  }, 0);
+    this.formData.tongTien = this.nguyenLieuSelection.reduce((total, item) => {
+      return total + (Number(item.thanhTien) || 0);
+    }, 0);
   }
   removeNguyenLieuSelection(index: number): void {
     this.nguyenLieuSelection.splice(index, 1);
   }
-  isNhanVienUnvalid=false;
-  isDienGiaiUnvalid=false;
+  isNhanVienUnvalid = false;
+  isDienGiaiUnvalid = false;
   onSave(): void {
     const allNguyenLieus = this.nguyenLieuSelection.map(loai => ({
       id: loai.selectedLoaiId,
@@ -169,7 +169,7 @@ export class PopupPhieuNhapComponent implements OnInit {
     }));
     this.isNhanVienUnvalid = !this.formData.nhanVien;
     this.isDienGiaiUnvalid = !this.formData.dienGiai;
-    if(this.isNhanVienUnvalid || this.isDienGiaiUnvalid){
+    if (this.isNhanVienUnvalid || this.isDienGiaiUnvalid) {
       return;
     }
 
@@ -177,12 +177,12 @@ export class PopupPhieuNhapComponent implements OnInit {
       id: this.formData.id,
       tenPhieu: this.formData.tenPhieu,
       tenNguoiGiao: this.formData.tenNguoiGiao,
-      nhaCungCap: this.formData.nhaCungCap||null,
+      nhaCungCap: this.formData.nhaCungCap || null,
       dienGiai: this.formData.dienGiai,
       diaDiem: this.formData.diaDiem,
       tongTien: this.formData.tongTien,
       ghiChu: this.formData.ghiChu,
-      nhanVien: this.formData.nhanVien||null,
+      nhanVien: this.formData.nhanVien || null,
       nguyenLieus: allNguyenLieus
     };
 

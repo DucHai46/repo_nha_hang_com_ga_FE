@@ -29,6 +29,10 @@
                 name="soDienThoai"
                 placeholder="Nhập số điện thoại..."
                 class="w-full"
+                maxlength="11"
+                required
+                pattern="^[0-9]{0,11}$"
+                (input)="onInputChange($event)"
               />
             </div>
 
@@ -71,7 +75,12 @@
             </div>
 
             <div class="form-group">
-              <label for="position">Chức Vụ: <span *ngIf="isChucVuInValid" class="text-red-500">*</span></label>
+              <label for="position"
+                >Chức Vụ:
+                <span *ngIf="isChucVuInValid" class="text-red-500"
+                  >*</span
+                ></label
+              >
               <div class="flex items-center gap-2">
                 <select
                   id="position"
@@ -88,7 +97,6 @@
               <p *ngIf="isChucVuInValid" class="text-red-500 text-sm mt-1">
                 Vui lòng chọn chức vụ.
               </p>
-
             </div>
           </div>
         </div>

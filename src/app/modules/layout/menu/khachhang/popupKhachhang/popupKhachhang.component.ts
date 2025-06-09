@@ -13,7 +13,7 @@ export class PopupKhachhangComponent {
     soDienThoai: '',
   };
 
-  @Input() isEditMode: boolean = false; 
+  @Input() isEditMode: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
@@ -25,5 +25,15 @@ export class PopupKhachhangComponent {
 
   onCancel(): void {
     this.close.emit();
+  }
+
+  onInputChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
+    if (filteredValue.length > 11) {
+      filteredValue = filteredValue.substring(0, 11);
+    }
+    inputElement.value = filteredValue;
+    this.formData.soDienThoai = filteredValue;
   }
 } 

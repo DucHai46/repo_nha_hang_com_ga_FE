@@ -236,4 +236,14 @@ export class PopupGiaoDienComponent implements OnInit {
       });
     }
   }
+
+  onInputChange(event: Event, index: number): void {
+    const inputElement = event.target as HTMLInputElement;
+    let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
+    if (filteredValue.length > 11) {
+      filteredValue = filteredValue.substring(0, 11);
+    }
+    inputElement.value = filteredValue;
+    this.formData.footer.phone[index] = filteredValue;
+  }
 }

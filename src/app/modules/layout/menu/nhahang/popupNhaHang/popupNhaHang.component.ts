@@ -18,8 +18,8 @@ export class PopupNhaHangComponent {
     moTa: '',
     isActive: false
   };
-  @Input() isEditMode: boolean = false;  
-  @Input() isChiTietOpen: boolean = false; 
+  @Input() isEditMode: boolean = false;
+  @Input() isChiTietOpen: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
   constructor(
@@ -28,11 +28,11 @@ export class PopupNhaHangComponent {
   ) { }
 
   onSave(): void {
-    this.save.emit(this.formData); 
+    this.save.emit(this.formData);
   }
 
   onCancel(): void {
-    this.close.emit(); 
+    this.close.emit();
   }
 
   selectedFile: File | null = null;
@@ -93,5 +93,14 @@ export class PopupNhaHangComponent {
     } else {
       formData.isActive = true;
     }
+  }
+  onInputChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    let filteredValue = inputElement.value.replace(/[^0-9]/g, '');
+    if (filteredValue.length > 11) {
+      filteredValue = filteredValue.substring(0, 11);
+    }
+    inputElement.value = filteredValue;
+    this.formData.soDienThoai = filteredValue;
   }
 }

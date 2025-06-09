@@ -53,15 +53,15 @@
             ></label
           >
           <div class="flex items-center gap-2">
-            <textarea
+            <input
               id="soDienThoai"
               [(ngModel)]="khachHangTT.soDienThoai"
               maxlength="11"
               name="soDienThoai"
               placeholder="Nhập số điện thoại..."
               pattern="^[0-9]{0,11}$"
-            (input)="onInputChange($event)"
-            ></textarea>
+              (input)="onInputChange($event)"
+            />
           </div>
           <p *ngIf="isSoDienThoaiUnvalid" class="text-red-500 text-sm mt-1">
             Vui lòng nhập số điện thoại

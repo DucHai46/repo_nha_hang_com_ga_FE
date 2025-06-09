@@ -440,6 +440,10 @@
                   placeholder="Nhập số điện thoại..."
                   class="border border-gray-300 p-2 rounded flex-1"
                   [disabled]="isChiTietOpen"
+                  maxlength="11"
+                  required
+                  pattern="^[0-9]{0,11}$"
+                  (input)="onInputChange($event, i)"
                 />
                 <button
                   type="button"

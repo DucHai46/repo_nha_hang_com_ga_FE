@@ -25,7 +25,9 @@
               [(ngModel)]="formData.soDienThoai"
               name="SoDienThoai"
               placeholder="Nhập số điện thoai..."
-              [maxLength]="10"
+              maxlength="11"
+              required
+              pattern="^[0-9]{0,11}$"
               (input)="onInputChange($event)"
             />
           </div>
