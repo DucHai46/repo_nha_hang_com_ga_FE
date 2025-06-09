@@ -27,6 +27,7 @@ export class DondatbanComponent implements OnInit {
   itemsSearch: any[] = [];
   banAn: any[] = [];
   khachHang: any[] = [];
+  khachHangIds: any[] = [];
   paging: any = {
     page: 1,
     size: 10,
@@ -49,13 +50,38 @@ export class DondatbanComponent implements OnInit {
   }
   searchForm: any={
     ban: '',
-    khachHang: '',
+    khachHangs: '',
     tuNgay: '',
     denNgay: '',
     tuGio: '',
     denGio: '',
   }
+  searchKH: any = {
+    tenKhachHang: '',
+  };
   search() {
+      if (this.searchForm.khachHangs) {
+      this.searchKH.isPaging = true;
+      this.searchKH.PageNumber = this.paging.page;
+      this.searchKH.PageSize = this.paging.size;
+      this.searchKH.tenKhachHang = this.searchForm.khachHangs;
+      this.khachHangService.getKhachHang(this.searchKH).subscribe({
+        next: (res: any) => {
+          this.khachHang = res.data.data;
+          this.khachHangIds = res.data.data.map((kh: any) => kh.id);
+          this.searchForm.khachHang = this.khachHangIds;
+          this.searchDonDatBan();
+        }
+      });
+    } else {
+      if (this.khachHangIds) {
+        this.khachHangIds = [];
+      }
+      this.searchDonDatBan();
+    }
+  }
+  
+  searchDonDatBan() {
     this.searchForm.isPaging = true;  
     this.searchForm.PageNumber = this.paging.page;
     this.searchForm.PageSize = this.paging.size;
@@ -72,7 +98,7 @@ export class DondatbanComponent implements OnInit {
           this.notification.error('Lỗi', 'Lấy dữ liệu thất bại');
         }
       }
-    )  
+    )
   }
   changePage(newPage: number) {
     if (newPage < 1 || newPage > this.totalPages) return;
@@ -87,7 +113,9 @@ export class DondatbanComponent implements OnInit {
   }
   reset(){
     this.searchForm.ban = '';
-    this.searchForm.khachHang='';
+    this.searchForm.khachHangs='';
+    this.khachHangIds = [];
+    this.searchForm.khachHang = [];
     this.searchForm.tuNgay = '';
     this.searchForm.denNgay = '';
     this.searchForm.tuGio = '';
