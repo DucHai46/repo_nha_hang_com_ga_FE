@@ -2,28 +2,68 @@
   <!-- Sidebar + Main Content -->
   <div class="w-full max-w-7xl flex flex-col sm:flex-row justify-center">
     <!-- Sidebar -->
-    <div class="w-full sm:w-64 mb-6 sm:mb-0 sm:mr-10 bg-white rounded-lg shadow">
+    <div
+      class="w-full sm:w-64 mb-6 sm:mb-0 sm:mr-10 bg-white rounded-lg shadow"
+    >
       <div class="border-b border-gray-200">
-        <div class="px-8 py-4 cursor-pointer text-base hover:bg-gray-50 flex items-center justify-between">
+        <div
+          class="px-8 py-4 cursor-pointer text-base hover:bg-gray-50 flex items-center justify-between"
+        >
           <span>Thực đơn giao hàng</span>
         </div>
       </div>
     </div>
     <!-- Main Content -->
     <div class="flex-1">
-      <h2 class="mb-8 text-2xl font-semibold text-center sm:text-left">Tất cả sản phẩm</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
-        <div *ngFor="let item of pagedItems" class="bg-yellow-50 rounded-xl shadow p-6 flex flex-col items-center">
-          <img [src]="item.hinhAnhBase64 || item.hinhAnh" [alt]="item.ten" class="w-full h-40 object-cover rounded-lg mb-4" />
-          <div class="text-lg font-semibold mb-2 text-center">{{item.ten}}</div>
+      <h2 class="mb-8 text-2xl font-semibold text-center sm:text-left">
+        Tất cả sản phẩm
+      </h2>
+      <!-- Search Input -->
+      <div class="mb-6">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          placeholder="Tìm kiếm món ăn..."
+          class="w-full sm:w-96 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8"
+      >
+        <div
+          *ngFor="let item of pagedItems"
+          class="bg-yellow-50 rounded-xl shadow p-6 flex flex-col items-center"
+        >
+          <img
+            [src]="item.hinhAnhBase64 || item.hinhAnh"
+            [alt]="item.ten"
+            class="w-full h-40 object-cover rounded-lg mb-4"
+          />
+          <div class="text-lg font-semibold mb-2 text-center">
+            {{ item.ten }}
+          </div>
           <div class="mb-4 flex flex-col items-center">
-            <ng-container *ngIf="item.giamGia > 0 && item.giaGoc > item.gia; else noDiscount">
-              <span class="text-gray-400 text-base line-through">{{item.giaGoc | number}}₫</span>
-              <span class="text-yellow-500 text-lg font-bold">{{item.gia | number}}₫</span>
-              <span class="text-xs text-red-500">-{{item.soTienGiam | number}}₫ ({{item.giamGia}}%)</span>
+            <ng-container
+              *ngIf="
+                item.giamGia > 0 && item.giaGoc > item.gia;
+                else noDiscount
+              "
+            >
+              <span class="text-gray-400 text-base line-through"
+                >{{ item.giaGoc | number }}₫</span
+              >
+              <span class="text-yellow-500 text-lg font-bold"
+                >{{ item.gia | number }}₫</span
+              >
+              <span class="text-xs text-red-500"
+                >-{{ item.soTienGiam | number }}₫ ({{ item.giamGia }}%)</span
+              >
             </ng-container>
             <ng-template #noDiscount>
-              <span class="text-yellow-500 text-base font-medium">{{item.gia | number}}₫</span>
+              <span class="text-yellow-500 text-base font-medium"
+                >{{ item.gia | number }}₫</span
+              >
             </ng-template>
           </div>
           <button
@@ -37,10 +77,9 @@
       <!-- Paging -->
       <div class="flex justify-center items-center mt-8 space-x-2 select-none">
         <ng-container *ngFor="let page of pages">
-          <span
-            *ngIf="page === '...'; else pageNum"
-            class="px-2 text-gray-400"
-          >...</span>
+          <span *ngIf="page === '...'; else pageNum" class="px-2 text-gray-400"
+            >...</span
+          >
           <ng-template #pageNum>
             <button
               (click)="goToPage(page.toString())"
@@ -49,7 +88,9 @@
               [class.text-gray-400]="page !== currentPage"
               class="px-2 py-1 rounded focus:outline-none !text-gray-400 hover:!text-black"
               [disabled]="page === currentPage"
-            >{{page}}</button>
+            >
+              {{ page }}
+            </button>
           </ng-template>
         </ng-container>
         <button
