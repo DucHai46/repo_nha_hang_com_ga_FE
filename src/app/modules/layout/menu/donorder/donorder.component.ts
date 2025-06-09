@@ -336,7 +336,13 @@ export class DonorderComponent implements OnInit {
               this.formHoaDon = res.data;
               this.closePopup();
               this.updateDonOrderStatusOnlline(this.formHoaDon.donOrder.id, { trangThai: 2 });
-              this.search();
+              this.hoaDonThanhToanService.getHoaDonThanhToan({}).subscribe({
+                next: (res: any) => {
+                  this.hoaDons = res.data.data;
+                  this.search();
+                }
+              });
+              // this.search();
               this.notification.create(
                 'success',
                 'Thông báo!',
