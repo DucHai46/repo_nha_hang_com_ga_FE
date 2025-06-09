@@ -138,7 +138,7 @@ export class DonorderComponent implements OnInit {
     tenKhachHang: '',
   }
 
-  isThanhToan(item: any) {
+  isThanhToan(item: any) {7
     let isThanhToan = true;
     item.chiTietDonOrder.forEach((ct: any) => {
       if (ct.monAns.length > 0) {
